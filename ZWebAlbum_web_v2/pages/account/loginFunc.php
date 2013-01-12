@@ -29,6 +29,7 @@
 	else
 	{
 		$row = $database->getSingle();
+		session_start();
 		$_SESSION['User_ID'] = $row['ID'];
 		$_SESSION['User_Name'] = $row['Name'];
 		$_SESSION['User_Nickname'] = $row['Nickname'];

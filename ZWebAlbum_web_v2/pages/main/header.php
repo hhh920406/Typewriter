@@ -7,7 +7,7 @@
 	{
 		$userID = $_SESSION['User_ID'];				// 用户的ID，是一个唯一的整数
 		$userName = $_SESSION['User_Name'];			// 用户登录用的名称，是唯一的字符串
-		$userNickname = $_SESSION['User_NickName']; // 用户用来显示的名称，字符串
+		$userNickname = $_SESSION['User_Nickname']; // 用户用来显示的名称，字符串
 		$userType = $_SESSION['User_Type'];			// 用户类型，一个整数
 	}
 	

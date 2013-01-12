@@ -20,15 +20,34 @@
 		{
 			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 		}
+		var name = Text_UserName.value;
+		var password = Password_Password.value;
 		xmlhttp.onreadystatechange = function()
 		{
 			if(xmlhttp.readyState == 4 && xmlhttp.status == 200)
 			{
 				document.getElementById("loginState").innerHTML = xmlhttp.responseText;
+				if(xmlhttp.responseText == "登录成功")
+				{
+					if(Checkbox_Remember.checked)
+					{
+						document.cookie = "name=" + escape(name);
+						document.cookie = "password=" + escape(password);
+					}
+					var cookie = document.cookie;
+					var cookieArray = cookie.split(";");
+					for(var i=0;i<cookieArray.length;++i)
+					{
+						var value = cookieArray[i].split("=");
+						if("prevPage" == value[0])
+						{
+							window.location.href = value[1];
+						}
+					}
+					window.location.href = "/pages/main/index.php";
+				}
 			}
 		}
-		var name = Text_UserName.value;
-		var password = Password_Password.value;
 		xmlhttp.open("GET", "/pages/account/loginFunc.php?name=" + name + "&password=" + password , true);
 		xmlhttp.send();
 	}
@@ -66,7 +85,7 @@
 			<tr style="height: 40px">
 				<td></td>
 				<td>
-					<input name="Checkbox_Remember" type="checkbox" /> 下次自动登录
+					<input id="Checkbox_Remember" type="checkbox" /> 下次自动登录
 				</td>
 				<td></td>
 			</tr>
