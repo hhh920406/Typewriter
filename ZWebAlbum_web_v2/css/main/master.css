@@ -11,22 +11,22 @@
 
 #topLeft
 {
-	display: inline-block;
-	position: absolute;
-	left: 10px;
-	height: 100%;
-	text-align: left;
-	padding-top: 5px;
-	color: darkgray;
+    display: inline-block;
+    position: absolute;
+    left: 10px;
+    height: 100%;
+    text-align: left;
+    padding-top: 5px;
+    color: darkgray;
 }
 
 #topRight
 {
     display: inline-block;
-	position: absolute;
-	right: 10px;
+    position: absolute;
+    right: 10px;
     height: 100%;
-	text-align: right;
+    text-align: right;
     padding-top: 5px;
 }
 
@@ -61,10 +61,10 @@
         
 #banner
 {
-	width: 1024px;
-	height: 241px;
-	margin: 0 auto;
-	margin-top: 10px;
+    width: 1024px;
+    height: 241px;
+    margin: 0 auto;
+    margin-top: 10px;
     background-image: url('/resource/images/banner.jpg'); 
     background-repeat: no-repeat;
 }

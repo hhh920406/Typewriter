@@ -2,9 +2,9 @@
 
 body
 {
-	font-family: Arial, sans-serif;
-	padding: 0;
-	margin: 0;
+    font-family: Arial, sans-serif;
+    padding: 0;
+    margin: 0;
 }
 
 .inputLarge
@@ -34,8 +34,8 @@ body
 
 .buttonGreen
 {
-	width: 272px;
-	height: 47px;
+    width: 272px;
+    height: 47px;
     background-color: rgb(96, 176, 68);
     background-image: url('/resource/images/btn_green_normal.png');
     border: 0px none;
@@ -51,7 +51,7 @@ body
 
 .buttonGreen:focus
 {
-	outline: none;
+    outline: none;
 }
 
 .buttonGreen:hover
@@ -78,7 +78,7 @@ body
 
 .buttonBlue:focus
 {
-	outline: none;
+    outline: none;
 }
 
 .buttonBlue:hover

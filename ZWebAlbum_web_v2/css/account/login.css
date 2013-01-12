@@ -2,16 +2,16 @@
 
 #formDiv
 {
-	width: 600px;
-	margin: 0 auto;
+    width: 600px;
+    margin: 0 auto;
 }
 
 .formLine
 {
-	width: 100%;
-	height: 55px;
-	line-height: 55px;
-	overflow: hidden;
+    width: 100%;
+    height: 55px;
+    line-height: 55px;
+    overflow: hidden;
 }
 
 .formLeft
@@ -19,7 +19,7 @@
     display: inline-block;
     width: 95px;
     height: 100%;
-	text-align: right;
+    text-align: right;
 }
 
 .formMid
@@ -27,7 +27,7 @@
     display: inline-block;
     width: 295px;
     height: 100%;
-	text-align: left;
+    text-align: left;
 }
 
 .formRight
@@ -35,5 +35,5 @@
     display: inline-block;
     width: 195px;
     height: 100%;
-	text-align: left;
+    text-align: left;
 }
