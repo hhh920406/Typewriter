@@ -18,6 +18,7 @@
     }
     
     $database = new Database();
+    
     $queryString =     "SELECT * " .
                        "FROM D_User " .
                        "WHERE Name='" . $name . "' AND Password='" . $password . "'";

@@ -22,7 +22,7 @@ class Database
             die('Could not connect: ' . mysql_error());
         }
         mysql_select_db($this->databaseName, $this->connection);
-        mysql_query("set names utf-8");
+        mysql_query("set names 'utf8'");
     }
     
     function close_connection()
