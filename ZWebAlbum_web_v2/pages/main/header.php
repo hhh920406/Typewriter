@@ -5,10 +5,10 @@
     session_start();
     if(!empty($_SESSION['User_ID']))
     {
-        $userID = $_SESSION['User_ID'];                // 用户的ID，是一个唯一的整数
-        $userName = $_SESSION['User_Name'];            // 用户登录用的名称，是唯一的字符串
+        $userID = $_SESSION['User_ID'];             // 用户的ID，是一个唯一的整数
+        $userName = $_SESSION['User_Name'];         // 用户登录用的名称，是唯一的字符串
         $userNickname = $_SESSION['User_Nickname']; // 用户用来显示的名称，字符串
-        $userType = $_SESSION['User_Type'];            // 用户类型，一个整数
+        $userType = $_SESSION['User_Type'];         // 用户类型，一个整数
     }
     
     // 显示用户昵称，链接到更新用户信息页面
@@ -16,7 +16,7 @@
     {
         global $userNickname;
         echo "<li>";
-        echo "<a href='/pages/update.php'>";
+        echo "<a href='/pages/account/update.php'>";
         echo $userNickname;
         echo "</a>";
         echo "</li>";
@@ -32,7 +32,7 @@
     function echoLogout()
     {
         echo "<li>";
-        echo "<a href='/pages/logout.php'>退出</a>";
+        echo "<a href='/pages/account/logout.php'>退出</a>";
         echo "</li>";
     }
     
@@ -69,16 +69,16 @@
     <div class="menuBlock">
         <ul>
             <li>
-                <a href="/pages/index.php">首页</a>
+                <a href="/pages/main/index.php">首页</a>
             </li>
             <li>
-                <a href="">查看相册</a>
+                <a href="/pages/album/list.php">查看相册</a>
             </li>
             <li>
-                <a href="">上传照片</a>
+                <a href="/pages/photo/upload.php">上传照片</a>
             </li>
             <li>
-                <a href="">照片分类</a>
+                <a href="/pages/classify/select.php">照片分类</a>
             </li>
             <li>
                 <a href="">人物管理</a>
