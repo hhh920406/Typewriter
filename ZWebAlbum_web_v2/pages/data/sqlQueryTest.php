@@ -19,12 +19,12 @@
         
         echo "Create table: <br/>";
         $typeArray = array( "ID" => "INT(4) NOT NULL AUTO_INCREMENT", 
-                            "PRIMARY KEY" => "(ID)",
                             "Name" => "VARCHAR(45) NOT NULL", 
                             "Password" => "VARCHAR(45) NOT NULL",
                             "Nickname" => "VARCHAR(45) DEFAULT ''",
                             "Type" => "INT(4) DEFAULT '0'");
-        $database->createTableArray1($tableName, $typeArray);
+        $primaryArray = array("ID");
+        $database->createTable($tableName, $typeArray, $primaryArray);
         echo $database->getQueryString();
         echo "<br/>";
         echo "<hr/>";
@@ -37,32 +37,20 @@
         echo "INSERT Test";
         $database = new Database("", "", "", $databaseName);
         echo "<hr/>";
-        
-        echo "Insert single data: <br/>";
-        $valueArray = array("Name" => "monkey005", 
-                            "Password" => "monkey", 
-                            "Nickname" => "无尽猴子五号机",  
-                            "Type" => "0");
-        $database->insertSingleArray1($tableName, $valueArray);
+        echo "Insert multiple: <br/>";
+        $columnArray = array("Name", "Password", "Nickname", "Type");
+        $valueArray = array(array("monkey015", "monkey", "无尽猴子十五号机", "0"), 
+                            array("monkey016", "monkey", "无尽猴子十六号机", "0"), 
+                            array("monkey017", "monkey", "无尽猴子十七号机", "0"));
+        $database->insert($tableName, $columnArray, $valueArray);
         echo $database->getQueryString();
         echo "<br/>";
-        
-        echo "Insert multiple data : <br/>";
-        $valueArray = array(array(  "Name" => "monkey009", 
-                                    "Password" => "monkey", 
-                                    "Nickname" => "无尽猴子九号机",  
-                                    "Type" => "0"), 
-                            array(  "Name" => "monkey010", 
-                                    "Password" => "monkey", 
-                                    "Nickname" => "无尽猴子十号机",  
-                                    "Type" => "0"), 
-                            array(  "Name" => "monkey011", 
-                                    "Password" => "monkey", 
-                                    "Nickname" => "无尽猴子十一号机",  
-                                    "Type" => "0"));
-        $database->insertMultipleArray1($tableName, $valueArray);
+        echo "Insert single: <br/>";
+        $valueArray = array("monkey018", "monkey", "无尽猴子十八号机", "0");
+        $database->insert($tableName, $columnArray, $valueArray);
         echo $database->getQueryString();
         echo "<br/>";
+        echo mysql_error();
         echo "<hr/>";
     }
     
