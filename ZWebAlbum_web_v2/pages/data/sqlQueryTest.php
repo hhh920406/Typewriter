@@ -114,7 +114,37 @@
         echo "<hr/>";
     }
     
+    function updateTest()
+    {
+        global $databaseName;
+        global $tableName;
+        echo "UPDATE Test";
+        $database = new Database("", "", "", $databaseName);
+        echo "<hr/>";
+        $updateValue = array("Nickname" => "无尽猴子更新测试");
+        $condition = "ID = 1";
+        $database->update($tableName, $updateValue, $condition);
+        echo $database->getQueryString();
+        $database->select($tableName, "", $condition);
+        printQueryResult($database->getAllResult());
+        echo "<hr/>";
+    }
+    
+    function deleteTest()
+    {
+        global $databaseName;
+        global $tableName;
+        echo "DELETE Test";
+        $database = new Database("", "", "", $databaseName);
+        echo "<hr/>";
+        echo $database->getQueryString();
+        printQueryResult($database->getAllResult());
+        echo "<hr/>";
+    }
+    
     createTest();
     insertTest();
     selectTest();
+    updateTest();
+    deleteTest();
 ?>

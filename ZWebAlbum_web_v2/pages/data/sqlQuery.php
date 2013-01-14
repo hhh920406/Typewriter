@@ -301,7 +301,7 @@ class Database
     // $relation是$condition的相对关系，只取AND或OR
     // $order使用来排序的列，DESC在函数内不主动添加
     // $limit是数据范围的限定
-    public function select($tableName, $columnNames, $condition, $relation = "", $order = "", $limit = "")
+    public function select($tableName, $columnNames, $condition = "", $relation = "", $order = "", $limit = "")
     {
         $this->queryString = "";
         if(!$tableName)
@@ -342,6 +342,48 @@ class Database
         $this->queryString .= $this->orderby($order);
         $this->queryString .= $this->limit($limit);
         $this->queryString .= ";";
+        $this->query($this->queryString);
+    }
+    
+    // 更新数据库中的信息
+    // $tableName是表名
+    // $updateValue是更改值的关联数组
+    public function update($tableName, $updateValue, $condition = "", $relation = "")
+    {
+        $this->queryString = "";
+        if(!$tableName)
+        {
+            return;
+        }
+        $this->queryString .= "UPDATE ";
+        $this->queryString .= $tableName;
+        $this->queryString .= " SET ";
+        if(is_array($updateValue))
+        {
+            $space = 1;
+            foreach($updateValue as $column => $value)
+            {
+                if($space)
+                {
+                    $space = 0;
+                }
+                else
+                {
+                    $this->queryString .= ", ";
+                }
+                $this->queryString .= $column . " = '" . $value . "'";
+            }
+        }
+        else
+        {
+            $this->queryString .= $updateValue;
+        }
+        $where = $this->where($condition, $relation);
+        if($where == "ERROR")
+        {
+            return;
+        }
+        $this->queryString .= $where;
         $this->query($this->queryString);
     }
 }
