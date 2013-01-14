@@ -54,6 +54,67 @@
         echo "<hr/>";
     }
     
+    function printQueryResult($result)
+    {
+        echo "<br/>";
+        if($result)
+        {
+            echo "<table border='1'>";
+            for($i = 0; $i < count($result); ++ $i)
+            {
+                if(0 == $i)
+                {
+                    echo "<tr>";
+                    foreach($result[$i] as $column => $value)
+                    {
+                        if(is_integer($column))
+                        {
+                            continue;
+                        }
+                        echo "<th>" . $column . "</th>";
+                    }
+                    echo "</tr>";
+                }
+                echo "<tr>";
+                foreach($result[$i] as $column => $value)
+                {
+                    if(is_integer($column))
+                    {
+                        continue;
+                    }
+                    echo "<td>" . $value . "</td>";
+                }
+                echo "</tr>";
+            }
+            echo "</table>";
+        }
+        else
+        {
+            echo "<table><tr><th>NULL</th></tr></table>";
+        }
+        echo "<br/>";
+    }
+    
+    function selectTest()
+    {
+        global $databaseName;
+        global $tableName;
+        echo "SELECT Test";
+        $database = new Database("", "", "", $databaseName);
+        echo "<hr/>";
+        $columnNames = array();
+        $condition = array( "Password = 'monkey'",
+                            "Nickname = '无尽猴子十二号机'");
+        $relation = "AND";
+        $order = "ID DESC";
+        $limit = array(0, 1);
+        $database->select($tableName, $columnNames, $condition, $relation, $order, $limit);
+        echo $database->getQueryString();
+        printQueryResult($database->getAllResult());
+        echo "<hr/>";
+    }
+    
     createTest();
     insertTest();
+    selectTest();
 ?>

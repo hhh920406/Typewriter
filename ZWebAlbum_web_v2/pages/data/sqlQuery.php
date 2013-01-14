@@ -72,10 +72,7 @@ class Database
     // 获取单条查询结果
     public function getSingleResult()
     {
-        while($row = mysql_fetch_array($this->result))
-        {
-            return $row;
-        }
+        return mysql_fetch_array($this->result);
     }
 
     // 获取全部查询结果
@@ -86,7 +83,7 @@ class Database
         {
             $rowsArray[] = $row;
         }
-        return rowsArray;
+        return $rowsArray;
     }
 
     // 返回间接SQL操作时的查询语句
@@ -95,31 +92,32 @@ class Database
         return $this->queryString;
     }
 
-    // 创建数据库，$databaseName是表名
+    // 创建数据库
+    // $databaseName是数据库名
     public function createDatabase($databaseName)
     {
+        $this->queryString = "";
         if(!$databaseName)
         {
-            $this->queryString = "";
             return;
         }
-        $this->queryString = "CREATE DATABASE " . $databaseName . " ";
+        $this->queryString .= "CREATE DATABASE " . $databaseName . " ";
         $this->queryString .= "DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
         $this->query($this->queryString);
     }
-    
+
     // 创建表
     // $tableName是表名
     // $typeArray是列名与类型的关联数组
     // $primaryArray是主键的数组
     public function createTable($tableName, $typeArray, $primaryArray)
     {
+        $this->queryString = "";
         if(!$tableName || !$typeArray)
         {
-            $this->queryString = "";
             return;
         }
-        $this->queryString = "CREATE TABLE " . $tableName . "(";
+        $this->queryString .= "CREATE TABLE " . $tableName . "(";
         $space = 1;
         foreach($typeArray as $column => $type)
         {
@@ -141,18 +139,19 @@ class Database
         $this->queryString .= ");";
         $this->query($this->queryString);
     }
-    
+
     // 插入数据
+    // $tableName对应表名
     // $columnArray是数据的列名
     // $valueArray是对应的数据
     public function insert($tableName, $columnArray, $valueArray)
     {
+        $this->queryString = "";
         if(!$valueArray)
         {
-            $this->queryString = "";
             return;
         }
-        $this->queryString = "INSERT INTO ";
+        $this->queryString .= "INSERT INTO ";
         $this->queryString .= $tableName;
         if($columnArray)
         {
@@ -205,9 +204,145 @@ class Database
         $this->queryString .= ";";
         $this->query($this->queryString);
     }
-
-    function select($columnNames, $tableName, $relation, $order, $limit)
+    
+    // 获得条件判定的语句
+    // $condition是一个关联数组，对应要比较的关系，如果为空则代表全部选择
+    // $relation是$condition的相对关系，只取AND或OR
+    private function where($condition, $relation)
     {
+        if($condition)
+        {
+            if(count($condition) > 1 && $relation != "AND" && $relation != "OR")
+            {
+                return "ERROR";
+            }
+        }
+        $sql = "";
+        if($condition)
+        {
+            $sql .= " WHERE ";
+            if(is_array($condition))
+            {
+                for($i = 0; $i < count($condition); ++ $i)
+                {
+                    if($i)
+                    {
+                        $sql .= " " . $relation . " ";
+                    }
+                    $sql .= $condition[$i];
+                }
+            }
+            else
+            {
+                $sql .= $condition;
+            }
+        }
+        return $sql;
+    }
+    
+    // 获得排序用的SQL语句
+    // $order使用来排序的列，DESC在函数内不主动添加
+    private function orderby($order)
+    {
+        $sql = "";
+        if($order)
+        {
+            $sql .= " ORDER BY ";
+            if(is_array($order))
+            {
+                for($i = 0; $i < count($order); ++ $i)
+                {
+                    if($i)
+                    {
+                        $sql .= ", ";
+                    }
+                    $sql .= $order[$i];
+                }
+            }
+            else
+            {
+                $sql .= $order;
+            }
+        }
+        return $sql;
+    }
+    
+    // 获得限定范围用的SQL语句
+    // $limit是数据范围的限定
+    private function limit($limit)
+    {
+        $sql = "";
+        if($limit)
+        {
+            $sql .= " LIMIT ";
+            if(is_array($limit))
+            {
+                if(1 == count($limit))
+                {
+                    $sql .= $limit[0];
+                }
+                else if(2 == count($limit))
+                {
+                    $sql .= $limit[0] . ", " . $limit[1];
+                }
+            }
+            else
+            {
+                $sql .= $limit;
+            }
+        }
+        return $sql;
+    }
+
+    // 数据库查询
+    // $tableName对应表名
+    // $columnNames对应要选择的列，如果为空则表示全部选择
+    // $condition是一个关联数组，对应要比较的关系，如果为空则代表全部选择
+    // $relation是$condition的相对关系，只取AND或OR
+    // $order使用来排序的列，DESC在函数内不主动添加
+    // $limit是数据范围的限定
+    public function select($tableName, $columnNames, $condition, $relation = "", $order = "", $limit = "")
+    {
+        $this->queryString = "";
+        if(!$tableName)
+        {
+            return;
+        }
+        $this->queryString .= "SELECT ";
+        if($columnNames)
+        {
+            if(is_array($columnNames))
+            {
+                for($i = 0; $i < count($columnNames); ++ $i)
+                {
+                    if($i)
+                    {
+                        $this->queryString .= ", ";
+                    }
+                    $this->queryString .= "[" . $columnNames[$i] . "]";
+                }
+            }
+            else
+            {
+                $this->queryString .= "[" . $columnNames . "]";
+            }
+        }
+        else
+        {
+            $this->queryString .= "*";
+        }
+        $this->queryString .= " FROM ";
+        $this->queryString .= $tableName;
+        $where = $this->where($condition, $relation);
+        if($where == "ERROR")
+        {
+            return;
+        }
+        $this->queryString .= $where;
+        $this->queryString .= $this->orderby($order);
+        $this->queryString .= $this->limit($limit);
+        $this->queryString .= ";";
+        $this->query($this->queryString);
     }
 }
 ?>
