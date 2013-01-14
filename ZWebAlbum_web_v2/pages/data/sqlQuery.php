@@ -386,5 +386,25 @@ class Database
         $this->queryString .= $where;
         $this->query($this->queryString);
     }
+    
+    // 更新数据库中的信息
+    // $tableName是表名
+    public function delete($tableName, $condition = "", $relation = "")
+    {
+        $this->queryString = "";
+        if(!$tableName)
+        {
+            return;
+        }
+        $this->queryString .= "DELETE FROM ";
+        $this->queryString .= $tableName;
+        $where = $this->where($condition, $relation);
+        if($where == "ERROR")
+        {
+            return;
+        }
+        $this->queryString .= $where;
+        $this->query($this->queryString);
+    }
 }
 ?>

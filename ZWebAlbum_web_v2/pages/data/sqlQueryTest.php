@@ -57,9 +57,9 @@
     function printQueryResult($result)
     {
         echo "<br/>";
+        echo "<table border='1'>";
         if($result)
         {
-            echo "<table border='1'>";
             for($i = 0; $i < count($result); ++ $i)
             {
                 if(0 == $i)
@@ -86,12 +86,12 @@
                 }
                 echo "</tr>";
             }
-            echo "</table>";
         }
         else
         {
-            echo "<table><tr><th>NULL</th></tr></table>";
+            echo "<tr><th>NULL</th></tr>";
         }
+        echo "</table>";
         echo "<br/>";
     }
     
@@ -137,7 +137,10 @@
         echo "DELETE Test";
         $database = new Database("", "", "", $databaseName);
         echo "<hr/>";
+        $condition = "Nickname = '无尽猴子十六号机'";
+        $database->delete($tableName, $condition);
         echo $database->getQueryString();
+        $database->select($tableName, "", $condition);
         printQueryResult($database->getAllResult());
         echo "<hr/>";
     }
