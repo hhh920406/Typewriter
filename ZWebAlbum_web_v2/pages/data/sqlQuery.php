@@ -1,19 +1,40 @@
 <?php
 /**
-* 提供数据库连接的基本方式
-*/
+ * Provide basic operations for MySQL query.
+ * It is not necessary to initial the connection manually before query.
+ * To use SQL directly, just invoking the query function.
+ * @author ZHG
+ * @version 20130115
+ */
 class Database
 {
-    private $host = "localhost";            // 主机名
-    private $name = "ZHG";                  // 登录名
-    private $password = "19910702";         // 登录密码
-    private $databaseName = "ZWebAlbum_v2"; // 数据库名
+    /**
+     * @var string $host The host name of the database.
+     * @var string $name The user name to connect to the host.
+     * @var string $password The password to connect to the host.
+     * @var string $databaseName he database name which to connect to.
+     */
+    private $host = "localhost";
+    private $name = "ZHG";
+    private $password = "19910702";
+    private $databaseName = "ZWebAlbum_v2";
 
-    private $connection = "";   // 连接
-    private $result = "";       // 查询结果
-    private $queryString = "";  // 用于查询的字符串，在使用间接SQL语句时使用
+    /**
+     * @var resource $connection The connection with the target database.
+     * @var array $result The query result.
+     * @var string $queryString The query string used when query undirectly.
+     */
+    private $connection = "";
+    private $result = "";
+    private $queryString = "";
 
-    // 构造函数，初始化数据库连接。如果不传递参数则使用默认配置。
+    /**
+     * Initial the class with database information.
+     * @param string $host The host name.
+     * @param string $name The login name.
+     * @param string $password The login password.
+     * @param string $databaseName The database name.
+     */
     public function __construct($host = "", $name = "", $password = "", $databaseName = "")
     {
         if($host)
@@ -35,7 +56,17 @@ class Database
         $this->init_connection();
     }
 
-    // 初始化数据库的连接并把字符设为UTF8
+    /**
+     * Close the connection to MySQL server.
+     */
+    private function __destructor()
+    {
+        $this->close_connection();
+    }
+
+    /**
+     * Connect to MySQL server and set the charset to UTF-8
+     */
     public function init_connection()
     {
         $this->connection = mysql_connect($this->host, $this->name, $this->password);
@@ -47,13 +78,21 @@ class Database
         mysql_query("set names 'utf8'");
     }
 
-    // 关闭数据库的连接
+    /**
+     * Close the connection to MySQL server.
+     */
     public function close_connection()
     {
-        mysql_close($connection);
+        if($this->connection)
+        {
+            mysql_close($connection);
+        }
     }
 
-    // 进行基本的查询，结果保存到$result中
+    /**
+     * The basic SQL query.
+     * @param string $queryString The SQL query.
+     */
     public function query($queryString)
     {
         if(!$this->connection)
@@ -63,19 +102,32 @@ class Database
         $this->result = mysql_query($queryString, $this->connection);
     }
 
-    // 获得上次查询返回的结果数
+    /**
+     * Get the row number of the query result.
+     * @return integer The row number of the query result.
+     */
     public function getRowNumber()
     {
-        return mysql_num_rows($this->result);
+        if($this->result)
+        {
+            return mysql_num_rows($this->result);
+        }
+        return 0;
     }
 
-    // 获取单条查询结果
+    /**
+     * Get a single result from the query result.
+     * @return array An associative array represents the result.
+     */
     public function getSingleResult()
     {
         return mysql_fetch_array($this->result);
     }
 
-    // 获取全部查询结果
+    /**
+     * Get the total query result.
+     * @return array An associative array represents the integral query result.
+     */
     public function getAllResult()
     {
         $rowsArray = array();
@@ -86,14 +138,19 @@ class Database
         return $rowsArray;
     }
 
-    // 返回间接SQL操作时的查询语句
+    /**
+     * Get the SQL query when query undirectly.
+     * @return string The SQL query statement.
+     */
     public function getQueryString()
     {
         return $this->queryString;
     }
 
-    // 创建数据库
-    // $databaseName是数据库名
+    /**
+     * Create a database in the host.
+     * @param string $databaseName The database name to be created.
+     */
     public function createDatabase($databaseName)
     {
         $this->queryString = "";
@@ -106,20 +163,19 @@ class Database
         $this->query($this->queryString);
     }
 
-    // 创建表
-    // $tableName是表名
-    // $typeArray是列名与类型的关联数组
-    // $primaryArray是主键的数组
-    public function createTable($tableName, $typeArray, $primaryArray)
+    /**
+     * Create a table to the current database.
+     * The function does not provide the error detection.
+     * @param string $tableName The table name to be created.
+     * @param array $columns An associative array, the keys represents the column names and the values represent the column types.
+     * @param array $primaryKey When it is an array, it contains column names represents the primary keys. When it is a string, it presents the single primary key.
+     */
+    public function createTable($tableName, $columns, $primaryKey)
     {
         $this->queryString = "";
-        if(!$tableName || !$typeArray)
-        {
-            return;
-        }
         $this->queryString .= "CREATE TABLE " . $tableName . "(";
         $space = 1;
-        foreach($typeArray as $column => $type)
+        foreach($columns as $column => $type)
         {
             if($space)
             {
@@ -131,26 +187,32 @@ class Database
             }
             $this->queryString .= $column . " " . $type;
         }
-        foreach($primaryArray as $primary)
+        if(is_array($primaryKey))
         {
-            $this->queryString .= ", ";
-            $this->queryString .= "PRIMARY KEY (" . $primary . ")";
+            foreach($primaryKey as $primary)
+            {
+                $this->queryString .= ", ";
+                $this->queryString .= "PRIMARY KEY (" . $primary . ")";
+            }
+        }
+        else
+        {
+            $this->queryString .= ", " . "PRIMARY KEY (" . $primaryKey . ")";
         }
         $this->queryString .= ");";
         $this->query($this->queryString);
     }
 
-    // 插入数据
-    // $tableName对应表名
-    // $columnArray是数据的列名
-    // $valueArray是对应的数据
+    /**
+     * Insert data to table.
+     * The function does not provide the error detection.
+     * @param string $tableName The table to be inserted.
+     * @param array $columnArray An array of column names represents the correspondence between columns and values. When it is null it represents select all the columns with the table structure order.
+     * @param array $valueArray When it is a one dimension array, it is the values to be inserted with the same order of the $columnArray. When it is a two dimensions array, it is a array of the one dimension array descriped just now.
+     */
     public function insert($tableName, $columnArray, $valueArray)
     {
         $this->queryString = "";
-        if(!$valueArray)
-        {
-            return;
-        }
         $this->queryString .= "INSERT INTO ";
         $this->queryString .= $tableName;
         if($columnArray)
@@ -204,19 +266,16 @@ class Database
         $this->queryString .= ";";
         $this->query($this->queryString);
     }
-    
-    // 获得条件判定的语句
-    // $condition是一个关联数组，对应要比较的关系，如果为空则代表全部选择
-    // $relation是$condition的相对关系，只取AND或OR
+
+    /**
+     * Get the WHERE statement.
+     * The function does not provide the error detection.
+     * @param array $condition @see select
+     * @param string $relation @see select
+     * @return string The WHERE statement.
+     */
     private function where($condition, $relation)
     {
-        if($condition)
-        {
-            if(count($condition) > 1 && $relation != "AND" && $relation != "OR")
-            {
-                return "ERROR";
-            }
-        }
         $sql = "";
         if($condition)
         {
@@ -239,9 +298,13 @@ class Database
         }
         return $sql;
     }
-    
-    // 获得排序用的SQL语句
-    // $order使用来排序的列，DESC在函数内不主动添加
+
+    /**
+     * Get the ORDER BY statement.
+     * The function does not provide the error detection.
+     * @param array $order @see select
+     * @return string The ORDER BY statement.
+     */
     private function orderby($order)
     {
         $sql = "";
@@ -266,9 +329,12 @@ class Database
         }
         return $sql;
     }
-    
-    // 获得限定范围用的SQL语句
-    // $limit是数据范围的限定
+
+    /**
+     * Get the LIMIT statement.
+     * @param array $limit @see select
+     * @return string The LIMIT statement.
+     */
     private function limit($limit)
     {
         $sql = "";
@@ -294,20 +360,19 @@ class Database
         return $sql;
     }
 
-    // 数据库查询
-    // $tableName对应表名
-    // $columnNames对应要选择的列，如果为空则表示全部选择
-    // $condition是一个关联数组，对应要比较的关系，如果为空则代表全部选择
-    // $relation是$condition的相对关系，只取AND或OR
-    // $order使用来排序的列，DESC在函数内不主动添加
-    // $limit是数据范围的限定
+    /**
+     * Select data from table.
+     * The function does not provide the error detection.
+     * @param string $tableName The table to be selected.
+     * @param array $columnNames The columns to be selected. If it is null, it is to select all the columns.
+     * @param array $condition When it is a string, it presents the full WHERE SQL query string. When it is an array, it contains the conditions.
+     * @param string $relation The $relation must be "AND" or "OR" if the $condtion is an array and its length is larger than one.
+     * @param array $order When it is a string, it presents the single order condition. When it is an array, it contains the order conditions. If descent order is needed, append " DESC" to the end of column name.
+     * @param array $limit When it is an integer, it is to choose $limit rows from the beginning. When is an array, it is to choose $limit[1] rows from $limit[0].
+     */
     public function select($tableName, $columnNames, $condition = "", $relation = "", $order = "", $limit = "")
     {
         $this->queryString = "";
-        if(!$tableName)
-        {
-            return;
-        }
         $this->queryString .= "SELECT ";
         if($columnNames)
         {
@@ -333,28 +398,24 @@ class Database
         }
         $this->queryString .= " FROM ";
         $this->queryString .= $tableName;
-        $where = $this->where($condition, $relation);
-        if($where == "ERROR")
-        {
-            return;
-        }
-        $this->queryString .= $where;
+        $this->queryString .= $this->where($condition, $relation);
         $this->queryString .= $this->orderby($order);
         $this->queryString .= $this->limit($limit);
         $this->queryString .= ";";
         $this->query($this->queryString);
     }
-    
-    // 更新数据库中的信息
-    // $tableName是表名
-    // $updateValue是更改值的关联数组
+
+    /**
+     * Update the data in table.
+     * The function does not provide the error detection.
+     * @param string $tableName The table where the data to be updated.
+     * @param array $updateValue When it is an associative array, its keys represents the column names and its values represents the values to be updated to. When it is a string, it is just a standard SQL query.
+     * @param array $condition @see select
+     * @param string $relation @see select
+     */
     public function update($tableName, $updateValue, $condition = "", $relation = "")
     {
         $this->queryString = "";
-        if(!$tableName)
-        {
-            return;
-        }
         $this->queryString .= "UPDATE ";
         $this->queryString .= $tableName;
         $this->queryString .= " SET ";
@@ -378,32 +439,23 @@ class Database
         {
             $this->queryString .= $updateValue;
         }
-        $where = $this->where($condition, $relation);
-        if($where == "ERROR")
-        {
-            return;
-        }
-        $this->queryString .= $where;
+        $this->queryString .= $this->where($condition, $relation);
         $this->query($this->queryString);
     }
-    
-    // 更新数据库中的信息
-    // $tableName是表名
+
+    /**
+     * Delete data from table.
+     * The function does not provide the error detection.
+     * @param string $tableName The table where the data to be deleted.
+     * @param array $condition @see select
+     * @param string $relation @see select
+     */
     public function delete($tableName, $condition = "", $relation = "")
     {
         $this->queryString = "";
-        if(!$tableName)
-        {
-            return;
-        }
         $this->queryString .= "DELETE FROM ";
         $this->queryString .= $tableName;
-        $where = $this->where($condition, $relation);
-        if($where == "ERROR")
-        {
-            return;
-        }
-        $this->queryString .= $where;
+        $this->queryString .= $this->where($condition, $relation);
         $this->query($this->queryString);
     }
 }
