@@ -48,7 +48,7 @@
                 }
             }
         }
-        xmlhttp.open("GET", "/pages/account/loginFunc.php?name=" + name + "&password=" + password , true);
+        xmlhttp.open("GET", "/pages/account/login_ajax.php?name=" + name + "&password=" + password , true);
         xmlhttp.send();
     }
 
