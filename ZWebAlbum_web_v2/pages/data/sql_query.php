@@ -1,4 +1,6 @@
 <?php
+include_once "sql_define.php";
+
 /**
  * Provide basic operations for MySQL query.
  * It is not necessary to initial the connection manually before query.
@@ -6,7 +8,7 @@
  * @author ZHG
  * @version 20130115
  */
-class Database
+class SQL_Query
 {
     /**
      * @var string $host The host name of the database.
@@ -14,10 +16,10 @@ class Database
      * @var string $password The password to connect to the host.
      * @var string $databaseName he database name which to connect to.
      */
-    private $host = "localhost";
-    private $name = "ZHG";
-    private $password = "19910702";
-    private $databaseName = "ZWebAlbum_v2";
+    private $host = HOST;
+    private $name = NAME;
+    private $password = PASSWORD;
+    private $databaseName = DATABASE;
 
     /**
      * @var resource $connection The connection with the target database.
@@ -59,7 +61,7 @@ class Database
     /**
      * Close the connection to MySQL server.
      */
-    private function __destructor()
+    private function __destroy()
     {
         $this->close_connection();
     }

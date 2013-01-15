@@ -4,10 +4,11 @@
  * @author ZHG
  * @version 20130115
  */
-include "sqlQuery.php";
+include_once "sql_query.php";
+include_once "sql_define.php";
 
 /**
- * @var string $databaseName The database used for testing.
+ * @var string $databaseName The sql_query used for testing.
  * @var string $tableName The table used for testing.
  */
 $databaseName = "Test";
@@ -23,12 +24,12 @@ function createTest()
     global $databaseName;
     global $tableName;
     echo "CREATE Test";
-    $database = new Database("", "", "", $databaseName);
+    $sql_query = new SQL_Query("", "", "", $databaseName);
     echo "<hr/>";
 
-    echo "Create database: <br/>";
-    $database->createDatabase($databaseName);
-    echo $database->getQueryString();
+    echo "Create sql_query: <br/>";
+    $sql_query->createDatabase($databaseName);
+    echo $sql_query->getQueryString();
     echo "<br/>";
 
     echo "Create table: <br/>";
@@ -38,8 +39,8 @@ function createTest()
                         "Nickname" => "VARCHAR(45) DEFAULT ''",
                         "Type" => "INT(4) DEFAULT '0'");
     $primaryArray = array("ID");
-    $database->createTable($tableName, $typeArray, $primaryArray);
-    echo $database->getQueryString();
+    $sql_query->createTable($tableName, $typeArray, $primaryArray);
+    echo $sql_query->getQueryString();
     echo "<br/>";
     echo "<hr/>";
 }
@@ -54,68 +55,23 @@ function insertTest()
     global $databaseName;
     global $tableName;
     echo "INSERT Test";
-    $database = new Database("", "", "", $databaseName);
+    $sql_query = new SQL_Query("", "", "", $databaseName);
     echo "<hr/>";
     echo "Insert multiple: <br/>";
     $columnArray = array("Name", "Password", "Nickname", "Type");
     $valueArray = array(array("monkey015", "monkey", "无尽猴子十五号机", "0"),
                         array("monkey016", "monkey", "无尽猴子十六号机", "0"),
                         array("monkey017", "monkey", "无尽猴子十七号机", "0"));
-    $database->insert($tableName, $columnArray, $valueArray);
-    echo $database->getQueryString();
+    $sql_query->insert($tableName, $columnArray, $valueArray);
+    echo $sql_query->getQueryString();
     echo "<br/>";
     echo "Insert single: <br/>";
     $valueArray = array("monkey018", "monkey", "无尽猴子十八号机", "0");
-    $database->insert($tableName, $columnArray, $valueArray);
-    echo $database->getQueryString();
+    $sql_query->insert($tableName, $columnArray, $valueArray);
+    echo $sql_query->getQueryString();
     echo "<br/>";
     echo mysql_error();
     echo "<hr/>";
-}
-
-/**
- * Print the query result.
- * @param array $result The result array.
- */
-function printQueryResult($result)
-{
-    echo "<br/>";
-    echo "<table border='1'>";
-    if($result)
-    {
-        for($i = 0; $i < count($result); ++ $i)
-        {
-            if(0 == $i)
-            {
-                echo "<tr>";
-                foreach($result[$i] as $column => $value)
-                {
-                    if(is_integer($column))
-                    {
-                        continue;
-                    }
-                    echo "<th>" . $column . "</th>";
-                }
-                echo "</tr>";
-            }
-            echo "<tr>";
-            foreach($result[$i] as $column => $value)
-            {
-                if(is_integer($column))
-                {
-                    continue;
-                }
-                echo "<td>" . $value . "</td>";
-            }
-            echo "</tr>";
-        }
-    }
-    else
-    {
-        echo "<tr><th>NULL</th></tr>";
-    }
-    echo "</table>";
-    echo "<br/>";
 }
 
 /**
@@ -128,7 +84,7 @@ function selectTest()
     global $databaseName;
     global $tableName;
     echo "SELECT Test";
-    $database = new Database("", "", "", $databaseName);
+    $sql_query = new SQL_Query("", "", "", $databaseName);
     echo "<hr/>";
     $columnNames = array();
     $condition = array( "Password = 'monkey'",
@@ -136,9 +92,9 @@ function selectTest()
     $relation = "OR";
     $order = "ID DESC";
     $limit = array(0, 1);
-    $database->select($tableName, $columnNames, $condition, $relation, $order, $limit);
-    echo $database->getQueryString();
-    printQueryResult($database->getAllResult());
+    $sql_query->select($tableName, $columnNames, $condition, $relation, $order, $limit);
+    echo $sql_query->getQueryString();
+    printQueryResult($sql_query->getAllResult());
     echo "<hr/>";
 }
 
@@ -152,14 +108,14 @@ function updateTest()
     global $databaseName;
     global $tableName;
     echo "UPDATE Test";
-    $database = new Database("", "", "", $databaseName);
+    $sql_query = new SQL_Query("", "", "", $databaseName);
     echo "<hr/>";
     $updateValue = array("Nickname" => "无尽猴子更新测试");
     $condition = "ID = 1";
-    $database->update($tableName, $updateValue, $condition);
-    echo $database->getQueryString();
-    $database->select($tableName, "", $condition);
-    printQueryResult($database->getAllResult());
+    $sql_query->update($tableName, $updateValue, $condition);
+    echo $sql_query->getQueryString();
+    $sql_query->select($tableName, "", $condition);
+    printQueryResult($sql_query->getAllResult());
     echo "<hr/>";
 }
 
@@ -173,13 +129,13 @@ function deleteTest()
     global $databaseName;
     global $tableName;
     echo "DELETE Test";
-    $database = new Database("", "", "", $databaseName);
+    $sql_query = new SQL_Query("", "", "", $databaseName);
     echo "<hr/>";
     $condition = "Nickname = '无尽猴子十六号机'";
-    $database->delete($tableName, $condition);
-    echo $database->getQueryString();
-    $database->select($tableName, "", $condition);
-    printQueryResult($database->getAllResult());
+    $sql_query->delete($tableName, $condition);
+    echo $sql_query->getQueryString();
+    $sql_query->select($tableName, "", $condition);
+    printQueryResult($sql_query->getAllResult());
     echo "<hr/>";
 }
 
