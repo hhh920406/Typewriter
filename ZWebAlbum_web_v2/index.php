@@ -1,4 +1,4 @@
 <?php
-    // 跳转到真正的主页
-    header("Location: /pages/main");
+// Jump to the true index.
+header("Location: /pages/main");
 ?>

@@ -1,17 +1,32 @@
 <?php
-    /***
-     * 在这里获取当前的用户信息。
-     */
+    include_once $_SERVER['DOCUMENT_ROOT'].'/pages/account/login_func.php';
+
+    // Try login if cookie exists.
     session_start();
+    if(empty($_SESSION['User_ID']))
+    {
+        if(!empty($_COOKIE['name']))
+        {
+            $name = $_COOKIE['name'];
+            $password = $_COOKIE['password'];
+            if(SUCCESSS != login($name, $password))
+            {
+                setcookie('name', null, time() - 1);
+                setcookie('password', null, time() - 1);
+            }
+        }
+    }
+
+    // Record user information if the user has login.
     if(!empty($_SESSION['User_ID']))
     {
-        $userID = $_SESSION['User_ID'];             // 用户的ID，是一个唯一的整数
-        $userName = $_SESSION['User_Name'];         // 用户登录用的名称，是唯一的字符串
-        $userNickname = $_SESSION['User_Nickname']; // 用户用来显示的名称，字符串
-        $userType = $_SESSION['User_Type'];         // 用户类型，一个整数
+        $userID = $_SESSION['User_ID'];
+        $userName = $_SESSION['User_Name'];
+        $userNickname = $_SESSION['User_Nickname'];
+        $userType = $_SESSION['User_Type'];
     }
-    
-    // 显示用户昵称，链接到更新用户信息页面
+
+    // Show user nickname, link to update information page.
     function echoUserNickname()
     {
         global $userNickname;
@@ -21,22 +36,22 @@
         echo "</a>";
         echo "</li>";
     }
-    
-    // TODO 判断用户身份，是否显示管理工具
+
+    // TODO Judge the user identity.
     function echoManagementTools()
     {
-        // TODO
+        // @TODO
     }
-    
-    // 退出登录的链接
+
+    // The link to loggout page.
     function echoLogout()
     {
         echo "<li>";
         echo "<a href='/pages/account/logout.php'>退出</a>";
         echo "</li>";
     }
-    
-    // 显示未登录状态，链接到登录页面
+
+    // Show unlogin status, link to login page.
     function echoLogin()
     {
         echo "<li style='color: gray'>";
@@ -44,7 +59,6 @@
         echo "</li>";
     }
 ?>
-
 <div id="top">
 <div id="topLeft">Z实验室2013_个人相册管理</div>
 <div id="topRight">

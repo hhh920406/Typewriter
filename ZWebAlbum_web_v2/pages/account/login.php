@@ -31,8 +31,10 @@
                 {
                     if(Checkbox_Remember.checked)
                     {
-                        document.cookie = "name=" + escape(name);
-                        document.cookie = "password=" + escape(password);
+                        var date = new Date();
+                        date.setMonth(date.getMonth() + 1);
+                        document.cookie = "name=" + escape(name) + "; expires=" + date.toGMTString() + "; + path='/pages'";
+                        document.cookie = "password=" + escape(password) + "; expires=" + date.toGMTString() + "; + path='/pages'";
                     }
                     var cookie = document.cookie;
                     var cookieArray = cookie.split(";");
