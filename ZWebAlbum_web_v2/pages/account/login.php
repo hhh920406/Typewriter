@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="/css/main/common.css">
     <link rel="stylesheet" href="/css/main/master.css">
     <link rel="stylesheet" href="/css/account/login.css">
+    <script src="/js/main/cookie.js"></script>
     <script>
-    // 用户登录验证
+    // Login authentication.
     function userLogin()
     {
         var xmlhttp;
@@ -31,20 +32,13 @@
                 {
                     if(Checkbox_Remember.checked)
                     {
-                        var date = new Date();
-                        date.setMonth(date.getMonth() + 1);
-                        document.cookie = "name=" + escape(name) + "; expires=" + date.toGMTString() + "; + path='/pages'";
-                        document.cookie = "password=" + escape(password) + "; expires=" + date.toGMTString() + "; + path='/pages'";
+                        setCookie("name", name);
+                        setCookie("password", password);
                     }
-                    var cookie = document.cookie;
-                    var cookieArray = cookie.split(";");
-                    for(var i=0;i<cookieArray.length;++i)
+                    var prevPage = getCookie("prevPage");
+                    if(prevPage != "")
                     {
-                        var value = cookieArray[i].split("=");
-                        if("prevPage" == value[0])
-                        {
-                            window.location.href = value[1];
-                        }
+                        window.locaiton.href = prevPage;
                     }
                     window.location.href = "/pages/main/index.php";
                 }
@@ -54,7 +48,7 @@
         xmlhttp.send();
     }
 
-    // 跳转到注册页面
+    // Jump to register page.
     function userRegister()
     {
         self.location = "/pages/account/register.php";

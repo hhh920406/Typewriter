@@ -11,8 +11,8 @@
             $password = $_COOKIE['password'];
             if(SUCCESSS != login($name, $password))
             {
-                setcookie('name', null, time() - 1);
-                setcookie('password', null, time() - 1);
+                setcookie('name', null, time() - 1, "/");
+                setcookie('password', null, time() - 1, "/");
             }
         }
     }
