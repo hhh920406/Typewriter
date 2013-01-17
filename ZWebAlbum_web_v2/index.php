@@ -1,4 +1,4 @@
 <?php
 // Jump to the true index.
-header("Location: /pages/main");
+header("Location: /pages/main/index");
 ?>

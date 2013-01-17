@@ -31,7 +31,7 @@
     {
         global $userNickname;
         echo "<li>";
-        echo "<a href='/pages/account/update.php'>";
+        echo "<a href='/pages/account/update'>";
         echo $userNickname;
         echo "</a>";
         echo "</li>";
@@ -47,7 +47,7 @@
     function echoLogout()
     {
         echo "<li>";
-        echo "<a href='/pages/account/logout.php'>退出</a>";
+        echo "<a href='/pages/account/logout'>退出</a>";
         echo "</li>";
     }
 
@@ -55,7 +55,7 @@
     function echoLogin()
     {
         echo "<li style='color: gray'>";
-        echo "<a href='/pages/account/login.php'>未登录</a>";
+        echo "<a href='/pages/account/login'>未登录</a>";
         echo "</li>";
     }
 ?>
@@ -83,16 +83,16 @@
     <div class="menuBlock">
         <ul>
             <li>
-                <a href="/pages/main/index.php">首页</a>
+                <a href="/pages/main/index">首页</a>
             </li>
             <li>
-                <a href="/pages/album/list.php">个人主页</a>
+                <a href="/pages/album/list">个人主页</a>
             </li>
             <li>
-                <a href="/pages/photo/upload.php">相册</a>
+                <a href="/pages/photo/upload">相册</a>
             </li>
             <li>
-                <a href="/pages/classify/select.php">应用</a>
+                <a href="/pages/classify/select">应用</a>
             </li>
         </ul>
     </div>

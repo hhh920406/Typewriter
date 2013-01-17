@@ -1,10 +1,10 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'].'/api/account/user.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/api/account/account_user.php';
 
 $name = $_GET["name"];
 $password = $_GET["password"];
 
-$result = login($name, $password);
+$result = Account_User::login($name, $password);
 switch($result)
 {
     case LOGIN_SUCCESS:

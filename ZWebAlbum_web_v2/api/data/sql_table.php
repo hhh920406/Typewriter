@@ -40,7 +40,7 @@ class SQL_Table
     }
 
     /**
-     * Select without WHERE.
+     * Select without LIMIT.
      * @param integer $startPosition The start position of the query result.
      * @param integer $rowNumber The row number of the query result.
      * @return array Query result.
@@ -54,6 +54,22 @@ class SQL_Table
         }
         $this->sql_query->select($this->tableName, null, "", "", "", $limit);
         return $this->sql_query->getAllResult();
+    }
+    
+    public function getPageNumber($itemsPerPage)
+    {
+        return $this->getRowNumber / $itemsPerPage;
+    }
+    
+    /**
+     * Select using page.
+     * @param integer $itemsPerPage The number of items per page.
+     * @param integer $pageNumber The page to be selected, the page index start with 1.
+     * @param array Query result.
+     */
+    public function selectWithPage($itemsPerPage, $pageNumber)
+    {
+        $this->selectWithLimit(($pageNumber - 1) * $itemsPerPage, $itemsPerPage);
     }
 
     /**

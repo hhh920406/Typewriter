@@ -40,7 +40,7 @@
                     {
                         window.locaiton.href = prevPage;
                     }
-                    window.location.href = "/pages/main/index.php";
+                    window.location.href = "/pages/main/index";
                 }
             }
         }
@@ -51,7 +51,7 @@
     // Jump to register page.
     function userRegister()
     {
-        self.location = "/pages/account/register.php";
+        self.location = "/pages/account/register";
     }
     
     // Login on press enter.
