@@ -1,12 +1,23 @@
 <?php
+include_once "regex.php";
 include_once $_SERVER['DOCUMENT_ROOT'].'/api/data/sql_user.php';
 
-define("SUCCESS", 0);
-define("ERROR_EXIST", 1);
-define("ERROR_WRONG", 2);
+define("LOGIN_SUCCESS", 0);
+define("LOGIN_ERROR_NAME", 1);
+define("LOGIN_ERROR_PASSWORD", 2);
+define("LOGIN_ERROR_EXIST", 3);
+define("LOGIN_ERROR_WRONG", 4);
 
 function login($name, $password)
 {
+    if(!isTextSimple($name))
+    {
+        return LOGIN_ERROR_NAME;
+    }
+    if(!isTextSimple($password))
+    {
+        return LOGIN_ERROR_PASSWORD;
+    }
     $sql_user = new SQL_User();
     $result = $sql_user->selectByPassword($name, $password);
     if(count($result) != 1)
@@ -29,4 +40,5 @@ function login($name, $password)
         return SUCCESS;
     }
 }
+
 ?>

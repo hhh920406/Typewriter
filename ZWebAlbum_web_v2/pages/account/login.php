@@ -53,6 +53,16 @@
     {
         self.location = "/pages/account/register.php";
     }
+    
+    // Login on press enter.
+    document.onkeyup = function(event)
+    {
+        var keyCode =  event.keyCode ? event.keyCode : (event.which ? event.which : event.charCode);
+        if(keyCode == 13)
+        {
+            userLogin();
+        }
+    }
     </script>
 </head>
 
@@ -88,7 +98,7 @@
             <tr>
                 <td></td>
                 <td>
-                    <span id="loginState"></span>
+                    <span id="loginState" class="errorMessage"></span>
                 </td>
                 <td></td>
             </tr>
