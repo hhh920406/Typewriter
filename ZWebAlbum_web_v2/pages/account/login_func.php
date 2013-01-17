@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'].'/pages/data/sql_user.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/api/data/sql_user.php';
 
 define("SUCCESS", 0);
 define("ERROR_EXIST", 1);
