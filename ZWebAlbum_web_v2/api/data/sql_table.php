@@ -23,6 +23,15 @@ class SQL_Table
     {
         unset($this->sql_query);
     }
+    
+    /**
+     * Get the primary key name of the table.
+     * @return string Primary key name.
+     */
+    public function getPrimaryKeyName()
+    {
+        return $this->IDName;
+    }
 
     /**
      * Get the condition which all it contains is equal relation.
@@ -48,28 +57,30 @@ class SQL_Table
     public function selectWithLimit($startPosition = 0, $rowNumber = 30)
     {
         $limit = "";
-        if($startPosition || $rowNumber)
-        {
-            $limit = array($startPosition, $rowNumber);
-        }
+        $limit = array($startPosition, $rowNumber);
         $this->sql_query->select($this->tableName, null, "", "", "", $limit);
         return $this->sql_query->getAllResult();
     }
     
+    /**
+     * Get the totol page number.
+     * @param integer $itemsPerPage The number of items per page.
+     * @return integer The page number.
+     */
     public function getPageNumber($itemsPerPage)
     {
-        return $this->getRowNumber / $itemsPerPage;
+        return $this->getRowNumber() / $itemsPerPage;
     }
     
     /**
      * Select using page.
      * @param integer $itemsPerPage The number of items per page.
      * @param integer $pageNumber The page to be selected, the page index start with 1.
-     * @param array Query result.
+     * @return array Query result.
      */
     public function selectWithPage($itemsPerPage, $pageNumber)
     {
-        $this->selectWithLimit(($pageNumber - 1) * $itemsPerPage, $itemsPerPage);
+        return $this->selectWithLimit(($pageNumber - 1) * $itemsPerPage, $itemsPerPage);
     }
 
     /**
