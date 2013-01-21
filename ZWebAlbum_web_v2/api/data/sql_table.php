@@ -1,4 +1,9 @@
 <?php
+include_once "sql_query.php";
+/**
+ * The basic class for MySQL query of table.
+ * @author ZHG
+ */
 class SQL_Table
 {
     /*
@@ -6,7 +11,7 @@ class SQL_Table
      */
     protected $sql_query = "";
     protected $tableName = "";
-    protected $IDName = "";
+    protected $primaryKeyName = "";
 
     /**
      * Connect to SQL server.
@@ -25,12 +30,35 @@ class SQL_Table
     }
     
     /**
+     * Set the table name.
+     * @param string $tableName The target table name.
+     */
+    public function setTableName($tableName)
+    {
+        $this->tableName = $tableName;
+    }
+    
+    public function getTableName()
+    {
+        return $this->tableName;
+    }
+    
+    /**
+     * Set the primary key name.
+     * @param string $primaryKeyName The primary key of the table.
+     */
+    public function setPrimaryKeyName($primaryKeyName)
+    {
+        $this->primaryKeyName = $primaryKeyName;
+    }
+    
+    /**
      * Get the primary key name of the table.
      * @return string Primary key name.
      */
     public function getPrimaryKeyName()
     {
-        return $this->IDName;
+        return $this->primaryKeyName;
     }
 
     /**
@@ -99,10 +127,10 @@ class SQL_Table
      * @param int $ID
      * @return array Query result.
      */
-    public function select($ID)
+    public function select($primaryKey)
     {
         $condition = $this->getEqualCondition(array(
-            $this->IDName => $ID
+            $this->primaryKeyName => $primaryKey
         ));
         $this->sql_query->select($this->tableName, "", $condition);
         return $this->sql_query->getAllResult();
@@ -136,10 +164,10 @@ class SQL_Table
      * @param type $info The associative array represents the data to be updated.
      * @return int Return 0 if failed.
      */
-    public function update($ID, $info)
+    public function update($primaryKey, $info)
     {
         $condition = $this->getEqualCondition(array(
-            $this->IDName => $ID
+            $this->primaryKeyName => $primaryKey
         ));
         $this->sql_query->update($this->tableName, $info, $condition);
         if(mysql_error())
@@ -154,10 +182,10 @@ class SQL_Table
      * @param type $ID
      * @return int Return 0 if failed.
      */
-    public function delete($ID)
+    public function delete($primaryKey)
     {
         $condition = $this->getEqualCondition(array(
-            $this->IDName => $ID
+            $this->primaryKeyName => $primaryKey
         ));
         $this->sql_query->delete($this->tableName, $condition);
         if(mysql_error())

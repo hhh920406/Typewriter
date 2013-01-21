@@ -78,7 +78,7 @@
     </ul>
 </div>
 </div>
-<div id="banner"></div>
+<div id="banner_small"></div>
 <div id="menu">
     <div class="menuBlock">
         <ul>

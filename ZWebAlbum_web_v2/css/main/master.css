@@ -69,6 +69,17 @@
     background-repeat: no-repeat;
 }
 
+#banner_small
+{
+    width: 1024px;
+    height: 30px;
+    margin: 0 auto;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    background-image: url('/resource/images/banner_small.png'); 
+    background-repeat: no-repeat;
+}
+
 #menu
 {
     width:1024px;
