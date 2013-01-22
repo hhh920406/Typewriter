@@ -7,7 +7,13 @@ obj
 *.jpg
 *.gif
 
+# Other Projects
+/ZWebAlbum_web_v2
+
 # Smarty Folders
-cache
-plugins
-templates_c
+/ZWebAlbum_web_v3/cache
+/ZWebAlbum_web_v3/plugins
+/ZWebAlbum_web_v3/templates_c
+
+# Netbeans Project
+/ZWebAlbum_web_v3/nbproject/private/
