@@ -2,26 +2,19 @@
 bin
 obj
 
-# Images and Flash
-*.bmp
-*.jpg
-*.jpeg
-*.gif
+# Resource
 *.png
-*.swf
-*.ico
-*.psd
-
-# Storage Folder
-Storage
-Resource
-drawable-*
+*.jpg
+*.gif
 
 # Other Projects
-ZWebAlbum
-ZWebAlbum_Doc
-ZWebAlbum_Android
-ZWebAlbum_Client
-ZWebAlbum_Server
-/ZWebAlbum_web_v2/nbproject/private/
-/ZWebAlbum_web_v2/.settings/
+phpMyAdmin
+/ZWebAlbum_web_v2
+
+# Smarty Folders
+/ZWebAlbum_web_v3/cache
+/ZWebAlbum_web_v3/plugins
+/ZWebAlbum_web_v3/templates_c
+
+# Netbeans Project
+/ZWebAlbum_web_v3/nbproject/private/
