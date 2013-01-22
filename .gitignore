@@ -8,6 +8,7 @@ obj
 *.gif
 
 # Other Projects
+phpMyAdmin
 /ZWebAlbum_web_v2
 
 # Smarty Folders

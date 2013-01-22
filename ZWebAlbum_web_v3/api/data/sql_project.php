@@ -18,6 +18,7 @@ class SQL_Project
         $sql_query = new SQL_Query();
         $sql_query->createDatabase(DATABASE);
         $sql_user = new SQL_User();
+        $sql_user->createTable();
     }
 }
 ?>

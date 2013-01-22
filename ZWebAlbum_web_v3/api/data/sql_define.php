@@ -3,7 +3,7 @@
 define("HOST", "localhost");
 define("NAME", "ZHG");
 define("PASSWORD", "19910702");
-define("DATABASE", "ZWebAlbum_v2");
+define("DATABASE", "ZWebAlbum_v3");
 
 
 /**

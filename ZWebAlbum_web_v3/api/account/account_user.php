@@ -62,9 +62,9 @@ define("UPDATE_FAILED", -1);
             $result = $sql_user->selectByName($name);
             if(count($result) == 1)
             {
-                return ERROR_WRONG;
+                return LOGIN_ERROR_WRONG;
             }
-            return ERROR_EXIST;
+            return LOGIN_ERROR_EXIST;
         }
         else
         {
@@ -74,7 +74,7 @@ define("UPDATE_FAILED", -1);
             $_SESSION['User_Name'] = $row['Name'];
             $_SESSION['User_Nickname'] = $row['Nickname'];
             $_SESSION['User_Type'] = $row['Type'];
-            return SUCCESS;
+            return LOGIN_SUCCESS;
         }
     }
 
