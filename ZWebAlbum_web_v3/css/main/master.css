@@ -65,7 +65,7 @@
     height: 241px;
     margin: 0 auto;
     margin-top: 10px;
-    background-image: url('/resource/images/banner.jpg'); 
+    background-image: url('/images/banner.jpg'); 
     background-repeat: no-repeat;
 }
 
@@ -76,7 +76,7 @@
     margin: 0 auto;
     margin-top: 2px;
     margin-bottom: 2px;
-    background-image: url('/resource/images/banner_small.png'); 
+    background-image: url('/images/banner_small.png'); 
     background-repeat: no-repeat;
 }
 

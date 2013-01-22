@@ -1,7 +1,7 @@
 <?php
-include "sql_define.php";
-include "sql_table.php";
-include "sql_query.php";
+include_once "sql_define.php";
+include_once "sql_table.php";
+include_once "sql_query.php";
 
 /**
  * The SQL operation for user table.
