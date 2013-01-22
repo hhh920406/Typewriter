@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>cookie.js Test</title>
+        <script src="cookie.js"></script>
+    </head>
+    
+    <body>
+        <script>
+            document.write("Current cookie status: ");
+            printAllCookies();
+            document.write("Set cookie: ");
+            setCookie("CookieTest1", "test 1");
+            setCookie("CookieTest2", "test 2");
+            setCookie("CookieTest3", "test 3");
+            setCookie("CookieTest3", "test 3d");
+            printAllCookies();
+            document.write("Get cookie: ");
+            document.write("<table border='1'><tr><th>Name</th><th>Value</th>");
+            document.write("<tr><td>CookieTest1</td><td>" + getCookie("CookieTest1") + "</td></tr>");
+            document.write("<tr><td>CookieTest2</td><td>" + getCookie("CookieTest2") + "</td></tr>");
+            document.write("<tr><td>CookieTest3</td><td>" + getCookie("CookieTest3") + "</td></tr>");
+            document.write("</table>");
+            document.write("Delete cookies: ");
+            deleteAllCookies();
+            printAllCookies();
+        </script>
+    <body>
+</html>
