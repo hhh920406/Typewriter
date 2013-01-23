@@ -1,7 +1,6 @@
 /**
  * Provide basic cookie operations.
  * @author ZHG
- * @version 16/01/2013 10:31:59 
  */
 
 /**

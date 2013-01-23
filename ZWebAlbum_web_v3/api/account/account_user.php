@@ -6,8 +6,8 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/api/data/sql_user.php';
  * The APIs about user.
  * @author ZHG
  */
- 
- 
+
+
 /**
  * @def integer LOGIN_SUCCESS Successfully login, the session is saved.
  * @def integer LOGIN_ERROR_NAME The format of the name string is not valid.
@@ -114,7 +114,7 @@ define("UPDATE_FAILED", -1);
         }
         return REGISTER_ERROR_UNKNOWN;
     }
-    
+
     /**
      * Update user basic information.
      * @param integer $id The user id whose information is to be updated.
@@ -130,7 +130,7 @@ define("UPDATE_FAILED", -1);
         }
         return UPDATE_FAILED;
     }
-    
+
     /**
      * Delete user.
      * @param integer $id The user id.
@@ -140,7 +140,7 @@ define("UPDATE_FAILED", -1);
         $sql_user = new SQL_User();
         return $sql_user->delete($id);
     }
-    
+
     /**
      * Get the total number of user.
      * @return integer The number of user.
@@ -150,7 +150,7 @@ define("UPDATE_FAILED", -1);
         $sql_user = new SQL_User();
         return $sql_user->getRowNumber();
     }
-    
+
     /**
      * Select user.
      * @param integer $itemsPerPage The number of items per page.
