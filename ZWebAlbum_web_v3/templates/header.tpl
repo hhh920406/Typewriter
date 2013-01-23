@@ -1,7 +1,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>{$title}</title>
+        <title>{%$title%}</title>
         <link rel="stylesheet" href="/css/main/common.css">
         <link rel="stylesheet" href="/css/main/master.css">
     </head>
@@ -12,24 +12,24 @@
             </div>
             <div id = "topRight">
                 <ul>
-                    {if $userID}
+                    {%if $userID%}
                         <li>
-                            <a href = "/pages/account/update">
-                                {$userNickname}
+                            <a href = "/pages/account/update.php">
+                                {%$userNickname%}
                             </a>
                         </li>
                         <li>
-                            <a href = "/pages/account/logout">
+                            <a href = "/pages/account/logout.php">
                                 退出
                             </a>
                         </li>
-                    {else}
+                    {%else%}
                         <li style = "color: gray">
-                            <a href = "/pages/account/login">
+                            <a href = "/pages/account/login.php">
                                 未登录
                             </a>
                         </li>
-                    {/if}
+                    {%/if%}
                 </ul>
             </div>
         </div>
@@ -39,22 +39,22 @@
             <div class = "menuBlock">
                 <ul>
                     <li>
-                        <a href = "/pages/main/index">
+                        <a href = "/pages/main/index.php">
                             首页
                         </a>
                     </li>
                     <li>
-                        <a href = "/pages/album/list">
+                        <a href = "/pages/album/list.php">
                             个人主页
                         </a>
                     </li>
                     <li>
-                        <a href = "/pages/photo/upload">
+                        <a href = "/pages/photo/upload.php">
                             相册
                         </a>
                     </li>
                     <li>
-                        <a href = "/pages/classify/select">
+                        <a href = "/pages/classify/select.php">
                             应用
                         </a>
                     </li>

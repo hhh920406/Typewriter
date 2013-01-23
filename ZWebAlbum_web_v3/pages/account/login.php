@@ -40,7 +40,7 @@
                     {
                         window.locaiton.href = prevPage;
                     }
-                    window.location.href = "/pages/main/index";
+                    window.location.href = "/pages/main/index.php";
                 }
             }
         }
@@ -51,7 +51,7 @@
     // Jump to register page.
     function userRegister()
     {
-        self.location = "/pages/account/register";
+        self.location = "/pages/account/register.php";
     }
     
     // Login on press enter.
@@ -66,61 +66,7 @@
     </script>
 </head>
 
-<body>
-    <?php include $_SERVER['DOCUMENT_ROOT'].'/pages/main/header.php';?>
-    <div id="pageBody">
-        <table style="width: 600px; margin: 0 auto;">
-            <tr style="height: 40px">
-                <td style="width: 100px; text-align: right;">
-                    用户名：
-                </td>
-                <td style="width: 300px;">
-                    <input id="Text_UserName" type="text" class="inputLarge" />
-                </td>
-                <td style="width: 200px;"></td>
-            </tr>
-            <tr style="height: 40px">
-                <td style="text-align: right;">
-                    密码：
-                </td>
-                <td>
-                    <input id="Password_Password" type="password" class="inputLarge" />
-                </td>
-                <td></td>
-            </tr>
-            <tr style="height: 40px">
-                <td></td>
-                <td>
-                    <input id="Checkbox_Remember" type="checkbox" /> 下次自动登录
-                </td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <span id="loginState" class="errorMessage"></span>
-                </td>
-                <td></td>
-            </tr>
-            <tr style="height: 40px">
-                <td></td>
-                <td>
-                    <input name="Button_Submit" type="submit" value="登　录" class="buttonBlue" onclick="userLogin()" />
-                </td>
-                <td></td>
-            </tr>
-            <tr style="height: 10px">
-            </tr>
-            <tr style="height: 40px">
-                <td></td>
-                <td>
-                    <input name="Button_Register" type="button" value="注　册" class="buttonGreen" onclick="userRegister()" />
-                </td>
-                <td></td>
-            </tr>
-        </table>
-    </div>
-    <?php include $_SERVER['DOCUMENT_ROOT'].'/pages/main/footer.php';?>
-</body>
-
-</html>
+<?php
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/pages/main/init.php";
+    $smarty->display("account/login.tpl");
+?>
