@@ -1,9 +1,7 @@
-@CHARSET "UTF-8";
-
-.loginTable
+.registerTable
 {
     width: 600px;
-    margin: 0 auto;
+    margin: 0 auto
 }
 
 .rowInput
@@ -19,15 +17,10 @@
 
 .columnInput
 {
-    width: 300px;
+    width: 200px;
 }
 
 .columnDescription
 {
-    width: 200px;
-}
-
-.errorMessage
-{
-    color: red;
+    width: 300px;
 }
