@@ -14,7 +14,10 @@
     $smarty->left_delimiter = "{%";
     $smarty->right_delimiter = "%}";
     //$smarty->force_compile = true;
-    $smarty->debugging = true;
+    $smarty->debugging = false;
     $smarty->caching = false;
     $smarty->cache_lifetime = 120;
+    
+    $smarty->assign('userID', $userID);
+    $smarty->assign('userNickname', $userNickname);
 ?>

@@ -1,15 +1,19 @@
 @CHARSET "UTF-8";
 
-#top 
+#navBar 
 {
-    position: relative;
+    z-index: 2000;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
     height: 30px;
     font-size: 13px;
     color: white;
     background: rgb(45, 45, 45);
 }
 
-#topLeft
+#navBarLogo
 {
     display: inline-block;
     position: absolute;
@@ -20,7 +24,7 @@
     color: darkgray;
 }
 
-#topRight
+#navBarLinks
 {
     display: inline-block;
     position: absolute;
@@ -30,22 +34,22 @@
     padding-top: 5px;
 }
 
-    #topRight ul
+    #navBarLinks ul
     {
         list-style-type: none;
         margin: 0px;
         padding: 0px;
     }
     
-    #topRight li
+    #navBarLinks li
     {
         display: inline-block;
         padding-left: 2px;
         padding-right: 2px;
     }
     
-        #topRight li a:link,
-        #topRight li a:visited
+        #navBarLinks li a:link,
+        #navBarLinks li a:visited
         {
             color: darkgray;
             text-decoration: none;
@@ -143,11 +147,10 @@
 #pageBody 
 {
     width: 1024px;
+    padding: 0px;
     margin: 0 auto;
-    padding-top: 30px;
-    padding-left: 0;
-    padding-right: 0;
-    padding-bottom: 30px;
+    overflow: hidden;
+    zoom: 1;
 }
 
 #separator
@@ -191,4 +194,51 @@
         color: black;
         text-decoration: none;
         outline: none;
+    }
+
+#sideBar
+{
+    float: left;
+    width: 159px;
+    border-right: 1px solid rgb(217, 220, 226);
+    border-color: rgb(206, 225, 238);
+}
+
+    #sideBar h3
+    {
+        font-size: 13px;
+        font-weight: bold;
+        color: rgb(140, 140, 140);
+    }
+
+    #sideBar article
+    {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    
+    #sideBar a
+    {
+        font-size: 14px;
+        display: block;
+        width: 159px;
+        height: 30px;
+        margin: 0 auto;
+        line-height: 30px;
+        vertical-align: baseline;
+    }
+
+    #sideBar a:link, 
+    #sideBar a:visited
+    {
+        color: black;
+        text-decoration: none;
+        outline: none;
+    }
+
+    #sideBar a:hover
+    {
+        text-decoration: none;
+        outline: none;
+        background-color: rgb(237, 245, 252);
     }

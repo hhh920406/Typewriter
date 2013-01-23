@@ -6,11 +6,11 @@
         <link rel="stylesheet" href="/css/main/master.css">
     </head>
     <body>
-        <div id = "top">
-            <div id = "topLeft">
+        <div id = "navBar">
+            <div id = "navBarLogo">
                 Z实验室2013_个人相册管理
             </div>
-            <div id = "topRight">
+            <div id = "navBarLinks">
                 <ul>
                     {%if $userID%}
                         <li>
