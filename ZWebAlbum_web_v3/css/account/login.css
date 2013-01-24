@@ -1,29 +1,53 @@
 @CHARSET "UTF-8";
 
-.loginTable
+#loginDiv
 {
-    width: 600px;
+    width: 400px;
     margin: 0 auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .rowInput
 {
-    height: 40px;
+    width: 100%;
+    height: 50px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.rowStatus
+{
+    width: 100%;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 .columnText
 {
-    width: 100px;
+    display: inline-block;
+    width: 80px;
+    height: 50px;
     text-align: right;
+    vertical-align: top;
+    line-height: 50px;
 }
 
 .columnInput
 {
-    width: 300px;
+    display: inline-block;
+    width: 280px;
+    height: 50px;
+    vertical-align: top;
 }
 
-.columnDescription
+.columnStatus
 {
-    width: 200px;
+    display: inline-block;
+    position: relative;
+    left: 80px;
+    width: 280px;
+    margin: 0 auto;
+    font-size: 14px;
 }
 

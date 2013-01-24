@@ -11,9 +11,6 @@ $password = $_GET["password"];
 $result = Account_User::login($name, $password);
 switch($result)
 {
-    case LOGIN_SUCCESS:
-        echo "登录成功";
-        break;
     case LOGIN_ERROR_NAME:
         echo "用户名格式不合法";
         break;

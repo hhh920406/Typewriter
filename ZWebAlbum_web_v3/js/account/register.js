@@ -206,3 +206,13 @@ function register()
     xmlhttp.send();
     setDivText("Div_Register", TYPE_WAITING, "提交中。。。");
 }
+
+// Register on pressing enter.
+document.onkeyup = function(event)
+{
+    var keyCode =  event.keyCode ? event.keyCode : (event.which ? event.which : event.charCode);
+    if(keyCode == 13)
+    {
+        register();
+    }
+}

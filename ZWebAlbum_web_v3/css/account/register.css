@@ -1,3 +1,5 @@
+@CHARSET "UTF-8";
+
 #registerDiv
 {
     width: 800px;
@@ -6,17 +8,12 @@
     padding-bottom: 50px;
 }
 
-.registerTable
-{
-    width: 600px;
-    margin: 0 auto;
-    vertical-align: top;
-}
-
 .rowInput
 {
     width: 100%;
     height: 50px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 .rowDescription
@@ -24,6 +21,8 @@
     width: 100%;
     height: 30px;
     line-height: 30px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 .columnText
