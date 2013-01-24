@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <meta charset="uft-8">
-        <title>注册用户</title>
-    </head>
-    
-    <body>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/main/common.css">
+    <link rel="stylesheet" href="/css/main/master.css">
+    <link rel="stylesheet" href="/css/account/register.css">
+    <script src="/js/main/ajax.js"></script>
+    <script src="/js/account/register.js"></script>
+</head>
 
-</html>
+<?php
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/pages/main/init.php";
+    $smarty->display("account/register.tpl");
+?>

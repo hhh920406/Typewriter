@@ -7,6 +7,24 @@ body
     margin: 0;
 }
 
+.normalMessage
+{
+    color: black;
+    line-height: 16px;
+}
+
+.correctMessage
+{
+    color: darkgreen;
+    line-height: 16px;
+}
+
+.errorMessage
+{
+    color: red;
+    line-height: 16px;
+}
+
 .inputLarge
 {
     width: 252px;
@@ -37,7 +55,7 @@ body
     width: 272px;
     height: 47px;
     background-color: rgb(96, 176, 68);
-    background-image: url('/resource/images/btn_green_normal.png');
+    background-image: url('/images/btn_green_normal.png');
     border: 0px none;
     border-radius: 3px 3px 3px 3px;
     cursor: pointer;
@@ -56,7 +74,13 @@ body
 
 .buttonGreen:hover
 {
-    background-image: url('/resource/images/btn_green_hover.png');
+    background-image: url('/images/btn_green_hover.png');
+}
+
+.buttonGreen:disabled
+{
+    opacity: 0.5;
+    cursor: default;
 }
 
 .buttonBlue
@@ -64,7 +88,7 @@ body
     width: 272px;
     height: 47px;
     background-color: rgb(48, 114, 179);
-    background-image: url('/resource/images/btn_blue_normal.png');
+    background-image: url('/images/btn_blue_normal.png');
     border: 0px none;
     border-radius: 3px 3px 3px 3px;
     cursor: pointer;
@@ -83,5 +107,11 @@ body
 
 .buttonBlue:hover
 {
-    background-image: url('/resource/images/btn_blue_hover.png');
+    background-image: url('/images/btn_blue_hover.png');
+}
+
+.buttonBlue:disabled
+{
+    opacity: 0.5;
+    cursor: default;
 }

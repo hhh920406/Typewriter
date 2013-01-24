@@ -21,12 +21,14 @@ define("LOGIN_ERROR_PASSWORD", -2);
 define("LOGIN_ERROR_EXIST", -3);
 define("LOGIN_ERROR_WRONG", -4);
 /**
+ * @def integer REGISTER_SUCCESS Register successfully.
  * @def integer REGISTER_ERROR_NAME The format of the name string is not valid.
  * @def integer REGISTER_ERROR_PASSWORD The format of the password string is not valid.
  * @def integer REGISTER_ERROR_NICKNAME The format of the nickname string is not valid.
  * @def integer REGISTER_ERROR_EXIST The user name is already exist.
  * @def integer REGISTER_ERROR_UNKNOWN An unknown error occured.
  */
+define("REGISTER_SUCCESS", 0);
 define("REGISTER_ERROR_NAME", -1);
 define("REGISTER_ERROR_PASSWORD", -2);
 define("REGISTER_ERROR_NICKNAME", -3);
@@ -96,15 +98,15 @@ define("UPDATE_FAILED", -1);
 
     /**
      * User register.
-     * @param array $user An associative array with "name", "password" and "nickname" kyes.
+     * @param array $user An associative array with "name", "password" and "nickname" keys.
      * @return integer Return constant with prefix "REGISTER_ERROR_" if register is failed, else return the user id.
      */
     public static function register($user)
     {
         // TODO Judge if the nickname contains any illegal words.
         $sql_user = new SQL_User();
-        $result = $sql_user->selectByName($name);
-        if(count($result) == 1)
+        $result = $sql_user->selectByName($user["name"]);
+        if(count($result) != 0)
         {
             return REGISTER_ERROR_EXIST;
         }

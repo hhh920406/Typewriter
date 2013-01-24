@@ -1,5 +1,9 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'].'/api/account/account_user.php';
+/**
+ * The ajax page for login.
+ * @author ZHG <CyberZHG@gmail.com>
+ */
+include_once $_SERVER['DOCUMENT_ROOT'] . '/api/account/account_user.php';
 
 $name = $_GET["name"];
 $password = $_GET["password"];

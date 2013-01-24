@@ -3,24 +3,16 @@
 
 <head>
     <meta charset="utf-8">
-    <title>用户登录</title>
     <link rel="stylesheet" href="/css/main/common.css">
     <link rel="stylesheet" href="/css/main/master.css">
     <link rel="stylesheet" href="/css/account/login.css">
     <script src="/js/main/cookie.js"></script>
+    <script src="/js/main/ajax.js"></script>
     <script>
     // Login authentication.
     function userLogin()
     {
-        var xmlhttp;
-        if(window.XMLHttpRequest)
-        {
-            xmlhttp = new XMLHttpRequest();
-        }
-        else
-        {
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
+        var xmlhttp = getXMLHttp();
         var name = Text_UserName.value;
         var password = Password_Password.value;
         xmlhttp.onreadystatechange = function()
