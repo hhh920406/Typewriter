@@ -11,6 +11,7 @@
     font-size: 13px;
     color: white;
     background: rgb(45, 45, 45);
+    opacity: 0.8;
 }
 
 #navBarLogo
@@ -68,7 +69,6 @@
     width: 1024px;
     height: 241px;
     margin: 0 auto;
-    margin-top: 10px;
     background-image: url('/images/banner.jpg'); 
     background-repeat: no-repeat;
 }
