@@ -3,17 +3,17 @@
 <html>
     <head>
         <meta charset = "utf-8">
-        <title>SQL_User_Test</title>
+        <title>SQL_Album_Test</title>
     </head>
     
     <body>
         <?php
             /**
-             * The test of sql_user_test.php.
+             * The test of sql_album_test.php.
              * @author ZHG
              * @version 20130115
              */
-            include_once "sql_user.php";
+            include_once "sql_album.php";
             include_once "sql_define.php";
 
             /**
@@ -27,9 +27,9 @@
             function createTest()
             {
                 echo "Create Table Test <hr/>";
-                $sql_user = new SQL_User();
-                $sql_user->createTable();
-                printQueryResult($sql_user->selectWithLimit());
+                $sql_album = new SQL_Album();
+                $sql_album->createTable();
+                printQueryResult($sql_album->selectWithLimit());
                 echo "<hr/>";
             }
 
@@ -39,10 +39,9 @@
             function selectTest()
             {
                 echo "Select Test <hr/>";
-                $sql_user = new SQL_User();
-                printQueryResult($sql_user->select(1));
-                printQueryResult($sql_user->selectByName("MonkeyAdmin"));
-                printQueryResult($sql_user->selectByPassword("MonkeyAdmin", "monkey"));
+                $sql_album = new SQL_Album();
+                printQueryResult($sql_album->select(1));
+                printQueryResult($sql_album->selectByUser(3));
                 echo "<hr/>";
             }
 
@@ -54,16 +53,16 @@
             {
                 global $id;
                 echo "Insert Test <hr/>";
-                $sql_user = new SQL_User();
+                $sql_album = new SQL_Album();
                 $user = array
                 (
-                    "Name" => "monkey019",
-                    "Password" => "monkey",
-                    "Nickname" => "无限猴子十九号机"
+                    "UserID" => "1",
+                    "Name" => "一号测试相册",
+                    "Description" => "猴子的一号测试相册"
                 );
-                $sql_user->insert($user);
-                $id = $sql_user->getAutoIncrementID();
-                printQueryResult($sql_user->selectWithLimit());
+                $sql_album->insert($user);
+                $id = $sql_album->getAutoIncrementID();
+                printQueryResult($sql_album->selectWithLimit());
                 echo "Auto Increment ID: " . $id;
                 echo "<hr/>";
             }
@@ -76,15 +75,14 @@
             {
                 global $id;
                 echo "Update Test <hr/>";
-                $sql_user = new SQL_User();
+                $sql_album = new SQL_Album();
                 $user = array
                 (
-                    "Name" => "monkey019",
-                    "Password" => "monkey",
-                    "Nickname" => "被修改的猴子"
+                    "Name" => "一号测试相册",
+                    "Description" => "被修改的猴子的一号测试相册"
                 );
-                $sql_user->update($id, $user);
-                printQueryResult($sql_user->selectWithLimit());
+                $sql_album->update($id, $user);
+                printQueryResult($sql_album->selectWithLimit());
                 echo "<hr/>";
             }
 
@@ -96,9 +94,9 @@
             {
                 global $id;
                 echo "Delete Test <hr/>";
-                $sql_user = new SQL_User();
-                $sql_user->delete($id);
-                printQueryResult($sql_user->selectWithLimit());
+                $sql_album = new SQL_Album();
+                $sql_album->delete($id);
+                printQueryResult($sql_album->selectWithLimit());
                 echo "<hr/>";
             }
 

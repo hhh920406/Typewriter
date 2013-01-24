@@ -6,7 +6,6 @@ include_once "sql_query.php";
 /**
  * The SQL operation for user table.
  * @author ZHG
- * @version 20130115
  */
 class SQL_User extends SQL_Table
 {
@@ -27,11 +26,16 @@ class SQL_User extends SQL_Table
     {
         $columns = array
         (
-            $this->primaryKeyName => "INT(4) NOT NULL AUTO_INCREMENT",
-            "Name" => "VARCHAR(45) NOT NULL UNIQUE",
-            "Password" => "VARCHAR(45) NOT NULL",
-            "Nickname" => "VARCHAR(45) DEFAULT ''",
-            "Type" => "INT(4) DEFAULT '0'"
+            $this->primaryKeyName   =>  "INT(4) NOT NULL AUTO_INCREMENT " . 
+                                        "COMMENT 'The ID of the user. '",
+            "Name"                  =>  "VARCHAR(45) NOT NULL UNIQUE " . 
+                                        "COMMENT 'The login name of the user. '",
+            "Password"              =>  "VARCHAR(45) NOT NULL " . 
+                                        "COMMENT 'The login password of the user. '",
+            "Nickname"              =>  "VARCHAR(45) DEFAULT '' " . 
+                                        "COMMENT 'The nickname of the user. '",
+            "Type"                  =>  "INT(4) DEFAULT '0' " . 
+                                        "COMMENT 'The type of the user. '"
         );
         $primary = $this->primaryKeyName;
         $this->sql_query->createTable($this->primaryKeyName, $columns, $primary);

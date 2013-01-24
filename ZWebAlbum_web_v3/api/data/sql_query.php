@@ -460,5 +460,36 @@ class SQL_Query
         $this->queryString .= $this->where($condition, $relation);
         $this->query($this->queryString);
     }
+    
+    /**
+     * Add foreign key.
+     * @param string $currentTableName
+     * @param string $currentKeyName
+     * @param string $foreignTableName
+     * @param string $foreignKeyName
+     * @param string $onDelete
+     * @param string $onUpdate
+     */
+    public function alterForeignKey(
+            $currentTableName, 
+            $currentKeyName, 
+            $foreignTableName, 
+            $foreignKeyName, 
+            $onDelete = "RESTRICT",
+            $onUpdate = "RESTRICT")
+    {
+        $this->queryString = "ALTER TABLE ";
+        $this->queryString .= $currentTableName . " ";
+        $this->queryString .= "ADD FOREIGN KEY ";
+        $this->queryString .= "(" . $currentKeyName . ") ";
+        $this->queryString .= "REFERENCES ";
+        $this->queryString .= $foreignTableName . " ";
+        $this->queryString .= "(" . $foreignKeyName . ") ";
+        $this->queryString .= "ON DELETE ";
+        $this->queryString .= $onDelete . " ";
+        $this->queryString .= "ON UPDATE ";
+        $this->queryString .= $onUpdate;
+        $this->query($this->queryString);
+    }
 }
 ?>
