@@ -38,11 +38,11 @@ class SQL_User extends SQL_Table
                                         "COMMENT 'The type of the user. '"
         );
         $primary = $this->primaryKeyName;
-        $this->sql_query->createTable($this->primaryKeyName, $columns, $primary);
+        $this->sql_query->createTable($this->tableName, $columns, $primary);
 
         $columns = array("Name", "Password", "Nickname", "Type");
         $values = array("MonkeyAdmin", "monkey", "猴子君主", "100");
-        $this->sql_query->insert($this->primaryKeyName, $columns, $values);
+        $this->sql_query->insert($this->tableName, $columns, $values);
     }
 
     /**

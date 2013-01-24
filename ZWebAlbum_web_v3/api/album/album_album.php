@@ -6,7 +6,7 @@
      * The APIs about album.
      * @author ZHG <CyberZHG@gmail.com>
      */
-    class Account_User
+    class Album_Album
     {
         public static function getAllAlbums($userID)
         {
@@ -16,7 +16,7 @@
         
         public static function getAlbumsNumber($userID)
         {
-            return count(Account_User::getAlbumsNumber($userID));
+            return count(Album_Album::getAlbumsNumber($userID));
         }
         
         public static function getMaximumIndice($userID)
