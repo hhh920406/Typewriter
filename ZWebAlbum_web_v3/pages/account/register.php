@@ -3,8 +3,6 @@
 
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="/css/main/common.css">
-    <link rel="stylesheet" href="/css/main/master.css">
     <link rel="stylesheet" href="/css/account/register.css">
     <script src="/js/main/ajax.js"></script>
     <script src="/js/account/register.js"></script>

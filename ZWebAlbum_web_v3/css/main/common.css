@@ -50,6 +50,12 @@ body
     outline: 0px none;
 }
 
+.inputLarge:disabled
+{
+    opacity: 0.5;
+    cursor: default;
+}
+
 .buttonGreen
 {
     width: 272px;

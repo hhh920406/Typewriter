@@ -1,4 +1,65 @@
 @CHARSET "UTF-8";
 
+#updateDiv
+{
+    width: 600px;
+    margin: 0 auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
 
+.rowInput
+{
+    width: 100%;
+    height: 50px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
 
+.rowDescription
+{
+    width: 100%;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.columnText
+{
+    display: inline-block;
+    width: 100px;
+    height: 50px;
+    text-align: right;
+    vertical-align: top;
+    line-height: 50px;
+}
+
+.columnInput
+{
+    display: inline-block;
+    width: 300px;
+    height: 50px;
+    vertical-align: top;
+}
+
+.columnStatus
+{
+    display: inline-block;
+    width: 150px;
+    height: 50px;
+    margin: 0 auto;
+    padding-top: 15px;
+    font-size: 14px;
+}
+
+.columnDescription
+{
+    display: inline-block;
+    position: relative;
+    left: 100px;
+    width: 300px;
+    padding-top: 1px;
+    padding-left: 5px;
+    font-size: 12px;
+    vertical-align: top;
+    color: darkgray;
+}

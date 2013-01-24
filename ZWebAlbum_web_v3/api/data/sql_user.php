@@ -17,7 +17,7 @@ class SQL_User extends SQL_Table
     {
         parent::__construct();
         $this->tableName = "D_User";
-        $this->IDName = "UserID";
+        $this->primaryKeyName = "UserID";
     }
 
     /**
@@ -27,18 +27,18 @@ class SQL_User extends SQL_Table
     {
         $columns = array
         (
-            $this->IDName => "INT(4) NOT NULL AUTO_INCREMENT",
+            $this->primaryKeyName => "INT(4) NOT NULL AUTO_INCREMENT",
             "Name" => "VARCHAR(45) NOT NULL UNIQUE",
             "Password" => "VARCHAR(45) NOT NULL",
             "Nickname" => "VARCHAR(45) DEFAULT ''",
             "Type" => "INT(4) DEFAULT '0'"
         );
-        $primary = $this->IDName;
-        $this->sql_query->createTable($this->tableName, $columns, $primary);
+        $primary = $this->primaryKeyName;
+        $this->sql_query->createTable($this->primaryKeyName, $columns, $primary);
 
         $columns = array("Name", "Password", "Nickname", "Type");
         $values = array("MonkeyAdmin", "monkey", "猴子君主", "100");
-        $this->sql_query->insert($this->tableName, $columns, $values);
+        $this->sql_query->insert($this->primaryKeyName, $columns, $values);
     }
 
     /**

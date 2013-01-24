@@ -36,6 +36,7 @@ function isTextSimple(value)
 
 /**
  * Judge if the user name is valid.
+ * @return boolean Return true if valid.
  */
 function judgeName()
 {
@@ -68,6 +69,7 @@ function judgeName()
 
 /**
  * Judge if the user name is existed.
+ * @return boolean Return true if valid.
  */
 function judgeExist()
 {
@@ -95,6 +97,7 @@ function judgeExist()
 
 /**
  * Judge if the password is valid.
+ * @return boolean Return true if valid.
  */
 function judgePassword()
 {
@@ -124,6 +127,7 @@ function judgePassword()
 
 /**
  * Judge if the passwords typed are same.
+ * @return boolean Return true if valid.
  */
 function judgeConfirm()
 {
@@ -151,6 +155,7 @@ function judgeConfirm()
 
 /**
  * Judge if the nickname is valid.
+ * @return boolean Return true if valid.
  */
 function judgeNickname()
 {
@@ -173,6 +178,7 @@ function judgeNickname()
  */
 function register()
 {
+    clearDivText("Div_Register");
     var flag = true;
     flag &= judgeName();
     flag &= judgePassword();
@@ -185,7 +191,6 @@ function register()
     var name = document.getElementById("Text_Name").value;
     var password = document.getElementById("Password_Password").value;
     var nickname = document.getElementById("Text_Nickname").value;
-    clearDivText("Div_Register");
     var xmlhttp = getXMLHttp();
     xmlhttp.onreadystatechange = function()
     {

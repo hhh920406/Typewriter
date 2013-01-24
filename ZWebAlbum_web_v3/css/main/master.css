@@ -241,3 +241,20 @@
         outline: none;
         background-color: rgb(237, 245, 252);
     }
+    
+    #sideBar a.selected:link,
+    #sideBar a.selected:visited,
+    #sideBar a.selected:hover
+    {
+        color: white;
+        text-decoration: none;
+        outline: none;
+        font-weight: bold;
+        background-color: rgb(57, 126, 206);
+    }
+    
+#container
+{
+    width: 805px;
+    float: left;
+}

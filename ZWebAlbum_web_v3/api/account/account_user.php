@@ -79,6 +79,23 @@ define("UPDATE_FAILED", -1);
             return LOGIN_SUCCESS;
         }
     }
+    
+    /**
+     * Whether the password is correct.
+     * @param string $name The user name used to login.
+     * @param string $password The password used to login.
+     * @return integer Return 1 if the password is correct, else return 0.
+     */
+    public static function isPasswordCorrect($name, $password)
+    {
+        $sql_user = new SQL_User();
+        $result = $sql_user->selectByPassword($name, $password);
+        if(count($result) == 1)
+        {
+            return 1;
+        }
+        return 0;
+    }
 
     /**
      * Judge if the user name is exist.
