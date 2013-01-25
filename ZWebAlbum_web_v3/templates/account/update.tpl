@@ -1,4 +1,4 @@
-{%include file="header.tpl" title="更新信息"%}
+{%include file="header_small.tpl" title="更新信息"%}
 <div id = "sideBar">
     <article>
         <h3>

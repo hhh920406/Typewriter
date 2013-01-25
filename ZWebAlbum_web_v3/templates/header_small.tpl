@@ -1,8 +1,6 @@
 {%include file = "header_nav.tpl"%}
-<div id = "banner">
-</div>
-<div id = "menu">
-    <div class = "menuBlock">
+<div id = "banner_small">
+    <div class = "menuBlock_small">
         <ul>
             <li>
                 <a href = "/pages/main/index.php">
@@ -28,4 +26,3 @@
     </div>
 </div>
 <div id = "pageBody">
- 

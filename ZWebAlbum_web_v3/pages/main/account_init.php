@@ -43,11 +43,14 @@
      */
     function browseControl($authority)
     {
-        setcookie("prevPage", "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . "?" . $_SERVER['QUERY_STRING'], "/");
+        setcookie("prevPage", "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . "?" . $_SERVER['QUERY_STRING'], 1200, "/");
         switch($authority)
         {
             case AUTHORITY_LOGIN:
-                header("Location: " . "/pages/account/login.php");
+                if(!isset($_SESSION["User_ID"]))
+                {
+                    header("Location: " . "/pages/account/login.php");
+                }
                 break;
         }
     }

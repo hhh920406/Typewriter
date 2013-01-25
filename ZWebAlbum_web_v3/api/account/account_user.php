@@ -49,7 +49,7 @@
          * @param string $sessionId The session id, use default when it's empty.
          * @return integer The pre-defined constants with prefix "LOGIN_".
          */
-        public static function login($name, $password, $sessionId)
+        public static function login($name, $password, $sessionId = "")
         {
             if(!Account_Regex::isTextSimple($name))
             {
@@ -93,7 +93,7 @@
          * User logout.
          * @param string $sessionId The session id, use default when it's empty.
          */
-        public static function logout($sessionId)
+        public static function logout($sessionId = "")
         {
             if($sessionId)
             {
