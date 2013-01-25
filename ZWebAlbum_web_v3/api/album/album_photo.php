@@ -1,5 +1,4 @@
 <?php
-    include_once "account_regex.php";
     include_once $_SERVER['DOCUMENT_ROOT'].'/api/data/sql_photo.php';
 
     /**

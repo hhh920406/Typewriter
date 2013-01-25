@@ -199,7 +199,10 @@ class SQL_Query
         }
         else
         {
-            $this->queryString .= ", " . "PRIMARY KEY (" . $primaryKey . ")";
+            if($primaryKey)
+            {
+                $this->queryString .= ", " . "PRIMARY KEY (" . $primaryKey . ")";
+            }
         }
         $this->queryString .= ");";
         $this->query($this->queryString);

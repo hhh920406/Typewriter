@@ -46,9 +46,10 @@
          * User login.
          * @param string $name The user name used to login.
          * @param string $password The password used to login.
+         * @param string $sessionId The session id, use default when it's empty.
          * @return integer The pre-defined constants with prefix "LOGIN_".
          */
-        public static function login($name, $password)
+        public static function login($name, $password, $sessionId)
         {
             if(!Account_Regex::isTextSimple($name))
             {
@@ -71,7 +72,14 @@
             }
             else
             {
-                session_start();
+                if($sessionId)
+                {
+                    session_start($sessionId);
+                }
+                else
+                {
+                    session_start();
+                }
                 $row = $result[0];
                 $_SESSION['User_ID'] = $row['UserID'];
                 $_SESSION['User_Name'] = $row['Name'];
@@ -79,6 +87,23 @@
                 $_SESSION['User_Type'] = $row['Type'];
                 return LOGIN_SUCCESS;
             }
+        }
+        
+        /**
+         * User logout.
+         * @param string $sessionId The session id, use default when it's empty.
+         */
+        public static function logout($sessionId)
+        {
+            if($sessionId)
+            {
+                session_start($sessionId);
+            }
+            else
+            {
+                session_start();
+            }
+            session_destroy();
         }
 
         /**

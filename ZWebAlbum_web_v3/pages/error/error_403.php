@@ -9,6 +9,7 @@
     <body>
         <?php
             include_once $_SERVER["DOCUMENT_ROOT"] . "/pages/main/init.php";
+            $smarty->display("error/error_403.tpl");
         ?>
     </body>
 </html>

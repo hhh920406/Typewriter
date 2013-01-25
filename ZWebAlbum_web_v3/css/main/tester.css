@@ -1,0 +1,35 @@
+html,
+body
+{
+    height: 100%;
+}
+
+.srcDiv
+{
+    display: inline-block;
+    width: 45%;
+    height: 100%;
+    margin: 0 10px 0 0;
+}
+
+.disDiv
+{
+    display: inline-block;
+    width: 45%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.expandDiv
+{
+    width: 95%;
+    height: 95%;
+    margin: 0 auto;
+}
+
+.expandControl
+{
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
