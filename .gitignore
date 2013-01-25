@@ -10,6 +10,8 @@ obj
 # Other Projects
 phpMyAdmin
 ZWebAlbum_web_v2
+/ZWebAlbum_web_v3/developer
+/ZWebAlbum_web_v3/sdk
 
 # Smarty Folders
 /ZWebAlbum_web_v3/cache
