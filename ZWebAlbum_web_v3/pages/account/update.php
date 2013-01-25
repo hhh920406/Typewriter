@@ -4,7 +4,6 @@
         <meta charset = "utf-8">
         <link rel = "stylesheet" href = "/css/account/update.css">
         <script src="/js/main/ajax.js"></script>
-        <script src="/js/account/update_basic.js"></script>
     </head>
 
     <body>

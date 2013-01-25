@@ -5,6 +5,7 @@
             编辑信息
         </h3>
         {%if $tab == "basic"%}
+        <script src="/js/account/update_basic.js"></script>
         <a href = "/pages/account/update.php" class = "selected">
         {%else%}
         <a href = "/pages/account/update.php">
@@ -12,13 +13,13 @@
             　基本信息
         </a>
         {%if $tab == "contact"%}
+        <script src="/js/account/update_contact.js"></script>
         <a href = "/pages/account/update.php?tab=contact" class = "selected">
         {%else%}
         <a href = "/pages/account/update.php?tab=contact">
         {%/if%}
             　联系方式
         </a>
-        </ul>
     </article>
 </div>
 <div id = "container">

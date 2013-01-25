@@ -20,7 +20,7 @@
                 </a>
             </li>
             <li>
-                <a href = "/pages/classify/select.php">
+                <a href = "/pages/application">
                     应用
                 </a>
             </li>

@@ -200,7 +200,8 @@
 #pageBody 
 {
     width: 1024px;
-    padding: 0px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     margin: 0 auto;
     overflow: hidden;
 }

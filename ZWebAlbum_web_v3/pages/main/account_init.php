@@ -43,7 +43,7 @@
      */
     function browseControl($authority)
     {
-        setcookie("prevPage", "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . "?" . $_SERVER['QUERY_STRING'], 1200, "/");
+        setcookie("prevPage", "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"] . "?" . $_SERVER['QUERY_STRING'], 1200, "/");
         switch($authority)
         {
             case AUTHORITY_LOGIN:
