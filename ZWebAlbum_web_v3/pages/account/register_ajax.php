@@ -12,22 +12,8 @@ $nickname = $_GET["nickname"];
 $user = array("name" => $name, "password" => $password, "nickname" => $nickname);
 
 $result = Account_User::register($user);
-switch($result)
+if($result != REGISTER_SUCCESS)
 {
-    case REGISTER_ERROR_NAME:
-        echo "用户名格式不合法";
-        break;
-    case REGISTER_ERROR_PASSWORD:
-        echo "密码格式不合法";
-        break;
-    case REGISTER_ERROR_NICKNAME:
-        echo "用户昵称不合法";
-        break;
-    case REGISTER_ERROR_EXIST:
-        echo "用户名已经存在";
-        break;
-    case REGISTER_ERROR_UNKNOWN:
-        echo "注册失败，原因未知";
-        break;
+    echo Account_User::getRegisterMessage($result);
 }
 ?>

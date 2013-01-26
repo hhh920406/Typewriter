@@ -21,13 +21,12 @@ if(0 == Account_User::isPasswordCorrect($name, $origin))
 $user = array("password" => $password, "nickname" => $nickname);
 
 $result = Account_User::update($id, $user);
-switch($result)
+if($result == UPDATE_SUCCESS)
 {
-    case UPDATE_SUCCESS:
-        $_SESSION["User_Nickname"] = $nickname;
-        break;
-    case UPDATE_FAILED:
-        echo "更新失败，错误未知";
-        break;
+    $_SESSION["User_Nickname"] = $nickname;
+}
+else
+{
+    echo Account_User::getUpdateMessage($result);
 }
 ?>

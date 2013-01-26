@@ -13,7 +13,7 @@
     </div>
     <div class = "rowDescription">
         <div class = "columnDescription">
-            用户名的长度为6到20位，只能包含大小写英文字母、数字和下划线。用户名区分大小写。
+            用户名的长度为6到20位，只能包含大小写英文字母、数字和下划线。
         </div>
     </div>
         
