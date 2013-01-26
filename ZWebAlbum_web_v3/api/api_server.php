@@ -1,5 +1,5 @@
 <?php
-if(isset($_POST["apikey"]) && isset($_POST["method"]))
+if(isset($_POST["API_KEY"]) && isset($_POST["method"]))
 {
     if($_POST["method"] == "token")
     {
