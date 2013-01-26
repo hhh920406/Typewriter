@@ -88,6 +88,30 @@
                 return LOGIN_SUCCESS;
             }
         }
+
+        /**
+         * Return the meaning of the login result.
+         * @param int $result The result status of login.
+         * @return string The meaning of the LOGIN_?
+         */
+        public static function getLoginMessage($result)
+        {
+            switch($result)
+            {
+                case LOGIN_SUCCESS:
+                    return "登录成功";
+                case LOGIN_ERROR_EXIST:
+                    return "用户不存在";
+                case LOGIN_ERROR_NAME:
+                    return "用户名格式不正确";
+                case LOGIN_ERROR_PASSWORD:
+                    return "密码格式不正确";
+                case LOGIN_ERROR_WRONG:
+                    return "用户名或密码错误";
+                default:
+                    return "未知状态";
+            }
+        }
         
         /**
          * User logout.
@@ -161,6 +185,32 @@
         }
 
         /**
+         * Return the meaning of the register result.
+         * @param int $result The result status of register.
+         * @return string The meaning of the REGISTER_?
+         */
+        public static function getRegisterMessage($result)
+        {
+            switch($result)
+            {
+                case REGISTER_SUCCESS:
+                    return "注册成功";
+                case REGISTER_ERROR_NAME:
+                    return "用户名格式不正确";
+                case REGISTER_ERROR_PASSWORD:
+                    return "密码格式不正确";
+                case REGISTER_ERROR_EXIST:
+                    return "用户名已经存在";
+                case REGISTER_ERROR_NICKNAME:
+                    return "用户昵称格式不正确";
+                case REGISTER_ERROR_UNKNOWN:
+                    return "未知错误";
+                default:
+                    return "未知状态";
+            }
+        }
+
+        /**
          * Update user basic information.
          * @param integer $id The user id whose information is to be updated.
          * @param array $user An associative array with "name", "password" and "nickname" keys.
@@ -174,6 +224,22 @@
                 return UPDATE_SUCCESS;
             }
             return UPDATE_FAILED;
+        }
+
+        /**
+         * Return the meaning of the update result.
+         * @param int $result The result status of update.
+         * @return string The meaning of the UPDATE_?
+         */
+        public static function getUpdateMessage($result)
+        {
+            switch($result)
+            {
+                case UPDATE_SUCCESS:
+                    return "更新成功";
+                case UPDATE_FAILED:
+                    return "更新失败";
+            }
         }
 
         /**
