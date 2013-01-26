@@ -30,7 +30,7 @@
                                 "COMMENT 'The API key of the application. '",
                 "UserName"  =>  "VARCHAR(50) NOT NULL " .
                                 "COMMENT 'The name of the user. '",
-                "Token"     =>  "VARCHAR(32) NOT NULL" .
+                "Token"     =>  "VARCHAR(32) NOT NULL " .
                                 "COMMENT 'The communication token. '"
             );
             $primary = $this->primaryKeyName;
