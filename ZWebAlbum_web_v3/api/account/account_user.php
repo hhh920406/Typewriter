@@ -2,6 +2,12 @@
     include_once "account_regex.php";
     include_once $_SERVER['DOCUMENT_ROOT'].'/api/data/sql_user.php';
 
+    define("USER_TYPE_NORMAL", 0);
+    define("USER_TYPE_STAR", 1);
+    define("USER_TYPE_VIP", 2);
+    define("USER_TYPE_ADMIN", 3);
+    define("USER_TYPE_SUPERADMIN", 4);
+
     /**
      * @def integer LOGIN_SUCCESS Successfully login, the session is saved.
      * @def integer LOGIN_ERROR_NAME The format of the name string is not valid.
@@ -41,6 +47,25 @@
      */
      class Account_User
      {
+
+        public static function getTypeMessage($type)
+        {
+            switch($type)
+            {
+                case USER_TYPE_NORMAL:
+                    return "Normal";
+                case USER_TYPE_STAR:
+                    return "Star";
+                case USER_TYPE_VIP:
+                    return "VIP";
+                case USER_TYPE_ADMIN:
+                    return "Admin";
+                case USER_TYPE_SUPERADMIN:
+                    return "Super Admin";
+                default:
+                    return "Unknown";
+            }
+        }
 
         /**
          * User login.
