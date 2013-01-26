@@ -16,6 +16,8 @@
             print_r($result = $api->getUserToken("Monkey012"));
             echo "<br/>Decode Result: <br/>";
             print_r($result = json_decode($result));
+            echo "<br/>user.basic: <br/>";
+            print_r($api->getUserBasic());
         ?>
     </html>
 </html>

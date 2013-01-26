@@ -34,7 +34,7 @@ class ApiRequestService extends HttpRequestService {
         $post_data["API_KEY"] = $this->api_config->API_KEY;
         $post_data["SDK_VERSION"] = $this->api_config->SDK_VERSION;
         if($this->user_token != "") {
-            $post_data["user_token"] = $this->user_token;
+            $post_data["token"] = $this->user_token;
         }
         return $this->post($this->api_config->API_URL, $post_data);
     }
@@ -73,6 +73,7 @@ class ApiRequestService extends HttpRequestService {
         $post_data["method"] = "user.basic";
         $result = $this->apiPost($post_data);
         if($result) {
+            $result = json_decode($json);
             $basic = array(
                 "id" => $result->UserID,
                 "name" => $result->Name,
@@ -81,6 +82,7 @@ class ApiRequestService extends HttpRequestService {
             );
             return $basic;
         }
+        return array();
     }
 }
 

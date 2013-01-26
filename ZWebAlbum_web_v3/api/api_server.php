@@ -13,7 +13,7 @@ if(isset($_POST["method"]))
             switch($_POST["method"])
             {
                 case "user.basic":
-                    include_once "server/user.info.php";
+                    include_once "server/user.basic.php";
                     break;
             }
         }
