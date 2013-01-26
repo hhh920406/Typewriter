@@ -282,6 +282,10 @@ class SQL_Query
     private function where($condition, $relation)
     {
         $sql = "";
+        if($relation == "")
+        {
+            $relation = "AND";
+        }
         if($condition)
         {
             $sql .= " WHERE ";

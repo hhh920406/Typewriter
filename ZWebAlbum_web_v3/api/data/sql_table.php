@@ -138,8 +138,8 @@ class SQL_Table
 
     /**
      * Insert new data.
-     * @param type $info The associative array of the insert data.
-     * @return int Return 0 if failed.
+     * @param array $info The associative array of the insert data.
+     * @return bool Return 0 if failed.
      */
     public function insert($info)
     {
@@ -153,9 +153,9 @@ class SQL_Table
         $this->sql_query->insert($this->tableName, $columns, $values);
         if(mysql_error())
         {
-            return 0;
+            return false;
         }
-        return 1;
+        return true;
     }
 
     /**
@@ -172,9 +172,9 @@ class SQL_Table
         $this->sql_query->update($this->tableName, $info, $condition);
         if(mysql_error())
         {
-            return 0;
+            return false;
         }
-        return 1;
+        return true;
     }
 
     /**
@@ -190,9 +190,9 @@ class SQL_Table
         $this->sql_query->delete($this->tableName, $condition);
         if(mysql_error())
         {
-            return 0;
+            return false;
         }
-        return 1;
+        return true;
     }
 
     /**

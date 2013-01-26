@@ -34,7 +34,7 @@ class ApiRequestService extends HttpRequestService {
         $post_data["API_KEY"] = $this->api_config->API_KEY;
         $post_data["SDK_VERSION"] = $this->api_config->SDK_VERSION;
         if($this->user_token != "") {
-            $post_data["user_token"] = $this->user_token;
+            $post_data["token"] = $this->user_token;
         }
         return $this->post($this->api_config->API_URL, $post_data);
     }
@@ -53,7 +53,14 @@ class ApiRequestService extends HttpRequestService {
         if($password != "") {
             $post_data["password"] = $password;
         }
-        return $this->user_token = $this->apiPost($post_data);
+        $result = $this->apiPost($post_data);
+        if($result) {
+            $result = json_decode($result);
+            $this->user_token = $result->token;
+        } else {
+            $this->user_token = "";
+        }
+        return $this->user_token;
     }
 
     /**
@@ -61,6 +68,28 @@ class ApiRequestService extends HttpRequestService {
      */
     public function releaseUserToken() {
         $this->user_token = "";
+    }
+
+    /**
+     * 获取用户的基础信息。
+     * @return array 返回是一个关联数组，包括用户的id、用户名name、用户昵称nickname、用户的类型type。
+     * 用户的类型为一个字符串，分为Normal：一般用户，Star：星级用户，VIP：重要用户，Admin：管理员。
+     */
+    public function getUserBasic() {
+        $post_data = array();
+        $post_data["method"] = "user.basic";
+        $result = $this->apiPost($post_data);
+        if($result) {
+            $result = json_decode($result);
+            $basic = array(
+                "id" => $result->UserID,
+                "name" => $result->Name,
+                "nickname" => $result->Nickname,
+                "type" => $result->Type
+            );
+            return $basic;
+        }
+        return array();
     }
 }
 

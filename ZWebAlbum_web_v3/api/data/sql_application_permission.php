@@ -26,11 +26,11 @@
         {
             $columns = array
             (
-                "ApplicationID" =>  "INT(4) NOT NULL " . 
+                "ApplicationID" =>  "INT(4) NOT NULL " .
                                     "COMMENT 'The ID of application. '",
-                "Permission"    =>  "INT(4) NOT NULL " . 
+                "Permission"    =>  "INT(4) NOT NULL " .
                                     "COMMENT 'The type of the permission. '",
-                "Type"          =>  "INT(4) DEFAULT '0' " . 
+                "Type"          =>  "INT(4) DEFAULT '0' " .
                                     "COMMENT 'The needs of the permission. '"
             );
             $primary = $this->primaryKeyName;

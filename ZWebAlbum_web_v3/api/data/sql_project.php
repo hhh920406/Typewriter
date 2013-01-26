@@ -7,6 +7,7 @@ include_once "sql_photo.php";
 include_once "sql_application.php";
 include_once "sql_application_permission.php";
 include_once "sql_user_application.php";
+include_once "sql_application_token.php";
 
 /**
  * Provide operations for the project database.
@@ -40,6 +41,9 @@ class SQL_Project
         $sql_user_application = new SQL_User_Application();
         $sql_user_application->createTable();
         unset($sql_user_application);
+        $sql_application_token = new SQL_Application_Token();
+        $sql_application_token->createTable();
+        unset($sql_application_token);
     }
 }
 ?>
