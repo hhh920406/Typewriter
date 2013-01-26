@@ -62,6 +62,26 @@ class ApiRequestService extends HttpRequestService {
     public function releaseUserToken() {
         $this->user_token = "";
     }
+
+    /**
+     * 获取用户的基础信息。
+     * @return array 返回是一个关联数组，包括用户的id、用户名name、用户昵称nickname、用户的类型type。
+     * 用户的类型为一个字符串，分为Normal：一般用户，Star：星级用户，VIP：重要用户，Admin：管理员。
+     */
+    public function getUserBasic() {
+        $post_data = array();
+        $post_data["method"] = "user.basic";
+        $result = $this->apiPost($post_data);
+        if($result) {
+            $basic = array(
+                "id" => $result->UserID,
+                "name" => $result->Name,
+                "nickname" => $result->Nickname,
+                "type" => $result->Type
+            );
+            return $basic;
+        }
+    }
 }
 
 ?>
