@@ -3,6 +3,9 @@
     include_once "sql_table.php";
     include_once "sql_query.php";
 
+    define("TYPE_APP_CORE", 1);
+    define("TYPE_APP_FULL", 2);
+
     /**
      * The SQL operation for application table.
      * @author ZHG
