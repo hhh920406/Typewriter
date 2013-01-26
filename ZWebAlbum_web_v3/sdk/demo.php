@@ -12,11 +12,9 @@
             include_once "apiRequestService.php";
 
             $api = new ApiRequestService();
-            echo "Json Result: <br/>";
+            echo "Token: <br/>";
             print_r($result = $api->getUserToken("Monkey012"));
-            echo "<br/>Decode Result: <br/>";
-            print_r($result = json_decode($result));
-            echo "<br/>user.basic: <br/>";
+            echo "<br/>User.Basic: <br/>";
             print_r($api->getUserBasic());
         ?>
     </html>

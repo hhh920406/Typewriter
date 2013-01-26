@@ -53,7 +53,14 @@ class ApiRequestService extends HttpRequestService {
         if($password != "") {
             $post_data["password"] = $password;
         }
-        return $this->user_token = $this->apiPost($post_data);
+        $result = $this->apiPost($post_data);
+        if($result) {
+            $result = json_decode($result);
+            $this->user_token = $result->token;
+        } else {
+            $this->user_token = "";
+        }
+        return $this->user_token;
     }
 
     /**

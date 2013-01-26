@@ -11,7 +11,7 @@
   * @var string SDK_VERSION SDK的版本，不需要更改。
   */
 $api_config = new stdClass();
-$api_config->API_KEY = "SD9FS9FU3H893J983DJ98WFW98UFW9D91KD0";
+$api_config->API_KEY = "SD9FS9FU3H893J983DJ98WFWW9D91KD0";
 $api_config->API_URL = "http://127.0.0.1/api/api_server.php";
 $api_config->SDK_VERSION = "PHP 1.0";
 ?>

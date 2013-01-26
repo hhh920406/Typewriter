@@ -92,7 +92,7 @@
             $token = substr(md5(uniqid(mt_rand(), true)), 0, 32);
             $columnArray = array("APIKey", "UserName", "Token");
             $valueArray = array($key, $name, $token);
-            $this->sql_query->insert($this->tableName, $key, $name);
+            $this->sql_query->insert($this->tableName, $columnArray, $valueArray);
             return $token;
         }
     }

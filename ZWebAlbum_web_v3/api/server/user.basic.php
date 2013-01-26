@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"] . "/api/application/application_token";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/api/application/application_token.php";
 include_once $_SERVER["DOCUMENT_ROOT"] . "/api/account/account_user.php";
 $name = Application_Token::getUserName($token);
 $userArray = Account_User::getUserByName($name);
