@@ -14,8 +14,10 @@ class ApiRequestService extends HttpRequestService {
     protected $api_config;
     protected $user_token;
 
+    private $token_cookie;
+
     /**
-     * 初始化http请求和基本配置。
+     * 初始化http请求和基本配置，如果启用了cookie，在获得过令牌后再次创建类的时候则无需再次执行getUserToken操作。
      * @global string $api_config 位于位置文件中的基本配置信息。
      */
     public function  __construct() {
@@ -23,6 +25,10 @@ class ApiRequestService extends HttpRequestService {
         parent::__construct();
         $this->api_config = $api_config;
         $this->user_token = "";
+        $this->token_cookie = "token_" . $this->api_config->API_KEY;
+        if(isset($_COOKIE[$this->token_cookie])) {
+            $this->user_token = $_COOKIE[$this->token_cookie];
+        }
     }
 
     /**
@@ -57,17 +63,23 @@ class ApiRequestService extends HttpRequestService {
         if($result) {
             $result = json_decode($result);
             $this->user_token = $result->token;
+            setcookie($this->token_cookie, $this->user_token, 8640000, "/");
         } else {
             $this->user_token = "";
         }
         return $this->user_token;
     }
 
+    public function setUserToken($token) {
+        $this->user_token = $token;
+    }
+
     /**
-     * 释放令牌，通常用于网站外部客户端用户退出的操作。
+     * 释放令牌。
      */
     public function releaseUserToken() {
         $this->user_token = "";
+        setcookie($this->token_cookie, "", time() - 1, "/");
     }
 
     /**
