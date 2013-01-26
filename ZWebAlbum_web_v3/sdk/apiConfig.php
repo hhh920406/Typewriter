@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * 定义基本的常量和变量。
  * @author ZHG <CyberZHG@gmail.com>
@@ -12,6 +12,6 @@
   */
 $api_config = new stdClass();
 $api_config->API_KEY = "SD9FS9FU3H893J983DJ98WFW98UFW9D91KD0";
-$api_config->API_URL = "http://127.0.0.1/api/";
+$api_config->API_URL = "http://127.0.0.1/api/api_server.php";
 $api_config->SDK_VERSION = "PHP 1.0";
 ?>

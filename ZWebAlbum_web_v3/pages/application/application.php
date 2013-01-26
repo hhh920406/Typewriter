@@ -13,7 +13,7 @@
             browseControl(AUTHORITY_LOGIN);
             if(isset($_GET["appname"]))
             {
-                $apppath = "http://" . $_SERVER["HTTP_HOST"] . "/developer/" . $_GET["appname"];
+                $apppath = "http://" . $_SERVER["HTTP_HOST"] . "/app/" . $_GET["appname"];
                 $smarty->assign("apppath", $apppath);
             }
             else

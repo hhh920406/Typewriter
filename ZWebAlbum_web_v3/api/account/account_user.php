@@ -2,6 +2,12 @@
     include_once "account_regex.php";
     include_once $_SERVER['DOCUMENT_ROOT'].'/api/data/sql_user.php';
 
+    define("USER_TYPE_NORMAL", 0);
+    define("USER_TYPE_STAR", 1);
+    define("USER_TYPE_VIP", 2);
+    define("USER_TYPE_ADMIN", 3);
+    define("USER_TYPE_SUPERADMIN", 4);
+
     /**
      * @def integer LOGIN_SUCCESS Successfully login, the session is saved.
      * @def integer LOGIN_ERROR_NAME The format of the name string is not valid.
@@ -41,6 +47,25 @@
      */
      class Account_User
      {
+
+        public static function getTypeMessage($type)
+        {
+            switch($type)
+            {
+                case USER_TYPE_NORMAL:
+                    return "Normal";
+                case USER_TYPE_STAR:
+                    return "Star";
+                case USER_TYPE_VIP:
+                    return "VIP";
+                case USER_TYPE_ADMIN:
+                    return "Admin";
+                case USER_TYPE_SUPERADMIN:
+                    return "Super Admin";
+                default:
+                    return "Unknown";
+            }
+        }
 
         /**
          * User login.
@@ -88,6 +113,30 @@
                 return LOGIN_SUCCESS;
             }
         }
+
+        /**
+         * Return the meaning of the login result.
+         * @param int $result The result status of login.
+         * @return string The meaning of the LOGIN_?
+         */
+        public static function getLoginMessage($result)
+        {
+            switch($result)
+            {
+                case LOGIN_SUCCESS:
+                    return "登录成功";
+                case LOGIN_ERROR_EXIST:
+                    return "用户不存在";
+                case LOGIN_ERROR_NAME:
+                    return "用户名格式不正确";
+                case LOGIN_ERROR_PASSWORD:
+                    return "密码格式不正确";
+                case LOGIN_ERROR_WRONG:
+                    return "用户名或密码错误";
+                default:
+                    return "未知状态";
+            }
+        }
         
         /**
          * User logout.
@@ -121,6 +170,17 @@
                 return 1;
             }
             return 0;
+        }
+
+        /**
+         * Get user information by name.
+         * @param string $name The name of the user.
+         * @return array Query result.
+         */
+        public static function getUserByName($name)
+        {
+            $sql_user = new SQL_User();
+            return $sql_user->selectByName($name);
         }
 
         /**
@@ -161,6 +221,32 @@
         }
 
         /**
+         * Return the meaning of the register result.
+         * @param int $result The result status of register.
+         * @return string The meaning of the REGISTER_?
+         */
+        public static function getRegisterMessage($result)
+        {
+            switch($result)
+            {
+                case REGISTER_SUCCESS:
+                    return "注册成功";
+                case REGISTER_ERROR_NAME:
+                    return "用户名格式不正确";
+                case REGISTER_ERROR_PASSWORD:
+                    return "密码格式不正确";
+                case REGISTER_ERROR_EXIST:
+                    return "用户名已经存在";
+                case REGISTER_ERROR_NICKNAME:
+                    return "用户昵称格式不正确";
+                case REGISTER_ERROR_UNKNOWN:
+                    return "未知错误";
+                default:
+                    return "未知状态";
+            }
+        }
+
+        /**
          * Update user basic information.
          * @param integer $id The user id whose information is to be updated.
          * @param array $user An associative array with "name", "password" and "nickname" keys.
@@ -174,6 +260,22 @@
                 return UPDATE_SUCCESS;
             }
             return UPDATE_FAILED;
+        }
+
+        /**
+         * Return the meaning of the update result.
+         * @param int $result The result status of update.
+         * @return string The meaning of the UPDATE_?
+         */
+        public static function getUpdateMessage($result)
+        {
+            switch($result)
+            {
+                case UPDATE_SUCCESS:
+                    return "更新成功";
+                case UPDATE_FAILED:
+                    return "更新失败";
+            }
         }
 
         /**
