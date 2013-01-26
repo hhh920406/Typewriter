@@ -94,7 +94,7 @@
          * @param int $result The result status of login.
          * @return string The meaning of the LOGIN_?
          */
-        public static function getLoginString($result)
+        public static function getLoginMessage($result)
         {
             switch($result)
             {
@@ -189,7 +189,7 @@
          * @param int $result The result status of register.
          * @return string The meaning of the REGISTER_?
          */
-        public static function getRegisterString($result)
+        public static function getRegisterMessage($result)
         {
             switch($result)
             {
@@ -231,7 +231,7 @@
          * @param int $result The result status of update.
          * @return string The meaning of the UPDATE_?
          */
-        public static function getUpdateString($result)
+        public static function getUpdateMessage($result)
         {
             switch($result)
             {
