@@ -4,37 +4,46 @@ if(isset($_POST["method"]))
     switch($_POST["method"])
     {
         case "token":
-            include_once "account/account_user.php";
-            if(isset($_POST["name"]) && isset($_POST["password"]))
+            if(isset($_POST["name"]))
             {
+                include_once "account/account_user.php";
                 $name = $_POST["name"];
-                $password = $_POST["password"];
-                $result = Account_User::login($name, $password);
-                if($result == LOGIN_SUCCESS)
+                if(isset($_POST["password"]))
                 {
-                    echo json_encode(array(
-                        "token" => session_id()));
+                    $password = $_POST["password"];
+                    $result = Account_User::login($name, $password);
+                    if($result == LOGIN_SUCCESS)
+                    {
+                        echo json_encode(array(
+                            "token" => session_id()));
+                    }
+                    else
+                    {
+                        echo json_encode(array(
+                            "token" => "",
+                            "error" => Account_User::getLoginMessage($result)));
+                    }
                 }
                 else
                 {
-                    echo json_encode(array(
-                        "token" => "",
-                        "error" => Account_User::getLoginMessage($result)));
-                }
-            }
-            else
-            {
-                session_start();
-                if(isset($_SESSION["User_ID"]))
-                {
-                    echo json_encode(array(
-                        "token" => session_id()));
-                }
-                else
-                {
-                    echo json_encode(array(
-                        "token" => "",
-                        "error" => "没有用户登录"));
+                    $result = Account_User::getUserByName($name);
+                    if(count($result) == 1)
+                    {
+                        session_start();
+                        $row = $result[0];
+                        $_SESSION['User_ID'] = $row['UserID'];
+                        $_SESSION['User_Name'] = $row['Name'];
+                        $_SESSION['User_Nickname'] = $row['Nickname'];
+                        $_SESSION['User_Type'] = $row['Type'];
+                        echo json_encode(array(
+                            "token" => session_id()));
+                    }
+                    else
+                    {
+                        echo json_encode(array(
+                            "token" => "",
+                            "error" => "该用户不存在"));
+                    }
                 }
             }
             break;

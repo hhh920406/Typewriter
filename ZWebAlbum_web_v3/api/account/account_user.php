@@ -148,6 +148,17 @@
         }
 
         /**
+         * Get user information by name.
+         * @param string $name The name of the user.
+         * @return array Query result.
+         */
+        public static function getUserByName($name)
+        {
+            $sql_user = new SQL_User();
+            return $sql_user->selectByName($name);
+        }
+
+        /**
          * Judge if the user name is exist.
          * @param string $name The user name to be judged.
          * @return integer 1 as true, 0 as false.

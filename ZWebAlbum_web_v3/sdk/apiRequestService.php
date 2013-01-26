@@ -46,11 +46,11 @@ class ApiRequestService extends HttpRequestService {
      * @param string $password
      * @return string  如果成功返回用户的令牌，如果失败返回false。
      */
-    public function getUserToken($name = "", $password = "") {
+    public function getUserToken($name, $password = "") {
         $post_data = array();
         $post_data["method"] = "token";
-        if($name != "" && $password != "") {
-            $post_data["name"] = $name;
+        $post_data["name"] = $name;
+        if($password != "") {
             $post_data["password"] = $password;
         }
         return $this->user_token = $this->apiPost($post_data);
