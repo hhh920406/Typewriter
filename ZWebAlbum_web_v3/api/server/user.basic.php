@@ -1,11 +1,16 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'].'/api/account/account_user.php';
-session_start($token);
-$basic = array(
-    "UserID" => $_SESSION["User_ID"],
-    "Name" => $_SESSION["User_Name"],
-    "Nickname" => $_SESSION["User_Nickname"],
-    "Type" => Account_User::getTypeMessage($_SESSION["User_Type"])
-);
-echo json_encode($basic);
+include_once $_SERVER["DOCUMENT_ROOT"] . "/api/application/application_token";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/api/account/account_user.php";
+$name = Application_Token::getUserName($token);
+$userArray = Account_User::getUserByName($name);
+foreach($userArray as $user) {
+    $basic = array(
+        "UserID" => $user["UserID"],
+        "Name" => $user["Name"],
+        "Nickname" => $user["Nickname"],
+        "Type" => Account_User::getTypeMessage($user["Type"])
+    );
+    echo json_encode($basic);
+    break;
+}
 ?>
