@@ -1,7 +1,7 @@
 <?php
 if(isset($_POST["name"]))
 {
-    include_once "account/account_user.php";
+    include_once $_SERVER['DOCUMENT_ROOT']."api/account/account_user.php";
     $name = $_POST["name"];
     if(isset($_POST["password"]))
     {
@@ -9,8 +9,10 @@ if(isset($_POST["name"]))
         $result = Account_User::login($name, $password);
         if($result == LOGIN_SUCCESS)
         {
+            include_once $_SERVER['DOCUMENT_ROOT']."api/application/application_token.php";
+            $key = $_POST["apikey"];
             echo json_encode(array(
-                "token" => session_id()));
+                "token" => Application_Token::createToken($key, $name)));
         }
         else
         {
@@ -24,14 +26,10 @@ if(isset($_POST["name"]))
         $result = Account_User::getUserByName($name);
         if(count($result) == 1)
         {
-            session_start();
-            $row = $result[0];
-            $_SESSION['User_ID'] = $row['UserID'];
-            $_SESSION['User_Name'] = $row['Name'];
-            $_SESSION['User_Nickname'] = $row['Nickname'];
-            $_SESSION['User_Type'] = $row['Type'];
+            include_once $_SERVER['DOCUMENT_ROOT']."api/application/application_token.php";
+            $key = $_POST["apikey"];
             echo json_encode(array(
-                "token" => session_id()));
+                "token" => Application_Token::createToken($key, $name)));
         }
         else
         {
