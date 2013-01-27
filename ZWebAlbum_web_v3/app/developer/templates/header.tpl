@@ -8,3 +8,4 @@
     <body>
         <div id = "container">
             {include file = "nav.tpl"}
+            <div id = "bodyDiv">
