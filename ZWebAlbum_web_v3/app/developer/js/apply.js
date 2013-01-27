@@ -3,7 +3,7 @@
  * @return boolean
  */
 function judgeSymbol() {
-    var symbol = document.getElementById("Text_Symbol").value;
+    var symbol = Text_Symbol.value;
     setStatus("Status_Symbol", TYPE_NORMAL, "");
     setInputEnable("Button_Symbol", false);
     if(isSymbolValid(symbol)) {
@@ -16,19 +16,18 @@ function judgeSymbol() {
     }
 }
 
+/**
+ * Judge and show if the symbol is exist.
+ * @return boolean
+ */
 function judgeExistSymbol() {
     var xmlhttp = getXMLHttp();
     var symbol = Text_Symbol.value;
-    xmlhttp.onreadystatechange = function()
-    {
-        if(xmlhttp.readyState == 4 && xmlhttp.status == 200)
-        {
-            if(xmlhttp.responseText.length > 0)
-            {
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            if(xmlhttp.responseText.length > 0) {
                 setStatus("Status_Exist_Symbol", TYPE_ERROR, xmlhttp.responseText)
-            }
-            else
-            {
+            } else {
                 setStatus("Status_Exist_Symbol", TYPE_CORRECT, "");
             }
         }
@@ -36,4 +35,52 @@ function judgeExistSymbol() {
     xmlhttp.open("GET", "symbol_ajax.php?symbol=" + symbol);
     xmlhttp.send();
     setStatus("Status_Exist_Symbol", TYPE_WAITING, "检测中。。。");
+}
+
+function apply() {
+    $flag = true;
+    $flag &= judgeSymbol();
+    $flag &= judgeName();
+    $flag &= judgeDescription();
+    if($flag) {
+        var xmlhttp = getXMLHttp();
+        xmlhttp.onreadystatechange = function() {
+            if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                if(xmlhttp.responseText.length > 0) {
+                    setStatus("Status_Apply", TYPE_ERROR, xmlhttp.responseText)
+                } else {
+                    setStatus("Status_Apply", TYPE_CORRECT, "");
+                }
+            }
+        }
+        var symbol = Text_Symbol.value;
+        var name = Text_Name.value;
+        var description = TextArea_Description.value;
+        var type = 0;
+        switch(Select_Type.value) {
+            case "Inside":
+                type = 1;
+                break;
+            case "Outside":
+                type = 2;
+                break;
+            case "Desktop":
+                type = 3;
+                break;
+            case "Core":
+                type = 4;
+                break;
+        }
+        var user_basic = Checkbox_user_basic.checked;
+        //TODO 还需要获取用户ID
+        xmlhttp.open("GET", "apply_ajax.php?" +
+            "id=" + "6" + "&" + 
+            "symbol=" + symbol + "&" +
+            "name=" + name + "&" +
+            "description=" + description + "&" +
+            "type=" + type + "&" +
+            "user_basic=" + user_basic);
+        xmlhttp.send();
+        setStatus("Status_Apply", TYPE_WAITING, "提交中。。。");
+    }
 }

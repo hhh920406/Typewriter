@@ -86,7 +86,7 @@ function setInputEnable(name, enable) {
  * @return boolean
  */
 function judgeName() {
-    var name = document.getElementById("Text_Name").value;
+    var name = Text_Name.value;
     setStatus("Status_Name", TYPE_NORMAL, "");
     setInputEnable("Button_Name", false);
     if(isNameValid(name)) {
@@ -100,11 +100,32 @@ function judgeName() {
 }
 
 /**
+ * Judge and show if the name is exist.
+ * @return boolean
+ */
+function judgeExistName() {
+    var xmlhttp = getXMLHttp();
+    var name = Text_Name.value;
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            if(xmlhttp.responseText.length > 0) {
+                setStatus("Status_Exist_Name", TYPE_ERROR, xmlhttp.responseText)
+            } else {
+                setStatus("Status_Exist_Name", TYPE_CORRECT, "");
+            }
+        }
+    }
+    xmlhttp.open("GET", "name_ajax.php?name=" + name);
+    xmlhttp.send();
+    setStatus("Status_Exist_Name", TYPE_WAITING, "检测中。。。");
+}
+
+/**
  * Judge and show if the description is valid.
  * @return boolean
  */
 function judgeDescription() {
-    var description = document.getElementById("TextArea_Description").value;
+    var description = TextArea_Description.value;
     var countString = "[" + description.length + "/240]";
     setStatus("Status_Description", TYPE_NORMAL, "");
     if(description.length < 240) {

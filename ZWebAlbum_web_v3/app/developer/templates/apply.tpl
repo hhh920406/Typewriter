@@ -85,7 +85,7 @@
             <select id = "Select_Type">
                 <option value = "Inside">站内应用</option>
                 <option value = "Outside">站外应用</option>
-                <option value = "Client">客户端应用</option>
+                <option value = "Desktop">客户端应用</option>
                 {if $basic["type"] == "Admin" || $basic["type"] == "Super Admin"}
                 <option value = "Core">核心应用</option>
                 {/if}
@@ -114,7 +114,7 @@
             用户许可：
         </div>
         <div class = "columnSelect">
-            <input type = "checkbox" checked = "true" >获取用户的基础信息</input>
+            <input id = "Checkbox_user_basic" type = "checkbox" checked = "true" >获取用户的基础信息</input>
             <br/>
             <input type = "checkbox">获取相册列表和照片列表</input>
             <br/>
@@ -129,6 +129,9 @@
 
     <div class = "rowDescription">
         <hr/>
+    </div>
+    <div class = "rowSubmit">
+        <div id = "Status_Apply"></div>
     </div>
     <div class = "rowSubmit">
         <input type = "button" value = "申　请" onclick = "apply()"></input>
