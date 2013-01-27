@@ -3,10 +3,10 @@
     include_once "sql_table.php";
     include_once "sql_query.php";
 
-    define("TYPE_APP_CORE", 1);
-    define("TYPE_APP_FULL", 2);
-    define("TYPE_APP_REMOTE", 3);
-    define("TYPE_APP_DESKTOP", 4);
+    define("TYPE_APP_INSIDE", 1);
+    define("TYPE_APP_OUTSIDE", 2);
+    define("TYPE_APP_DESKTOP", 3);
+    define("TYPE_APP_CORE", 4);
 
     /**
      * The SQL operation for application table.
@@ -37,9 +37,11 @@
                                             "COMMENT 'The ID of the user who create the application. '",
                 "APIKey"                =>  "VARCHAR(32) UNIQUE NOT NULL " . 
                                             "COMMENT 'The API key of the application. '",
-                "Name"                  =>  "VARCHAR(50) UNIQUE NOT NULL " . 
+                "Symbol"                =>  "VARCHAR(32) UNIQUE NOT NULL " .
+                                            "COMMENT 'The symbol for distinction. '",
+                "Name"                  =>  "VARCHAR(50) NOT NULL " . 
                                             "COMMENT 'The name of the application'",
-                "Description"           =>  "VARCHAR(200) DEFAULT '' " . 
+                "Description"           =>  "VARCHAR(240) DEFAULT '' " .
                                             "COMMENT 'The Description of the photo. '",
                 "Type"                  =>  "INT(4) DEFAULT '0' " . 
                                             "COMMENT 'The type of the applicaiton. '"
