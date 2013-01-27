@@ -17,5 +17,23 @@ function judgeSymbol() {
 }
 
 function judgeExistSymbol() {
-    //
+    var xmlhttp = getXMLHttp();
+    var symbol = Text_Symbol.value;
+    xmlhttp.onreadystatechange = function()
+    {
+        if(xmlhttp.readyState == 4 && xmlhttp.status == 200)
+        {
+            if(xmlhttp.responseText.length > 0)
+            {
+                setStatus("Status_Exist_Symbol", TYPE_ERROR, xmlhttp.responseText)
+            }
+            else
+            {
+                setStatus("Status_Exist_Symbol", TYPE_CORRECT, "");
+            }
+        }
+    }
+    xmlhttp.open("GET", "symbol_ajax.php?symbol=" + symbol);
+    xmlhttp.send();
+    setStatus("Status_Exist_Symbol", TYPE_WAITING, "检测中。。。");
 }

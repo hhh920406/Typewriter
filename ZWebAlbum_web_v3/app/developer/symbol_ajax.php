@@ -1,7 +1,9 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+include_once "data.php";
 
+$symbol = $_GET["symbol"];
+
+if(isSymbolExist($symbol)) {
+    echo "代号已存在";
+}
 ?>

@@ -51,7 +51,7 @@ class SQL {
     /**
      * Close the connection to MySQL server.
      */
-    private function __destruct() {
+    public function __destruct() {
         $this->close_connection();
     }
 
@@ -72,7 +72,7 @@ class SQL {
      */
     public function close_connection() {
         if($this->connection) {
-            mysql_close($connection);
+            mysql_close($this->connection);
         }
     }
 

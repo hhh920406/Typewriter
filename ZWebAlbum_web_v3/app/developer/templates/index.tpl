@@ -1,4 +1,5 @@
 {include file = "header.tpl"}
+<script src = "js/ajax.js"></script>
 {if $tab == "basic"}
     {if $appid}
         <script src = "js/form.js"></script>
