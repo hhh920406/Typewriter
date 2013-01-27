@@ -61,7 +61,7 @@ class SQL_Query
     /**
      * Close the connection to MySQL server.
      */
-    private function __destroy()
+    public function __destruct()
     {
         $this->close_connection();
     }
@@ -87,7 +87,7 @@ class SQL_Query
     {
         if($this->connection)
         {
-            mysql_close($connection);
+            mysql_close($this->connection);
         }
     }
 
