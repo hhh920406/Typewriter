@@ -1,16 +1,16 @@
 <?php
-include_once "data.php";
-
-$symbol = $_POST["symbol"];
-if(isSymbolExist($symbol)) {
-    echo "标识已经存在";
+include "data.php";
+$origin = getApplicationBySymbol($_POST["symbol"]);
+if(count($origin) != 1) {
+    echo "应用不存在";
     return;
 }
-
-$name = $_POST["name"];
-if(isNameExist($name)) {
-    echo "名称已经存在";
-    return;
+$origin = $origin[0];
+if($_POST["name"] != $origin["Name"]) {
+    if(isNameExist($_POST["name"])) {
+        echo "应用名称已经存在";
+        return;
+    }
 }
 
 session_start();
@@ -39,7 +39,8 @@ if($_POST["user_basic"]) {
     $permission[] = 0;
 }
 
-if(!applyApplication($info, $permission)) {
+if(!updateApplication($origin["ApplicationID"], $info, $permission)) {
     echo "提交出错";
 }
+
 ?>

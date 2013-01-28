@@ -73,6 +73,7 @@ class SQL {
     public function close_connection() {
         if($this->connection) {
             mysql_close($this->connection);
+            $this->connection = "";
         }
     }
 
