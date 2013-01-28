@@ -64,5 +64,19 @@
             $this->sql_query->select($this->tableName, "", $condition);
             return $this->sql_query->getAllResult();
         }
+
+        /**
+         * Select by the application symbol.
+         * @param string $symbol The application symbol.
+         * @return array Query result.
+         */
+        public function selectBySymbol($symbol)
+        {
+            $condition = $this->getEqualCondition(array(
+                "Symbol" => $symbol
+            ));
+            $this->sql_query->select($this->tableName, "", $condition);
+            return $this->sql_query->getAllResult();
+        }
     }
 ?>

@@ -20,14 +20,25 @@
         }
         
         /**
-         * Get the basic information of the user.
+         * Get the basic information of the application.
          * @param integer $applicationID The id of the application.
          * @return array Query result.
          */
         public static function getApplicationInformation($applicationID)
         {
-            $sql_application = new SQL_Application($applicationID);
+            $sql_application = new SQL_Application();
             return $sql_application->select($applicationID);
+        }
+
+        /**
+         * Get the basic information by symbol.
+         * @param integer $symbol The symbol of the application.
+         * @return array Query result.
+         */
+        public static function getApplicationBySymbol($symbol)
+        {
+            $sql_application = new SQL_Application();
+            return $sql_application->selectBySymbol($symbol);
         }
         
         /**
