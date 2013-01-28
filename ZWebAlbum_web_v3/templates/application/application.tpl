@@ -1,4 +1,4 @@
-{%include file = "header_small.tpl" title = "应用"%}
+{%include file = "header_small.tpl"%}
 {%if $apppath == ""%}
 <h2>
     应用不存在

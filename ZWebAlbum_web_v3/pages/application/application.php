@@ -13,12 +13,23 @@
             browseControl(AUTHORITY_LOGIN);
             if(isset($_GET["appname"]))
             {
-                $apppath = "http://" . $_SERVER["HTTP_HOST"] . "/app/" . $_GET["appname"];
+                $apppath = "http://" . $_SERVER["HTTP_HOST"] . "/app/" . $_GET["appname"] . "/index.php?username=" . $_SESSION["User_Name"];
                 $smarty->assign("apppath", $apppath);
+                include_once $_SERVER["DOCUMENT_ROOT"] . "/api/application/application_application.php";
+                $info = Application_Application::getApplicationBySymbol($_GET["appname"]);
+                if(count($info) > 0)
+                {
+                    foreach($info as $row)
+                    {
+                        $smarty->assign("title", $row["name"]);
+                        break;
+                    }
+                }
             }
             else
             {
                 $smarty->assign("apppath", "");
+                $smarty->assign("title", "应用");
             }
             $smarty->display("application/application.tpl");
         ?>
