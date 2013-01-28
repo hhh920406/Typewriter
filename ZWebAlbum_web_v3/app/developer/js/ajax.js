@@ -8,3 +8,12 @@ function getXMLHttp() {
         return new ActiveXObject("Microsoft.XMLHTTP");
     }
 }
+
+function showDialog(content) {
+    dialogBox.style.display = "block";
+    Dialog.innerHTML = content;
+}
+
+function hideDialog() {
+    dialogBox.style.display = "none";
+}

@@ -50,7 +50,8 @@ function apply() {
                     setStatus("Status_Apply", TYPE_ERROR, xmlhttp.responseText)
                 } else {
                     setStatus("Status_Apply", TYPE_CORRECT, "");
-                    window.location.href = window.location.pathname;
+                    var username = getQueryStringByName("username");
+                    window.location.href = window.location.pathname + "?username=" + username;
                 }
             }
         }

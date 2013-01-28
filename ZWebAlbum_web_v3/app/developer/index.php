@@ -7,13 +7,17 @@
     </head>
     <body>
         <?php
+        session_start();
+        $username = "";
         if(isset($_GET["username"])) {
-            include_once "sdk/apiRequestService.php";
-            $api = new ApiRequestService();
-            $api->getUserToken($_GET["username"]);
-            $basic = $api->getUserBasic();
-            session_start();
-            $_SESSION["basic"] = $basic;
+            $username = $_GET["username"];
+            if(!isset($_SESSION["basic"])) {
+                include_once "sdk/apiRequestService.php";
+                $api = new ApiRequestService();
+                $api->getUserToken($username);
+                $basic = $api->getUserBasic();
+                $_SESSION["basic"] = $basic;
+            }
         }
         include_once "smarty_init.php";
         $tab = "";
@@ -41,11 +45,8 @@
                 include_once "download.php";
                 break;
         }
-        $url = "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"];
+        $url = "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"] . "?username=" . $username;
         $smarty->assign("url", $url);
-        $smarty->assign("url_apply", $url . "?tab=apply");
-        $smarty->assign("url_doc", $url . "?tab=doc");
-        $smarty->assign("url_download", $url . "?tab=download");
         $smarty->display("index.tpl");
         ?>
     </body>

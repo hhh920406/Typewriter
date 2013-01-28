@@ -1,4 +1,50 @@
-root { 
-    display: block;
+.fieldsetDiv {
+    display: inline-block;
+    width: 49%;
 }
 
+.buttonDiv {
+    text-align: right;
+}
+
+.editButton {
+    width: 80px;
+    height: 30px;
+    margin: 5px;
+    border: 1px solid rgb(170, 170, 170);
+    border-radius: 12px 12px 12px 12px;
+    color: rgb(17, 17, 17);
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    background: -moz-linear-gradient(center top , rgb(255, 255, 255), rgb(204, 204, 204)) repeat scroll 0% 0% transparent;
+}
+
+.deleteButton {
+    width: 80px;
+    height: 30px;
+    margin: 5px;
+    border: 1px solid rgb(170, 170, 170);
+    border-radius: 12px 12px 12px 12px;
+    color: rgb(17, 17, 17);
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    background: -moz-linear-gradient(center top , rgb(255, 255, 255), rgb(204, 204, 204)) repeat scroll 0% 0% transparent;
+}
+
+.editButton:hover {
+    position: relative;
+    color: white;
+    border: 1px solid rgb(48, 114, 179);
+    background: -moz-linear-gradient(center top , rgb(89, 155, 205), rgb(48, 114, 179)) repeat scroll 0% 0% transparent;
+    cursor: pointer;
+}
+
+.deleteButton:hover {
+    position: relative;
+    color: white;
+    border: 1px solid rgb(200, 100, 100);
+    background: -moz-linear-gradient(center top , rgb(250, 100, 100), rgb(200, 50, 50)) repeat scroll 0% 0% transparent;
+    cursor: pointer;
+}

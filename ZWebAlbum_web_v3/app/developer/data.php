@@ -15,6 +15,26 @@ function isNameExist($name) {
     return count($result) > 0;
 }
 
+/**
+ * Get all the applications belong to the user.
+ * @param int $userID The id of the user.
+ */
+function getApplicationByUser($userID) {
+    $sql = new SQL();
+    $sql->query("SELECT * FROM D_Application WHERE UserID = '" . $userID . "';");
+    return $sql->getAllResult();
+}
+
+/**
+ * Delete application by application ID.
+ * @param int $applicationID
+ */
+function deleteApplication($applicationID) {
+    $sql = new SQL();
+    $sql->query("DELETE FROM D_Application_Permission WHERE ApplicationID = '" . $applicationID . "';");
+    $sql->query("DELETE FROM D_Application WHERE ApplicationID = '" . $applicationID . "';");
+}
+
 function applyApplication($info, $permission) {
     $apikey = substr(md5(uniqid(mt_rand(), true)), 0, 32);
     $sql = new SQL();
