@@ -88,6 +88,7 @@ class SQL_Query
         if($this->connection)
         {
             mysql_close($this->connection);
+            $this->connection = "";
         }
     }
 
