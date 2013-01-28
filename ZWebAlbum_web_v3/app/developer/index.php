@@ -7,6 +7,14 @@
     </head>
     <body>
         <?php
+        if(isset($_GET["username"])) {
+            include_once "sdk/apiRequestService.php";
+            $api = new ApiRequestService();
+            $api->getUserToken($_GET["username"]);
+            $basic = $api->getUserBasic();
+            session_start();
+            $_SESSION["basic"] = $basic;
+        }
         include_once "smarty_init.php";
         $tab = "";
         if(isset($_GET["tab"])) {

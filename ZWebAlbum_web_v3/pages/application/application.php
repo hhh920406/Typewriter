@@ -21,9 +21,13 @@
                 {
                     foreach($info as $row)
                     {
-                        $smarty->assign("title", $row["name"]);
+                        $smarty->assign("title", $row["Name"]);
                         break;
                     }
+                }
+                else
+                {
+                    $smarty->assign("title", "应用");
                 }
             }
             else

@@ -1,7 +1,5 @@
 <?php
-include_once "sdk/apiRequestService.php";
-$api = new ApiRequestService();
-$api->getUserToken("Monkey012");
-$basic = $api->getUserBasic();
+session_start();
+$basic = $_SESSION["basic"];
 $smarty->assign("basic", $basic);
 ?>

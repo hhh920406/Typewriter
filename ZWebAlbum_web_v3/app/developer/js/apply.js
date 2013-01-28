@@ -50,6 +50,7 @@ function apply() {
                     setStatus("Status_Apply", TYPE_ERROR, xmlhttp.responseText)
                 } else {
                     setStatus("Status_Apply", TYPE_CORRECT, "");
+                    window.location.href = window.location.pathname;
                 }
             }
         }
@@ -72,15 +73,14 @@ function apply() {
                 break;
         }
         var user_basic = Checkbox_user_basic.checked;
-        //TODO 还需要获取用户ID
-        xmlhttp.open("GET", "apply_ajax.php?" +
-            "id=" + "6" + "&" + 
+        xmlhttp.open("POST", "apply_ajax.php");
+        xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        xmlhttp.send(
             "symbol=" + symbol + "&" +
             "name=" + name + "&" +
             "description=" + description + "&" +
             "type=" + type + "&" +
             "user_basic=" + user_basic);
-        xmlhttp.send();
         setStatus("Status_Apply", TYPE_WAITING, "提交中。。。");
     }
 }

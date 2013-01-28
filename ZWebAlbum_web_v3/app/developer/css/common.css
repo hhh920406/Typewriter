@@ -112,7 +112,7 @@ input[type="submit"] {
 input[type="button"]:hover,
 input[type="submit"]:hover {
     position: relative;
-    background: -moz-linear-gradient(center top , rgb(204, 204, 204), rgb(221, 221, 221)) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(center top , rgb(255, 255, 255), rgb(221, 221, 221)) repeat scroll 0% 0% transparent;
     cursor: pointer;
 }
 

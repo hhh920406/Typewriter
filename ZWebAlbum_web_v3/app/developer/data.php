@@ -25,7 +25,21 @@ function applyApplication($info, $permission) {
             "'" . $info["name"] . "'," .
             "'" . $info["description"] . "'," .
             "'" . $info["type"] . "');");
-    echo mysql_error();
-    return mysql_error() == "";
+    if(mysql_error()) {
+        return false;
+    }
+    $sql->query("SELECT LAST_INSERT_ID()");
+    $result = $sql->getSingleResult();
+    $applicationID = $result[0];
+    foreach($permission as $row) {
+        $sql->query("INSERT INTO D_Application_Permission (ApplicationID, Permission, Type) VALUES (" .
+            "'" . $applicationID . "'," .
+            "'" . $row . "'," .
+            "'" . "0" . "');");
+        if(mysql_error()){
+            return false;
+        }
+    }
+    return true;
 }
 ?>

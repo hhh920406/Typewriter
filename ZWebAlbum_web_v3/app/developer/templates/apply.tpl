@@ -131,9 +131,9 @@
         <hr/>
     </div>
     <div class = "rowSubmit">
-        <div id = "Status_Apply"></div>
-    </div>
-    <div class = "rowSubmit">
         <input type = "button" value = "申　请" onclick = "apply()"></input>
+        <div class = "columnInput">
+            <div id = "Status_Apply"></div>
+        </div>
     </div>
 </div>
