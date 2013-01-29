@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"] . '/api/data/sql_application_token.php';
+include_once $_SERVER["DOCUMENT_ROOT"] . "/api/data/sql_application_token.php";
 
 /**
  * Basic operations for application token distribution.

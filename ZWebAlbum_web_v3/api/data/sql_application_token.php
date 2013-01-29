@@ -93,7 +93,6 @@
         public function insertToken($key, $name)
         {
             $token = substr(md5(uniqid(mt_rand(), true)), 0, 32);
-            $this->sql_query->close_connection();
             $sql_user = new SQL_User();
             $user = $sql_user->selectByName($name);
             $id = 0;

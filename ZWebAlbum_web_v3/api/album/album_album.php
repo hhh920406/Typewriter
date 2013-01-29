@@ -1,5 +1,5 @@
 <?php
-    include_once $_SERVER['DOCUMENT_ROOT'].'/api/data/sql_album.php';
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/api/data/sql_album.php";
 
     /**
      * The APIs about album.

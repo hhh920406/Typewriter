@@ -18,7 +18,7 @@ class SQL_Table
      */
     public function __construct()
     {
-        $this->sql_query = new SQL_Query();
+        $this->sql_query = SQL_Query::getInstance();
     }
 
     /**
@@ -26,7 +26,6 @@ class SQL_Table
      */
     public function __destroy()
     {
-        unset($this->sql_query);
     }
     
     /**
