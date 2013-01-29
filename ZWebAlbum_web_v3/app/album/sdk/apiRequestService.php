@@ -48,8 +48,8 @@ class ApiRequestService extends HttpRequestService {
     /**
      * 获取用户的令牌，如果同时拥有正确的用户名和密码，则默认得到了用户的全部许可，通常用于网站外客户端的制作。
      * 如果没有用户名和密码，则只能是网站内部的应用，网站会根据已登录用户的记录来进行许可的授权。
-     * @param string $name
-     * @param string $password
+     * @param string $name 用户名
+     * @param string $password 密码
      * @return string  如果成功返回用户的令牌，如果失败返回false。
      */
     public function getUserToken($name, $password = "") {
@@ -102,6 +102,221 @@ class ApiRequestService extends HttpRequestService {
             return $basic;
         }
         return array();
+    }
+
+    /**
+     * 删除用户的相册，同时删除相册里面的所有图片。
+     * @param int $albumID 相册的ID，在获取相册信息时可以得到。
+     * @return bool 如果成功返回true，否则返回false。
+     */
+    public function deleteAlbum($albumID) {
+        $post_data = array();
+        $post_data["method"] = "album.delete";
+        $result = $this->apiPost($post_data);
+        if($result) {
+            $result = json_decode($result);
+            return $result->return == "true";
+        }
+        return false;
+    }
+
+    /**
+     * 删除用户的照片。
+     * @param int $photoID 照片的ID，在获取照片信息时可以得到。
+     * @return bool 如果成功返回true，否则返回false。
+     */
+    public function deletePhoto($photoID) {
+        $post_data = array();
+        $post_data["method"] = "photo.delete";
+        $result = $this->apiPost($post_data);
+        if($result) {
+            $result = json_decode($result);
+            return $result->return == "true";
+        }
+        return false;
+    }
+
+    /**
+     * 新建相册。
+     * @param string $name 相册的名称。
+     * @param string $description 相册的描述。
+     * @param string $type 相册的类型。
+     * @return int 新建相册的ID。
+     */
+    public function insertAlbum($name, $description, $type) {
+        $post_data = array();
+        $post_data["method"] = "album.insert";
+        $post_data["album_name"] = $name;
+        $post_data["album_description"] = $description;
+        $post_data["album_type"] = $type;
+        $result = $this->apiPost($result);
+        if($result) {
+            $result = json_decode($result);
+            if(isset($result->album_id)) {
+                return $result->album_id;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * 上传照片。
+     * @param string $albumID 相册的ID。
+     * @param string $description 对于照片的描述。
+     * @param string $photoPath 要上传的照片在本地的位置。
+     * @return int 上传照片后的ID。
+     */
+    public function insertPhoto($albumID, $description, $photoPath) {
+        $post_data = array();
+        $post_data["method"] = "photo.insert";
+        $post_data["album_id"] = $albumID;
+        $post_data["photo_description"] = $description;
+        $post_data["photo_path"] = $photoPath;
+        $result = $this->apiPost($result);
+        if($result) {
+            $result = json_decode($result);
+            if(isset($result->album_id)) {
+                return $result->album_id;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * 获得全部相册的信息。
+     * @return array 返回是一个数组，数组中的每一项是一个stdClass，包含AlbumID相册ID、Album_Name相册名、Album_Description相册描述、Album_Type相册类型、Album_Indice相册用于排序的索引。
+     */
+    public function selectAllAlbums() {
+        $post_data = array();
+        $post_data["method"] = "album.select";
+        $result = $this->apiPost($result);
+        if($result) {
+            $result = json_decode($result);
+            return $result;
+        }
+        return array();
+    }
+
+    /**
+     * 获得指定相册的信息。
+     * @param int $albumID 相册的ID。
+     * @return stdClass @see selectAllAlbums()
+     */
+    public function selectAlbumById($albumID) {
+        $post_data = array();
+        $post_data["method"] = "album.select";
+        $post_data["album_id"] = $albumID;
+        $result = $this->apiPost($result);
+        if($result) {
+            $result = json_decode($result);
+            if(count($result) > 0) {
+                return $result[0];
+            }
+        }
+        return array();
+    }
+
+    /**
+     * 获得指定相册的信息。
+     * @param string $albumName 相册的名称。
+     * @return stdClass @see selectAllAlbums()
+     */
+    public function selectAlbumByName($albumName) {
+        $post_data = array();
+        $post_data["method"] = "album.select";
+        $post_data["album_name"] = $albumName;
+        $result = $this->apiPost($result);
+        if($result) {
+            $result = json_decode($result);
+            if(count($result) > 0) {
+                return $result[0];
+            }
+        }
+        return array();
+    }
+
+    /**
+     * 获得相册中的全部照片信息。
+     * @param int $albumID 相册的ID。
+     * @return array 返回的是一个数组，数组中的每一项是一个stdClass，包含PhotoID照片ID、AlbumID所属相册的ID、Description照片描述、Indice用于照片排序的索引。
+     */
+    public function selectAllPhotos($albumID) {
+        $post_data = array();
+        $post_data["method"] = "photo.select";
+        $post_data["album_id"] = $albumID;
+        $result = $this->apiPost($result);
+        if($result) {
+            $result = json_decode($result);
+            return $result;
+        }
+        return array();
+    }
+
+    /**
+     * 获取指定照片的信息。
+     * @param int $photoID 照片的ID。
+     * @return stdClass @see selectAllPhotos()
+     */
+    public function selectById($photoID) {
+        $post_data = array();
+        $post_data["method"] = "photo.select";
+        $post_data["photo_id"] = $photoID;
+        $result = $this->apiPost($result);
+        if($result) {
+            $result = json_decode($result);
+            if(count($result) > 0) {
+                return $result[0];
+            }
+        }
+        return array();
+    }
+
+    /**
+     * 更新相册信息。
+     * @param int $albumID 相册的ID。
+     * @param string $name 相册的名称。
+     * @param string $description 相册的描述。
+     * @param int $type 相册的类型。
+     * @param int $indice 相册的排序索引。
+     * @return bool 如果成功返回true，否则返回false。
+     */
+    public function updateAlbum($albumID, $name, $description, $type, $indice) {
+        $post_data = array();
+        $post_data["method"] = "album.update";
+        $post_data["album_id"] = $albumID;
+        $post_data["album_name"] = $name;
+        $post_data["album_description"] = $description;
+        $post_data["album_type"] = $type;
+        $post_data["album_indice"] = $indice;
+        $result = $this->apiPost($post_data);
+        if($result) {
+            $result = json_decode($result);
+            return $result->return == "true";
+        }
+        return false;
+    }
+
+    /**
+     * 更新照片信息。
+     * @param int $photoID 照片的ID。
+     * @param int $albumID 所属相册的ID。
+     * @param string $description 照片的描述。
+     * @param int $indice 照片的排序索引。
+     * @return bool 如果成功返回true，否则返回false。
+     */
+    public function updatePhoto($photoID, $albumID, $description, $indice) {
+        $post_data = array();
+        $post_data["method"] = "photo.update";
+        $post_data["photo_id"] = $photoID;
+        $post_data["album_id"] = $albumID;
+        $post_data["photo_description"] = $description;
+        $post_data["photo_indice"] = $indice;
+        $result = $this->apiPost($post_data);
+        if($result) {
+            $result = json_decode($result);
+            return $result->return == "true";
+        }
+        return false;
     }
 }
 
