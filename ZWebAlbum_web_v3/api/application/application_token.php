@@ -44,6 +44,25 @@ class Application_Token
     }
 
     /**
+     * Get the user ID.
+     * @param string $token The token of the communication.
+     * @return string The user ID.
+     */
+    public static function getUserID($token)
+    {
+        $sql = new SQL_Application_Token();
+        $result = $sql->selectByToken($token);
+        if(count($result) > 0)
+        {
+            foreach($result as $row)
+            {
+                return $row["UserID"];
+            }
+        }
+        return "";
+    }
+
+    /**
      * Get the API key.
      * @param string $token The token of the communication.
      * @return string The API key.

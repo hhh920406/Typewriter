@@ -2,6 +2,7 @@
     include_once "sql_define.php";
     include_once "sql_table.php";
     include_once "sql_query.php";
+    include_once "sql_user.php";
 
     /**
      * The SQL operation for application token table.
@@ -28,6 +29,8 @@
             (
                 "APIKey"    =>  "VARCHAR(32) NOT NULL " .
                                 "COMMENT 'The API key of the application. '",
+                "UserID"    =>  "INT(4) NOT NULL " .
+                                "COMMENT 'The ID of the user. '",
                 "UserName"  =>  "VARCHAR(50) NOT NULL " .
                                 "COMMENT 'The name of the user. '",
                 "Token"     =>  "VARCHAR(32) NOT NULL " .
@@ -90,8 +93,11 @@
         public function insertToken($key, $name)
         {
             $token = substr(md5(uniqid(mt_rand(), true)), 0, 32);
-            $columnArray = array("APIKey", "UserName", "Token");
-            $valueArray = array($key, $name, $token);
+            $sql_user = new SQL_User();
+            $user = $sql_user->selectByName($name);
+            $id = $user[0]["UserID"];
+            $columnArray = array("APIKey", "UserID", "UserName", "Token");
+            $valueArray = array($key, $id, $name, $token);
             $this->sql_query->insert($this->tableName, $columnArray, $valueArray);
             return $token;
         }

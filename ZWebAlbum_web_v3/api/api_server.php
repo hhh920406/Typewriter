@@ -10,12 +10,7 @@ if(isset($_POST["API_KEY"]) && isset($_POST["method"]))
         if(isset($_POST["token"]))
         {
             $token = $_POST["token"];
-            switch($_POST["method"])
-            {
-                case "user.basic":
-                    include_once "server/user.basic.php";
-                    break;
-            }
+            include_once "server/" . $_POST["method"] . ".php";
         }
     }
 }
