@@ -6,6 +6,7 @@ obj
 *.png
 *.jpg
 *.gif
+*.zip
 
 # Other Projects
 phpMyAdmin
