@@ -6,17 +6,15 @@ obj
 *.png
 *.jpg
 *.gif
+*.zip
 
 # Other Projects
 phpMyAdmin
 
 # Smarty Folders
-/ZWebAlbum_web_v3/cache
-/ZWebAlbum_web_v3/plugins
-/ZWebAlbum_web_v3/templates_c
-/ZWebAlbum_web_v3/app/developer/cache
-/ZWebAlbum_web_v3/app/developer/plugins
-/ZWebAlbum_web_v3/app/developer/templates_c
+cache
+plugins
+templates_c
 
 # Netbeans Project
 nbproject
