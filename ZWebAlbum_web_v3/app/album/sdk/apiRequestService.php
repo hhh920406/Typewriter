@@ -93,12 +93,6 @@ class ApiRequestService extends HttpRequestService {
         $result = $this->apiPost($post_data);
         if($result) {
             $result = json_decode($result);
-            $basic = array(
-                "id" => $result->UserID,
-                "name" => $result->Name,
-                "nickname" => $result->Nickname,
-                "type" => $result->Type
-            );
             return $basic;
         }
         return array();
