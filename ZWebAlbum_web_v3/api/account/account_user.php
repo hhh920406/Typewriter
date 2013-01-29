@@ -1,6 +1,6 @@
 <?php
     include_once "account_regex.php";
-    include_once $_SERVER['DOCUMENT_ROOT'].'/api/data/sql_user.php';
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/api/data/sql_user.php";
 
     define("USER_TYPE_NORMAL", 0);
     define("USER_TYPE_STAR", 1);

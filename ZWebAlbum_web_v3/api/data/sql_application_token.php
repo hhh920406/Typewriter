@@ -95,7 +95,13 @@
             $token = substr(md5(uniqid(mt_rand(), true)), 0, 32);
             $sql_user = new SQL_User();
             $user = $sql_user->selectByName($name);
-            $id = $user[0]["UserID"];
+            $id = 0;
+            foreach($user as $row)
+            {
+                $id = $row["UserID"];
+                break;
+            }
+            unset($sql_user);
             $columnArray = array("APIKey", "UserID", "UserName", "Token");
             $valueArray = array($key, $id, $name, $token);
             $this->sql_query->insert($this->tableName, $columnArray, $valueArray);

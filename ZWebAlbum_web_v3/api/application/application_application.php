@@ -1,6 +1,6 @@
 <?php
-    include_once $_SERVER["DOCUMENT_ROOT"] . '/api/data/sql_application.php';
-    include_once $_SERVER["DOCUMENT_ROOT"] . '/api/data/sql_application_permission.php';
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/api/data/sql_application.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/api/data/sql_application_permission.php";
     
     /**
      * The basic application operaions.
