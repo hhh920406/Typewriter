@@ -10,13 +10,24 @@ if(isset($_POST["API_KEY"]) && isset($_POST["method"]))
         if(isset($_POST["token"]))
         {
             $token = $_POST["token"];
-            switch($_POST["method"])
+            $filename = "server/" . $_POST["method"] . ".php";
+            if(file_exists($filename))
             {
-                case "user.basic":
-                    include_once "server/user.basic.php";
-                    break;
+                include_once $filename;
+            }
+            else
+            {
+                echo json_encode(array("error", "请求操作不存在。"));
             }
         }
+        else
+        {
+            echo json_encode(array("error", "没有给出用户令牌。"));
+        }
     }
+}
+else
+{
+    echo json_encode(array("error", "没有提供API Key或操作方法。"));
 }
 ?>

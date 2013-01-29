@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"] . '/api/data/sql_application_token.php';
+include_once $_SERVER["DOCUMENT_ROOT"] . "/api/data/sql_application_token.php";
 
 /**
  * Basic operations for application token distribution.
@@ -38,6 +38,25 @@ class Application_Token
             foreach($result as $row)
             {
                 return $row["UserName"];
+            }
+        }
+        return "";
+    }
+
+    /**
+     * Get the user ID.
+     * @param string $token The token of the communication.
+     * @return string The user ID.
+     */
+    public static function getUserID($token)
+    {
+        $sql = new SQL_Application_Token();
+        $result = $sql->selectByToken($token);
+        if(count($result) > 0)
+        {
+            foreach($result as $row)
+            {
+                return $row["UserID"];
             }
         }
         return "";

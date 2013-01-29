@@ -51,11 +51,11 @@
          * @param string $Name
          * @return array Query result.
          */
-        public function selectByName($userID, $Name)
+        public function selectByName($userID, $name)
         {
             $condition = $this->getEqualCondition(array(
                 "UserID" => $userID,
-                "Name" => $Name
+                "Name" => $name
             ));
             $this->sql_query->select($this->tableName, "", $condition);
             return $this->sql_query->getAllResult();

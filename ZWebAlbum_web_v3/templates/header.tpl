@@ -10,12 +10,12 @@
                 </a>
             </li>
             <li>
-                <a href = "/pages/album/list.php">
+                <a href = "">
                     个人主页
                 </a>
             </li>
             <li>
-                <a href = "/pages/photo/upload.php">
+                <a href = "/pages/application/application.php?appname=album">
                     相册
                 </a>
             </li>

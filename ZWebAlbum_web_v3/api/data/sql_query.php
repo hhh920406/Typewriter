@@ -30,6 +30,17 @@ class SQL_Query
     private $result = "";
     private $queryString = "";
 
+    private static $instance = "";
+
+    public static function getInstance()
+    {
+        if(SQL_Query::$instance == "")
+        {
+            SQL_Query::$instance = new SQL_Query();
+        }
+        return SQL_Query::$instance;
+    }
+
     /**
      * Initial the class with database information.
      * @param string $host The host name.
@@ -37,7 +48,7 @@ class SQL_Query
      * @param string $password The login password.
      * @param string $databaseName The database name.
      */
-    public function __construct($host = "", $name = "", $password = "", $databaseName = "")
+    private function __construct($host = "", $name = "", $password = "", $databaseName = "")
     {
         if($host)
         {

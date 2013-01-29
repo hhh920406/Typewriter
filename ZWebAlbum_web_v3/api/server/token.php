@@ -1,7 +1,7 @@
 <?php
 if(isset($_POST["name"]))
 {
-    include_once $_SERVER['DOCUMENT_ROOT']."/api/account/account_user.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/api/account/account_user.php";
     $name = $_POST["name"];
     if(isset($_POST["password"]))
     {
@@ -26,7 +26,7 @@ if(isset($_POST["name"]))
         $result = Account_User::getUserByName($name);
         if(count($result) == 1)
         {
-            include_once $_SERVER['DOCUMENT_ROOT']."/api/application/application_token.php";
+            include_once $_SERVER['DOCUMENT_ROOT'] . "/api/application/application_token.php";
             $key = $_POST["API_KEY"];
             echo json_encode(array(
                 "token" => Application_Token::createToken($key, $name)));

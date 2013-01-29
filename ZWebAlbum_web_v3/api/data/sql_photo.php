@@ -55,5 +55,18 @@
             $this->sql_query->select($this->tableName, "", $condition, "", "Indice DESC");
             return $this->sql_query->getAllResult();
         }
+
+        /**
+         * Delete all photos in the album.
+         * @param int $albumID
+         * @return boolean
+         */
+        public function deleteByAlbum($albumID)
+        {
+            $condition = $this->getEqualCondition(array(
+                "AlbumID" => $albumID
+            ));
+            return $this->sql_query->delete($this->tableName, $condition);
+        }
     }
 ?>
