@@ -63,7 +63,7 @@ function deletePermissions($applicationID) {
  * @param int $applicationID
  */
 function deleteApplication($applicationID) {
-    deleteApplication($applicationID);
+    deletePermissions($applicationID);
     $sql = new SQL();
     $sql->query("DELETE FROM D_Application WHERE ApplicationID = '" . $applicationID . "';");
 }
