@@ -13,7 +13,7 @@
             return $sql_photo->select($albumID);
         }
         
-        public static function getPhotosNumber($albumID)
+        public static function getPhotoNumber($albumID)
         {
             return count(Account_Photo::getPhotos($albumID));
         }

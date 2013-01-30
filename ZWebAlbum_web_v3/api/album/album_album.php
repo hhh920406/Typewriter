@@ -19,9 +19,9 @@
             return $sql_album->selectByName($userID, $name);
         }
         
-        public static function getAlbumsNumber($userID)
+        public static function getAlbumNumber($userID)
         {
-            return count(Album_Album::getAlbumsNumber($userID));
+            return count(Album_Album::getAllAlbums($userID));
         }
         
         public static function getNextIndice($userID)

@@ -14,7 +14,14 @@ else if(isset($_POST["album_name"]))
 }
 else
 {
-    $userID = Application_Token::getUserID($token);
-    echo json_encode(Album_Album::getAllAlbums($userID));
+    if(isset($_POST["limit_start"]) && isset($_POST["limit_number"]))
+    {
+        //TODO
+    } 
+    else
+    {
+        $userID = Application_Token::getUserID($token);
+        echo json_encode(Album_Album::getAllAlbums($userID));
+    }
 }
 ?>
