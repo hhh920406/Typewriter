@@ -9,10 +9,10 @@ if(isset($_POST["album_id"]))
     {
         if(Album_Album::delete($albumID))
         {
-            echo json_encode(array("return", "true"));
+            echo json_encode(array("return" => "true"));
             return;
         }
     }
 }
-echo json_encode(array("return", "false"));
+echo json_encode(array("return" => "false"));
 ?>

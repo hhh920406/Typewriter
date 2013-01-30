@@ -17,17 +17,17 @@ if(isset($_POST["API_KEY"]) && isset($_POST["method"]))
             }
             else
             {
-                echo json_encode(array("error", "请求操作不存在。"));
+                echo json_encode(array("error" => "请求操作不存在。"));
             }
         }
         else
         {
-            echo json_encode(array("error", "没有给出用户令牌。"));
+            echo json_encode(array("error" => "没有给出用户令牌。"));
         }
     }
 }
 else
 {
-    echo json_encode(array("error", "没有提供API Key或操作方法。"));
+    echo json_encode(array("error" => "没有提供API Key或操作方法。"));
 }
 ?>

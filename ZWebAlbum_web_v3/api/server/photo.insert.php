@@ -10,6 +10,6 @@ $photoInfo = array(
     "Description" => $description,
     "PhotoPath" => $path
 );
-Album_Photo::insert($photoInfo);
-echo json_decode(array("album_photo", Album_Photo::getAutoIncrementID()));
+
+echo json_decode(array("album_photo" => Album_Photo::insert($photoInfo)));
 ?>
