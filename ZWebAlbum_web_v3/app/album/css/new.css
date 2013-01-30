@@ -1,0 +1,63 @@
+@CHARSET "UTF-8";
+
+ .newDiv {
+     width: 600px;
+     margin: 0 auto;
+}
+
+.newHead {
+    width: 100%;
+    text-align: center;
+    font-size: large;
+}
+
+.newLine {
+    width: 100%;
+    min-height: 50px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.newText {
+    display: inline-block;
+    width: 100px;
+    height: 50px;
+    text-align: right;
+    vertical-align: top;
+    line-height: 50px;
+}
+
+.newInput {
+    display: inline-block;
+    width: 300px;
+    height: 50px;
+    vertical-align: top;
+}
+
+.newStatus {
+    display: inline-block;
+    width: 180px;
+    height: 50px;
+    margin: 0 auto;
+    padding-top: 15px;
+    font-size: 14px;
+}
+
+.newDescription {
+    display: inline-block;
+    position: relative;
+    left: 100px;
+    width: 300px;
+    padding-top: 1px;
+    padding-left: 5px;
+    font-size: 12px;
+    vertical-align: top;
+    color: darkgray;
+}
+
+.newTextArea {
+    display: inline-block;
+    width: 300px;
+    height: 106px;
+    vertical-align: top;
+}

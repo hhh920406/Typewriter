@@ -63,7 +63,7 @@ class ApiRequestService extends HttpRequestService {
         if($result) {
             $result = json_decode($result);
             $this->user_token = $result->token;
-            setcookie($this->token_cookie, $this->user_token, 8640000, "/");
+            setcookie($this->token_cookie, $this->user_token, time() + 86400, "/");
         } else {
             $this->user_token = "";
         }
@@ -93,7 +93,7 @@ class ApiRequestService extends HttpRequestService {
         $result = $this->apiPost($post_data);
         if($result) {
             $result = json_decode($result);
-            return $basic;
+            return $result;
         }
         return array();
     }
@@ -143,14 +143,14 @@ class ApiRequestService extends HttpRequestService {
         $post_data["album_name"] = $name;
         $post_data["album_description"] = $description;
         $post_data["album_type"] = $type;
-        $result = $this->apiPost($result);
+        $result = $this->apiPost($post_data);
         if($result) {
             $result = json_decode($result);
             if(isset($result->album_id)) {
                 return $result->album_id;
             }
         }
-        return 0;
+        return "0";
     }
 
     /**
@@ -166,7 +166,7 @@ class ApiRequestService extends HttpRequestService {
         $post_data["album_id"] = $albumID;
         $post_data["photo_description"] = $description;
         $post_data["photo_path"] = $photoPath;
-        $result = $this->apiPost($result);
+        $result = $this->apiPost($post_data);
         if($result) {
             $result = json_decode($result);
             if(isset($result->album_id)) {
@@ -183,7 +183,7 @@ class ApiRequestService extends HttpRequestService {
     public function selectAllAlbums() {
         $post_data = array();
         $post_data["method"] = "album.select";
-        $result = $this->apiPost($result);
+        $result = $this->apiPost($post_data);
         if($result) {
             $result = json_decode($result);
             return $result;
@@ -200,7 +200,7 @@ class ApiRequestService extends HttpRequestService {
         $post_data = array();
         $post_data["method"] = "album.select";
         $post_data["album_id"] = $albumID;
-        $result = $this->apiPost($result);
+        $result = $this->apiPost($post_data);
         if($result) {
             $result = json_decode($result);
             if(count($result) > 0) {
@@ -219,7 +219,7 @@ class ApiRequestService extends HttpRequestService {
         $post_data = array();
         $post_data["method"] = "album.select";
         $post_data["album_name"] = $albumName;
-        $result = $this->apiPost($result);
+        $result = $this->apiPost($post_data);
         if($result) {
             $result = json_decode($result);
             if(count($result) > 0) {
@@ -238,7 +238,7 @@ class ApiRequestService extends HttpRequestService {
         $post_data = array();
         $post_data["method"] = "photo.select";
         $post_data["album_id"] = $albumID;
-        $result = $this->apiPost($result);
+        $result = $this->apiPost($post_data);
         if($result) {
             $result = json_decode($result);
             return $result;
@@ -251,11 +251,11 @@ class ApiRequestService extends HttpRequestService {
      * @param int $photoID 照片的ID。
      * @return stdClass @see selectAllPhotos()
      */
-    public function selectById($photoID) {
+    public function selectPhotoById($photoID) {
         $post_data = array();
         $post_data["method"] = "photo.select";
         $post_data["photo_id"] = $photoID;
-        $result = $this->apiPost($result);
+        $result = $this->apiPost($post_data);
         if($result) {
             $result = json_decode($result);
             if(count($result) > 0) {
