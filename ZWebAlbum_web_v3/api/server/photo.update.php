@@ -12,10 +12,10 @@ $photoInfo = array(
 );
 if(Album_Photo::update($photoID, $photoInfo))
 {
-    echo json_encode(array("return", "true"));
+    echo json_encode(array("return" => "true"));
 }
 else
 {
-    echo json_encode(array("return", "false"));
+    echo json_encode(array("return" => "false"));
 }
 ?>

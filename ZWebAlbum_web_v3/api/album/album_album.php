@@ -50,7 +50,7 @@
         public static function insert($albumInfo)
         {
             $sql_album = new SQL_Album();
-            $albumInfo["Indice"] = getNextIndice($albumInfo["UserID"]);
+            $albumInfo["Indice"] = Album_Album::getNextIndice($albumInfo["UserID"]);
             return $sql_album->insert($albumInfo);
         }
 
@@ -60,7 +60,7 @@
             return $sql_album->delete($albumID);
         }
 
-        public function getAutoIncrementID()
+        public static function getAutoIncrementID()
         {
             $sql_album = new SQL_Album();
             return $sql_album->getAutoIncrementID();
