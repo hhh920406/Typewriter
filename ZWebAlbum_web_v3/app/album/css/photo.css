@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+
+.title {
+    font-size: 16px;
+    color: rgb(50, 50, 50);
+    padding-left: 50px;
+}
+
+
+.title a {
+    color: black;
+    text-decoration: none;
+}
+
+.title a:hover {
+    color: white;
+    background-color: black;
+}

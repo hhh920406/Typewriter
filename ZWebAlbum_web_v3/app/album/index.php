@@ -31,11 +31,11 @@
             switch($tab) {
                 case "":
                     if(isset($_GET["photoid"])) {
-                        include_once "photo_list.php";
-                        $tabsub = "photo_list";
-                    } else if(isset($_GET["albumid"])) {
                         include_once "photo.php";
                         $tabsub = "photo";
+                    } else if(isset($_GET["albumid"])) {
+                        include_once "photo_list.php";
+                        $tabsub = "photo_list";
                     } else {
                         include_once "album_list.php";
                         $tabsub = "album_list";

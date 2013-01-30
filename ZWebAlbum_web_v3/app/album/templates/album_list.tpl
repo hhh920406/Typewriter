@@ -1,3 +1,7 @@
+<div class = "title">
+    全部相册
+    <hr/>
+</div>
 {foreach item = album from = $albums}
 <div class = "albumDiv">
     <a href = {$url}&albumid={$album->AlbumID}>
