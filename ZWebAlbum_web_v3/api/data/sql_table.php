@@ -152,9 +152,9 @@ class SQL_Table
         $this->sql_query->insert($this->tableName, $columns, $values);
         if(mysql_error())
         {
-            return false;
+            return 0;
         }
-        return true;
+        return $this->getAutoIncrementID();
     }
 
     /**
