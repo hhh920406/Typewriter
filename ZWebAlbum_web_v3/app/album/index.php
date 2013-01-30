@@ -11,7 +11,6 @@
              */
             session_start();
             $username = "";
-            unset($_SESSION["basic"]);
             if(isset($_GET["username"])) {
                 $username = $_GET["username"];
                 if(!isset($_SESSION["basic"])) {

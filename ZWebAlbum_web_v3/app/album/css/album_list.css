@@ -1,0 +1,10 @@
+@CHARSET "UTF-8";
+
+.albumDiv {
+    display: inline-block;
+    width: 200px;
+    height: 150px;
+    margin: 20px;
+    box-shadow: 3px 3px 15px rgb(187, 187, 187);
+}
+
