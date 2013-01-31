@@ -5,17 +5,17 @@
      * The APIs about album.
      * @author ZHG <CyberZHG@gmail.com>
      */
-    class Account_Photo
+    class Album_Photo
     {
         public static function getPhotos($albumID)
         {
             $sql_photo = new SQL_Photo();
-            return $sql_photo->select($albumID);
+            return $sql_photo->selectByAlbum($albumID);
         }
         
         public static function getPhotoNumber($albumID)
         {
-            return count(Account_Photo::getPhotos($albumID));
+            return count(Album_Photo::getPhotos($albumID));
         }
         
         public static function getNextIndice($albumID)
