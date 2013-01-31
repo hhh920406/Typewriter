@@ -12,6 +12,7 @@
     <script src = "js/new.js"></script>
     {include file = "new.tpl"}
 {elseif $tab == "upload"}
+    <script src = "js/upload.js"></script>
     {include file = "upload.tpl"}
 {/if}
 {include file = "footer.tpl"}

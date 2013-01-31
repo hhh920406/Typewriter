@@ -160,12 +160,11 @@ class ApiRequestService extends HttpRequestService {
      * @param string $photoPath 要上传的照片在本地的位置。
      * @return int 上传照片后的ID。
      */
-    public function insertPhoto($albumID, $description, $photoPath) {
+    public function insertPhoto($albumID, $photoPath) {
         $post_data = array();
         $post_data["method"] = "photo.insert";
         $post_data["album_id"] = $albumID;
-        $post_data["photo_description"] = $description;
-        $post_data["photo_path"] = $photoPath;
+        $post_data["upload"] = "@" . $photoPath;
         $result = $this->apiPost($post_data);
         if($result) {
             $result = json_decode($result);

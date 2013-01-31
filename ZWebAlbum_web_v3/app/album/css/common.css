@@ -132,14 +132,6 @@ textarea {
     height: 100px;
 }
 
-select {
-    width: 272px;
-    height: 48px;
-    padding-top: 12px;
-    padding-left: 10px;
-    font-size: 16px;
-}
-
 fieldset {
     margin-top: 1em;
     border-radius: 4px 4px 4px 4px;
