@@ -20,9 +20,8 @@ if($_FILES["upload"]["error"] == UPLOAD_ERR_OK)
 {
     $description = $_FILES["upload"]["name"];
     $extension = getExtension($_FILES["upload"]["name"]);
-    $tempPath = $_SERVER["DOCUMENT_ROOT"] . "/temp/" . $_FILES["upload"]["tmp_name"];
     $path = $_SERVER["DOCUMENT_ROOT"] . "/storage/" . $albumID . "/" . substr(md5(uniqid(mt_rand(), true)), 0, 32) . $extension;
-    copy($tempPath, $path);
+    move_uploaded_file($_FILES["upload"]["tmp_name"], $path);
     $photoInfo = array(
         "AlbumID" => $albumID,
         "Description" => $description,
