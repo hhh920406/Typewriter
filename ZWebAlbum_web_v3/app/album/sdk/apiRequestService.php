@@ -37,12 +37,19 @@ class ApiRequestService extends HttpRequestService {
      * @return string  如果成功返回内容，如果失败返回false。
      */
     public function apiPost($post_data) {
-        $post_data["API_KEY"] = $this->api_config->API_KEY;
         $post_data["SDK_VERSION"] = $this->api_config->SDK_VERSION;
         if($this->user_token != "") {
             $post_data["token"] = $this->user_token;
         }
         return $this->post($this->api_config->API_URL, $post_data);
+    }
+
+    /**
+     * 获取网站接口的地址。
+     * @return string
+     */
+    public function getPostURL() {
+        return $this->api_config->API_URL;
     }
 
     /**
@@ -56,6 +63,7 @@ class ApiRequestService extends HttpRequestService {
         $post_data = array();
         $post_data["method"] = "token";
         $post_data["name"] = $name;
+        $post_data["API_KEY"] = $this->api_config->API_KEY;
         if($password != "") {
             $post_data["password"] = $password;
         }
@@ -67,6 +75,14 @@ class ApiRequestService extends HttpRequestService {
         } else {
             $this->user_token = "";
         }
+        return $this->user_token;
+    }
+
+    /**
+     * 直接获得当前存储的令牌，不进行远程查询。
+     * @return string 用户令牌
+     */
+    public function getUserTokenWithoutRequest() {
         return $this->user_token;
     }
 

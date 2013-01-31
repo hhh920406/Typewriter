@@ -1,16 +1,35 @@
-function upload() {
-    for(var i = 0; i < File_Upload.files.length; ++ i) {
-        var file = File_Upload.files[i];
+function addWaitingDiv(id, name) {
+    Div_Status.innerHTML +=
+        "<div id = 'Photo_" + id + "' class = 'photoDiv'>" +
+        "   <div id = 'Name_" + id + "' class = 'nameDiv'>" + name + "</div>" +
+        "   <div id = 'Status_" + id + "' class = 'statusDiv'>" + "上传中" + "</div>" +
+        "</div>";
+}
+
+function setStatusDiv(id, text) {
+    var status = document.getElementById("Status_" + id);
+    status.innerHTML = text;
+}
+
+function setStatusCorrect(id) {
+    setStatusDiv(id, "<div style = 'color: darkgreen'>上传成功</div>");
+}
+
+function setStatusError(id) {
+    setStatusDiv(id, "<div style = 'color: red'>上传失败</div>");
+}
+
+function showResult() {
+    var result = Hidden_Frame.document.body.innerHTML;
+    if(result) {
+        var xmlhttp = getXMLHttp();
         xmlhttp.onreadystatechange = function() {
             if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                if(xmlhttp.responseText.length == "0") {
-                    //Error
-                } else {
-                    //Correct
-                }
+                Div_Status.innerHTML += xmlhttp.responseText;
             }
         }
-        xmlhttp.open("GET", "upload_ajax.php?albumid=" + Text_Name.value + "&photopath=" + file.path);
-        xmlhttp.send();
+        xmlhttp.open("POST", "upload_result_ajax.php");
+        xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        xmlhttp.send("result=" + result);
     }
 }

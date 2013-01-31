@@ -13,6 +13,10 @@
             $api = new ApiRequestService();
             $albums = $api->selectAllAlbums();
             $smarty->assign("albums", $albums);
+            $token = $api->getUserTokenWithoutRequest();
+            $smarty->assign("token", $token);
+            $url = $api->getPostURL();
+            $smarty->assign("postUrl", $url);
         ?>
     </body>
 </html>
