@@ -116,7 +116,7 @@ class SQL_Table
      */
     public function getRowNumber()
     {
-        $this->sql_query->query("SELECT COUNT(*) FROM" . $this->tableName . ";");
+        $this->sql_query->count($this->tableName);
         $result = $this->sql_query->getSingleResult();
         return $result[0];
     }

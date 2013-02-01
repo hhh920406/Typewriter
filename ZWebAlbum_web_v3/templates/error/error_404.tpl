@@ -1,6 +1,6 @@
 <div class = "centerDiv">
     <div class = "textDiv">
-        404: 居然……什么也没有！
+        404 Page Not Found
     </div>
-    <img src = "/images/404.png"></img>
+    <iframe scrolling='no' frameborder='0' src='http://yibo.iyiyun.com/js/yibo404' width='735' height='700'></iframe>
 </div>

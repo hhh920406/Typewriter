@@ -4,7 +4,14 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/api/album/album_photo.php";
 if(isset($_POST["album_id"]))
 {
     $albumID = $_POST["album_id"];
-    echo json_encode(Album_Photo::getPhotos($albumID));
+    if(isset($_POST["limit_start"]) && isset($_POST["limit_number"]))
+    {
+        echo json_encode(Album_Photo::getPhotos($albumID, $_POST["limit_start"], $_POST["limit_number"]));
+    }
+    else
+    {
+        echo json_encode(Album_Photo::getPhotos($albumID));
+    }
 }
 else
 {

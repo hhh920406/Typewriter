@@ -5,23 +5,39 @@
      * The APIs about album.
      * @author ZHG <CyberZHG@gmail.com>
      */
-    class Account_Photo
+    class Album_Photo
     {
-        public static function getPhotos($albumID)
+        /**
+         * Get all the photos in the album.
+         * @param int $albumID
+         * @return array Query result.
+         */
+        public static function getPhotos($albumID, $start = 0, $number = 0)
         {
             $sql_photo = new SQL_Photo();
-            return $sql_photo->select($albumID);
+            return $sql_photo->selectByAlbum($albumID, $start, $number);
         }
-        
-        public static function getPhotosNumber($albumID)
-        {
-            return count(Account_Photo::getPhotos($albumID));
-        }
-        
-        public static function getNextIndice($albumID)
+
+        /**
+         * Get the number of photos in the album.
+         * @param int $albumID
+         * @return array Query result.
+         */
+        public static function getPhotoNumber($albumID)
         {
             $sql_photo = new SQL_Photo();
-            $result = $sql_photo->select($albumID);
+            return $sql_photo->getNumberByAlbum($albumID);
+        }
+
+        /**
+         * Get the largest indice of the album.
+         * @param int $albumID
+         * @return int The largest indice plus one.
+         */
+        private static function getNextIndice($albumID)
+        {
+            $sql_photo = new SQL_Photo();
+            $result = $sql_photo->selectByAlbum($albumID, 0, 1);
             foreach($result as $row)
             {
                 return $row["Indice"] + 1;
@@ -29,6 +45,10 @@
             return 1;
         }
 
+        /**
+         * Delete all the photos in the album.
+         * @param int $albumID
+         */
         public static function deleteAllPhotos($albumID)
         {
             $sql_photo = new SQL_Photo();
@@ -58,12 +78,6 @@
         {
             $sql_photo = new SQL_Photo();
             return $sql_photo->delete($photoID);
-        }
-
-        public static function getAutoIncrementID()
-        {
-            $sql_album = new SQL_Album();
-            return $sql_album->getAutoIncrementID();
         }
     }
 ?>
