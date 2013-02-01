@@ -66,13 +66,36 @@
          * @param integer $UserID
          * @return array Query result.
          */
-        public function selectByUser($userID)
+        public function selectByUser($userID, $start = 0, $number = 0)
         {
             $condition = $this->getEqualCondition(array(
                 "UserID" => $userID
             ));
-            $this->sql_query->select($this->tableName, "", $condition, "", "Indice DESC");
+            if($start || $number)
+            {
+                $limit = array($start, $number);
+                $this->sql_query->select($this->tableName, "", $condition, "", "Indice DESC", $limit);
+            }
+            else
+            {
+                $this->sql_query->select($this->tableName, "", $condition, "", "Indice DESC");
+            }
             return $this->sql_query->getAllResult();
+        }
+
+        /**
+         * Get the number of albums belong to the user.
+         * @param int $userID
+         * @return int Album number.
+         */
+        public function getNumberByUser($userID)
+        {
+            $condition = $this->getEqualCondition(array(
+                "UserID" => $userID
+            ));
+            $this->sql_query->count($this->tableName, $condition);
+            $result = $this->sql_query->getSingleResult();
+            return $result[0];
         }
     }
 ?>
