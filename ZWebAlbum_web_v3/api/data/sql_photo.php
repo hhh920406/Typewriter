@@ -74,7 +74,12 @@
             $condition = $this->getEqualCondition(array(
                 "AlbumID" => $albumID
             ));
-            return $this->sql_query->delete($this->tableName, $condition);
+            $this->sql_query->delete($this->tableName, $condition);
+            if(mysql_error())
+            {
+                return false;
+            }
+            return true;
         }
 
         /**
