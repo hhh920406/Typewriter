@@ -17,6 +17,22 @@
     background-color: black;
 }
 
+
+.pagerDiv {
+    width : 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+    .pagerDiv a:link,
+    .pagerDiv a:visited {
+        color: darkblue;
+    }
+
+    .pagerDiv a:hover {
+        color: darkcyan;
+    }
+
 .albumDiv {
     display: inline-block;
     width: 200px;
@@ -39,6 +55,5 @@
     margin: 0 auto;
     font-size: 13px;
     color: rgb(40, 40, 40);
-    text-align: center;
 }
 

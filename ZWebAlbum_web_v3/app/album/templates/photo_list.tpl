@@ -3,6 +3,9 @@
     {$album->Name}
     <hr/>
 </div>
+<div class = "pagerDiv">
+{include file = "pager.tpl"}
+</div>
 {foreach item = photo from = $photos}
 <div class = "albumDiv">
     <a href = {$url}&albumid={$photo->PhotoID}>
@@ -15,3 +18,6 @@
     </div>
 </div>
 {/foreach}
+<div class = "pagerDiv">
+{include file = "pager.tpl"}
+</div>

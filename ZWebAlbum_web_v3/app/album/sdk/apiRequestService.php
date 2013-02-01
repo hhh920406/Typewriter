@@ -115,6 +115,38 @@ class ApiRequestService extends HttpRequestService {
     }
 
     /**
+     * 获取用户相册的数量。
+     * @return int 相册数量
+     */
+    public function countAlbum() {
+        $post_data = array();
+        $post_data["method"] = "album.count";
+        $result = $this->apiPost($post_data);
+        if($result) {
+            $result = json_decode($result);
+            return $result->number;
+        }
+        return 0;
+    }
+
+    /**
+     * 获取相册照片的数量。
+     * @param int $albumID 相册ID
+     * @return int 照片数量
+     */
+    public function countPhoto($albumID) {
+        $post_data = array();
+        $post_data["method"] = "photo.count";
+        $post_data["album_id"] = $albumID;
+        $result = $this->apiPost($post_data);
+        if($result) {
+            $result = json_decode($result);
+            return $result->number;
+        }
+        return 0;
+    }
+
+    /**
      * 删除用户的相册，同时删除相册里面的所有图片。
      * @param int $albumID 相册的ID，在获取相册信息时可以得到。
      * @return bool 如果成功返回true，否则返回false。
@@ -193,11 +225,17 @@ class ApiRequestService extends HttpRequestService {
 
     /**
      * 获得全部相册的信息。
+     * @param int $start 起始位置
+     * @param int $number 选取的数量
      * @return array 返回是一个数组，数组中的每一项是一个stdClass，包含AlbumID相册ID、Album_Name相册名、Album_Description相册描述、Album_Type相册类型、Album_Indice相册用于排序的索引。
      */
-    public function selectAllAlbums() {
+    public function selectAlbums($start = 0, $number = 0) {
         $post_data = array();
         $post_data["method"] = "album.select";
+        if($start || $number) {
+            $post_data["limit_start"] = $start;
+            $post_data["limit_number"] = $number;
+        }
         $result = $this->apiPost($post_data);
         if($result) {
             $result = json_decode($result);
@@ -226,33 +264,20 @@ class ApiRequestService extends HttpRequestService {
     }
 
     /**
-     * 获得指定相册的信息。
-     * @param string $albumName 相册的名称。
-     * @return stdClass @see selectAllAlbums()
-     */
-    public function selectAlbumByName($albumName) {
-        $post_data = array();
-        $post_data["method"] = "album.select";
-        $post_data["album_name"] = $albumName;
-        $result = $this->apiPost($post_data);
-        if($result) {
-            $result = json_decode($result);
-            if(count($result) > 0) {
-                return $result[0];
-            }
-        }
-        return array();
-    }
-
-    /**
      * 获得相册中的全部照片信息。
      * @param int $albumID 相册的ID。
+     * @param int $start 起始位置
+     * @param int $number 选取的数量
      * @return array 返回的是一个数组，数组中的每一项是一个stdClass，包含PhotoID照片ID、AlbumID所属相册的ID、Description照片描述、Indice用于照片排序的索引。
      */
-    public function selectAllPhotos($albumID) {
+    public function selectPhotos($albumID, $start, $number) {
         $post_data = array();
         $post_data["method"] = "photo.select";
         $post_data["album_id"] = $albumID;
+        if($start || $number) {
+            $post_data["limit_start"] = $start;
+            $post_data["limit_number"] = $number;
+        }
         $result = $this->apiPost($post_data);
         if($result) {
             $result = json_decode($result);

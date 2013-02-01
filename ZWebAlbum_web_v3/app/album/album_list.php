@@ -12,7 +12,18 @@
             include_once "util.php";
             include_once "sdk/apiRequestService.php";
             $api = new ApiRequestService();
-            $albums = $api->selectAllAlbums();
+            $page = 1;
+            $itemPerPage = 12;
+            if(isset($_GET["page"])) {
+                $page = $_GET["page"];
+            }
+            $maxPage = (int)(($api->countAlbum() - 1) / $itemPerPage) + 1;
+            $pageURL = "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"] .
+                "?username=" . $_GET["username"];
+            $smarty->assign("page", $page);
+            $smarty->assign("maxPage", $maxPage);
+            $smarty->assign("pageURL", $pageURL);
+            $albums = $api->selectAlbums(($page - 1) * $itemPerPage, $itemPerPage);
             for($i = 0; $i < count($albums); ++ $i) {
                 $albums[$i]->Name = cutStr($albums[$i]->Name, 20);
             }

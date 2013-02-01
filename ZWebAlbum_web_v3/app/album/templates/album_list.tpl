@@ -2,6 +2,9 @@
     全部相册
     <hr/>
 </div>
+<div class = "pagerDiv">
+{include file = "pager.tpl"}
+</div>
 {foreach item = album from = $albums}
 <div class = "albumDiv">
     <a href = {$url}&albumid={$album->AlbumID}>
@@ -14,3 +17,6 @@
     </div>
 </div>
 {/foreach}
+<div class = "pagerDiv">
+{include file = "pager.tpl"}
+</div>
