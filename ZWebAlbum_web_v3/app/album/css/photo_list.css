@@ -57,3 +57,29 @@
     color: rgb(40, 40, 40);
 }
 
+.infoDiv {
+    width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.titleDiv {
+    width: 80%;
+    height: 20px;
+    line-height: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    padding-left: 20px;
+}
+
+.descriptionDiv {
+    width: 80%;
+    font-size: 15px;
+    color: rgb(50, 50, 50);
+    padding-top: 10px;
+    padding-left: 20px;
+}
+
+.operationDiv {
+    float: right;
+}

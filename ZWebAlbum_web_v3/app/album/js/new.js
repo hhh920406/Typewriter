@@ -6,20 +6,14 @@
 /**
  * Judge if the album name is already exist.
  */
-function judgeNameExist() {
-    var xmlhttp = getXMLHttp();
-    xmlhttp.onreadystatechange = function() {
-        if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            if(xmlhttp.responseText.length > 0) {
-                setStatus("Status_Name", TYPE_ERROR, xmlhttp.responseText);
-            } else {
-                setStatus("Status_Name", TYPE_CORRECT, "");
-            }
-        }
+function judgeName() {
+    if(Text_Name.length == 0) {
+        setStatus("Status_Name", TYPE_ERROR, "");
+        return false;
+    } else {
+        setStatus("Status_Name", TYPE_CORRECT, "");
+        return true;
     }
-    xmlhttp.open("GET", "new_exist_ajax.php?albumname=" + Text_Name.value);
-    xmlhttp.send();
-    setStatus("Status_Name", TYPE_WAITING, "检测中。。。");
 }
 
 /**
@@ -38,19 +32,21 @@ function judgeDescription() {
 }
 
 function createAlbum() {
-    var xmlhttp = getXMLHttp();
-    xmlhttp.onreadystatechange = function() {
-        if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            if(xmlhttp.responseText.length == "0") {
-                setStatus("Status_Create", TYPE_ERROR, "创建失败");
-            } else {
-                setStatus("Status_Create", TYPE_CORRECT, "");
+    if(judgeName() && judgeDescription) {
+        var xmlhttp = getXMLHttp();
+        xmlhttp.onreadystatechange = function() {
+            if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                if(xmlhttp.responseText.length == "0") {
+                    setStatus("Status_Create", TYPE_ERROR, "创建失败");
+                } else {
+                    setStatus("Status_Create", TYPE_CORRECT, "");
+                }
             }
         }
+        var name = Text_Name.value;
+        var description = TextArea_Description.value;
+        xmlhttp.open("GET", "new_create_ajax.php?name=" + name + "&description=" + description);
+        xmlhttp.send();
+        setStatus("Status_Create", TYPE_WAITING, "检测中。。。");
     }
-    var name = Text_Name.value;
-    var description = TextArea_Description.value;
-    xmlhttp.open("GET", "new_create_ajax.php?name=" + name + "&description=" + description);
-    xmlhttp.send();
-    setStatus("Status_Create", TYPE_WAITING, "检测中。。。");
 }

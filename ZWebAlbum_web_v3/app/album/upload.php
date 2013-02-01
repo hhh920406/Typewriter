@@ -11,7 +11,7 @@
              */
             include_once "sdk/apiRequestService.php";
             $api = new ApiRequestService();
-            $albums = $api->selectAllAlbums();
+            $albums = $api->selectAlbums();
             $smarty->assign("albums", $albums);
             $token = $api->getUserTokenWithoutRequest();
             $smarty->assign("token", $token);

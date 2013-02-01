@@ -9,7 +9,7 @@
             相册名：
         </div>
         <div class = "newInput">
-            <input id = "Text_Name" type = "text" onblur = "judgeNameExist()" ></input>
+            <input id = "Text_Name" type = "text" onblur = "judgeName()" ></input>
         </div>
         <div class = "newStatus">
             <div id = "Status_Name"></div>

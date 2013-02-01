@@ -3,6 +3,19 @@
     {$album->Name}
     <hr/>
 </div>
+<div class = "infoDiv">
+    <div class = "operationDiv">
+        <a href = # onclick = "deleteAlbum()">删除相册</a>
+    </div>
+    <div class = "titleDiv">
+        {$album->Name}
+    </div>
+    <div class = "descriptionDiv">
+        {$album->Description}
+    </div>
+</div>
+<div id = "Test_Div"></div>
+<input type = "hidden" id = "Hidden_ID" value = {$album->AlbumID}></input>
 <div class = "pagerDiv">
 {include file = "pager.tpl"}
 </div>
