@@ -4,6 +4,8 @@ document.onkeyup = function(event) {
         Link_Prev.click();
     } else if(keyCode == 39) {
         Link_Next.click();
+    } else if(keyCode == 13) {
+        Text_Description.blur();
     }
 }
 
@@ -28,4 +30,14 @@ function deletePhoto() {
         xmlhttp.open("GET", "photo_delete_ajax.php?photoid=" + Hidden_ID.value);
         xmlhttp.send();
     }
+}
+
+function updatePhoto() {
+    var xmlhttp = getXMLHttp();
+    xmlhttp.open("GET", "photo_update_ajax.php" +
+        "?photoid=" + Hidden_Photo_ID.value +
+        "&albumid=" + Hidden_Album_ID.value +
+        "&description=" + Text_Description.value +
+        "&indice=" + Hidden_Indice.value);
+    xmlhttp.send();
 }

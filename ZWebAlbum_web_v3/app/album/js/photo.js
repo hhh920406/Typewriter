@@ -6,6 +6,10 @@ function tuneHeight() {
     }
 }
 
+function updatePhoto() {
+
+}
+
 document.onkeyup = function(event) {
     Frame_Image.focus();
     var keyCode =  event.keyCode ? event.keyCode : (event.which ? event.which : event.charCode);

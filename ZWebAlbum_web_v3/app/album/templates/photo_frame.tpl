@@ -17,11 +17,13 @@
     </div>
 </div>
 <div id = "Test_Div"></div>
-<input type = "hidden" id = "Hidden_ID" value = {$photo->PhotoID}></input>
+<input type = "hidden" id = "Hidden_Album_ID" value = {$albumID}></input>
+<input type = "hidden" id = "Hidden_Photo_ID" value = {$photo->PhotoID}></input>
+<input type = "hidden" id = "Hidden_Indice" value = {$photo->Indice}></input>
 <div class = "imageDiv">
     <img id = "Image_Image" src = {$photo->PhotoPath}></img>
 </div>
 <div class = "descriptionDiv">
-    {$photo->Description}
+    <input id = "Text_Description" type = "text" class = "descriptionInput" onblur = "updatePhoto()" value = {$photo->EditDescription}></input>
 </div>
 {/if}

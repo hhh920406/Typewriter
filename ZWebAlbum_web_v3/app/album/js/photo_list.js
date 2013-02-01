@@ -11,3 +11,21 @@ function deleteAlbum() {
         xmlhttp.send();
     }
 }
+
+function updateAlbum() {
+    var xmlhttp = getXMLHttp();
+    xmlhttp.open("GET", "album_update_ajax.php" +
+        "?albumid=" + Hidden_ID.value +
+        "&name=" + Text_Name.value +
+        "&description=" + Text_Description.value +
+        "&type=" + Hidden_Type.value +
+        "&indice=" + Hidden_Indice.value);
+    xmlhttp.send();
+}
+
+document.onkeyup = function(event) {
+    var keyCode =  event.keyCode ? event.keyCode : (event.which ? event.which : event.charCode);
+    if(keyCode == 13) {
+        updateAlbum();
+    }
+}

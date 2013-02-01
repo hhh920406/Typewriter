@@ -63,21 +63,33 @@
     padding: 10px;
 }
 
-.titleDiv {
+.titleInput {
     width: 80%;
     height: 20px;
     line-height: 20px;
     font-size: 18px;
     font-weight: bold;
     padding-left: 20px;
+    background: none;
+    border: none;
 }
 
-.descriptionDiv {
+.titleInput:focus {
+    background-color: rgb(230, 243, 255);
+}
+
+.descriptionInput {
     width: 80%;
     font-size: 15px;
     color: rgb(50, 50, 50);
-    padding-top: 10px;
+    margin-top: 10px;
     padding-left: 20px;
+    background: none;
+    border: none;
+}
+
+.descriptionInput:focus {
+    background-color: rgb(243, 230, 255);
 }
 
 .operationDiv {

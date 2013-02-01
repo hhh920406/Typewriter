@@ -31,6 +31,8 @@
             for($i = 0; $i < count($photos); ++ $i) {
                 $photos[$i]->Description = cutStr($photos[$i]->Description, 20);
             }
+            $album->EditName = "'" . $album->Name . "'";
+            $album->EditDescription = "'" . $album->Description . "'";
             $smarty->assign("album", $album);
             $smarty->assign("photos", $photos);
         ?>

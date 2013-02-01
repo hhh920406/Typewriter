@@ -326,6 +326,7 @@ class ApiRequestService extends HttpRequestService {
         $post_data["album_indice"] = $indice;
         $result = $this->apiPost($post_data);
         if($result) {
+            print_r($result);
             $result = json_decode($result);
             return $result->return == "true";
         }

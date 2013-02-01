@@ -14,6 +14,7 @@
             $albumID = $_GET["albumid"];
             $photoNum = $_GET["photonum"];
             $photoPos = $_GET["photopos"];
+            $smarty->assign("albumID", $albumID);
             $smarty->assign("photoPos", $photoPos);
             $smarty->assign("photoNum", $photoNum);
 
@@ -28,12 +29,15 @@
 
             function selectSingle($photos) {
                 if(count($photos)) {
+                    $photo = $photos[0];
+                    $photo->EditDescription = "'" . $photo->Description . "'";
                     return $photos[0];
                 }
                 $photo = new stdClass();
                 $photo->PhotoID = 0;
                 $photo->PhotoPath = "Not Found";
                 $photo->PhotoDescription = "Photo doesn't exist. ";
+                $photo->EditDescription = "'" . $photo->EditDescription . "'";
             }
 
             $photo = $api->selectPhotos($albumID, $photoPos, 1);

@@ -7,15 +7,13 @@
     <div class = "operationDiv">
         <a href = # onclick = "deleteAlbum()">删除相册</a>
     </div>
-    <div class = "titleDiv">
-        {$album->Name}
-    </div>
-    <div class = "descriptionDiv">
-        {$album->Description}
-    </div>
+    <input id = "Text_Name" type = "text" class = "titleInput"  onblur = "updateAlbum()" value = {$album->EditName}></input>
+    <input id = "Text_Description" type = "text" class = "descriptionInput"  onblur = "updateAlbum()" value = {$album->EditDescription}></input>
 </div>
 <div id = "Test_Div"></div>
 <input type = "hidden" id = "Hidden_ID" value = {$album->AlbumID}></input>
+<input type = "hidden" id = "Hidden_Type" value = {$album->Type}></input>
+<input type = "hidden" id = "Hidden_Indice" value = {$album->Indice}></input>
 <div class = "pagerDiv">
 {include file = "pager.tpl"}
 </div>

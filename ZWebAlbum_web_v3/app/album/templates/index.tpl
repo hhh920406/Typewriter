@@ -1,7 +1,6 @@
 {include file = "header.tpl"}
 <script src = "js/ajax.js"></script>
 <script src = "js/querystring.js"></script>
-<script src = "js/cookie.js"></script>
 {if $tab == ""}
     {if $tabsub == "album_list"}
         {include file = "album_list.tpl"}

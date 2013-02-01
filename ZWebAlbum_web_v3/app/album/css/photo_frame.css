@@ -29,3 +29,17 @@
 .operationDiv {
     float: right;
 }
+
+.descriptionInput {
+    width: 100%;
+    font-size: 15px;
+    color: rgb(50, 50, 50);
+    margin-top: 10px;
+    padding-left: 20px;
+    background: none;
+    border: none;
+}
+
+.descriptionInput:focus {
+    background-color: rgb(243, 230, 255);
+}

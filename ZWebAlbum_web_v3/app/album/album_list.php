@@ -26,6 +26,7 @@
             $albums = $api->selectAlbums(($page - 1) * $itemPerPage, $itemPerPage);
             for($i = 0; $i < count($albums); ++ $i) {
                 $albums[$i]->Name = cutStr($albums[$i]->Name, 20);
+                $photos = $api->selectPhotos($albums[$i]->AlbumID, 0, 1);
             }
             $smarty->assign("albums", $albums);
         ?>
