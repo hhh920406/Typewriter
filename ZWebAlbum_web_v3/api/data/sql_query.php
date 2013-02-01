@@ -427,6 +427,24 @@ class SQL_Query
     }
 
     /**
+     * Count the number of selected data.
+     * The function does not provide the error detection.
+     * @param string $tableName The table to be selected.
+     * @param array $columnNames The columns to be selected. If it is null, it is to select all the columns.
+     * @param array $condition When it is a string, it presents the full WHERE SQL query string. When it is an array, it contains the conditions.
+     * @param string $relation The $relation must be "AND" or "OR" if the $condtion is an array and its length is larger than one.
+     */
+    public function count($tableName, $columnNames, $condition = "", $relation = "")
+    {
+        $this->queryString = "";
+        $this->queryString .= "SELECT COUNT(*) FROM ";
+        $this->queryString .= $tableName;
+        $this->queryString .= $this->where($condition, $relation);
+        $this->queryString .= ";";
+        $this->query($this->queryString);
+    }
+
+    /**
      * Update the data in table.
      * The function does not provide the error detection.
      * @param string $tableName The table where the data to be updated.

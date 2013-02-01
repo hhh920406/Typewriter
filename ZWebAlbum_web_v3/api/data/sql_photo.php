@@ -47,12 +47,20 @@
          * @param integer $albumID
          * @return array Query result.
          */
-        public function selectByAlbum($albumID)
+        public function selectByAlbum($albumID, $start = 0, $number = 0)
         {
             $condition = $this->getEqualCondition(array(
                 "AlbumID" => $albumID
             ));
-            $this->sql_query->select($this->tableName, "", $condition, "", "Indice DESC");
+            if($start || $number)
+            {
+                $limit = array($start, $number);
+                $this->sql_query->select($this->tableName, "", $condition, "", "Indice DESC", $limit);
+            }
+            else
+            {
+                $this->sql_query->select($this->tableName, "", $condition, "", "Indice DESC");
+            }
             return $this->sql_query->getAllResult();
         }
 
@@ -67,6 +75,21 @@
                 "AlbumID" => $albumID
             ));
             return $this->sql_query->delete($this->tableName, $condition);
+        }
+
+        /**
+         * Get the number of photos in the album.
+         * @param int $albumID
+         * @return int Photo number.
+         */
+        public function getNumberByAlbum($albumID)
+        {
+            $condition = $this->getEqualCondition(array(
+                "AlbumID" => $albumID
+            ));
+            $this->sql_query->count($this->tableName, $condition);
+            $result = $this->sql_query->getSingleResult();
+            return $result[0];
         }
     }
 ?>
