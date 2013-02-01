@@ -1,3 +1,8 @@
+{if $photoNum == 0}
+相册中没有图片
+{else}
+<script src = "js/ajax.js"></script>
+<script src = "js/querystring.js"></script>
 <script src = "js/photo_frame.js"></script>
 <div class = "pagerDiv">
     <a id = "Link_Prev" href = {$pageURL}&photopos={$prevPos}>
@@ -7,10 +12,16 @@
     <a id = "Link_Next" href = {$pageURL}&photopos={$nextPos}>
         下一张
     </a>
+    <div class = "operationDiv">
+        <a href = # onclick = "deletePhoto()">删除</a>
+    </div>
 </div>
+<div id = "Test_Div"></div>
+<input type = "hidden" id = "Hidden_ID" value = {$photo->PhotoID}></input>
 <div class = "imageDiv">
     <img id = "Image_Image" src = {$photo->PhotoPath}></img>
 </div>
 <div class = "descriptionDiv">
     {$photo->Description}
 </div>
+{/if}

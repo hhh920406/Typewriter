@@ -154,6 +154,7 @@ class ApiRequestService extends HttpRequestService {
     public function deleteAlbum($albumID) {
         $post_data = array();
         $post_data["method"] = "album.delete";
+        $post_data["album_id"] = $albumID;
         $result = $this->apiPost($post_data);
         if($result) {
             $result = json_decode($result);
@@ -170,6 +171,7 @@ class ApiRequestService extends HttpRequestService {
     public function deletePhoto($photoID) {
         $post_data = array();
         $post_data["method"] = "photo.delete";
+        $post_data["photo_id"] = $photoID;
         $result = $this->apiPost($post_data);
         if($result) {
             $result = json_decode($result);

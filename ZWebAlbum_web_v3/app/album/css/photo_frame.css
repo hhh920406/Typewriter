@@ -25,3 +25,7 @@
     font-size: 15px;
     color: rgb(40, 40, 40);
 }
+
+.operationDiv {
+    float: right;
+}
