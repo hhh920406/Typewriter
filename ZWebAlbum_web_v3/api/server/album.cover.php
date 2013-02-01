@@ -1,17 +1,18 @@
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"] . "/api/application/application_token.php";
 include_once $_SERVER["DOCUMENT_ROOT"] . "/api/album/album_album.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/api/album/album_photo.php";
 $albumID = $_POST["album_id"];
-$userID = Application_Token::getUserID($token);
-$name = $_POST["album_name"];
-$description = $_POST["album_description"];
-$type = $_POST["album_type"];
-$indice = $_POST["album_indice"];
+$photoID = $_POST["photo_id"];
+$photo = Album_Photo::select($photoID);
+if(count($photo) == 0)
+{
+    echo json_encode(array("return" => "false"));
+    return;
+}
+$photo = $photo[0];
 $albumInfo = array(
-    "Name" => $name,
-    "Description" => $description,
-    "Type" => $type,
-    "Indice" => $indice
+    "PhotoPath" => $photo["PhotoPath"]
 );
 if(Album_Album::update($albumID, $albumInfo))
 {
