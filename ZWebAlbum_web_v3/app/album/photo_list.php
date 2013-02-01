@@ -25,6 +25,7 @@
             $smarty->assign("page", $page);
             $smarty->assign("maxPage", $maxPage);
             $smarty->assign("pageURL", $pageURL);
+            $smarty->assign("itemPerPage", $itemPerPage);
             $album = $api->selectAlbumById($albumID);
             $photos = $api->selectPhotos($albumID, ($page - 1) * $itemPerPage, $itemPerPage);
             for($i = 0; $i < count($photos); ++ $i) {

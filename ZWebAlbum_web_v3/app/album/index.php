@@ -30,7 +30,7 @@
             $tabsub = "";
             switch($tab) {
                 case "":
-                    if(isset($_GET["photoid"])) {
+                    if(isset($_GET["photopos"])) {
                         include_once "photo.php";
                         $tabsub = "photo";
                     } else if(isset($_GET["albumid"])) {

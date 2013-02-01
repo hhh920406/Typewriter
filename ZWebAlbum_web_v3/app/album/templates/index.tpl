@@ -7,6 +7,7 @@
     {elseif $tabsub == "photo_list"}
         {include file = "photo_list.tpl"}
     {elseif $tabsub == "photo"}
+        <script src = "js/photo.js"></script>
         {include file = "photo.tpl"}
     {/if}
 {elseif $tab == "new"}

@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+
+.pagerDiv {
+    width: 750px;
+    margin: 0 auto;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.imageDiv {
+    width: 750px;
+    margin: 0 auto;
+}
+
+.imageDiv img {
+    display: block;
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.descriptionDiv {
+    width: 750px;
+    margin: 0 auto;
+    padding-top: 10px;
+    font-size: 15px;
+    color: rgb(40, 40, 40);
+}

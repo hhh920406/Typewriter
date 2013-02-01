@@ -16,3 +16,15 @@
     color: white;
     background-color: black;
 }
+
+.imageDiv {
+    width: 750px;
+    margin: 0 auto;
+}
+
+.imageFrame {
+    width: 800px;
+    min-height: 200px;
+    margin: 0 auto;
+    border: 0;
+}
