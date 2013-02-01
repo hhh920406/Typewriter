@@ -4,9 +4,9 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/api/album/album_photo.php";
 if(isset($_POST["album_id"]))
 {
     $albumID = $_POST["album_id"];
-    if(isset($_POST["limit_start"]) && isset($_POST["limit_end"]))
+    if(isset($_POST["limit_start"]) && isset($_POST["limit_number"]))
     {
-        echo json_encode(Album_Photo::getPhotos($albumID, $_POST["limit_start"], $_POST["limit_end"]));
+        echo json_encode(Album_Photo::getPhotos($albumID, $_POST["limit_start"], $_POST["limit_number"]));
     }
     else
     {
