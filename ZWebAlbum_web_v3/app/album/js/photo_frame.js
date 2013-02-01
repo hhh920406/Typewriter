@@ -41,3 +41,11 @@ function updatePhoto() {
         "&indice=" + Hidden_Indice.value);
     xmlhttp.send();
 }
+
+function updateCover() {
+    var xmlhttp = getXMLHttp();
+    xmlhttp.open("GET", "album_cover_ajax.php" +
+        "?photoid=" + Hidden_Photo_ID.value +
+        "&albumid=" + Hidden_Album_ID.value);
+    xmlhttp.send();
+}

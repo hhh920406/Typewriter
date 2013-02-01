@@ -355,6 +355,19 @@ class ApiRequestService extends HttpRequestService {
         }
         return false;
     }
+
+    public function setAlbumCover($albumID, $photoID) {
+        $post_data = array();
+        $post_data["method"] = "album.cover";
+        $post_data["album_id"] = $albumID;
+        $post_data["photo_id"] = $photoID;
+        $result = $this->apiPost($post_data);
+        if($result) {
+            $result = json_decode($result);
+            return $result->return == "true";
+        }
+        return false;
+    }
 }
 
 ?>

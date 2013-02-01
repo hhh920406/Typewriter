@@ -13,6 +13,7 @@
         下一张
     </a>
     <div class = "operationDiv">
+        <a href = # onclick = "updateCover()">设为封面</a>
         <a href = # onclick = "deletePhoto()">删除</a>
     </div>
 </div>
