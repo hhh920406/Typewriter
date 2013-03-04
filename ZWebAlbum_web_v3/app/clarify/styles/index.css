@@ -1,0 +1,78 @@
+.mainBlock {
+    width: 800px;
+    min-height: 500px;
+    margin: 0 auto;
+}
+
+.textBlock {
+    width: 100%;
+    margin: 5px;
+    padding: 10px;
+    color: darkgray;
+}
+
+.albumBlock {
+    width: 100%;
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid;
+    border-color: darkgray;
+    border-radius: 10px;
+}
+
+.albumBlock ul {
+    width: 100%;
+}
+
+.albumBlock li {
+    display: inline-block;
+    width: 150px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.selectBlock {
+    display: none;
+    width: 100%;
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid;
+    border-color: darkgray;
+    border-radius: 10px;
+}
+
+.selectBlock ul {
+    width: 100%;
+}
+
+.selectBlock li {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    margin: 5px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 150px;
+    cursor: pointer;
+}
+
+.selectBlock li img {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.selectBlock li.color {
+    color: white;
+    background-color: darkmagenta;
+}
+
+.selectBlock li.time {
+    color: white;
+    background-color: darkblue;
+}
+
+.selectBlock li.event {
+    color: white;
+    background-color: darkgreen;
+}
