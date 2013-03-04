@@ -1,8 +1,10 @@
-# Build Folders
+# Build
+*.exe
 bin
 obj
 
 # Resource
+*.psd
 *.png
 *.jpg
 *.gif

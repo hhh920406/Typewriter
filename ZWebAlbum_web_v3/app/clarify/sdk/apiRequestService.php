@@ -272,7 +272,7 @@ class ApiRequestService extends HttpRequestService {
      * @param int $number 选取的数量
      * @return array 返回的是一个数组，数组中的每一项是一个stdClass，包含PhotoID照片ID、AlbumID所属相册的ID、Description照片描述、Indice用于照片排序的索引。
      */
-    public function selectPhotos($albumID, $start, $number) {
+    public function selectPhotos($albumID, $start = 0, $number = 0) {
         $post_data = array();
         $post_data["method"] = "photo.select";
         $post_data["album_id"] = $albumID;

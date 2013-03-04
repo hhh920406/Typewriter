@@ -3,7 +3,9 @@
 <html>
     <head>
         <meta charset = UTF-8>
+        <title>图像分类</title>
         <script src = "scripts/jquery.js"></script>
+        <script src = "scripts/jquery.cookie.js"></script>
         <script src = "scripts/index.js"></script>
         <link rel = stylesheet href = "styles/index.css">
     </head>
@@ -23,7 +25,11 @@
                 <ul>
                     {foreach item = album from = $albums}
                         <li>
-                            <input type = checkbox value = {$album->AlbumID}>{$album->Name}</input>
+                            <input type = checkbox value = {$album->AlbumID}>
+                                <span>
+                                    {$album->Name}
+                                </span>
+                            </input>
                         </li>
                     {/foreach}
                 </ul>
@@ -45,8 +51,12 @@
                     </li>
                 </ul>
             </div>
+            <div class = "processBlock">
+                正在进行处理
+                <ul id = "UL_Process"></ul>
+            </div>
             <div class = "textBlock">
-                说明：本应用提供对相册图片的分类处理。由于要处理的数据量可能较大，第一次分类时请耐心等待。
+                说明：本应用提供对相册图片的分类处理。由于要处理的数据量可能较大，第一次分类时请耐心等待。请确保你的浏览器允许javascript的执行和cookie的记录。
             </div>
     </div>
     </body>
