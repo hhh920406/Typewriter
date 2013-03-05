@@ -13,13 +13,11 @@
             $username = "";
             if(isset($_GET["username"])) {
                 $username = $_GET["username"];
-                if(!isset($_SESSION["basic"])) {
-                    include_once "sdk/apiRequestService.php";
-                    $api = new ApiRequestService();
-                    $api->getUserToken($username);
-                    $basic = $api->getUserBasic();
-                    $_SESSION["basic"] = $basic;
-                }
+                include_once "sdk/apiRequestService.php";
+                $api = new ApiRequestService();
+                $api->getUserToken($username);
+                $basic = $api->getUserBasic();
+                $_SESSION["basic"] = $basic;
             }
             include_once "smarty_init.php";
             $tab = "";

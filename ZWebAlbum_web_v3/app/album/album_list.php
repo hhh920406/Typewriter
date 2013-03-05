@@ -10,8 +10,6 @@
              * @author ZHG <CyberZHG@gmail.com>
              */
             include_once "util.php";
-            include_once "sdk/apiRequestService.php";
-            $api = new ApiRequestService();
             $page = 1;
             $itemPerPage = 12;
             if(isset($_GET["page"])) {

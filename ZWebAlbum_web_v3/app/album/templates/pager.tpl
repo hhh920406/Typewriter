@@ -24,15 +24,15 @@
 
 {$page}
 
-{if $page + 1 < $maxPage}
+{if $page + 1 <= $maxPage}
     <a href = {$pageURL}&page={$page + 1}>{$page + 1}</a>
 {/if}
 
-{if $page + 2 < $maxPage}
+{if $page + 2 <= $maxPage}
     <a href = {$pageURL}&page={$page + 2}>{$page + 2}</a>
 {/if}
 
-{if $page + 3 < $maxPage}
+{if $page + 3 <= $maxPage}
     ...
 {/if}
 

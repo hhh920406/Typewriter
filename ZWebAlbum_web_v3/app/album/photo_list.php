@@ -9,9 +9,7 @@
             /**
              * @author ZHG <CyberZHG@gmail.com>
              */
-            include_once "sdk/apiRequestService.php";
             include_once "util.php";
-            $api = new ApiRequestService();
             $albumID = $_GET["albumid"];
             $page = 1;
             $itemPerPage = 12;

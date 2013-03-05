@@ -124,7 +124,9 @@ class ApiRequestService extends HttpRequestService {
         $result = $this->apiPost($post_data);
         if($result) {
             $result = json_decode($result);
-            return $result->number;
+            if (isset($result->number)) {
+                return $result->number;
+            }
         }
         return 0;
     }
@@ -174,7 +176,6 @@ class ApiRequestService extends HttpRequestService {
         $post_data["photo_id"] = $photoID;
         $result = $this->apiPost($post_data);
         if($result) {
-            $result = json_decode($result);
             return $result->return == "true";
         }
         return false;

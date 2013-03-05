@@ -20,7 +20,8 @@ function setStatusError(id) {
 }
 
 function showResult() {
-    var result = Hidden_Frame.document.body.innerHTML;
+    /*var object = document.getElementById("Hidden_Frame").contentWindow;
+    var result = object.getElementsByTag("body")[0].innerHTML;
     if(result) {
         var xmlhttp = getXMLHttp();
         xmlhttp.onreadystatechange = function() {
@@ -31,5 +32,5 @@ function showResult() {
         xmlhttp.open("POST", "upload_result_ajax.php");
         xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
         xmlhttp.send("result=" + result);
-    }
+    }*/
 }

@@ -27,7 +27,7 @@ function deletePhoto() {
                     "&photopos=" + photoPos;
             }
         }
-        xmlhttp.open("GET", "photo_delete_ajax.php?photoid=" + Hidden_ID.value);
+        xmlhttp.open("GET", "photo_delete_ajax.php?photoid=" + Hidden_Photo_ID.value);
         xmlhttp.send();
     }
 }

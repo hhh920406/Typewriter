@@ -9,8 +9,6 @@
             /**
              * @author ZHG <CyberZHG@gmail.com>
              */
-            include_once "sdk/apiRequestService.php";
-            $api = new ApiRequestService();
             $albumID = $_GET["albumid"];
             $album = $api->selectAlbumById($albumID);
             $photoNum = $api->countPhoto($albumID);
