@@ -1,0 +1,47 @@
+@CHARSET "UTF-8";
+
+.title {
+    font-size: 16px;
+    color: rgb(50, 50, 50);
+    padding-left: 20px;
+}
+
+.pagerDiv {
+    width : 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+    .pagerDiv a:link,
+    .pagerDiv a:visited {
+        color: darkblue;
+    }
+
+    .pagerDiv a:hover {
+        color: darkcyan;
+    }
+
+.albumDiv {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    margin: 20px;
+}
+
+.photoDiv {
+    width: 200px;
+    height: 150px;
+    margin: 0 auto;
+    background-color: rgb(187, 187, 187);
+    box-shadow: 3px 3px 15px rgb(187, 187, 187);
+}
+
+.nameDiv {
+    width: 200px;
+    height: 50px;
+    line-height: 50px;
+    margin: 0 auto;
+    font-size: 13px;
+    color: rgb(40, 40, 40);
+    text-align: center;
+}

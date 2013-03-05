@@ -1,0 +1,45 @@
+@CHARSET "UTF-8";
+
+.pagerDiv {
+    width: 750px;
+    margin: 0 auto;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.imageDiv {
+    width: 750px;
+    margin: 0 auto;
+}
+
+.imageDiv img {
+    display: block;
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.descriptionDiv {
+    width: 750px;
+    margin: 0 auto;
+    padding-top: 10px;
+    font-size: 15px;
+    color: rgb(40, 40, 40);
+}
+
+.operationDiv {
+    float: right;
+}
+
+.descriptionInput {
+    width: 100%;
+    font-size: 15px;
+    color: rgb(50, 50, 50);
+    margin-top: 10px;
+    padding-left: 20px;
+    background: none;
+    border: none;
+}
+
+.descriptionInput:focus {
+    background-color: rgb(243, 230, 255);
+}
