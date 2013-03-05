@@ -434,7 +434,7 @@ class SQL_Query
      * @param array $condition When it is a string, it presents the full WHERE SQL query string. When it is an array, it contains the conditions.
      * @param string $relation The $relation must be "AND" or "OR" if the $condtion is an array and its length is larger than one.
      */
-    public function count($tableName, $columnNames, $condition = "", $relation = "")
+    public function count($tableName, $condition = "", $relation = "")
     {
         $this->queryString = "";
         $this->queryString .= "SELECT COUNT(*) FROM ";
