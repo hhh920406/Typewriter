@@ -224,6 +224,27 @@ class ApiRequestService extends HttpRequestService {
         }
         return 0;
     }
+    
+    /**
+     * 将照片复制到其它相册中。
+     * @param string $albumID 相册的ID。
+     * @param string $photoID 照片的ID。
+     * @return int 复制后照片的ID。
+     */
+    public function insertPhotoById($albumID, $photoID) {
+        $post_data = array();
+        $post_data["method"] = "photo_copy";
+        $post_data["album_id"] = $albumID;
+        $post_data["photo_id"] = $photoID;
+        $result = $this->apiPost($post_data);
+        if($result) {
+            $result = json_decode($result);
+            if(isset($result->album_id)) {
+                return $result->album_id;
+            }
+        }
+        return 0;
+    }
 
     /**
      * 获得全部相册的信息。

@@ -106,22 +106,24 @@ function recordSelection() {
  * @param {string} category 类别。
  */
 function savePhotoClarifyResult(photoIndex, category) {
+    var date = getValue("clarify_date_time");
     var id = getValue("clarify_photo_id_" + photoIndex);
     var url = getValue("clarify_photo_url_" + photoIndex);
     var albumID = "Result_" + category;
+    var albumName = category + " " + date;
     if ($("#" + albumID).length === 0) {
         var count = parseInt(getValue("clarify_result_count"));
         $("#Div_Result").append("<div id = '" + albumID + "' name = '" + count + "' class = 'resultBlockItem'></div");
         setValue("clarify_result_" + count + "_count", 0);
+        setValue("clarify_result_" + count + "_name", albumName);
         setValue("clarify_result_count", count + 1);
     }
     var index = $("#" + albumID).attr("name");
     var count = parseInt(getValue("clarify_result_" + index + "_count"));
     setValue("clarify_result_" + index + "_id_" + count, id);
     setValue("clarify_result_" + index + "_count", count + 1);
-    var date = getValue("clarify_date_time");
     var imgHTML = "<div class = 'selectBlockItemImageDiv'><img src = " + url + " alt = " + url + "></img></div>";
-    var checkboxHTML = "<div class = 'selectBlockItemInputDiv'><input type = checkbox name = 'Checkbox_Result' value = " + index + ">" + category + " " + date + "</input></div>";
+    var checkboxHTML = "<div class = 'selectBlockItemInputDiv'><input type = checkbox name = 'Checkbox_Result' value = " + index + ">" + albumName + "</input></div>";
     $("#" + albumID).html(imgHTML + checkboxHTML);
 }
 
@@ -209,13 +211,22 @@ function clarifyAlbum(pageURL, albumIndex) {
 
 /**
  * 保存分类的结果到服务器上。
- * @param {type} resultIndex 结果的索引。
+ * @param {int} resultIndex 结果的索引。
  */
 function saveClarifyResult(resultIndex) {
+    var name = getValue("clarify_result_" + resultIndex + "_name");
+    var count = getValue("clarify_result_" + resultIndex + "_count");
+    var list = "";
+    for (var i = 0; i < count; ++ i) {
+        if (i) {
+            list += ",";
+        }
+        list += getValue("clarify_result_" + resultIndex + "_id_" + i);
+    }
     $.ajax({
         url : "ajax_save_result.php",
-        type : "GET", 
-        data : {resultid : resultIndex},
+        type : "POST", 
+        data : {name : name, list : list},
         dataType : "html",
         timeout : 180000,
         async: false
