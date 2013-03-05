@@ -25,4 +25,5 @@
 </form>
 <hr/>
 <div id = "Div_Status" class = "resultDiv"></div>
-<iframe id = "Hidden_Frame" name = "Hidden_Frame" style = "display: none;" onload = "showResult()"></iframe>
+<iframe id = "Hidden_Frame" class = "display: none" name = "Hidden_Frame" onload = "showResult()">
+</iframe>

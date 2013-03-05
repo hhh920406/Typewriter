@@ -9,8 +9,6 @@
             /**
              * @author ZHG <CyberZHG@gmail.com>
              */
-            include_once "sdk/apiRequestService.php";
-            $api = new ApiRequestService();
             $albums = $api->selectAlbums();
             $smarty->assign("albums", $albums);
             $token = $api->getUserTokenWithoutRequest();
