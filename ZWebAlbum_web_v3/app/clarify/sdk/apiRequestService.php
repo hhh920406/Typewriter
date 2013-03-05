@@ -124,7 +124,9 @@ class ApiRequestService extends HttpRequestService {
         $result = $this->apiPost($post_data);
         if($result) {
             $result = json_decode($result);
-            return $result->number;
+            if(isset($result->number)) {
+                return $result->number;
+            }
         }
         return 0;
     }
@@ -139,9 +141,12 @@ class ApiRequestService extends HttpRequestService {
         $post_data["method"] = "photo.count";
         $post_data["album_id"] = $albumID;
         $result = $this->apiPost($post_data);
+        print_r($result);
         if($result) {
             $result = json_decode($result);
-            return $result->number;
+            if(isset($result->number)) {
+                return $result->number;
+            }
         }
         return 0;
     }
@@ -233,14 +238,15 @@ class ApiRequestService extends HttpRequestService {
      */
     public function insertPhotoById($albumID, $photoID) {
         $post_data = array();
-        $post_data["method"] = "photo_copy";
+        $post_data["method"] = "photo.copy";
         $post_data["album_id"] = $albumID;
         $post_data["photo_id"] = $photoID;
         $result = $this->apiPost($post_data);
+            print_r($result);
         if($result) {
             $result = json_decode($result);
-            if(isset($result->album_id)) {
-                return $result->album_id;
+            if(isset($result->photo_id)) {
+                return $result->photo_id;
             }
         }
         return 0;

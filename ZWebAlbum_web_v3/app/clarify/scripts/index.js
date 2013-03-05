@@ -1,10 +1,5 @@
 /**
  * 主页的脚本。
- * 对于使用的Cookie的说明：
- * clarify_date_time 分类开始的时间。
- * clarify_album_count 记录相册的数量。
- * clarify_photo_count 记录相册中照片的数量。
- * clarify_result_count 分类后相册的数量。
  * @author ZHG <CyberZHG@gmail.com>
  */
 
@@ -38,6 +33,7 @@ function restore() {
         $(".processBlock").slideUp(500, function() {
             $(".albumBlock").slideDown(500, function() {
                 check();
+                $("#Button_Save").fadeOut();
                 $("#Div_Process").html("");
                 $("#Div_Result").html("");
                 $(".cookieBlock").html("");
@@ -165,7 +161,7 @@ function clarifyPhoto(pageURL, albumIndex, photoIndex, callback) {
             }
         });
     } else {
-        callback(pageURL, albumIndex);
+        callback(pageURL, albumIndex + 1);
     }
 }
 
@@ -195,7 +191,7 @@ function clarifyAlbum(pageURL, albumIndex) {
                 });
                 setValue("clarify_photo_count", count);
                 $(".current").html(name + " [0/" + count + "]");
-                clarifyPhoto(pageURL, albumIndex + 1, 0, clarifyAlbum);
+                clarifyPhoto(pageURL, albumIndex, 0, clarifyAlbum);
             },
             error : function() {
                 $(".current").html(name + " [0/0]");
@@ -229,7 +225,7 @@ function saveClarifyResult(resultIndex) {
         data : {name : name, list : list},
         dataType : "html",
         timeout : 180000,
-        async: false
+        async : false
     });
 }
 
@@ -311,6 +307,7 @@ $(function() {
      * 保存分类结果。
      */
     $("#Button_Save").click(function() {
+        $("#Button_Save").prop("disabled", true);
         $("input[name='Checkbox_Result']").each(function() {
             if ($(this).prop("checked")) {
                 $(this).prop("checked", false);
@@ -319,5 +316,6 @@ $(function() {
                 $(this).parent().parent().fadeOut(500);
             }
         });
+        $("#Button_Save").prop("disabled", false);
     });
 });

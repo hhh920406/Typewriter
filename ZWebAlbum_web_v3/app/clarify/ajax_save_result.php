@@ -11,7 +11,7 @@ if (isset($_POST["name"]) && isset($_POST["list"])) {
     $name = $_POST["name"];
     $albumID = $api->insertAlbum($name, $name, 0);
     if ($albumID != 0) {
-        $list = preg_split("/[/s+,]/", $_POST["list"]);
+        $list = preg_split("/[\s,]+/", $_POST["list"]);
         for ($i = 0; $i < count($list); ++ $i) {
             $photoID = $api->insertPhotoById($albumID, $list[$i]);
             if ($photoID != 0) {

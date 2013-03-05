@@ -23,4 +23,7 @@
         </a>
     </article>
 </div>
+<a href = "/pages/application/application.php?appname=clarify">
+    照片分类
+</a>
 {%include file = "footer.tpl"%}
