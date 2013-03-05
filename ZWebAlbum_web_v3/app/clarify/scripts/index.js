@@ -3,14 +3,8 @@
  * 对于使用的Cookie的说明：
  * clarify_date_time 分类开始的时间。
  * clarify_album_count 记录相册的数量。
- * clarify_album_id_* 记录相册的ID。
- * clarify_album_name_* 记录相册的名称。
  * clarify_photo_count 记录相册中照片的数量。
- * clarify_photo_id_* 记录照片的ID。
- * clarify_photo_url_* 记录照片的路径。
  * clarify_result_count 分类后相册的数量。
- * clarify_result_*_count 分类后相册中照片的数量。
- * clarify_result_*_id_* 分类后相册中照片的ID。
  * @author ZHG <CyberZHG@gmail.com>
  */
 
@@ -46,6 +40,7 @@ function restore() {
                 check();
                 $("#Div_Process").html("");
                 $("#Div_Result").html("");
+                $(".cookieBlock").html("");
             });
         });
     });
@@ -65,6 +60,28 @@ function showProcessBlock() {
 }
 
 /**
+ * 记录数据。
+ * @param {string} key 
+ * @param {string} value
+ */
+function setValue(key, value) {
+    if ($("#cookie_" + key).length === 0) {
+        $(".cookieBlock").append("<input type = hidden id = 'cookie_" + key + "' value = '" + value + "'/>");
+    } else {
+        $("#cookie_" + key).val(value);
+    }
+}
+
+/**
+ * 读取数据。
+ * @param {string} key
+ * @returns {string} value
+ */
+function getValue(key) {
+    return $("#cookie_" + key).val();
+}
+
+/**
  * 将当前选择的相册列表记入到Cookie中。
  */
 function recordSelection() {
@@ -73,14 +90,14 @@ function recordSelection() {
         if ($(this).prop("checked")) {
             var name = $(this).next("span").text();
             var id = $(this).val();
-            $.cookie("clarify_album_name_" + count, name, {expires : 1, path : "/"});
-            $.cookie("clarify_album_id_" + count, id, {expires : 1, path : "/"});
+            setValue("clarify_album_name_" + count, name);
+            setValue("clarify_album_id_" + count, id);
             ++ count;
         }
     });
-    $.cookie("clarify_album_count", count, {expires: 1, path : "/"});
-    $.cookie("clarify_date_time", (new Date()).toUTCString(), {expires: 1, path : "/"});
-    $.cookie("clarify_result_count", 0,  {expires: 1, path : "/"});
+    setValue("clarify_album_count", count);
+    setValue("clarify_date_time", (new Date()).toLocaleString());
+    setValue("clarify_result_count", 0);;
 }
 
 /**
@@ -89,20 +106,20 @@ function recordSelection() {
  * @param {string} category 类别。
  */
 function savePhotoClarifyResult(photoIndex, category) {
-    var id = $.cookie("clarify_photo_id_" + photoIndex);
-    var url = $.cookie("clarify_photo_url_" + photoIndex);
+    var id = getValue("clarify_photo_id_" + photoIndex);
+    var url = getValue("clarify_photo_url_" + photoIndex);
     var albumID = "Result_" + category;
     if ($("#" + albumID).length === 0) {
-        var count = $.cookie("clarify_result_count");
+        var count = parseInt(getValue("clarify_result_count"));
         $("#Div_Result").append("<div id = '" + albumID + "' name = '" + count + "' class = 'resultBlockItem'></div");
-        $.cookie("clarify_result_" + count + "_count", 0, {expires: 1, path : "/"});
-        $.cookie("clarify_result_count", count + 1, {expires: 1, path : "/"});
+        setValue("clarify_result_" + count + "_count", 0);
+        setValue("clarify_result_count", count + 1);
     }
-    var index = $("#" + albumID).prop("name");
-    var count = $.cookie("clarify_result_" + index + "_count");
-    $.cookie("clarify_result_" + index + "_id_" + count, id, {expires: 1, path : "/"});
-    $.cookie("clarify_result_" + index + "_count", count + 1, {expires: 1, path : "/"});
-    var date = $.cookie("clarify_date_time");
+    var index = $("#" + albumID).attr("name");
+    var count = parseInt(getValue("clarify_result_" + index + "_count"));
+    setValue("clarify_result_" + index + "_id_" + count, id);
+    setValue("clarify_result_" + index + "_count", count + 1);
+    var date = getValue("clarify_date_time");
     var imgHTML = "<div class = 'selectBlockItemImageDiv'><img src = " + url + " alt = " + url + "></img></div>";
     var checkboxHTML = "<div class = 'selectBlockItemInputDiv'><input type = checkbox name = 'Checkbox_Result' value = " + index + ">" + category + " " + date + "</input></div>";
     $("#" + albumID).html(imgHTML + checkboxHTML);
@@ -116,9 +133,9 @@ function savePhotoClarifyResult(photoIndex, category) {
  * @param {function} callback 回调函数。
  */
 function clarifyPhoto(pageURL, albumIndex, photoIndex, callback) {
-    if (photoIndex < $.cookie("clarify_photo_count")) {
-        var id = $.cookie("clarify_photo_id_" + photoIndex);
-        var url = $.cookie("clarify_photo_url_" + photoIndex);
+    if (photoIndex < getValue("clarify_photo_count")) {
+        var id = getValue("clarify_photo_id_" + photoIndex);
+        var url = getValue("clarify_photo_url_" + photoIndex);
         url = encodeURIComponent(url);
         $.ajax({
             url : pageURL,
@@ -130,8 +147,8 @@ function clarifyPhoto(pageURL, albumIndex, photoIndex, callback) {
             dataType : "html",
             timeout : 180000,
             success : function(html) {
-                var name = $.cookie("clarify_album_name_" + albumIndex);
-                var number = $.cookie("clarify_photo_count");
+                var name = getValue("clarify_album_name_" + albumIndex);
+                var number = getValue("clarify_photo_count");
                 $(".current").html(name + " [" + (photoIndex + 1) + "/" + number + "]");
                 if ("" !== html) {
                     savePhotoClarifyResult(photoIndex, html);
@@ -139,8 +156,8 @@ function clarifyPhoto(pageURL, albumIndex, photoIndex, callback) {
                 clarifyPhoto(pageURL, albumIndex, photoIndex + 1, callback);
             },
             error : function() {
-                var name = $.cookie("clarify_album_name_" + albumIndex);
-                var number = $.cookie("clarify_photo_count");
+                var name = getValue("clarify_album_name_" + albumIndex);
+                var number = getValue("clarify_photo_count");
                 $(".current").html(name + " [" + (photoIndex + 1) + "/" + number + "]");
                 clarifyPhoto(pageURL, albumIndex, photoIndex + 1, callback);
             }
@@ -157,9 +174,9 @@ function clarifyPhoto(pageURL, albumIndex, photoIndex, callback) {
  */
 function clarifyAlbum(pageURL, albumIndex) {
     $(".current").attr("class", "history");
-    if (albumIndex < $.cookie("clarify_album_count")) {
-        var name = $.cookie("clarify_album_name_" + albumIndex);
-        var id = $.cookie("clarify_album_id_" + albumIndex);
+    if (albumIndex < getValue("clarify_album_count")) {
+        var name = getValue("clarify_album_name_" + albumIndex);
+        var id = getValue("clarify_album_id_" + albumIndex);
         $("#Div_Process").append("<div class = 'current'></li>");
         $.ajax({
             url : "ajax_get_photos.php",
@@ -170,11 +187,11 @@ function clarifyAlbum(pageURL, albumIndex) {
             success : function(json) {
                 var count = 0;
                 $.each(json, function(index) {
-                    $.cookie("clarify_photo_id_" + count, json[index].PhotoID, {expires: 1, path : "/"});
-                    $.cookie("clarify_photo_url_" + count, json[index].PhotoPath, {expires : 1, path : "/"});
+                    setValue("clarify_photo_id_" + count, json[index].PhotoID);
+                    setValue("clarify_photo_url_" + count, json[index].PhotoPath);
                     ++ count;
                 });
-                $.cookie("clarify_photo_count", count, {expires : 1, path : "/"});
+                setValue("clarify_photo_count", count);
                 $(".current").html(name + " [0/" + count + "]");
                 clarifyPhoto(pageURL, albumIndex + 1, 0, clarifyAlbum);
             },
@@ -274,8 +291,8 @@ $(function() {
      * 取消分类。
      */
     $("#Button_Cancel").click(function() {
-        $.cookie("clarify_album_count", 0, {expires : 1, path : "/"});
-        $.cookie("clarify_photo_count", 0, {expires : 1, path : "/"});
+        setValue("clarify_album_count", 0);
+        setValue("clarify_photo_count", 0);
         restore();
     });
     

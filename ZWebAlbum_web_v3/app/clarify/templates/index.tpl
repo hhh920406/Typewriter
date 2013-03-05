@@ -60,6 +60,8 @@
             <div class = "textBlock">
                 说明：本应用提供对相册图片的分类处理。由于要处理的数据量可能较大，第一次分类时请耐心等待。请确保你的浏览器允许javascript的执行和cookie的记录。
             </div>
+            <div class = "cookieBlock">
+            </div>
         </div>
     </body>
 </html>
