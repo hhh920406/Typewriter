@@ -20,11 +20,7 @@
     border-radius: 10px;
 }
 
-.albumBlock ul {
-    width: 100%;
-}
-
-.albumBlock li {
+.albumBlockItem {
     display: inline-block;
     width: 150px;
     margin-left: 5px;
@@ -41,11 +37,7 @@
     border-radius: 10px;
 }
 
-.selectBlock ul {
-    width: 100%;
-}
-
-.selectBlock li {
+.selectBlockItem {
     display: inline-block;
     width: 150px;
     height: 150px;
@@ -56,23 +48,23 @@
     cursor: pointer;
 }
 
-.selectBlock li img {
+.selectBlockItem img {
     width: 100%;
     height: 100%;
     margin: 0 auto;
 }
 
-.selectBlock li.color {
+selectBlockItemColor {
     color: white;
     background-color: darkmagenta;
 }
 
-.selectBlock li.time {
+selectBlockItemTime {
     color: white;
     background-color: darkblue;
 }
 
-.selectBlock li.event {
+selectBlockItemEvent {
     color: white;
     background-color: darkgreen;
 }
@@ -80,7 +72,7 @@
 .processBlock {
     display: none;
     width: 100%;
-    height: 300px;
+    max-height: none;
     margin: 5px;
     padding: 10px;
     border: 1px solid;
@@ -88,22 +80,59 @@
     border-radius: 10px;
 }
 
-.processBlock ul {
-}
-
-.processBlock li {
+.history {
     display: inline-block;
     width: 100%;
     margin-top: 2px;
     padding: 1px;
     text-align: center;
     color: gray;
-}
-
-.processBlock li.history {
     background-color: lightgray;
 }
 
-.processBlock li.current {
+.current {
+    display: inline-block;
+    width: 100%;
+    margin-top: 2px;
+    padding: 1px;
+    text-align: center;
+    color: gray;
     background-color: bisque;
+}
+
+.resultBlock {
+    display: none;
+    width: 100%;
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid;
+    border-color: darkgray;
+    border-radius: 10px;
+}
+
+.resultBlockItem {
+    display: inline-block;
+    width: 150px;
+    height: 170px;
+    margin: 5px;
+}
+
+.selectBlockItemImageDiv {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    background-color: darkgray;
+    cursor: pointer;
+}
+
+.selectBlockItemImageDiv img {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+}
+
+.selectBlockItemInputDiv {
+    width: 150px;
+    height: 20px;
+    line-height: 20px;
 }
