@@ -77,7 +77,7 @@
                 <option value = "Inside">站内应用</option>
                 <option value = "Outside">站外应用</option>
                 <option value = "Desktop">桌面应用</option>
-                {if $basic["type"] == "Admin" || $basic["type"] == "Super Admin"}
+                {if $basic->Type == "Admin" || $basic->Type == "Super Admin"}
                 <option value = "Core">核心应用</option>
                 {/if}
             </select>
@@ -93,7 +93,7 @@
             站外应用：使用自己的服务器，编程语言没有限制，由iframe连接到指定的url。
             <br/>
             桌面应用：在网站之外运行，编程语言没有限制，提供程序的上传，也可由链接转向下载服务器。
-            {if $basic["type"] == "Admin" || $basic["type"] == "Super Admin"}
+            {if $basic->Type == "Admin" || $basic->Type == "Super Admin"}
             <br/>
             核心应用：只有管理员级别才可以进行开发，默认即可获得用户全部许可。
             {/if}

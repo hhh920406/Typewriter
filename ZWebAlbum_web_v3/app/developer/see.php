@@ -10,7 +10,7 @@
             if(!isset($basic)) {
                 $basic = $_SESSION["basic"];
             }
-            $userID = $basic["id"];
+            $userID = $basic->UserID;
             $applications = getApplicationByUser($userID);
             for($i = 0; $i < count($applications); ++ $i) {
                 switch($applications[$i]["Type"]) {

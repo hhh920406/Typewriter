@@ -1,7 +1,10 @@
-<?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+<!DOCTYPE html>
 
-?>
+<html>
+    <head>
+        <meta charset = "utf-8">
+        <link rel = "stylesheet" href = "css/doc.css">
+    </head>
+    <body>
+    </body>
+</html>
