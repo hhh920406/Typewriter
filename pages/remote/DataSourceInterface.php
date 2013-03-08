@@ -54,6 +54,8 @@ interface DataSourceInterface {
      * itemPrice：商品的价格，
      * itemUrl：指向商品页面的URL，
      * itemImage：指向商品图片的URL。
+     * sellerID：卖家的ID。
+     * categoryID：所属类别的ID。
      * 如果出错或没有结果都将返回空数组。
      */
     public function getItemList($sellerID, $categoryID, $keyword, $startPrice, $endPrice, $pageNum, $itemPerPage);

@@ -7,7 +7,7 @@ require_once "ApiRequest.class.php";
 
 class ApiItemList extends ApiRequest {
     const method = "59miao.items.search";
-    const fields = "iid,title,price,click_url,pic_url";
+    const fields = "iid,title,price,click_url,pic_url,sid,cid";
     /**
      * 构造函数。
      */
@@ -57,6 +57,8 @@ class ApiItemList extends ApiRequest {
                         $resultItem->itemPrice = $item->price;
                         $resultItem->itemUrl = $item->click_url;
                         $resultItem->itemImage = $item->pic_url;
+                        $resultItem->sellerID = $item->sid;
+                        $resultItem->categoryID = $item->cid;
                         $result[] = $resultItem;
                     }
                     return $result;

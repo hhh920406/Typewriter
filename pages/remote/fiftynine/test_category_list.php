@@ -11,7 +11,7 @@
          * @author ZHG <CyberZHG@gmail.com>
          */
         require_once "DataSourceFiftynine.class.php";
-        require_once "Test.php";
+        require_once "test.php";
         $source = new DataSourceFiftynine();
         $result = $source->getCategoryList();
         printArrayWithTable($result);
