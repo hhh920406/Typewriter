@@ -13,7 +13,6 @@ interface DataSourceInterface {
      * 商家信息中包括
      * sellerID：卖家的ID，
      * sellerName：卖家的名称，
-     * sellerDesc：卖家的描述，
      * sellerUrl：指向商家首页的URL，
      * sellerLogo：指向商家Logo图片地址的链接。
      * 如果出错或没有结果都将返回空数组。

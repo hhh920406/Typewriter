@@ -4,13 +4,16 @@
  * @author CyberZHG <CyberZHG@gmail.com>
  */
 
-require_once "setting.php";
-require_once "../DataSourceInterface.php";
-require_once "ApiSellerList.class.php";
-require_once "ApiCategoryList.class.php";
-require_once "ApiSeller.class.php";
-require_once "ApiItemList.class.php";
-require_once "ApiItem.class.php";
+if (!defined("FILE_ROOT")) {
+    require_once "../../util/setting.php";
+}
+require_once FILE_ROOT . "pages/remote/fiftynine/setting.php";
+require_once FILE_ROOT . "pages/remote/DataSourceInterface.php";
+require_once FILE_ROOT . "pages/remote/fiftynine/ApiSellerList.class.php";
+require_once FILE_ROOT . "pages/remote/fiftynine/ApiCategoryList.class.php";
+require_once FILE_ROOT . "pages/remote/fiftynine/ApiSeller.class.php";
+require_once FILE_ROOT . "pages/remote/fiftynine/ApiItemList.class.php";
+require_once FILE_ROOT . "pages/remote/fiftynine/ApiItem.class.php";
 
 class DataSourceFiftynine implements DataSourceInterface {
     /**
@@ -52,7 +55,7 @@ class DataSourceFiftynine implements DataSourceInterface {
      * @return array
      */
     public function getCategoryList($parentID) {
-        if (-1 === $parentID) {
+        if ($parentID < 0) {
             $parentID = 0;
         }
         $parentID = (string) $parentID;

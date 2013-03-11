@@ -3,7 +3,12 @@
  * 获取商品的列表。
  * @author ZHG <CyberZHG@gmail.com>
  */
-require_once "ApiRequest.class.php";
+
+if (!defined("FILE_ROOT")) {
+    require_once "../../util/setting.php";
+}
+require_once FILE_ROOT . "pages/remote/fiftynine/setting.php";
+require_once FILE_ROOT . "pages/remote/fiftynine/ApiRequest.class.php";
 
 class ApiItemList extends ApiRequest {
     const method = "59miao.items.search";
@@ -29,7 +34,7 @@ class ApiItemList extends ApiRequest {
     public function query($sellerID, $categoryID, $keyword, $startPrice, $endPrice, $pageNum, $itemPerPage) {
         $params = array();
         if ($sellerID) {
-            $params["cid"] = $sellerID;
+            $params["sid"] = $sellerID;
         }
         if ($categoryID) {
             $params["cid"] = $categoryID;

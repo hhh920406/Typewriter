@@ -10,9 +10,9 @@
          * 对商品分类的测试。
          * @author ZHG <CyberZHG@gmail.com>
          */
-        require_once "DataSourceFiftynine.class.php";
+        require_once "DataSourceTaobao.class.php";
         require_once "test.php";
-        $source = new DataSourceFiftynine();
+        $source = new DataSourceTaobao();
         $result = $source->getCategoryList(0);
         printArrayWithTable($result);
         //$result = $source->getCategoryList(19);
@@ -20,5 +20,3 @@
         ?>
     </body>
 </html>
-
-

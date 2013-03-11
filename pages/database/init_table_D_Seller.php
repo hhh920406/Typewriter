@@ -1,10 +1,10 @@
 <?php
 /**
- * 检测表D_Item是否存在，如果不存在就创建。
+ * 检测表D_Seller是否存在，如果不存在就创建。
  * @author ZHG <CyberZHG@gmail.com>
  */
-echo "<h2>Table: D_Item</h2>";
-$query = getTableExistanceString("D_Item");
+echo "<h2>Table: D_Seller</h2>";
+$query = getTableExistanceString("D_Seller");
 echo $query . "<br/>";
 $sql->query($query);
 if ($sql->getError()) {
@@ -12,26 +12,23 @@ if ($sql->getError()) {
 } else {
     $result = $sql->getResult();
     if (count($result)) {
-        echo "D_Item表已经存在，不需要创建。<br/>";
+        echo "D_Seller表已经存在，不需要创建。<br/>";
     } else {
-        $query =    "CREATE TABLE D_Item (" . 
+        $query =    "CREATE TABLE D_Seller (" . 
                         "ID INT(4) NOT NULL AUTO_INCREMENT, " . 
                         "PRIMARY KEY (ID), " .
                         "RemoteID INT(4), " . 
                         "Name VARCHAR(50), " . 
-                        "Price TEXT, " . 
                         "Url TEXT, " . 
-                        "Image TEXT, " . 
-                        "SellerID INT(4), " . 
-                        "CategoryID INT(4), " . 
+                        "Logo TEXT, " . 
                         "Source VARCHAR(50)" . 
                     ");";
         echo $query . "<br/>";
         $sql->query($query);
         if ($sql->getError()) {
-            echo "创建表D_Item失败：" . $sql->getError() . "<br/>";
+            echo "创建表D_Seller失败：" . $sql->getError() . "<br/>";
         } else {
-            echo "创建表D_Item完成<br/>";
+            echo "创建表D_Seller完成<br/>";
         }
     }
 }

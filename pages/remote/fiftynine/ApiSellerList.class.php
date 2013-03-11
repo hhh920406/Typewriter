@@ -3,11 +3,14 @@
  * 获取商家的列表。
  * @author ZHG <CyberZHG@gmail.com>
  */
-require_once "ApiRequest.class.php";
+if (!defined("FILE_ROOT")) {
+    require_once "../../util/setting.php";
+}
+require_once FILE_ROOT . "pages/remote/fiftynine/ApiRequest.class.php";
 
 class ApiSellerList extends ApiRequest {
     const method = "59miao.shops.list.get";
-    const fields = "sid,name,desc,click_url,logo";
+    const fields = "sid,name,click_url,logo";
     /**
      * 构造函数。
      */
@@ -40,7 +43,6 @@ class ApiSellerList extends ApiRequest {
                         $resultItem = new stdClass();
                         $resultItem->sellerID = $item->sid;
                         $resultItem->sellerName = $item->name;
-                        $resultItem->sellerDesc = $item->desc;
                         $resultItem->sellerUrl = $item->click_url;
                         $resultItem->sellerLogo = $item->logo;
                         $result[] = $resultItem;

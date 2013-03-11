@@ -1,17 +1,38 @@
 <?php
 /**
- * 基于淘宝网站的数据获取，详见www.taobao.com。
+ * 基于淘宝网站的数据获取，详见open.taobao.com。
  * @author CyberZHG <CyberZHG@gmail.com>
  */
-
-require_once "setting.php";
-require_once "../DataSourceInterface.php";
+if (!defined("FILE_ROOT")) {
+    require_once "../../util/setting.php";
+}
+require_once FILE_ROOT . "pages/remote/taobao/setting.php";
+require_once FILE_ROOT . "pages/remote/DataSourceInterface.php";
+require_once FILE_ROOT . "pages/remote/taobao/ApiCategoryList.class.php";
+require_once FILE_ROOT . "pages/remote/taobao/ApiSellerList.class.php";
+require_once FILE_ROOT . "pages/remote/taobao/ApiSeller.class.php";
+require_once FILE_ROOT . "pages/remote/taobao/ApiItemList.class.php";
+require_once FILE_ROOT . "pages/remote/taobao/ApiItem.class.php";
 
 class DataSourceTaobao implements DataSourceInterface {
     /**
      * 构造函数。
      */
     public function __construct() {
+    }
+    
+    /**
+     * 获取类别列表。
+     * @see DataSourceInterface
+     * @param int $parentID
+     * @return array
+     */
+    public function getCategoryList($parentID) {
+        if ($parentID < 0) {
+            $parentID = 0;
+        }
+        $api = new ApiCategoryList();
+        return $api->query($parentID);
     }
     
     /**
@@ -22,17 +43,8 @@ class DataSourceTaobao implements DataSourceInterface {
      * @return array
      */
     public function getSellerList($pageNum, $itemPerPage) {
-        //TODO
-    }
-    
-    /**
-     * 获取类别列表。
-     * @see DataSourceInterface
-     * @param int $parentID
-     * @return array
-     */
-    public function getCategoryList($parentID) {
-        //TODO
+        $api = new ApiSellerList();
+        return $api->query($pageNum, $itemPerPage);
     }
     
     /**
@@ -42,7 +54,8 @@ class DataSourceTaobao implements DataSourceInterface {
      * @return array
      */
     public function getSeller($sellerID) {
-        //TODO
+        $api = new ApiSeller();
+        return $api->query($sellerID);
     }
     
     /**
@@ -58,7 +71,15 @@ class DataSourceTaobao implements DataSourceInterface {
      * @return array
      */
     public function getItemList($sellerID, $categoryID, $keyword, $startPrice, $endPrice, $pageNum, $itemPerPage) {
-        //TODO
+        if ($categoryID < 0) {
+            $categoryID = 0;
+        }
+        if ($endPrice <= $startPrice) {
+            $startPrice = 0;
+            $endPrice = 10000000;
+        }
+        $api = new ApiItemList();
+        return $api->query($keyword, $categoryID, $keyword, $startPrice, $endPrice, $pageNum, $itemPerPage);
     }
     
     /**
@@ -68,7 +89,8 @@ class DataSourceTaobao implements DataSourceInterface {
      * @return array
      */
     public function getItem($itemID) {
-        //TODO
+        $api = new ApiItem();
+        return $api->query($itemID);
     }
 }
 ?>

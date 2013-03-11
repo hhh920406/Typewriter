@@ -1,10 +1,14 @@
 <?php
-require_once "setting.php";
-
 /**
  * 进行API的请求。
  * @author ZHG <CyberZHG@gmail.com>
  */
+
+if (!defined("FILE_ROOT")) {
+    require_once "../../util/setting.php";
+}
+require_once FILE_ROOT . "pages/remote/fiftynine/setting.php";
+
 class ApiRequest {
     protected $result = ""; /** 请求的结果。*/
     protected $error = ""; /** 出现的错误信息。*/

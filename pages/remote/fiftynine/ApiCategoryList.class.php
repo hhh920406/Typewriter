@@ -3,7 +3,12 @@
  * 获取商品的分类。
  * @author ZHG <CyberZHG@gmail.com>
  */
-require_once "ApiRequest.class.php";
+
+if (!defined("FILE_ROOT")) {
+    require_once "../../util/setting.php";
+}
+require_once FILE_ROOT . "pages/remote/fiftynine/setting.php";
+require_once FILE_ROOT . "pages/remote/fiftynine/ApiRequest.class.php";
 
 class ApiCategoryList extends ApiRequest {
     const method = "59miao.itemcats.get";

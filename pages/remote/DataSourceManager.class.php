@@ -3,9 +3,12 @@
  * 用于管理不同的数据来源。
  * @author ZHG <CyberZHG@gmail.com>
  */
-require_once "DataSourceInterface.php";
-require_once "fiftynine/DataSourceFiftynine.class.php";
-require_once "taobao/DataSourceTaobao.class.php";
+if (!defined("FILE_ROOT")) {
+    require_once "../util/setting.php";
+}
+require_once FILE_ROOT . "pages/remote/DataSourceInterface.php";
+require_once FILE_ROOT . "pages/remote/fiftynine/DataSourceFiftynine.class.php";
+require_once FILE_ROOT . "pages/remote/taobao/DataSourceTaobao.class.php";
 
 class DataSourceManager implements DataSourceInterface {
     const RESOURCE_FIFTYNINE = "fiftynine";
