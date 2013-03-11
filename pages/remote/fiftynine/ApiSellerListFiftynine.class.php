@@ -1,18 +1,16 @@
 <?php
 /**
- * 获取商品的分类。
+ * 获取商家的列表。
  * @author ZHG <CyberZHG@gmail.com>
  */
-
 if (!defined("FILE_ROOT")) {
     require_once "../../util/setting.php";
 }
-require_once FILE_ROOT . "pages/remote/fiftynine/setting.php";
-require_once FILE_ROOT . "pages/remote/fiftynine/ApiRequest.class.php";
+require_once FILE_ROOT . "pages/remote/fiftynine/ApiRequestFiftynine.class.php";
 
-class ApiCategoryList extends ApiRequest {
-    const method = "59miao.itemcats.get";
-    const fields = "parent_cid,cid,name,is_parent";
+class ApiSellerListFiftynine extends ApiRequestFiftynine {
+    const method = "59miao.shops.list.get";
+    const fields = "sid,name,click_url,logo";
     /**
      * 构造函数。
      */
@@ -20,18 +18,22 @@ class ApiCategoryList extends ApiRequest {
     }
     
     /**
-     * 获取商品的分类。
-     * @param string $parentID 父分类的ID。
+     * 获取商家的列表。
+     * @param string $pageNum 页数。
+     * @param string $itemPerPage 每页的数量。
      * @return array
      */
-    public function query($parentID) {
+    public function query($pageNum, $itemPerPage) {
         $params = array (
-            "parent_cid"   => $parentID,
+            "page_no"   => $pageNum,
+            "page_size" => $itemPerPage,
         );
         if ($this->request(self::method, self::fields, $params)) {
+            $this->result = simplexml_load_string($this->result); /** 网站接口有问题，无法返回json格式的数据。*/
+            $this->result = json_encode($this->result);
             $this->result = json_decode($this->result);
-            if (isset($this->result->itemcats_get_response->itemcats->itemcat)) {
-                $this->result = $this->result->itemcats_get_response->itemcats->itemcat;
+            if (isset($this->result->shops->shop)) {
+                $this->result = $this->result->shops->shop;
                 if (!is_array($this->result)) {
                     $this->result = array($this->result);
                 }
@@ -39,10 +41,10 @@ class ApiCategoryList extends ApiRequest {
                 try {
                     foreach($this->result as $item) {
                         $resultItem = new stdClass();
-                        $resultItem->parentID = $item->parent_cid;
-                        $resultItem->categoryID = $item->cid;
-                        $resultItem->categoryName = $item->name;
-                        $resultItem->isParent = $item->is_parent === "true";
+                        $resultItem->sellerID = $item->sid;
+                        $resultItem->sellerName = $item->name;
+                        $resultItem->sellerUrl = $item->click_url;
+                        $resultItem->sellerLogo = $item->logo;
                         $result[] = $resultItem;
                     }
                     return $result;
@@ -59,4 +61,5 @@ class ApiCategoryList extends ApiRequest {
         return array();
     }
 }
+
 ?>

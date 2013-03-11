@@ -8,11 +8,11 @@ if (!defined("FILE_ROOT")) {
 }
 require_once FILE_ROOT . "pages/remote/taobao/setting.php";
 require_once FILE_ROOT . "pages/remote/DataSourceInterface.php";
-require_once FILE_ROOT . "pages/remote/taobao/ApiCategoryList.class.php";
-require_once FILE_ROOT . "pages/remote/taobao/ApiSellerList.class.php";
-require_once FILE_ROOT . "pages/remote/taobao/ApiSeller.class.php";
-require_once FILE_ROOT . "pages/remote/taobao/ApiItemList.class.php";
-require_once FILE_ROOT . "pages/remote/taobao/ApiItem.class.php";
+require_once FILE_ROOT . "pages/remote/taobao/ApiCategoryListTaobao.class.php";
+require_once FILE_ROOT . "pages/remote/taobao/ApiSellerListTaobao.class.php";
+require_once FILE_ROOT . "pages/remote/taobao/ApiSellerTaobao.class.php";
+require_once FILE_ROOT . "pages/remote/taobao/ApiItemListTaobao.class.php";
+require_once FILE_ROOT . "pages/remote/taobao/ApiItemTaobao.class.php";
 
 class DataSourceTaobao implements DataSourceInterface {
     /**
@@ -31,7 +31,7 @@ class DataSourceTaobao implements DataSourceInterface {
         if ($parentID < 0) {
             $parentID = 0;
         }
-        $api = new ApiCategoryList();
+        $api = new ApiCategoryListTaobao();
         return $api->query($parentID);
     }
     
@@ -43,7 +43,7 @@ class DataSourceTaobao implements DataSourceInterface {
      * @return array
      */
     public function getSellerList($pageNum, $itemPerPage) {
-        $api = new ApiSellerList();
+        $api = new ApiSellerListTaobao();
         return $api->query($pageNum, $itemPerPage);
     }
     
@@ -54,7 +54,7 @@ class DataSourceTaobao implements DataSourceInterface {
      * @return array
      */
     public function getSeller($sellerID) {
-        $api = new ApiSeller();
+        $api = new ApiSellerTaobao();
         return $api->query($sellerID);
     }
     
@@ -78,7 +78,7 @@ class DataSourceTaobao implements DataSourceInterface {
             $startPrice = 0;
             $endPrice = 10000000;
         }
-        $api = new ApiItemList();
+        $api = new ApiItemListTaobao();
         return $api->query($keyword, $categoryID, $keyword, $startPrice, $endPrice, $pageNum, $itemPerPage);
     }
     
@@ -89,7 +89,7 @@ class DataSourceTaobao implements DataSourceInterface {
      * @return array
      */
     public function getItem($itemID) {
-        $api = new ApiItem();
+        $api = new ApiItemTaobao();
         return $api->query($itemID);
     }
 }

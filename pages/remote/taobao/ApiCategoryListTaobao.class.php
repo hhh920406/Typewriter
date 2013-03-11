@@ -10,7 +10,7 @@ if (!defined("FILE_ROOT")) {
 require_once FILE_ROOT . "pages/remote/taobao/setting.php";
 require_once FILE_ROOT . "pages/remote/taobao/sdk/TopSdk.php";
 
-class ApiCategoryList {
+class ApiCategoryListTaobao {
     /**
      * 构造函数。
      */
@@ -24,8 +24,8 @@ class ApiCategoryList {
      */
     public function query($parentID) {
         $client = new TopClient();
-        $client->appkey = APP_KEY;
-        $client->secretKey = APP_SECRET;
+        $client->appkey = APP_KEY_TAOBAO;
+        $client->secretKey = APP_SECRET_TAOBAO;
         $request = new ItemcatsGetRequest();
         $request->setFields("parent_cid,cid,name,is_parent");
         $request->setParentCid($parentID);

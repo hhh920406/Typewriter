@@ -4,7 +4,7 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 
-class ApiSeller {
+class ApiSellerListTaobao {
     /**
      * 构造函数。
      */
@@ -12,11 +12,12 @@ class ApiSeller {
     }
     
     /**
-     * 获取商家的信息。
-     * @param string $sellerID 卖家的ID。
+     * 获取商家的列表。
+     * @param string $pageNum 页数。
+     * @param string $itemPerPage 每页的数量。
      * @return array
      */
-    public function query($sellerID) {
+    public function query($pageNum, $itemPerPage) {
         $returnItems = array();
         $resultItem->sellerID = 0;
         $resultItem->sellerName = "淘宝网";

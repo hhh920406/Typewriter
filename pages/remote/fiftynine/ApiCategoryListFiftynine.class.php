@@ -1,6 +1,6 @@
 <?php
 /**
- * 获取商品的信息。
+ * 获取商品的分类。
  * @author ZHG <CyberZHG@gmail.com>
  */
 
@@ -8,11 +8,11 @@ if (!defined("FILE_ROOT")) {
     require_once "../../util/setting.php";
 }
 require_once FILE_ROOT . "pages/remote/fiftynine/setting.php";
-require_once FILE_ROOT . "pages/remote/fiftynine/ApiRequest.class.php";
+require_once FILE_ROOT . "pages/remote/fiftynine/ApiRequestFiftynine.class.php";
 
-class ApiItem extends ApiRequest {
-    const method = "59miao.items.get";
-    const fields = "iid,title,price,click_url,pic_url,sid,cid";
+class ApiCategoryListFiftynine extends ApiRequestFiftynine {
+    const method = "59miao.itemcats.get";
+    const fields = "parent_cid,cid,name,is_parent";
     /**
      * 构造函数。
      */
@@ -20,18 +20,18 @@ class ApiItem extends ApiRequest {
     }
     
     /**
-     * 获取商品的信息。
-     * @param string $itemID 商品的ID。
+     * 获取商品的分类。
+     * @param string $parentID 父分类的ID。
      * @return array
      */
-    public function query($itemID) {
-        $params = array(
-            "iids" => $itemID
+    public function query($parentID) {
+        $params = array (
+            "parent_cid"   => $parentID,
         );
         if ($this->request(self::method, self::fields, $params)) {
             $this->result = json_decode($this->result);
-            if (isset($this->result->items_get_response->items->item)) {
-                $this->result = $this->result->items_get_response->items->item;
+            if (isset($this->result->itemcats_get_response->itemcats->itemcat)) {
+                $this->result = $this->result->itemcats_get_response->itemcats->itemcat;
                 if (!is_array($this->result)) {
                     $this->result = array($this->result);
                 }
@@ -39,13 +39,10 @@ class ApiItem extends ApiRequest {
                 try {
                     foreach($this->result as $item) {
                         $resultItem = new stdClass();
-                        $resultItem->itemID = $item->iid;
-                        $resultItem->itemName = $item->title;
-                        $resultItem->itemPrice = $item->price;
-                        $resultItem->itemUrl = $item->click_url;
-                        $resultItem->itemImage = $item->pic_url;
-                        $resultItem->sellerID = $item->sid;
+                        $resultItem->parentID = $item->parent_cid;
                         $resultItem->categoryID = $item->cid;
+                        $resultItem->categoryName = $item->name;
+                        $resultItem->isParent = $item->is_parent === "true";
                         $result[] = $resultItem;
                     }
                     return $result;
@@ -62,5 +59,4 @@ class ApiItem extends ApiRequest {
         return array();
     }
 }
-
 ?>

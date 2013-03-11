@@ -9,11 +9,11 @@ if (!defined("FILE_ROOT")) {
 }
 require_once FILE_ROOT . "pages/remote/fiftynine/setting.php";
 require_once FILE_ROOT . "pages/remote/DataSourceInterface.php";
-require_once FILE_ROOT . "pages/remote/fiftynine/ApiSellerList.class.php";
-require_once FILE_ROOT . "pages/remote/fiftynine/ApiCategoryList.class.php";
-require_once FILE_ROOT . "pages/remote/fiftynine/ApiSeller.class.php";
-require_once FILE_ROOT . "pages/remote/fiftynine/ApiItemList.class.php";
-require_once FILE_ROOT . "pages/remote/fiftynine/ApiItem.class.php";
+require_once FILE_ROOT . "pages/remote/fiftynine/ApiSellerListFiftynine.class.php";
+require_once FILE_ROOT . "pages/remote/fiftynine/ApiCategoryListFiftynine.class.php";
+require_once FILE_ROOT . "pages/remote/fiftynine/ApiSellerFiftynine.class.php";
+require_once FILE_ROOT . "pages/remote/fiftynine/ApiItemListFiftynine.class.php";
+require_once FILE_ROOT . "pages/remote/fiftynine/ApiItemFiftynine.class.php";
 
 class DataSourceFiftynine implements DataSourceInterface {
     /**
@@ -32,7 +32,7 @@ class DataSourceFiftynine implements DataSourceInterface {
     public function getSellerList($pageNum, $itemPerPage) {
         $pageNum = (string) $pageNum;
         $itemPerPage = (string) $itemPerPage;
-        $api = new ApiSellerList();
+        $api = new ApiSellerListFiftynine();
         return $api->query($pageNum, $itemPerPage);
     }
     
@@ -44,7 +44,7 @@ class DataSourceFiftynine implements DataSourceInterface {
      */
     public function getSeller($sellerID) {
         $sellerID = (string) $sellerID;
-        $api = new ApiSeller();
+        $api = new ApiSellerFiftynine();
         return $api->query($sellerID);
     }
     
@@ -59,7 +59,7 @@ class DataSourceFiftynine implements DataSourceInterface {
             $parentID = 0;
         }
         $parentID = (string) $parentID;
-        $api  = new ApiCategoryList();
+        $api  = new ApiCategoryListFiftynine();
         return $api->query($parentID);
     }
     
@@ -94,7 +94,7 @@ class DataSourceFiftynine implements DataSourceInterface {
         $endPrice = (string) $endPrice;
         $pageNum = (string) $pageNum;
         $itemPerPage = (string) $itemPerPage;
-        $api = new ApiItemList();
+        $api = new ApiItemListFiftynine();
         return $api->query($sellerID, $categoryID, $keyword, $startPrice, $endPrice, $pageNum, $itemPerPage);
     }
     
@@ -106,7 +106,7 @@ class DataSourceFiftynine implements DataSourceInterface {
      */
     public function getItem($itemID) {
         $itemID = (string) $itemID;
-        $api = new ApiItem();
+        $api = new ApiItemFiftynine();
         return $api->query($itemID);
     }
 }

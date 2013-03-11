@@ -9,7 +9,7 @@ if (!defined("FILE_ROOT")) {
 require_once FILE_ROOT . "pages/remote/taobao/setting.php";
 require_once FILE_ROOT . "pages/remote/taobao/sdk/TopSdk.php";
 
-class ApiItemList {
+class ApiItemListTaobao {
     /**
      * 构造函数。
      */
@@ -30,8 +30,8 @@ class ApiItemList {
      */
     public function query($sellerID, $categoryID, $keyword, $startPrice, $endPrice, $pageNum, $itemPerPage) {
         $client = new TopClient();
-        $client->appkey = APP_KEY;
-        $client->secretKey = APP_SECRET;
+        $client->appkey = APP_KEY_TAOBAO;
+        $client->secretKey = APP_SECRET_TAOBAO;
         $request = new TaobaokeItemsGetRequest();
         $request->setFields("num_iid,title,price,click_url,pic_url,cid");
         if ($categoryID != 0) {

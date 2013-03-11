@@ -9,7 +9,7 @@ if (!defined("FILE_ROOT")) {
 }
 require_once FILE_ROOT . "pages/remote/fiftynine/setting.php";
 
-class ApiRequest {
+class ApiRequestFiftynine {
     protected $result = ""; /** 请求的结果。*/
     protected $error = ""; /** 出现的错误信息。*/
     
@@ -31,7 +31,7 @@ class ApiRequest {
             "method"        =>  $method,
             "timestamp"     =>  Date("Y-m-d H:i:s"),
             "format"        =>  "json",
-            "app_key"       =>  APP_KEY,
+            "app_key"       =>  APP_KEY_FIFTYNINE,
             "v"             =>  "1.0",
             "sign_method"   =>  "md5",
             "fields"        =>  $fields,
@@ -47,8 +47,8 @@ class ApiRequest {
      */
     private function send($params) {
         ksort($params);
-        $url = API_URL;
-        $str = APP_SECRET;
+        $url = API_URL_FIFTYNINE;
+        $str = APP_SECRET_FIFTYNINE;
          foreach ($params as $key => $value) {
             if("" == $key || "" == $value) {
                 continue;

@@ -8,9 +8,9 @@ if (!defined("FILE_ROOT")) {
     require_once "../../util/setting.php";
 }
 require_once FILE_ROOT . "pages/remote/fiftynine/setting.php";
-require_once FILE_ROOT . "pages/remote/fiftynine/ApiRequest.class.php";
+require_once FILE_ROOT . "pages/remote/fiftynine/ApiRequestFiftynine.class.php";
 
-class ApiItemList extends ApiRequest {
+class ApiItemListFiftynine extends ApiRequestFiftynine {
     const method = "59miao.items.search";
     const fields = "iid,title,price,click_url,pic_url,sid,cid";
     /**

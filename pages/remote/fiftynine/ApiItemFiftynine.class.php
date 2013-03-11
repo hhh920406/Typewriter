@@ -1,16 +1,18 @@
 <?php
 /**
- * 获取商家的列表。
+ * 获取商品的信息。
  * @author ZHG <CyberZHG@gmail.com>
  */
+
 if (!defined("FILE_ROOT")) {
     require_once "../../util/setting.php";
 }
-require_once FILE_ROOT . "pages/remote/fiftynine/ApiRequest.class.php";
+require_once FILE_ROOT . "pages/remote/fiftynine/setting.php";
+require_once FILE_ROOT . "pages/remote/fiftynine/ApiRequestFiftynine.class.php";
 
-class ApiSellerList extends ApiRequest {
-    const method = "59miao.shops.list.get";
-    const fields = "sid,name,click_url,logo";
+class ApiItemFiftynine extends ApiRequestFiftynine {
+    const method = "59miao.items.get";
+    const fields = "iid,title,price,click_url,pic_url,sid,cid";
     /**
      * 构造函数。
      */
@@ -18,22 +20,18 @@ class ApiSellerList extends ApiRequest {
     }
     
     /**
-     * 获取商家的列表。
-     * @param string $pageNum 页数。
-     * @param string $itemPerPage 每页的数量。
+     * 获取商品的信息。
+     * @param string $itemID 商品的ID。
      * @return array
      */
-    public function query($pageNum, $itemPerPage) {
-        $params = array (
-            "page_no"   => $pageNum,
-            "page_size" => $itemPerPage,
+    public function query($itemID) {
+        $params = array(
+            "iids" => $itemID
         );
         if ($this->request(self::method, self::fields, $params)) {
-            $this->result = simplexml_load_string($this->result); /** 网站接口有问题，无法返回json格式的数据。*/
-            $this->result = json_encode($this->result);
             $this->result = json_decode($this->result);
-            if (isset($this->result->shops->shop)) {
-                $this->result = $this->result->shops->shop;
+            if (isset($this->result->items_get_response->items->item)) {
+                $this->result = $this->result->items_get_response->items->item;
                 if (!is_array($this->result)) {
                     $this->result = array($this->result);
                 }
@@ -41,10 +39,13 @@ class ApiSellerList extends ApiRequest {
                 try {
                     foreach($this->result as $item) {
                         $resultItem = new stdClass();
+                        $resultItem->itemID = $item->iid;
+                        $resultItem->itemName = $item->title;
+                        $resultItem->itemPrice = $item->price;
+                        $resultItem->itemUrl = $item->click_url;
+                        $resultItem->itemImage = $item->pic_url;
                         $resultItem->sellerID = $item->sid;
-                        $resultItem->sellerName = $item->name;
-                        $resultItem->sellerUrl = $item->click_url;
-                        $resultItem->sellerLogo = $item->logo;
+                        $resultItem->categoryID = $item->cid;
                         $result[] = $resultItem;
                     }
                     return $result;
