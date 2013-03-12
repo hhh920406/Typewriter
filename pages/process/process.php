@@ -20,8 +20,23 @@ while(fscanf(STDIN, "%s", $method) === 1) {
         case "fiftynine.item.amazon":
             require_once "fiftynine/obtain_item.php";
             return;
-        case "download.image":
+        case "fiftynine.item.taobao":
+            require_once "taobao/obtain_item.php";
+            return;
+        case "download_image":
             require_once "obtain_image.php";
+            return;
+        case "download_image_reverse":
+            require_once "obtain_image_reverse.php";
+            return;
+        case "feature":
+            echo "Type: ";
+            fscanf(STDIN, "%s", $method);
+            switch ($method) {
+                case "EHD_RGB_80":
+                    require_once "obtain_feature_EHD_RGB_80.php";
+                    break;
+            }
             return;
         case "exit":
             return;

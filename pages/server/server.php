@@ -5,14 +5,20 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
  require_once "../util/setting.php";
-if (isset($_POST["method"])) {
-    $fileName = FILE_ROOT . "pages/server/server." . $_POST["method"] . ".php";
+$method = "";
+if (isset($_GET["method"])) {
+    $method = $_GET["method"];
+} else if (isset($_POST["method"])) {
+    $method = $_POST["method"];
+}
+if ($method !== "") {
+    $fileName = FILE_ROOT . "pages/server/" . $method . ".php";
     if (file_exists($fileName)) {
         require_once $fileName;
     } else {
-        return json_encode(array("error" => "请求的方法不存在。"));
+        echo json_encode(array("错误" => "请求的方法不存在。"));
     }
 } else {
-    return json_encode(array("error" => "没有定义请求的方法。"));
+    echo json_encode(array("错误" => "没有定义请求的方法。"));
 }
 ?>

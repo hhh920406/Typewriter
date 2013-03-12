@@ -19,6 +19,7 @@ function obtainCategory($sourceName) {
         return;
     } 
     $queue = array(0);
+    $depth = array(0);
     for ($i = 0; $i < count($queue); ++ $i) {
         $parentID = $queue[$i];
         echo "Parent ID: " . $parentID . " Remaining: " . (count($queue) - $i - 1) . "\n";
@@ -46,7 +47,10 @@ function obtainCategory($sourceName) {
                     echo "Error: " . $sql->getError() . "\n";
                 }
                 if ($item->isParent) {
-                    $queue[] = $item->categoryID;
+                    if ($depth[$i] < 1) {
+                        $queue[] = $item->categoryID;
+                        $depth[] = $depth[$i] + 1;
+                    }
                 }
             }
         }

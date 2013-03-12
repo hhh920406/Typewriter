@@ -17,7 +17,7 @@ if ($sql->getError()) {
         $query =    "CREATE TABLE D_Item (" . 
                         "ID INT(4) NOT NULL AUTO_INCREMENT, " . 
                         "PRIMARY KEY (ID), " .
-                        "RemoteID INT(4), " . 
+                        "RemoteID vARCHAR(20), " . 
                         "Name TEXT, " . 
                         "Price TEXT, " . 
                         "Url TEXT, " . 

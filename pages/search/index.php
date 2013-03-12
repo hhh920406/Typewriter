@@ -4,6 +4,6 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 require_once "../util/setting.php";
-require_once FILE_ROOT . "pages/util/smarty.php";
+require_once "../util/smarty.php";
 $smarty->display("search/index.tpl");
 ?>

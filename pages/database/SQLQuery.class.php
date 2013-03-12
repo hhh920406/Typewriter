@@ -3,7 +3,10 @@
  * 基本的MySQL数据库封装。
  * @author ZHG <CyberZHG@gmail.com>
  */
-require_once "setting.php";
+if (!defined("FILE_ROOT")) {
+    require_once "../util/setting.php";
+}
+require_once FILE_ROOT . "pages/database/setting.php";
 
 class SQLQuery {
     protected $host = SQL_HOST; /**MySQL服务器地址。*/

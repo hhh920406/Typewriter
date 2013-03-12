@@ -3,7 +3,7 @@
  * 获取商品的数据到数据库中。
  * @author ZHG <CyberZHG@gmail.com>
  */
-$sourceName = DataSourceManager::RESOURCE_FIFTYNINE;
+$sourceName = DataSourceManager::RESOURCE_TAOBAO;
 $source = new DataSourceManager($sourceName);
 $sql = SQLQuery::getInstance();
 $query = "SELECT * FROM D_Category WHERE Source = '$sourceName';";
@@ -14,19 +14,20 @@ if ($sql->getError()) {
     return;
 }
 $categoryList = $sql->getResult();
-$sellerID = 1001;
+$sellerID = 0;
 $query = "SELECT COUNT(*) FROM D_Item WHERE Source = '$sourceName';";
 $sql->query($query);
 $count = $sql->getResult()[0][0];
 echo "Old Count: $count \n";
 $categoryCount = 0;
-$startCategoryID = 158;
-$startPageNumber = 42;
+$startCategoryID = 50050359;
+$startPageNumber = 5;
 $lastResult = array();
 $isStart = false;
 foreach ($categoryList as $category) {
     ++ $categoryCount;
     $categoryID = $category["RemoteID"];
+    echo "$categoryID\n";
     if (!$isStart && $categoryID != $startCategoryID) {
         continue;
     }
@@ -35,8 +36,8 @@ foreach ($categoryList as $category) {
         $isStart = true;
         $start = $startPageNumber;
     }
-    for ($i = $start; $i <= 99; ++ $i) {
-        $result = $source->getItemList($sellerID, $categoryID, "", 0, 0, $i, 20);
+    for ($i = $start; $i <= 10; ++ $i) {
+        $result = $source->getItemList($sellerID, $categoryID, "", 0, 0, $i, 40);
         if (count($result) === 0) {
             break;
         }
