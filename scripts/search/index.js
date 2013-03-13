@@ -85,8 +85,6 @@ function getResultItem(items, index) {
     });
 }
 
-
-
 /**
  * 获取查询结果并显示。
  * @param {string} token 传入的令牌名。
@@ -112,6 +110,54 @@ function getResult(token) {
             thread += 4;
         }
     });
+}
+
+function dropOver(event) {
+    event.preventDefault();
+    return true;
+}
+
+function dropImage(event) {
+    event.preventDefault();
+    var file = event.dataTransfer.files[0];
+    var formData = new FormData();
+    formData.append("method", "search.image.upload");
+    formData.append("upload", file);
+    $.ajax({
+        url : SERVER_URL,
+        type : "POST", 
+        contentType: false,
+        processData: false,
+        data : formData,
+        dataType : "json",
+        timeout : 3000,
+        success : function(json) {
+            window.location = "http://" + window.location.host + window.location.pathname + "?token=" + json.token;
+        }
+    });
+    /*var reader = new FileReader();
+    reader.onload = function() {
+        setTimeout(function(){}, 10000);
+        var imageData = reader.result;
+        $.ajax({
+            url : SERVER_URL,
+            type : "POST", 
+            data : { 
+                method : "search.image.upload",
+                upload : imageData
+            },
+            dataType : "html",
+            timeout : 3000,
+            success : function(json) {
+                alert(json);
+            },
+            error : function(a, b, c) {
+                alert(a + b + c);
+            }
+        });
+    };
+    reader.readAsDataURL(file);*/
+    return false;
 }
 
 $(function() {

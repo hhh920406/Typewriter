@@ -4,7 +4,6 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 require_once "search.image.php";
-
 if ($_FILES["upload"]["error"] === UPLOAD_ERR_OK) {
     $name = $_FILES["upload"]["name"];
     $extension = "";
@@ -22,14 +21,15 @@ if ($_FILES["upload"]["error"] === UPLOAD_ERR_OK) {
         echo json_encode(array("token" => $token));
         if (isset($_POST["redirect"])) {
             header("Location: ../search/index.php?token=" . $token);
-            return;
         } 
+        return;
     } else {
         echo json_encode(array("错误" => "图片格式不支持。"));
     }
 } else {
     echo json_encode(array("错误" => "上传文件失败"));
 }
+echo json_encode(array("token" => ""));
 if (isset($_POST["redirect"])) {
     header("Location: ../search/index.php");
     return;

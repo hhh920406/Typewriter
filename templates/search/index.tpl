@@ -3,14 +3,15 @@
     <head>
         <meta charset = UTF-8>
         <title>商品搜索</title>
-        {if $empty}
-        <link rel = stylesheet href = ../../styles/search/indexEmpty.css>
+        {if $empty === true}
+        <link rel = stylesheet href = ../../styles/search/indexEmpty.css />
         {else}
-        <link rel = stylesheet href = ../../styles/search/index.css>
+         <link rel = stylesheet href = ../../styles/search/index.css />
         {/if}
-        <script src = ../../scripts/util/jquery.js></script>
-        <script src = ../../scripts/search/setting.js></script>
-        <script src = ../../scripts/search/index.js></script>
+        <script src = ../../scripts/util/jquery.js ></script>
+        <scirpt src = ../../scripts/util/jquery.filedrop.js ></scirpt>
+        <script src = ../../scripts/search/setting.js ></script>
+        <script src = ../../scripts/search/index.js ></script>
     </head>
     <body>
         <input id = Result_Number type = hidden value = 0></input>
@@ -18,9 +19,10 @@
             <div class = searchLogo>
                 <img src = ../../images/logo.png></img>
             </div>
-            <input type = text class = searchText disabled = disabled value = 将图片拖放于此或点击右边按钮进行搜索>
+            <div id = dropbox type = text class = searchText ondragover= "dropOver(event);" ondrop = "dropImage(event);">
+                将图片拖放于此或点击右边按钮进行搜索
                 <input type = button class = searchImage></input>
-            </input>
+            </div>
             <div class = originImageDiv>
                 <img id = Img_Origin></img>
             </div>
