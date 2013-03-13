@@ -73,5 +73,9 @@
             <div id = Div_Result_Column_3 class = resultColumnDiv></div>
             <div id = Div_Result_Column_4 class = resultColumnDiv></div>
         </div>
+        <div id = Div_Show_Back></div>
+        <div id = Div_Show_Image>
+            <img id = Img_Show></img>
+        </div>
     </body>
 </html>

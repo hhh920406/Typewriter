@@ -66,7 +66,7 @@ function getResultItem(items, index) {
             }
             $("#Div_Result_Column_" + col).append(
                 "<div id = Result_Item_" + $("#Result_Number").val() + " class = resultItemDiv>" + 
-                "<img class = resultItemImage src = " + json.image + ">" + 
+                "<img class = resultItemImage src = " + json.image + " onclick = showImage('" + json.image + "');>" + 
                 "</img>" + 
                 "<div class = resultItemTitle>" + 
                 "<a href = " + json.url + " target = _blank>" + json.name + "</a>" +
@@ -135,29 +135,24 @@ function dropImage(event) {
             window.location = "http://" + window.location.host + window.location.pathname + "?token=" + json.token;
         }
     });
-    /*var reader = new FileReader();
-    reader.onload = function() {
-        setTimeout(function(){}, 10000);
-        var imageData = reader.result;
-        $.ajax({
-            url : SERVER_URL,
-            type : "POST", 
-            data : { 
-                method : "search.image.upload",
-                upload : imageData
-            },
-            dataType : "html",
-            timeout : 3000,
-            success : function(json) {
-                alert(json);
-            },
-            error : function(a, b, c) {
-                alert(a + b + c);
-            }
-        });
-    };
-    reader.readAsDataURL(file);*/
     return false;
+}
+
+function showImage(imageUrl) {
+    $("#Div_Show_Image").css("left", "0");
+    $("#Div_Show_Image").css("top", "0");
+    $("#Div_Show_Image").width(10000);
+    $("#Div_Show_Image").height(10000);
+    $("#Img_Show").prop("src", imageUrl);
+    $("#Div_Show_Image").fadeIn(600);
+    $("#Div_Show_Back").fadeIn(300, function() {
+    });
+    $("#Img_Show").load(function() {
+        $("#Div_Show_Image").width($("#Img_Show").width());
+        $("#Div_Show_Image").height($("#Img_Show").height());
+        $("#Div_Show_Image").css("left", (($(window).width() - $("#Img_Show").width()) / 2) + "px");
+        $("#Div_Show_Image").css("top", (($(window).height() - $("#Img_Show").height()) / 2) + "px");
+    });
 }
 
 $(function() {
@@ -202,5 +197,15 @@ $(function() {
                 }
             }
         }
+    });
+    $("#Div_Show_Back").click(function() {
+        $("#Div_Show_Image").fadeOut(300, function() {
+            $("#Div_Show_Back").fadeOut(400);
+        });
+    });
+    $("#Div_Show_Image").click(function() {
+        $("#Div_Show_Image").fadeOut(300, function() {
+            $("#Div_Show_Back").fadeOut(400);
+        });
     });
 });

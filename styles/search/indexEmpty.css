@@ -148,3 +148,10 @@ input[type="text"]:hover {
     display: none;
 }
     
+#Div_Show_Back {
+    display: none;
+}
+
+#Div_Show_Image {
+    display: none;
+}

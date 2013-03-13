@@ -203,3 +203,19 @@ input[type="text"]:hover {
     font-weight: bold;
     color: darkred;
 }
+
+#Div_Show_Back {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100000px;
+    height: 100000px;
+    background-color: black;
+    opacity: 0.8;
+}
+
+#Div_Show_Image {
+    display: none;
+    position: fixed;
+}
