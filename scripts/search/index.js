@@ -28,7 +28,7 @@ function getOriginImageUrl(token) {
         type : "GET", 
         data : { 
             method : "get.image.url",
-            token : token,
+            token : token
             },
         dataType : "json",
         timeout : 3000,
@@ -40,7 +40,8 @@ function getOriginImageUrl(token) {
 
 /**
  * 获取商品数据并显示。
- * @param string itemID 商品的ID。
+ * @param {string} items 商品的数组。
+ * @param {int} index 当前商品的下标。
  */
 function getResultItem(items, index) {
     if (index >= items.length) {
@@ -65,12 +66,12 @@ function getResultItem(items, index) {
             }
             $("#Div_Result_Column_" + col).append(
                 "<div id = Result_Item_" + $("#Result_Number").val() + " class = resultItemDiv>" + 
-                "<div>" + json.name + "</div>" + 
-                "<a href = " + json.url + ">" +
-                "<img src = " + json.image + ">" + 
-                "</img>" +
-                "</a>" + 
-                "<div class = resultItemPrice>" + "￥" + json.price + "</div>" +
+                "<img class = resultItemImage src = " + json.image + ">" + 
+                "</img>" + 
+                "<div class = resultItemTitle>" + 
+                "<a href = " + json.url + " target = _blank>" + json.name + "</a>" +
+                "</div>" + 
+                "价格：<span class = resultItemPrice>" + json.price + "</span>元" +
                 "</div>"
             );
             $("#Result_Item_" + $("#Result_Number").val()).fadeIn(300);
@@ -83,6 +84,8 @@ function getResultItem(items, index) {
         }
     });
 }
+
+
 
 /**
  * 获取查询结果并显示。
@@ -130,22 +133,26 @@ $(function() {
         $("#Div_Url").slideUp(300);
         $("#Div_Upload").slideDown(300);
     });
+    // 页面加载完成之后获取搜索结果。
     $(document).ready(function(){
         $("#Result_Number").val(0);
         var token = getQueryString("token");
-        if (token !== null) {
+        if (token !== "") {
             getOriginImageUrl(token);
             getResult(token);
         }
     });
+    // 页面滚动到低端后获取搜索结果。
     $(window).bind("scroll", function(){
         var top = document.documentElement.scrollTop + document.body.scrollTop;
         var textheight = $(document).height();
         if (textheight - top - $(window).height() <= 100) {
             if (parseInt($("#Result_Number").val()) < 200) {
-                if (thread == 0) {
+                if (thread === 0) {
                     var token = getQueryString("token");
-                    getResult(token);
+                    if (token !== "") {
+                        getResult(token);
+                    }
                 }
             }
         }

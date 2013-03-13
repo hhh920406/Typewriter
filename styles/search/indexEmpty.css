@@ -1,9 +1,11 @@
 html, body {
+    width: 100%;
+    height: 100%;
     margin: 0 auto;
 }
 
 input[type="text"] {
-    min-width: 80px;
+    min-width: 60px;
     min-height: 24px;
     border: 1px solid rgb(204, 204, 204);
     border-radius: 3px 3px 3px 3px;
@@ -16,35 +18,25 @@ input[type="text"]:hover {
 }
 
 .searchDiv {
-    position: fixed;
-    width: 100%;
-    height: 60px;
-    background-image: url("../../images/search_bar_background.jpg");
-    background-repeat: repeat-x;
-    opacity: 0.97;
-    z-index: 1000;
+    width: 500px;
+    height: 300px;
+    margin: 0 auto;
+    padding-top: 160px;
 }
 
 .searchLogo {
-    position: fixed;
-    top: 5px;
-    left: 5px;
-    width: 150px;
-    height: 50px;
-}
-
-.searchLogo img {
-    width: 150px;
-    height: 50px;
+    width: 300px;
+    height: 100px;
+    margin: 0 auto;
+    padding-bottom: 20px;
 }
 
 .searchText {
-    position: fixed;
-    top: 10px;
-    left: 200px;
-    padding: 0 20px 0 10px;
-    width: 350px;
-    height: 38px;
+    display: inline-block;
+    width: 380px;
+    height: 40px;
+    margin: 0 auto;
+    padding: 0 10px 0 10px;
     font-size: 18px;
     color: darkgray;
 }
@@ -54,10 +46,7 @@ input[type="text"]:hover {
 }
 
 .searchConfigDiv {
-    position: fixed;
-    top: 15px;
-    left: 680px;
-    width: 200px;
+    display: inline-block;
     height: 30px;
     line-height: 30px;
 }
@@ -75,9 +64,8 @@ input[type="text"]:hover {
 }
 
 .searchImage {
-    position: fixed;
-    top: 20px;
-    left: 550px;
+    position: relative;
+    left: -40px;
     width: 20px;
     height: 20px;
     padding: 0;
@@ -91,45 +79,30 @@ input[type="text"]:hover {
 }
 
 .originImageDiv {
-    position: fixed;
-    left: 600px;
-    top: 5px;
-    width: 50px;
-    height: 50px;
+    display: none;
 }
 
 .originImageDiv img {
-    width: 50px;
-    height: 50px;
-    border-radius: 8px;
+    display: none;
 }
 
 .searchConfigDetailDiv {
     display: none;
-    position: fixed;
-    z-index: 2000;
-    opacity: 0.9;
-    top: 20px;
-    left: 750px;
-    padding: 10px;
     font-size: 14px;
-    min-width: 200px;
+    width: 380px;
+    padding: 10px;
+    margin-top: 10px;
     min-height: 50px;
     border: 1px solid rgb(124, 124, 124);
-    border-radius: 5px;
     background-color: rgb(250, 250, 250);
 }
 
 .uploadImageDiv {
     display: none;
-    position: fixed;
-    z-index: 2000;
     opacity: 0.9;
-    top: 50px;
-    left: 200px;
-    padding: 10px;
     font-size: 14px;
-    min-width: 360px;
+    padding: 10px;
+    width: 380px;
     min-height: 50px;
     border: 1px solid rgb(124, 124, 124);
     background-color: rgb(250, 250, 250);
@@ -146,51 +119,26 @@ input[type="text"]:hover {
 }
 
 .resultDiv {
-    width: 1000px;
-    margin: 0 auto;
-    padding-top: 60px;
-    overflow: hidden;
+    display: none;
 }
 
 .resultColumnDiv {
-    display: inline-block;
-    width: 240px;
-    vertical-align: top;
-    overflow: hidden;
+    display: none;
 }
 
 .resultItemDiv {
-    overflow: hidden;
     display: none;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    padding: 15px;
-    font-size: 15px;
-    background-color: rgb(240, 240, 240);
-}
-
-.resultItemDiv:hover {
-    padding: 5px;
-    font-size: 16px;
-    background-color: rgb(200, 200, 200);
 }
 
 .resultItemDiv img {
-    width: 210px;
-    min-height: 20px;
-    cursor: pointer;
-}
-
-.resultItemDiv:hover img {
-    width: 230px;
+    display: none;
 }
 
 .resultItemTitle {
+    display: none;
 }
 
 .resultItemPrice {
-    padding: 3px;
-    font-size: 20px;
-    font-weight: bold;
-    color: darkred;
+    display: none;
 }
+    

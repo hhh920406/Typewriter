@@ -5,5 +5,10 @@
  */
 require_once "../util/setting.php";
 require_once "../util/smarty.php";
+if (isset($_GET["token"])) {
+    $smarty->assign("empty", false);
+} else {
+    $smarty->assign("empty", true);
+}
 $smarty->display("search/index.tpl");
 ?>
