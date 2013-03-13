@@ -18,7 +18,9 @@ if ($_FILES["upload"]["error"] === UPLOAD_ERR_OK) {
         $token = getTempToken();
         $token .= $extension;
         move_uploaded_file($_FILES["upload"]["tmp_name"], TEMP_PATH . $token);
-        echo json_encode(array("token" => $token));
+        $trueToken = getToken(TEMP_PATH . $token) . $extension;
+        rename(TEMP_PATH . $token, TEMP_PATH . $trueToken);
+        echo json_encode(array("token" => $trueToken));
         if (isset($_POST["redirect"])) {
             header("Location: ../search/index.php?token=" . $token);
         } 

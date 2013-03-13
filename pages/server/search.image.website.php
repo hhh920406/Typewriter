@@ -21,7 +21,9 @@ if (isset($_POST["website"])) {
         $token = getTempToken();
         $token .= $extension;
         downloadImage($website, TEMP_PATH . $token);
-        echo json_encode(array("token" => $token));
+        $trueToken = getToken(TEMP_PATH . $token) . $extension;
+        rename(TEMP_PATH . $token, TEMP_PATH . $trueToken);
+        echo json_encode(array("token" => $trueToken));
         if (isset($_POST["redirect"])) {
             header("Location: ../search/index.php?token=" . $token);
             return;
