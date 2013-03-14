@@ -129,6 +129,11 @@ input[type="text"]:hover {
     background-color: rgb(250, 250, 250);
 }
 
+.searchConfigDetailDiv div {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
 .uploadImageDiv {
     display: none;
     position: fixed;

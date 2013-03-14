@@ -91,15 +91,26 @@ function getResultItem(items, index) {
  */
 function getResult(token) {
     var index = $("#Result_Number").val();
-    $.ajax({
+    var data = { 
+        method : "get.image.result",
+        token : token,
+        index : index,
+        number : 16
+    };
+    if (getQueryString("start_price") !== "" && getQueryString("end_price") !== "") {
+        data.start_price = getQueryString("start_price");
+        data.end_price = getQueryString("end_price");
+    }
+    if (getQueryString("keyword") !== "") {
+        data.keyword = getQueryString("keyword");
+    }
+    if (getQueryString("type") !== "") {
+        data.type = getQueryString("type");
+    }
+    $.ajax({ 
         url : SERVER_URL,
         type : "GET", 
-        data : { 
-            method : "get.image.result",
-            token : token,
-            index : index,
-            number : 16
-            },
+        data : data,
         dataType : "json",
         timeout : 300000,
         success : function(json) {
@@ -108,6 +119,9 @@ function getResult(token) {
             getResultItem(json, 2);
             getResultItem(json, 3);
             thread += 4;
+        },
+        error : function(a, b, c) {
+            //alert(a + b + c);
         }
     });
 }
@@ -117,6 +131,56 @@ function dropOver(event) {
     return true;
 }
 
+/**
+ * 获取搜索的条件。
+ * @return {string} QueryString形式的条件。
+ */
+function getCondition() {
+    var flag = false;
+    var condition = "";
+    var startPrice = parseInt($("#Input_Price_Start").val());
+    var endPrice = parseInt($("#Input_Price_End").val());
+    if (!isNaN(startPrice) && !isNaN(endPrice) && startPrice < endPrice) {
+        if (flag) {
+            condition += "&";
+        } else {
+            flag = true;
+        }
+        condition += "start_price=" + startPrice;
+        condition += "&end_price=" + endPrice;
+    }
+    if ($("#Input_Keyword").val().length > 0) {
+        if (flag) {
+            condition += "&";
+        } else {
+            flag = true;
+        }
+        condition += "keyword=" + encodeURI($("#Input_Keyword").val());
+    }
+    if ($("#Input_Type").val().length > 0) {
+        if (flag) {
+            condition += "&";
+        } else {
+            flag = true;
+        }
+        condition += "type=" + encodeURI($("#Input_Type").val());
+    } else {
+        if ($("#Select_Type").val() !== "null") {
+            if (flag) {
+                condition += "&";
+            } else {
+                flag = true;
+            }
+            condition += "type=" + encodeURI($("#Select_Type").val());
+        }
+    }
+    return condition;
+}
+
+/**
+ * 拖放图像的处理。
+ * @param {type} event
+ */
 function dropImage(event) {
     event.preventDefault();
     var file = event.dataTransfer.files[0];
@@ -132,7 +196,8 @@ function dropImage(event) {
         dataType : "json",
         timeout : 3000,
         success : function(json) {
-            window.location = "http://" + window.location.host + window.location.pathname + "?token=" + json.token;
+            var condition = getCondition();
+            window.location = "http://" + window.location.host + window.location.pathname + "?token=" + json.token + "&" + condition;
         }
     });
     return false;
@@ -207,5 +272,19 @@ $(function() {
         $("#Div_Show_Image").fadeOut(300, function() {
             $("#Div_Show_Back").fadeOut(400);
         });
+    });
+    $("#Input_Type").change(function() {
+        if ($("#Input_Type").val().length > 0) {
+            $("#Select_Type").prop("disabled", true);
+        } else {
+            $("#Select_Type").prop("disabled", false);
+        }
+    });
+    $("#Button_Search").click(function() {
+        var condition = getCondition();
+        var token = getQueryString("token");
+        if (token !== "") {
+            window.location = "http://" + window.location.host + window.location.pathname + "?token=" + token + "&" + condition;
+        }
     });
 });

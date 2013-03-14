@@ -17,7 +17,11 @@ if ($sql->getError()) {
         $query =    "CREATE TABLE D_Item_EHD_RGB_80 (" . 
                         "ItemID INT(4) UNIQUE NOT NULL, " . 
                         "PRIMARY KEY (ItemID), " .
-                        "Property TEXT" . 
+                        "Price INT(4), " . 
+                        "Type TEXT, " .
+                        "Title TEXT, " . 
+                        "Image TEXT, " .
+                        "Feature TEXT" . 
                     ");";
         echo $query . "<br/>";
         $sql->query($query);

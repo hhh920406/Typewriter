@@ -24,8 +24,21 @@ for ($i = 0; $i < $num; $i += 50) {
             $count = $sql->getResult()[0][0];
             if ($count == 0) {
                 $feature = exec(FILE_ROOT . "exec/EHD_RGB_80.exe " . $targetPath);
-                $query = "INSERT INTO D_Item_EHD_RGB_80 (ItemID, Property) VALUES " . 
-                         "('" . $id . "', '" . $feature . "');";
+                $query = "SELECT * FROM D_Category WHERE Source = '" . $item["Source"] . "' AND RemoteID = '" . $item["CategoryID"] . "';";
+                echo "$query\n";
+                $sql->query($query);
+                if ($sql->getError()) {
+                    echo "Select Error: " . $sql->getError() . "\n";
+                }
+                $type = $sql->getResult()[0]["Name"];
+                $query = "INSERT INTO D_Item_EHD_RGB_80 " . 
+                         "(ItemID, Price, Type, Title, Image, Feature) VALUES " . 
+                         "('" . $id . 
+                         "', '" . $item["Price"] . 
+                         "', '" . $type . 
+                         "', '" . $item["Name"] . 
+                         "', '" . $item["Image"] . 
+                         "', '" . $feature . "');";
                 echo "$query\n";
                 $sql->query($query);
                 if ($sql->getError()) {
