@@ -4,6 +4,7 @@
  */
 
 var thread = 0; /**控制自动加载的数量。*/
+var columnNum = 1; /** 显示列的数量。 */
 
 /**
  * 获取QueryString的内容。
@@ -58,8 +59,8 @@ function getResultItem(items, index) {
         dataType : "json",
         timeout : 3000,
         success : function(json) {
-            var col = 1;
-            for (var i = 2; i <= 4; ++i) {
+            var col = 0;
+            for (var i = 1; i < columnNum; ++i) {
                 if ($("#Div_Result_Column_" + i).prop("offsetHeight") < $("#Div_Result_Column_" + col).prop("offsetHeight")) {
                     col = i;
                 }
@@ -76,11 +77,11 @@ function getResultItem(items, index) {
             );
             $("#Result_Item_" + $("#Result_Number").val()).fadeIn(300);
             $("#Result_Number").val(parseInt($("#Result_Number").val()) + 1);
-            getResultItem(items, parseInt(index) + 4);
+            getResultItem(items, parseInt(index) + 5);
         },
         error : function() {
             $("#Result_Number").val(parseInt($("#Result_Number").val()) + 1);
-            getResultItem(items, parseInt(index) + 4);
+            getResultItem(items, parseInt(index) + 5);
         }
     });
 }
@@ -90,6 +91,11 @@ function getResultItem(items, index) {
  * @param {string} token 传入的令牌名。
  */
 function getResult(token) {
+    columnNum = parseInt(($(window).width() - $(".searchConfigDetailDiv").width() - 20) / ($("#Div_Result_Column_0").width() + 10));
+    for (var i = 1; i < columnNum; ++i) {
+        $(".resultDiv").append("<div id = Div_Result_Column_" + i + " class = resultColumnDiv></div>");
+    }
+    $(".resultDiv").css("width", $(window).width());
     var index = $("#Result_Number").val();
     var data = { 
         method : "get.image.result",
@@ -118,6 +124,7 @@ function getResult(token) {
             getResultItem(json, 1);
             getResultItem(json, 2);
             getResultItem(json, 3);
+            getResultItem(json, 4);
             thread += 4;
         },
         error : function(a, b, c) {

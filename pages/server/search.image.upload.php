@@ -22,7 +22,7 @@ if ($_FILES["upload"]["error"] === UPLOAD_ERR_OK) {
         rename(TEMP_PATH . $token, TEMP_PATH . $trueToken);
         echo json_encode(array("token" => $trueToken));
         if (isset($_POST["redirect"])) {
-            header("Location: ../search/index.php?token=" . $token);
+            header("Location: ../search/index.php?token=" . $trueToken);
         } 
         return;
     } else {
