@@ -18,7 +18,7 @@ if ($sql->getError()) {
                         "ItemID INT(4) UNIQUE NOT NULL, " . 
                         "PRIMARY KEY (ItemID), " .
                         "Price INT(4), " . 
-                        "Type TEXT, " .
+                        "Type INT(4), " .
                         "Title TEXT, " . 
                         "Image TEXT, " .
                         "Feature TEXT" . 

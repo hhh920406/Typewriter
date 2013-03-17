@@ -3,39 +3,17 @@
  * 返回查询的结果。
  * @author ZHG <CyberZHG@gmail.com>
  */
-/**
- * 以逗号或空格分割字符串。
- * @param string $str 要分割的字符串。
- * @return string 分割后的结果。
- */
-function strSplit($str) {
-    $result = array();
-    $len = strlen($str);
-    $temp = "";
-    for ($i = 0; $i < $len; ++$i) {
-        if ($str[$i] == "," || $str[$i] == " ") {
-            if ($temp) {
-                $result[] = $temp;
-                $temp = "";
-            }
-        } else {
-            $temp .= $str[$i];
-        }
-    }
-    if ($temp) {
-        $result[] = $temp;
-    }
-    return $result;
-}
-
+require_once "setting.php";
 /**
  * 获取搜索的条件。
  * @return stdClass 搜索条件。
  */
 function getCondition() {
     $condition = new stdClass();
-    if (isset($_GET["start_price"]) && isset($_GET["end_price"])) {
+    if (isset($_GET["start_price"])) {
         $condition->startPrice = $_GET["start_price"];
+    }
+    if (isset($_GET["end_price"])) {
         $condition->endPrice = $_GET["end_price"];
     }
     if (isset($_GET["keyword"])) {
@@ -72,13 +50,41 @@ if (isset($_GET["token"]) && isset($_GET["index"]) && isset($_GET["number"])) {
         if ($originFeature !== "-1") {
             $originFeature = strSplit($originFeature);
             $sql = SQLQuery::getInstance();
-            if (isset($condition->startPrice) && isset($condition->endPrice)) {
+            $query = "SELECT * FROM D_Item_EHD_RGB_80";
+            $flag = false;
+            if (isset($condition->startPrice)) {
                 $startPrice = $condition->startPrice;
-                $endPrice = $condition->endPrice;
-                $query = "SELECT * FROM D_Item_EHD_RGB_80 WHERE Price >= '$startPrice' AND Price < '$endPrice';";
-            } else {
-                $query = "SELECT * FROM D_Item_EHD_RGB_80;";
+                if ($flag) {
+                    $query .= " AND ";
+                } else {
+                    $query .= " WHERE ";
+                    $flag = true;
+                }
+                $query .= "Price >= '$startPrice'";
             }
+            if (isset($condition->endPrice)) {
+                $endPrice = $condition->endPrice;
+                if ($flag) {
+                    $query .= " AND ";
+                } else {
+                    $query .= " WHERE ";
+                    $flag = true;
+                }
+                $query .= "Price <= '$endPrice'";
+            }
+            if (isset($condition->type)) {
+                $type = $condition->type;
+                if ($type !== "null") {
+                    if ($flag) {
+                        $query .= " AND ";
+                    } else {
+                        $query .= " WHERE ";
+                        $flag = true;
+                    }
+                    $query .= "Type = '$type'";
+                }
+            }
+            $query .= ";";
             $sql->query($query);
             $result = $sql->getResult();
             $ids = array();
@@ -101,11 +107,6 @@ if (isset($_GET["token"]) && isset($_GET["index"]) && isset($_GET["number"])) {
                         if (strpos($item["Title"], $word) !== false) {
                             $dist -= 10000;
                         }
-                    }
-                }
-                if (isset($condition->type)) {
-                    if (strpos($item["Type"], $condition->type) === false) {
-                        $dist += 100000;
                     }
                 }
                 $ids[] = $item["ItemID"];

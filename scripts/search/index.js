@@ -125,7 +125,7 @@ function getResult(token) {
             getResultItem(json, 2);
             getResultItem(json, 3);
             getResultItem(json, 4);
-            thread += 4;
+            thread += 5;
         },
         error : function(a, b, c) {
             //alert(a + b + c);
@@ -147,13 +147,20 @@ function getCondition() {
     var condition = "";
     var startPrice = parseInt($("#Input_Price_Start").val());
     var endPrice = parseInt($("#Input_Price_End").val());
-    if (!isNaN(startPrice) && !isNaN(endPrice) && startPrice < endPrice) {
+    if (!isNaN(startPrice)) {
         if (flag) {
             condition += "&";
         } else {
             flag = true;
         }
         condition += "start_price=" + startPrice;
+    }
+    if (!isNaN(endPrice)) {
+        if (flag) {
+            condition += "&";
+        } else {
+            flag = true;
+        }
         condition += "&end_price=" + endPrice;
     }
     if ($("#Input_Keyword").val().length > 0) {
@@ -218,6 +225,58 @@ function showImage(imageUrl) {
     });
 }
 
+/**
+ * 从Query String中获取条件信息。
+ */
+function loadCondition() {
+    var value = getQueryString("start_price");
+    if (value !== "") {
+        $("#Input_Price_Start").val(value);
+        $("#Sync_Start_Price_1").val($("#Input_Price_Start").val());
+        $("#Sync_Start_Price_2").val($("#Input_Price_Start").val());
+    }
+    value = getQueryString("end_price");
+    if (value !== "") {
+        $("#Input_Price_End").val(value);
+        $("#Sync_End_Price_1").val($("#Input_Price_End").val());
+        $("#Sync_End_Price_2").val($("#Input_Price_End").val());
+    }
+    value = getQueryString("keyword");
+    if (value !== "") {
+        $("#Input_Keyword").val(decodeURI(value));
+        $("#Sync_Keyword_1").val($("#Input_Keyword").val());
+        $("#Sync_Keyword_2").val($("#Input_Keyword").val());
+    }
+}
+
+/**
+ * 获取分类信息。
+ */
+function getCategory() {
+    $.ajax({
+        url : SERVER_URL,
+        type : "GET", 
+        data : {method : "get.category.list"},
+        dataType : "json",
+        timeout : 3000,
+        success : function(json) {
+            for (var i = 0; i < json.length; ++i) {
+                $("#Select_Type").append("<option value = " + json[i].id + ">" + json[i].name + "</option>");
+            }
+            var value = getQueryString("type");
+            if (value !== "") {
+                $("#Select_Type option[value=" + value + "]").attr("selected","true");
+                $("#Sync_Type_1").val($("#Select_Type").val());
+                $("#Sync_Type_2").val($("#Select_Type").val());
+            }
+        },
+        error : function(a, b, c) {
+            alert(a + b + c);
+        }
+    });
+}
+    
+
 $(function() {
     // 详细配置的显示和隐藏。
     $("#Link_Config").click(function() {
@@ -245,6 +304,8 @@ $(function() {
             getOriginImageUrl(token);
             getResult(token);
         }
+        loadCondition();
+        getCategory();
     });
     // 页面滚动到低端后获取搜索结果。
     $(window).bind("scroll", function(){

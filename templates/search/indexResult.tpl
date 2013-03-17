@@ -81,30 +81,8 @@
                     </div>
                     <div>
                         <span>类别：</span>
-                        <select id = Select_Type>
+                        <select id = Select_Type style = max-width:200px >
                             <option value = null>不限制</option>
-                            <option value = 女装>女装</option>
-                            <option value = 男装>男装</option>
-                            <option value = 女鞋>女鞋</option>
-                            <option value = 男鞋>男鞋</option>
-                            <option value = 内衣>内衣</option>
-                            <option value = 箱包>箱包</option>
-                            <option value = 数码>数码</option>
-                            <option value = 厨房>厨房</option>
-                            <option value = 家电>家电</option>
-                            <option value = 手机>手机</option>
-                            <option value = 台式机>台式机</option>
-                            <option value = 笔记本>笔记本</option>
-                            <option value = 电脑>电脑</option>
-                            <option value = 家具>家具</option>
-                            <option value = 厨房>厨房</option>
-                            <option value = 运动>运动</option>
-                            <option value = 钟表>钟表</option>
-                            <option value = 玩具>玩具</option>
-                            <option value = 汽车>汽车</option>
-                            <option value = 宠物>宠物</option>
-                            <option value = 网络>网络</option>
-                            <option value = 书籍>书籍</option>
                         </select>
                         <hr/>
                     </div>
