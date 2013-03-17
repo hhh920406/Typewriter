@@ -77,6 +77,14 @@
                             <option value = null>不限制</option>
                         </select>
                     </div>
+                    <div>
+                        <div>
+                            关注内容：
+                        </div>
+                        <input id = CheckBox_Shape type = checkbox>形状</input>
+                        <input id = CheckBox_Color type = checkbox>颜色</input>
+                        <input id = CheckBox_Stripe type = checkbox disabled = disabled>纹理</input>
+                    </div>
                 </div>
             </div>
         </div>

@@ -84,8 +84,16 @@
                         <select id = Select_Type style = max-width:200px >
                             <option value = null>不限制</option>
                         </select>
-                        <hr/>
                     </div>
+                    <div>
+                        <div>
+                            关注内容：
+                        </div>
+                        <input id = CheckBox_Shape type = checkbox checked = checked>形状</input>
+                        <input id = CheckBox_Color type = checkbox checked = checked>颜色</input>
+                        <input id = CheckBox_Stripe type = checkbox disabled = disabled>纹理</input>
+                    </div>
+                    <hr/>
                     <input id = Button_Search type = button value = 搜索></input>
                 </div>
             </div>

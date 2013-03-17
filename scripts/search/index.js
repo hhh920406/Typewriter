@@ -113,6 +113,9 @@ function getResult(token) {
     if (getQueryString("type") !== "") {
         data.type = getQueryString("type");
     }
+    if (getQueryString("prefer") !== "") {
+        data.prefer = getQueryString("prefer");
+    }
     $.ajax({ 
         url : SERVER_URL,
         type : "GET", 
@@ -179,6 +182,12 @@ function getCondition() {
         }
         condition += "type=" + encodeURI($("#Select_Type").val());
     }
+    if (flag) {
+        condition += "&";
+    } else {
+        flag = true;
+    }
+    condition += "prefer=" + $("#Sync_Prefer_1").val();
     return condition;
 }
 
@@ -225,6 +234,31 @@ function showImage(imageUrl) {
     });
 }
 
+
+/**
+ * 同步搜索偏好。
+ */
+function syncPrefer() {
+    var value = "";
+    if ($("#CheckBox_Shape").prop("checked")) {
+        value += "1";
+    } else {
+        value += "0";
+    }
+    if ($("#CheckBox_Color").prop("checked")) {
+        value += "1";
+    } else {
+        value += "0";
+    }
+    if ($("#CheckBox_Stripe").prop("checked")) {
+        value += "1";
+    } else {
+        value += "0";
+    }
+    $("#Sync_Prefer_1").val(value);
+    $("#Sync_Prefer_2").val(value);
+}
+
 /**
  * 从Query String中获取条件信息。
  */
@@ -247,6 +281,17 @@ function loadCondition() {
         $("#Sync_Keyword_1").val($("#Input_Keyword").val());
         $("#Sync_Keyword_2").val($("#Input_Keyword").val());
     }
+    value = getQueryString("prefer");
+    if (value === "") {
+        $("#CheckBox_Shape").prop("checked", true);
+        $("#CheckBox_Color").prop("checked", true);
+        $("#CheckBox_Stripe").prop("checked", true);
+    } else {
+        $("#CheckBox_Shape").prop("checked", value[0] === "1");
+        $("#CheckBox_Color").prop("checked", value[1] === "1");
+        $("#CheckBox_Stripe").prop("checked", value[2] === "1");
+    }
+    syncPrefer();
 }
 
 /**
@@ -275,7 +320,6 @@ function getCategory() {
         }
     });
 }
-    
 
 $(function() {
     // 详细配置的显示和隐藏。
@@ -361,5 +405,14 @@ $(function() {
     $("#Select_Type").change(function() {
         $("#Sync_Type_1").val($("#Select_Type").val());
         $("#Sync_Type_2").val($("#Select_Type").val());
+    });
+    $("#CheckBox_Shape").change(function() {
+        syncPrefer();
+    });
+    $("#CheckBox_Color").change(function() {
+        syncPrefer();
+    });
+    $("#CheckBox_Stripe").change(function() {
+        syncPrefer();
     });
 });

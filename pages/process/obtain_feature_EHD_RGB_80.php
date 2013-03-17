@@ -29,8 +29,8 @@ function strSplit($str) {
 }
 
 $sql = SQLQuery::getInstance();
-$query = "DELETE FROM D_Item_EHD_RGB_80;";
-$sql->query($query);
+//$query = "DELETE FROM D_Item_EHD_RGB_80;";
+//$sql->query($query);
 $query = "SELECT * FROM D_Category WHERE Source = 'fiftynine';";
 $sql->query($query);
 $category = $sql->getResult();
