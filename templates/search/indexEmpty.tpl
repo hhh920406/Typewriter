@@ -7,6 +7,7 @@
         <script src = ../../scripts/util/jquery.js ></script>
         <script src = ../../scripts/search/setting.js ></script>
         <script src = ../../scripts/search/index.js ></script>
+        <script src = ../../scripts/search/indexCanvas.js></script>
     </head>
     <body>
         <input id = Result_Number type = hidden value = 0></input>
@@ -28,6 +29,11 @@
                     <form action = ../server/server.php id = Form_Url name = Form_Url encType = "multipart/form-data" method = "post">
                         <input name = method type = hidden value = search.image.website></input>
                         <input name = redirect type = hidden value = ZHG></input>
+                        <input id = Sync_Start_Price_1 name = start_price type = hidden></input>
+                        <input id = Sync_End_Price_1 name = end_price type = hidden></input>
+                        <input id = Sync_Keyword_1 name = keyword type = hidden></input>
+                        <input id = Sync_Type_1 name = type type = hidden></input>
+                        <input id = Sync_Prefer_1 name = prefer type = hidden></input>
                         <input id = Text_Url name = website type = text></input>
                         <input id = Button_Url type = submit value = 搜索></input>
                     </form>
@@ -36,6 +42,11 @@
                     <form action = ../server/server.php id = Form_Upload name = Form_Upload encType = "multipart/form-data" method = "post">
                         <input name = method type = hidden value = search.image.upload></input>
                         <input name = redirect type = hidden value = ZHG></input>
+                        <input id = Sync_Start_Price_2 name = start_price type = hidden></input>
+                        <input id = Sync_End_Price_2 name = end_price type = hidden></input>
+                        <input id = Sync_Keyword_2 name = keyword type = hidden></input>
+                        <input id = Sync_Type_2 name = type type = hidden></input>
+                        <input id = Sync_Prefer_2 name = prefer type = hidden></input>
                         <input id = File_Upload name = upload type = file onchange = Form_Upload.submit()></input>
                     </form>
                     <ifame id = Hidden_Frame name = Hidden_Frame style = display:none></ifame>
@@ -86,7 +97,7 @@
                             <option value = 宠物>宠物</option>
                             <option value = 网络>网络</option>
                             <option value = 书籍>书籍</option>
-                        </select> 
+                        </select>
                     </div>
                 </div>
             </div>

@@ -164,22 +164,13 @@ function getCondition() {
         }
         condition += "keyword=" + encodeURI($("#Input_Keyword").val());
     }
-    if ($("#Input_Type").val().length > 0) {
+    if ($("#Select_Type").val() !== "null") {
         if (flag) {
             condition += "&";
         } else {
             flag = true;
         }
-        condition += "type=" + encodeURI($("#Input_Type").val());
-    } else {
-        if ($("#Select_Type").val() !== "null") {
-            if (flag) {
-                condition += "&";
-            } else {
-                flag = true;
-            }
-            condition += "type=" + encodeURI($("#Select_Type").val());
-        }
+        condition += "type=" + encodeURI($("#Select_Type").val());
     }
     return condition;
 }
@@ -293,5 +284,21 @@ $(function() {
         if (token !== "") {
             window.location = "http://" + window.location.host + window.location.pathname + "?token=" + token + "&" + condition;
         }
+    });
+    $("#Input_Price_Start").change(function() {
+        $("#Sync_Start_Price_1").val($("#Input_Price_Start").val());
+        $("#Sync_Start_Price_2").val($("#Input_Price_Start").val());
+    });
+    $("#Input_Price_End").change(function() {
+        $("#Sync_End_Price_1").val($("#Input_Price_End").val());
+        $("#Sync_End_Price_2").val($("#Input_Price_End").val());
+    });
+    $("#Input_Keyword").change(function() {
+        $("#Sync_Keyword_1").val($("#Input_Keyword").val());
+        $("#Sync_Keyword_2").val($("#Input_Keyword").val());
+    });
+    $("#Select_Type").change(function() {
+        $("#Sync_Type_1").val($("#Select_Type").val());
+        $("#Sync_Type_2").val($("#Select_Type").val());
     });
 });

@@ -26,6 +26,26 @@ function getToken($originImagePath) {
     return md5($feature);
 }
 
+function getRedirectURL($token) {
+    $url = "../search/index.php?token=" . $token;
+    if (isset($_POST["start_price"])) {
+        $url .= "&start_price=" . $_POST["start_price"];
+    }
+    if (isset($_POST["end_price"])) {
+        $url .= "&end_price=" . $_POST["end_price"];
+    }
+    if (isset($_POST["keyword"])) {
+        $url .= "&keyword=" . $_POST["keyword"];
+    }
+    if (isset($_POST["type"])) {
+        $url .= "&type=" . $_POST["type"];
+    }
+    if (isset($_POST["prefer"])) {
+        $url .= "&prefer=" . $_POST["prefer"];
+    }
+    return $url;
+}
+
 /**
  * 下载图片到指定位置。
  * @param string $url 原位置。

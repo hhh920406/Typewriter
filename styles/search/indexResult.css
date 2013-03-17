@@ -3,7 +3,7 @@ html, body {
 }
 
 input[type="text"] {
-    min-width: 80px;
+    width: 80px;
     min-height: 24px;
     text-align: center;
     border: 1px solid rgb(204, 204, 204);
@@ -18,7 +18,6 @@ input[type="text"]:hover {
 
 .searchDiv {
     position: fixed;
-    min-width: 687px;
     width: 100%;
     height: 60px;
     background-image: url("../../images/search_bar_background.jpg");
@@ -175,7 +174,7 @@ input[type="text"]:hover {
     margin-top: 5px;
     margin-bottom: 2px;
     padding: 15px;
-    font-size: 15px;
+    font-size: 14px;
     background-color: rgb(240, 240, 240);
     border-radius: 10px;
     opacity: 0.9;
