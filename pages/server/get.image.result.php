@@ -22,6 +22,15 @@ function getCondition() {
     if (isset($_GET["type"])) {
         $condition->type = urldecode($_GET["type"]);
     }
+    if (isset($_GET["prefer"])) {
+        $condition->shapeFeature = $_GET["prefer"][0] === "1";
+        $condition->colorFeature = $_GET["prefer"][1] === "1";
+        $condition->textureFeature = $_GET["prefer"][2] === "1";
+    } else {
+        $condition->shapeFeature = true;
+        $condition->colorFeature = true;
+        $condition->textureFeature = true;
+    }
     return $condition;
 }
 
@@ -46,11 +55,13 @@ if (isset($_GET["token"]) && isset($_GET["index"]) && isset($_GET["number"])) {
     $cachePath = TEMP_PATH . $cacheName;
     if (!file_exists($cachePath)) {
         $originImagePath = TEMP_PATH . $_GET["token"];
-        $originFeature = exec(FILE_ROOT . "exec/EHD_RGB_80.exe " . $originImagePath);
-        if ($originFeature !== "-1") {
-            $originFeature = strSplit($originFeature);
+        $originShapeFeature = exec(FILE_ROOT . "exec/EHD_RGB_80.exe " . $originImagePath);
+        $originColorFeature = exec(FILE_ROOT . "exec/72HSV.exe " . $originImagePath);
+        if ($originShapeFeature !== "-1" && $originColorFeature !== "-1") {
+            $originShapeFeature = strSplit($originShapeFeature);
+            $originColorFeature = strSplit($originColorFeature);
             $sql = SQLQuery::getInstance();
-            $query = "SELECT * FROM D_Item_EHD_RGB_80";
+            $query = "SELECT * FROM D_Item_Feature";
             $flag = false;
             if (isset($condition->startPrice)) {
                 $startPrice = $condition->startPrice;
@@ -90,22 +101,41 @@ if (isset($_GET["token"]) && isset($_GET["index"]) && isset($_GET["number"])) {
             $ids = array();
             $dists = array();
             foreach ($result as $item) {
-                $feature = $item["Feature"];
-                if ($feature === "-1") {
-                    continue;
+                $shapeDist = 0;
+                if ($condition->shapeFeature) {
+                    $feature = $item["ShapeFeature"];
+                    if ($feature === "-1") {
+                        continue;
+                    }
+                    $feature = strSplit($feature);
+                    if (count($feature) != count($originShapeFeature)) {
+                        continue;
+                    }
+                    for ($i = 0; $i < count($feature); ++$i) {
+                        $shapeDist += ($originShapeFeature[$i] - $feature[$i]) * ($originShapeFeature[$i] - $feature[$i]);
+                    }
+                    $shapeDist /= 3920.0;
                 }
-                $feature = strSplit($feature);
-                if (count($feature) != count($originFeature)) {
-                    continue;
+                $colorDist = 0;
+                if ($condition->colorFeature) {
+                    $feature = $item["ColorFeature"];
+                    if ($feature === "-1") {
+                        continue;
+                    }
+                    $feature = strSplit($feature);
+                    if (count($feature) != count($originColorFeature)) {
+                        continue;
+                    }
+                    for ($i = 0; $i < count($feature); ++$i) {
+                        $colorDist += ($originColorFeature[$i] - $feature[$i]) * ($originColorFeature[$i] - $feature[$i]);
+                    }
+                    $colorDist /= 72.0;
                 }
-                $dist = 0;
-                for ($i = 0; $i < count($feature); ++$i) {
-                    $dist += ($originFeature[$i] - $feature[$i]) * ($originFeature[$i] - $feature[$i]);
-                }
+                $dist = $shapeDist + $colorDist * 10;
                 if (isset($condition->keyword)) {
                     foreach ($condition->keyword as $word) {
                         if (strpos($item["Title"], $word) !== false) {
-                            $dist -= 10000;
+                            $dist -= 11;
                         }
                     }
                 }

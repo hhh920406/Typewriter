@@ -30,13 +30,7 @@ while(fscanf(STDIN, "%s", $method) === 1) {
             require_once "obtain_image_reverse.php";
             return;
         case "feature":
-            echo "Type: ";
-            fscanf(STDIN, "%s", $method);
-            switch ($method) {
-                case "EHD_RGB_80":
-                    require_once "obtain_feature_EHD_RGB_80.php";
-                    break;
-            }
+            require_once "obtain_feature.php";
             return;
         case "exit":
             return;
