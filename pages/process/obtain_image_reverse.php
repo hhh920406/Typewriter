@@ -29,8 +29,8 @@ $sql = SQLQuery::getInstance();
 $count = 0;
 $query = "SELECT COUNT(*) FROM D_Item";
 $sql->query($query);
-for ($i = $sql->getResult()[0][0] - 20; ; $i -= 20) {
-    $query = "SELECT * FROM D_Item LIMIT $i, 20";
+for ($i = $sql->getResult()[0][0] - 100; ; $i -= 100) {
+    $query = "SELECT * FROM D_Item LIMIT $i, 100";
     echo "$query\n";
     $sql->query($query);
     if ($sql->getError()) {
@@ -46,11 +46,13 @@ for ($i = $sql->getResult()[0][0] - 20; ; $i -= 20) {
             if (!is_dir($targetPath)) {
                 mkdir($targetPath, 0777, true);
             }
-            $targetPath .= "/" . $item["RemoteID"] . ".jpg";
+            $targetPath .= "/" . $item["RemoteID"];
             if (!file_exists($targetPath)) {
                 echo "Start Download: $url\n";
-                echo "Target Path: $targetPath\n";
-                downloadImage($url, $targetPath);
+                echo "Target Path: $targetPath.temp\n";
+                if (downloadImage($url, $targetPath . ".temp")) {
+                    rename($targetPath . ".temp", $targetPath . ".jpg");
+                }
                 ++ $count;
                 echo "Total Number: $count\n";
                 echo Date("Y-m-d H:i:s") . "\n";

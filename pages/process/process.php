@@ -32,6 +32,9 @@ while(fscanf(STDIN, "%s", $method) === 1) {
         case "feature":
             require_once "obtain_feature.php";
             return;
+        case "transform_feature":
+            require_once "transform_feature.php";
+            return;
         case "exit":
             return;
         default:

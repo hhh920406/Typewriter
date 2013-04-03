@@ -43,7 +43,7 @@ echo "$query\n";
 $sql->query($query);
 $num = $sql->getResult()[0][0];
 echo "Total Number: $num\n";
-for ($i = 0; $i < $num; $i += 50) {
+for ($i = 15850; $i < $num; $i += 50) {
     $query = "SELECT * FROM D_Item LIMIT $i, 50;";
     echo "$query\n";
     $sql->query($query);

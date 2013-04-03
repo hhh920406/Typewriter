@@ -10,4 +10,5 @@ require_once FILE_ROOT . "pages/database/SQLQuery.class.php";
 require_once FILE_ROOT . "pages/remote/DataSourceManager.class.php";
 
 define("IMAGE_PATH", "D:/Apache2.2/htdocs/images/");
+define("IMAGE_FEATURE_PATH", "D:/Apache2.2/htdocs/feature/");
 ?>
