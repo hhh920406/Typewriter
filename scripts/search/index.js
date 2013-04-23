@@ -316,7 +316,7 @@ function getCategory() {
             }
         },
         error : function(a, b, c) {
-            alert(a + b + c);
+            alert("Categroy Error: " + a + " / " + b + " / " + c);
         }
     });
 }

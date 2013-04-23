@@ -3,26 +3,48 @@
  * 从数据库的链接中下载图片。
  * @author ZHG <CyberZHG@gmail.com>
  */
-/**
- * 下载图片到指定位置
- * @param string $url 原位置。
- * @param string $targetPath 目的地址。
- * @return boolean 如果成功返回true，否则返回false。
- */
+function createDir($dir) {
+    if (!file_exists($dir)) {
+        createDir(dirname($dir));
+        mkdir($dir, 0777);
+    }
+}
+
 function downloadImage($url, $targetPath) {
+    createDir(dirname($targetPath));
     $originFile = fopen($url, "rb");
     if ($originFile) {
-        $targetFile = fopen($targetPath, "wb");
+        $targetFile = fopen($targetPath . ".temp", "wb");
         if ($targetFile) {
             while (!feof($originFile)) {
                 fwrite($targetFile, fread($originFile, 1024 * 4), 1024 * 4);
             }
             fclose($targetFile);
             fclose($originFile);
+            rename($targetPath . ".temp", $targetPath);
             return true;
         }
     }
     return false;
+}
+
+$file = fopen("file", "r");
+if ($file) {
+    while (!feof($file)) {
+        $path = fgets($file);
+        $name = "";
+        for ($i = strlen($path) - 1; $i >= 0; --$i) {
+            if ($path[$i] === "&") {
+                $name = "";
+            }
+            if ($path[$i] === "=" || $path[$i] === "/") {
+                break;
+            }
+            $name = $path[$i] . $name;
+        }
+        downloadImage($path, "image/" . $name);
+    }
+    fclose($file);
 }
 
 $sql = SQLQuery::getInstance();

@@ -5,7 +5,7 @@
  */
 
 define("SQL_HOST", "localhost");
-define("SQL_NAME", "ZHG");
+define("SQL_NAME", "root");
 define("SQL_PASSWORD", "19910702");
 define("SQL_DATABASE", "ZShopping");
 
