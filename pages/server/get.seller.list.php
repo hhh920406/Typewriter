@@ -1,14 +1,14 @@
 <?php
 /**
- * 获取商品分类的列表。
+ * 获取商家的列表。
  * @author ZHG <CyberZHG@gmail.com>
  */
 require_once "setting.php";
 require_once "../database/SQLQuery.class.php";
-$cacheName = TEMP_PATH . "category.cache";
+$cacheName = TEMP_PATH . "seller.cache";
 if (!file_exists($cacheName)) {
     $sql = SQLQuery::getInstance();
-    $query = "SELECT * FROM D_Category WHERE Parent = 0;";
+    $query = "SELECT * FROM D_Seller;";
     $sql->query($query);
     $result = $sql->getResult();
     $store = array();

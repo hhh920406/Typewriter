@@ -10,5 +10,5 @@ if (isset($_GET["token"])) {
 } else {
     $smarty->assign("empty", true);
 }
-$smarty->display("search/index.tpl");
+$smarty->display("search/index2.tpl");
 ?>

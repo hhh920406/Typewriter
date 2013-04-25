@@ -107,11 +107,11 @@ function getResult(token) {
         data.start_price = getQueryString("start_price");
         data.end_price = getQueryString("end_price");
     }
-    if (getQueryString("keyword") !== "") {
-        data.keyword = getQueryString("keyword");
+    if (getQueryString("seller") !== "") {
+        data.keyword = getQueryString("seller");
     }
-    if (getQueryString("type") !== "") {
-        data.type = getQueryString("type");
+    if (getQueryString("category") !== "") {
+        data.type = getQueryString("category");
     }
     if (getQueryString("prefer") !== "") {
         data.prefer = getQueryString("prefer");
@@ -166,28 +166,27 @@ function getCondition() {
         }
         condition += "&end_price=" + endPrice;
     }
-    if ($("#Input_Keyword").val().length > 0) {
+    if ($("#Input_Seller").val().length > 0) {
         if (flag) {
             condition += "&";
         } else {
             flag = true;
         }
-        condition += "keyword=" + encodeURI($("#Input_Keyword").val());
+        condition += "seller=" + encodeURI($("#Input_Seller").val());
     }
-    if ($("#Select_Type").val() !== "null") {
+    if ($("#Select_Category").val() !== "null") {
         if (flag) {
             condition += "&";
         } else {
             flag = true;
         }
-        condition += "type=" + encodeURI($("#Select_Type").val());
+        condition += "category=" + encodeURI($("#Select_Category").val());
     }
     if (flag) {
         condition += "&";
     } else {
         flag = true;
     }
-    condition += "prefer=" + $("#Sync_Prefer_1").val();
     return condition;
 }
 
@@ -234,31 +233,6 @@ function showImage(imageUrl) {
     });
 }
 
-
-/**
- * 同步搜索偏好。
- */
-function syncPrefer() {
-    var value = "";
-    if ($("#CheckBox_Shape").prop("checked")) {
-        value += "1";
-    } else {
-        value += "0";
-    }
-    if ($("#CheckBox_Color").prop("checked")) {
-        value += "1";
-    } else {
-        value += "0";
-    }
-    if ($("#CheckBox_Stripe").prop("checked")) {
-        value += "1";
-    } else {
-        value += "0";
-    }
-    $("#Sync_Prefer_1").val(value);
-    $("#Sync_Prefer_2").val(value);
-}
-
 /**
  * 从Query String中获取条件信息。
  */
@@ -266,32 +240,47 @@ function loadCondition() {
     var value = getQueryString("start_price");
     if (value !== "") {
         $("#Input_Price_Start").val(value);
-        $("#Sync_Start_Price_1").val($("#Input_Price_Start").val());
-        $("#Sync_Start_Price_2").val($("#Input_Price_Start").val());
     }
     value = getQueryString("end_price");
     if (value !== "") {
         $("#Input_Price_End").val(value);
-        $("#Sync_End_Price_1").val($("#Input_Price_End").val());
-        $("#Sync_End_Price_2").val($("#Input_Price_End").val());
     }
     value = getQueryString("keyword");
     if (value !== "") {
         $("#Input_Keyword").val(decodeURI(value));
-        $("#Sync_Keyword_1").val($("#Input_Keyword").val());
-        $("#Sync_Keyword_2").val($("#Input_Keyword").val());
     }
     value = getQueryString("prefer");
     if (value === "") {
         $("#CheckBox_Shape").prop("checked", true);
-        $("#CheckBox_Color").prop("checked", true);
-        $("#CheckBox_Stripe").prop("checked", true);
+        $("#CheckBox_Color").prop("checked", false);
+        $("#CheckBox_Stripe").prop("checked", false);
     } else {
         $("#CheckBox_Shape").prop("checked", value[0] === "1");
         $("#CheckBox_Color").prop("checked", value[1] === "1");
         $("#CheckBox_Stripe").prop("checked", value[2] === "1");
     }
-    syncPrefer();
+}
+
+function getSeller() {
+    $.ajax({
+        url : SERVER_URL,
+        type : "GET", 
+        data : {method : "get.seller.list"},
+        dataType : "json",
+        timeout : 3000,
+        success : function(json) {
+            for (var i = 0; i < json.length; ++i) {
+                $("#Select_Seller").append("<option value = " + json[i].id + ">" + json[i].name + "</option>");
+            }
+            var value = getQueryString("type");
+            if (value !== "") {
+                $("#Select_Seller option[value=" + value + "]").attr("selected","true");
+            }
+        },
+        error : function(a, b, c) {
+            alert("Seller Error: " + a + " / " + b + " / " + c);
+        }
+    });
 }
 
 /**
@@ -306,13 +295,11 @@ function getCategory() {
         timeout : 3000,
         success : function(json) {
             for (var i = 0; i < json.length; ++i) {
-                $("#Select_Type").append("<option value = " + json[i].id + ">" + json[i].name + "</option>");
+                $("#Select_Category").append("<option value = " + json[i].id + ">" + json[i].name + "</option>");
             }
             var value = getQueryString("type");
             if (value !== "") {
-                $("#Select_Type option[value=" + value + "]").attr("selected","true");
-                $("#Sync_Type_1").val($("#Select_Type").val());
-                $("#Sync_Type_2").val($("#Select_Type").val());
+                $("#Select_Category option[value=" + value + "]").attr("selected","true");
             }
         },
         error : function(a, b, c) {
@@ -334,11 +321,18 @@ $(function() {
     $("#Link_Url").click(function() {
         $("#Div_Url").slideDown(300);
         $("#Div_Upload").slideUp(300);
+        $("#Div_Sketch").slideUp(300);
     });
     // 切换到上传图片模式。
     $("#Link_Upload").click(function() {
         $("#Div_Url").slideUp(300);
         $("#Div_Upload").slideDown(300);
+        $("#Div_Sketch").slideUp(300);
+    });
+    $("#Link_Sketch").click(function() {
+        $("#Div_Url").slideUp(300);
+        $("#Div_Upload").slideUp(300);
+        $("#Div_Sketch").slideDown(300);
     });
     // 页面加载完成之后获取搜索结果。
     $(document).ready(function(){
@@ -389,30 +383,5 @@ $(function() {
         if (token !== "") {
             window.location = "http://" + window.location.host + window.location.pathname + "?token=" + token + "&" + condition;
         }
-    });
-    $("#Input_Price_Start").change(function() {
-        $("#Sync_Start_Price_1").val($("#Input_Price_Start").val());
-        $("#Sync_Start_Price_2").val($("#Input_Price_Start").val());
-    });
-    $("#Input_Price_End").change(function() {
-        $("#Sync_End_Price_1").val($("#Input_Price_End").val());
-        $("#Sync_End_Price_2").val($("#Input_Price_End").val());
-    });
-    $("#Input_Keyword").change(function() {
-        $("#Sync_Keyword_1").val($("#Input_Keyword").val());
-        $("#Sync_Keyword_2").val($("#Input_Keyword").val());
-    });
-    $("#Select_Type").change(function() {
-        $("#Sync_Type_1").val($("#Select_Type").val());
-        $("#Sync_Type_2").val($("#Select_Type").val());
-    });
-    $("#CheckBox_Shape").change(function() {
-        syncPrefer();
-    });
-    $("#CheckBox_Color").change(function() {
-        syncPrefer();
-    });
-    $("#CheckBox_Stripe").change(function() {
-        syncPrefer();
     });
 });
