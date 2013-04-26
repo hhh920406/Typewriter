@@ -57,7 +57,7 @@ function getResultItem(items, index) {
             id : items[index]
             },
         dataType : "json",
-        timeout : 3000,
+        timeout : 5000,
         success : function(json) {
             var col = 0;
             for (var i = 1; i < columnNum; ++i) {
@@ -65,18 +65,21 @@ function getResultItem(items, index) {
                     col = i;
                 }
             }
-            $("#Div_Result_Column_" + col).append(
-                "<div id = Result_Item_" + $("#Result_Number").val() + " class = resultItemDiv>" + 
-                "<img class = resultItemImage src = " + json.image + " onclick = showImage('" + json.image + "');>" + 
-                "</img>" + 
-                "<div class = resultItemTitle>" + 
-                "<a href = " + json.url + " target = _blank>" + json.name + "</a>" +
-                "</div>" + 
-                "价格：<span class = resultItemPrice>" + json.price + "</span>元" +
-                "</div>"
-            );
-            $("#Result_Item_" + $("#Result_Number").val()).fadeIn(300);
-            $("#Result_Number").val(parseInt($("#Result_Number").val()) + 1);
+            try {
+                $("#Div_Result_Column_" + col).append(
+                    "<div id = Result_Item_" + $("#Result_Number").val() + " class = resultItemDiv>" + 
+                    "<img class = resultItemImage src = " + json.image + " onclick = showImage('" + json.image + "');>" + 
+                    "</img>" + 
+                    "<div class = resultItemTitle>" + 
+                    "<a href = " + json.url + " target = _blank>" + json.name + "</a>" +
+                    "</div>" + 
+                    "价格：<span class = resultItemPrice>" + json.price + "</span>元" +
+                    "</div>"
+                );
+                $("#Result_Item_" + $("#Result_Number").val()).fadeIn(300);
+                $("#Result_Number").val(parseInt($("#Result_Number").val()) + 1);
+            } catch (err) {
+            }
             getResultItem(items, parseInt(index) + 5);
         },
         error : function() {
@@ -108,10 +111,10 @@ function getResult(token) {
         data.end_price = getQueryString("end_price");
     }
     if (getQueryString("seller") !== "") {
-        data.keyword = getQueryString("seller");
+        data.seller = getQueryString("seller");
     }
     if (getQueryString("category") !== "") {
-        data.type = getQueryString("category");
+        data.category = getQueryString("category");
     }
     if (getQueryString("prefer") !== "") {
         data.prefer = getQueryString("prefer");

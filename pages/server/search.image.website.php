@@ -21,11 +21,9 @@ if (isset($_POST["website"])) {
         $token = getTempToken();
         $token .= $extension;
         downloadImage($website, TEMP_PATH . $token);
-        $trueToken = getToken(TEMP_PATH . $token) . $extension;
-        rename(TEMP_PATH . $token, TEMP_PATH . $trueToken);
-        echo json_encode(array("token" => $trueToken));
+        echo json_encode(array("token" => $token));
         if (isset($_POST["redirect"])) {
-            header("Location: " . getRedirectURL($trueToken));
+            header("Location: " . getRedirectURL($token));
             return;
         }
     } else {

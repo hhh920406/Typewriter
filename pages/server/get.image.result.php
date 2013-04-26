@@ -12,24 +12,44 @@ function getCondition() {
     $condition = new stdClass();
     if (isset($_GET["start_price"])) {
         $condition->startPrice = $_GET["start_price"];
+    } else {
+        $condition->startPrice = "0";
     }
     if (isset($_GET["end_price"])) {
         $condition->endPrice = $_GET["end_price"];
+    } else {
+        $condition->endPrice = "2000000000";
     }
-    if (isset($_GET["keyword"])) {
-        $condition->keyword = strSplit(urldecode($_GET["keyword"]));
+    if (isset($_GET["seller"])) {
+        $condition->seller = $_GET["seller"];
+        if ($condition->seller === "null") {
+            $condition->seller = "0";
+        }
+    } else {
+        $condition->seller = "0";
     }
-    if (isset($_GET["type"])) {
-        $condition->type = urldecode($_GET["type"]);
+    if (isset($_GET["category"])) {
+        $condition->category = $_GET["category"];
+        if ($condition->category === "null") {
+            $condition->category = "0";
+        }
+    } else {
+        $condition->category = "0";
     }
     if (isset($_GET["prefer"])) {
-        $condition->shapeFeature = $_GET["prefer"][0] === "1";
-        $condition->colorFeature = $_GET["prefer"][1] === "1";
-        $condition->textureFeature = $_GET["prefer"][2] === "1";
+        switch ($_GET["prefer"]) {
+        case "100":
+            $condition->type = "1";
+            break;
+        case "010":
+            $condition->type = "2";
+            break;
+        case "001":
+            $condition->type = "3";
+            break;
+        }
     } else {
-        $condition->shapeFeature = true;
-        $condition->colorFeature = true;
-        $condition->textureFeature = true;
+        $condition->type = "1";
     }
     return $condition;
 }
@@ -55,100 +75,8 @@ if (isset($_GET["token"]) && isset($_GET["index"]) && isset($_GET["number"])) {
     $cachePath = TEMP_PATH . $cacheName;
     if (!file_exists($cachePath)) {
         $originImagePath = TEMP_PATH . $_GET["token"];
-        $originShapeFeature = exec(FILE_ROOT . "exec/EHD_RGB_80.exe " . $originImagePath);
-        $originColorFeature = exec(FILE_ROOT . "exec/72HSV.exe " . $originImagePath);
-        if ($originShapeFeature !== "-1" && $originColorFeature !== "-1") {
-            $originShapeFeature = strSplit($originShapeFeature);
-            $originColorFeature = strSplit($originColorFeature);
-            $sql = SQLQuery::getInstance();
-            $query = "SELECT * FROM D_Item_Feature";
-            $flag = false;
-            if (isset($condition->startPrice)) {
-                $startPrice = $condition->startPrice;
-                if ($flag) {
-                    $query .= " AND ";
-                } else {
-                    $query .= " WHERE ";
-                    $flag = true;
-                }
-                $query .= "Price >= '$startPrice'";
-            }
-            if (isset($condition->endPrice)) {
-                $endPrice = $condition->endPrice;
-                if ($flag) {
-                    $query .= " AND ";
-                } else {
-                    $query .= " WHERE ";
-                    $flag = true;
-                }
-                $query .= "Price <= '$endPrice'";
-            }
-            if (isset($condition->type)) {
-                $type = $condition->type;
-                if ($type !== "null") {
-                    if ($flag) {
-                        $query .= " AND ";
-                    } else {
-                        $query .= " WHERE ";
-                        $flag = true;
-                    }
-                    $query .= "Type = '$type'";
-                }
-            }
-            $query .= ";";
-            $sql->query($query);
-            $result = $sql->getResult();
-            $ids = array();
-            $dists = array();
-            foreach ($result as $item) {
-                $shapeDist = 0;
-                if ($condition->shapeFeature) {
-                    $feature = $item["ShapeFeature"];
-                    if ($feature === "-1") {
-                        continue;
-                    }
-                    $feature = strSplit($feature);
-                    if (count($feature) != count($originShapeFeature)) {
-                        continue;
-                    }
-                    for ($i = 0; $i < count($feature); ++$i) {
-                        $shapeDist += ($originShapeFeature[$i] - $feature[$i]) * ($originShapeFeature[$i] - $feature[$i]);
-                    }
-                    $shapeDist /= 3920.0;
-                }
-                $colorDist = 0;
-                if ($condition->colorFeature) {
-                    $feature = $item["ColorFeature"];
-                    if ($feature === "-1") {
-                        continue;
-                    }
-                    $feature = strSplit($feature);
-                    if (count($feature) != count($originColorFeature)) {
-                        continue;
-                    }
-                    for ($i = 0; $i < count($feature); ++$i) {
-                        $colorDist += ($originColorFeature[$i] - $feature[$i]) * ($originColorFeature[$i] - $feature[$i]);
-                    }
-                    $colorDist /= 72.0;
-                }
-                $dist = $shapeDist + $colorDist * 10;
-                if (isset($condition->keyword)) {
-                    foreach ($condition->keyword as $word) {
-                        if (strpos($item["Title"], $word) !== false) {
-                            $dist -= 11;
-                        }
-                    }
-                }
-                $ids[] = $item["ItemID"];
-                $dists[] = $dist;
-            }
-            array_multisort($dists, SORT_ASC, SORT_NUMERIC, $ids);
-            $file = fopen($cachePath, "w");
-            if ($file) {
-                fwrite($file, json_encode($ids));
-                fclose($file);
-            }
-        }
+        $command = "{$condition->type},{$condition->startPrice},{$condition->endPrice},{$condition->seller},{$condition->category},{$originImagePath},{$cachePath}";
+        exec(FILE_ROOT . "exec/RecordSearch_client.exe " . $command);
     }
     $result = array();
     $file = fopen($cachePath, "r");
