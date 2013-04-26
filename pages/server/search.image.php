@@ -53,19 +53,21 @@ function getRedirectURL($token) {
  * @return boolean 如果成功返回true，否则返回false。
  */
 function downloadImage($url, $targetPath) {
-    $originFile = fopen($url, "rb");
-    if ($originFile) {
-        $targetFile = fopen($targetPath, "wb");
-        if ($targetFile) {
-            while (!feof($originFile)) {
-                fwrite($targetFile, fread($originFile, 1024 * 4), 1024 * 4);
-            }
-            fclose($targetFile);
-            fclose($originFile);
-            return true;
-        }
+    $cp = curl_init($url);
+    $fp = fopen($targetPath . ".temp", "w");
+    curl_setopt($cp, CURLOPT_FILE, $fp);
+    curl_setopt($cp, CURLOPT_HEADER, 0);
+    curl_setopt($cp, CURLOPT_TIMEOUT, 10);
+    curl_exec($cp);
+    fclose($fp);
+    $flag = true;
+    if (curl_error($cp)) {
+        $flag = false;
+    } else {
+        rename($targetPath . ".temp", $targetPath);
     }
-    return false;
+    curl_close($cp);
+    return $flag;
 }
 
 /**

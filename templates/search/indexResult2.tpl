@@ -3,12 +3,18 @@
     <head>
         <meta charset = UTF-8>
         <title>商品搜索</title>
-        {if $empty === true}
-        <link rel = stylesheet href = ../../styles/search/indexEmpty.css />
-        {else}
-         <link rel = stylesheet href = ../../styles/search/indexResult.css />
-        {/if}
-        <script src = ../../scripts/util/jquery.js ></script>
+        <link rel = stylesheet href = ../../styles/search/indexResult.css />
+        <!-- wPaint -->
+        <script src = ./wpaint/inc/jquery.1.8.2.min.js ></script>
+        <script src = ./wpaint/inc/jquery.ui.core.min.js ></script>
+        <script src = ./wpaint/inc/jquery.ui.widget.min.js ></script>
+        <script src = ./wpaint/inc/jquery.ui.mouse.min.js ></script>
+        <script src = ./wpaint/inc/jquery.ui.draggable.min.js ></script>
+        <script src = ./wpaint/inc/wColorPicker.js ></script>
+        <script src = ./wpaint/wPaint.js ></script>
+        <link rel = stylesheet href = ./wpaint/inc/wColorPicker.css />
+        <link rel = stylesheet href = ./wpaint/wPaint.css />
+        <!-- wPaint -->
         <script src = ../../scripts/search/setting.js ></script>
         <script src = ../../scripts/search/index2.js ></script>
     </head>
@@ -35,7 +41,20 @@
                     <ifame id = Hidden_Frame name = Hidden_Frame style = display:none></ifame>
                 </div>
                 <div id = Div_Sketch style = display:none>
-                    <input id = Button_Sketch type = button value = 开始绘制></input>
+                    <table>
+                        <tr>
+                            <td>
+                                <div id = wPaint style = "position:relative; width:470px; height:300px; background:#CACACA; border:solid black 1px;"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type = button value = 清除画布 onclick = wPaint_clear(); />
+                                <input type = button value = 上传图像 onclick = wPaint_upload(); />
+                            </td>
+                        </tr>
+                    </table>
+                    <script src = ../../scripts/search/index2sketch.js></script>
                 </div>
             </div>
         </div>

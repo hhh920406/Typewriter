@@ -33,7 +33,7 @@ if ($_FILES["upload"]["error"] === UPLOAD_ERR_OK) {
 }
 echo json_encode(array("token" => ""));
 if (isset($_POST["redirect"])) {
-    header("Location: ../search/index.php");
+    header("Location: ../search/index2.php");
     return;
 } 
 ?>

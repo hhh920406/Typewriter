@@ -33,7 +33,7 @@ if (isset($_POST["website"])) {
     }
 }
 if (isset($_POST["redirect"])) {
-    header("Location: ../search/index.php");
+    header("Location: ../search/index2.php");
     return;
 } 
 ?>

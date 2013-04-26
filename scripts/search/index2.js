@@ -141,6 +141,26 @@ function dropOver(event) {
     return true;
 }
 
+function getPreferString() {
+    var condition = "";
+    if ($("#CheckBox_Shape").prop("checked")) {
+        condition += "1";
+    } else {
+        condition += "0";
+    }
+    if ($("#CheckBox_Color").prop("checked")) {
+        condition += "1";
+    } else {
+        condition += "0";
+    }
+    if ($("#CheckBox_Stripe").prop("checked")) {
+        condition += "1";
+    } else {
+        condition += "0";
+    }
+    return condition;
+}
+
 /**
  * 获取搜索的条件。
  * @return {string} QueryString形式的条件。
@@ -166,13 +186,13 @@ function getCondition() {
         }
         condition += "&end_price=" + endPrice;
     }
-    if ($("#Input_Seller").val().length > 0) {
+    if ($("#Select_Seller").val().length > 0) {
         if (flag) {
             condition += "&";
         } else {
             flag = true;
         }
-        condition += "seller=" + encodeURI($("#Input_Seller").val());
+        condition += "seller=" + encodeURI($("#Select_Seller").val());
     }
     if ($("#Select_Category").val() !== "null") {
         if (flag) {
@@ -187,33 +207,8 @@ function getCondition() {
     } else {
         flag = true;
     }
+    condition += "prefer=" + getPreferString();
     return condition;
-}
-
-/**
- * 拖放图像的处理。
- * @param {type} event
- */
-function dropImage(event) {
-    event.preventDefault();
-    var file = event.dataTransfer.files[0];
-    var formData = new FormData();
-    formData.append("method", "search.image.upload");
-    formData.append("upload", file);
-    $.ajax({
-        url : SERVER_URL,
-        type : "POST", 
-        contentType: false,
-        processData: false,
-        data : formData,
-        dataType : "json",
-        timeout : 3000,
-        success : function(json) {
-            var condition = getCondition();
-            window.location = "http://" + window.location.host + window.location.pathname + "?token=" + json.token + "&" + condition;
-        }
-    });
-    return false;
 }
 
 function showImage(imageUrl) {
@@ -272,7 +267,7 @@ function getSeller() {
             for (var i = 0; i < json.length; ++i) {
                 $("#Select_Seller").append("<option value = " + json[i].id + ">" + json[i].name + "</option>");
             }
-            var value = getQueryString("type");
+            var value = getQueryString("seller");
             if (value !== "") {
                 $("#Select_Seller option[value=" + value + "]").attr("selected","true");
             }
@@ -297,7 +292,7 @@ function getCategory() {
             for (var i = 0; i < json.length; ++i) {
                 $("#Select_Category").append("<option value = " + json[i].id + ">" + json[i].name + "</option>");
             }
-            var value = getQueryString("type");
+            var value = getQueryString("category");
             if (value !== "") {
                 $("#Select_Category option[value=" + value + "]").attr("selected","true");
             }
@@ -306,6 +301,60 @@ function getCategory() {
             alert("Categroy Error: " + a + " / " + b + " / " + c);
         }
     });
+}
+
+function uploadImage(file) {
+    var formData = new FormData();
+    formData.append("method", "search.image.upload");
+    formData.append("upload", file);
+    $.ajax({
+        url : SERVER_URL,
+        type : "POST", 
+        contentType: false,
+        processData: false,
+        data : formData,
+        dataType : "json",
+        timeout : 3000,
+        success : function(json) {
+            var condition = getCondition();
+            window.location = "http://" + window.location.host + window.location.pathname + "?token=" + json.token + "&" + condition;
+        }
+    });
+}
+
+/**
+ * 拖放图像的处理。
+ * @param {type} event
+ */
+function dropImage(event) {
+    event.preventDefault();
+    var file = event.dataTransfer.files[0];
+    uploadImage(file);
+    return false;
+}
+
+function uploadWithUrl() {
+    var formData = new FormData();
+    formData.append("method", "search.image.website");
+    formData.append("website", $("#Text_Url").val());
+    $.ajax({
+        url : SERVER_URL,
+        type : "POST", 
+        contentType: false,
+        processData: false,
+        data : formData,
+        dataType : "json",
+        timeout : 3000,
+        success : function(json) {
+            var condition = getCondition();
+            window.location = "http://" + window.location.host + window.location.pathname + "?token=" + json.token + "&" + condition;
+        }
+    });
+}
+
+function uploadWithFile() {
+    var file = File_Upload.files[0];
+    uploadImage(file);
 }
 
 $(function() {
@@ -343,6 +392,7 @@ $(function() {
             getResult(token);
         }
         loadCondition();
+        getSeller();
         getCategory();
     });
     // 页面滚动到低端后获取搜索结果。
@@ -383,5 +433,14 @@ $(function() {
         if (token !== "") {
             window.location = "http://" + window.location.host + window.location.pathname + "?token=" + token + "&" + condition;
         }
+    });
+    $("#Button_Url").click(function() {
+        uploadWithUrl();
+    });
+    $("#File_Upload").change(function() {
+        uploadWithFile();
+    });
+    $("#Button_Sketch").click(function() {
+        window.location = "wpaint/wpaint.html";
     });
 });

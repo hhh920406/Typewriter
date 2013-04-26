@@ -1,5 +1,5 @@
 {if $empty === true}
-    {include file = "search/index2Empty.tpl"}
+    {include file = "search/indexEmpty2.tpl"}
 {else}
-    {include file = "search/index2Result.tpl"}
+    {include file = "search/indexResult2.tpl"}
 {/if}
