@@ -89,11 +89,17 @@ function getResultItem(items, index) {
     });
 }
 
+var querying = false;
+
 /**
  * 获取查询结果并显示。
  * @param {string} token 传入的令牌名。
  */
 function getResult(token) {
+    if (querying) {
+        return;
+    }
+    querying = true;
     columnNum = parseInt(($(window).width() - $(".searchConfigDetailDiv").width() - 20) / ($("#Div_Result_Column_0").width() + 10));
     for (var i = 1; i < columnNum; ++i) {
         $(".resultDiv").append("<div id = Div_Result_Column_" + i + " class = resultColumnDiv></div>");
@@ -132,6 +138,7 @@ function getResult(token) {
             getResultItem(json, 3);
             getResultItem(json, 4);
             thread += 5;
+            querying = false;
         },
         error : function(a, b, c) {
             //alert(a + b + c);
@@ -265,7 +272,7 @@ function getSeller() {
         type : "GET", 
         data : {method : "get.seller.list"},
         dataType : "json",
-        timeout : 3000,
+        timeout : 10000,
         success : function(json) {
             for (var i = 0; i < json.length; ++i) {
                 $("#Select_Seller").append("<option value = " + json[i].id + ">" + json[i].name + "</option>");
@@ -290,7 +297,7 @@ function getCategory() {
         type : "GET", 
         data : {method : "get.category.list"},
         dataType : "json",
-        timeout : 3000,
+        timeout : 10000,
         success : function(json) {
             for (var i = 0; i < json.length; ++i) {
                 $("#Select_Category").append("<option value = " + json[i].id + ">" + json[i].name + "</option>");
@@ -317,7 +324,7 @@ function uploadImage(file) {
         processData: false,
         data : formData,
         dataType : "json",
-        timeout : 3000,
+        timeout : 10000,
         success : function(json) {
             var condition = getCondition();
             window.location = "http://" + window.location.host + window.location.pathname + "?token=" + json.token + "&" + condition;
@@ -347,7 +354,7 @@ function uploadWithUrl() {
         processData: false,
         data : formData,
         dataType : "json",
-        timeout : 3000,
+        timeout : 10000,
         success : function(json) {
             var condition = getCondition();
             window.location = "http://" + window.location.host + window.location.pathname + "?token=" + json.token + "&" + condition;

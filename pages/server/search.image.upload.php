@@ -15,7 +15,7 @@ if ($_FILES["upload"]["error"] === UPLOAD_ERR_OK) {
     }
     $extension = strtolower($extension);
     if (isExtensionValid($extension)) {
-        $token = getTempToken();
+        $token = getToken();
         $token .= $extension;
         move_uploaded_file($_FILES["upload"]["tmp_name"], TEMP_PATH . $token);
         echo json_encode(array("token" => $token));

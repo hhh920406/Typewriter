@@ -8,14 +8,13 @@ require_once "search.image.php";
 if (isset($_POST["image"])) {
     $s = base64_decode(str_replace('data:image/png;base64,', '', $_POST["image"]));
     $extension = ".png";
-    $token = getTempToken();
+    $token = getToken();
     $token .= $extension;
     file_put_contents(TEMP_PATH . $token, $s);
-    $trueToken = getToken(TEMP_PATH . $token) . $extension;
-    rename(TEMP_PATH . $token, TEMP_PATH . $trueToken);
-    echo json_encode(array("token" => $trueToken));
+    rename(TEMP_PATH . $token, TEMP_PATH . $token);
+    echo json_encode(array("token" => $token));
     if (isset($_POST["redirect"])) {
-        header("Location: " . getRedirectURL($trueToken));
+        header("Location: " . getRedirectURL($token));
         return;
     }
 }

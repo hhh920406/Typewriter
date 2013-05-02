@@ -28,54 +28,64 @@ function downloadImage($url, $targetPath) {
     return false;
 }
 
-$file = fopen("file", "r");
-if ($file) {
-    while (!feof($file)) {
-        $path = fgets($file);
-        $name = "";
-        for ($i = strlen($path) - 1; $i >= 0; --$i) {
-            if ($path[$i] === "&") {
-                $name = "";
-            }
-            if ($path[$i] === "=" || $path[$i] === "/") {
-                break;
-            }
-            $name = $path[$i] . $name;
-        }
-        downloadImage($path, "image/" . $name);
-    }
-    fclose($file);
-}
-
-$sql = SQLQuery::getInstance();
 $count = 0;
-for ($i = 0; ; $i += 100) {
-    $query = "SELECT * FROM D_Item LIMIT $i, 100";
-    echo "$query\n";
-    $sql->query($query);
-    if ($sql->getError()) {
-        echo "Error: " . $sql->getError() . "\n";
-    } else {
-        $result = $sql->getResult();
-        if (count($result) === 0) {
-            break;
-        }
-        foreach ($result as $item) {
-            $url = $item["Image"];
-            $targetPath = IMAGE_PATH . $item["Source"] . "/" . $item["SellerID"] . "/" . $item["CategoryID"];
-            if (!is_dir($targetPath)) {
-                mkdir($targetPath, 0777, true);
+$filePath = "D:/Apache2.2/htdocs/ZShopping_web/exec/Item.list";
+$savePath = "D:/Apache2.2/htdocs/ZShopping_web/exec/Item.save";
+$dataFile = fopen($filePath, "r");
+if ($dataFile) {
+    $data = "";
+    while (!feof($dataFile)) {
+        $data .= fread($dataFile, 1024);
+    }
+    fclose($dataFile);
+    $saveFile = fopen($savePath, "r");
+    if ($saveFile) {
+        $lines = array();
+        $temp = "";
+        $data = preg_replace('/\n|\r\n/', '_', $data);
+        $len = strlen($data);
+        for ($i = 0; $i < $len; ++$i) {
+            if ($data[$i] == "_") {
+                $lines[] = $temp;
+                $temp = "";
+            } else {
+                $temp .= $data[$i];
             }
-            $targetPath .= "/" . $item["RemoteID"];
-            if (!file_exists($targetPath)) {
-                echo "Start Download: $url\n";
-                echo "Target Path: $targetPath.temp\n";
-                if (downloadImage($url, $targetPath . ".temp")) {
-                    rename($targetPath . ".temp", $targetPath . ".jpg");
+        }
+        $ids = array();
+        for ($i = 0; $i < count($lines); ++$i) {
+            $temp = "";
+            for ($j = 0; $j < strlen($lines[$i]); ++$j) {
+                if ($lines[$i][$j] === " ") {
+                    break;
                 }
-                ++ $count;
-                echo "Total Number: $count\n";
-                echo Date("Y-m-d H:i:s") . "\n";
+                $temp .= $lines[$i][$j];
+            }
+            $ids[] = $temp;
+        }
+        for ($i = 0; $i < count($ids); ++$i) {
+            $infoFilePath = DATA_PATH . "info/item_" . $ids[$i];
+            $item = "";
+            if (file_exists($infoFilePath)) {
+                $file = fopen($infoFilePath, "r");
+                if ($file) {
+                    while (!feof($file)) {
+                        $item .= fread($file, 1024);
+                    }
+                    fclose($file);
+                } else {
+                    continue;
+                }
+                $item = json_decode($item);
+            } else {
+                continue;
+            }
+            $imageFilePath = DATA_PATH . "image/" . $ids[$i] . ".jpg";
+            if (!file_exists($imageFilePath)) {
+                if (downloadImage($item->image, $imageFilePath)) {
+                    ++ $count;
+                    echo "{$count}: $imageFilePath\n";
+                }
             }
         }
     }

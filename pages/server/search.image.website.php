@@ -18,7 +18,7 @@ if (isset($_POST["website"])) {
     }
     $extension = strtolower($extension);
     if (isExtensionValid($extension)) {
-        $token = getTempToken();
+        $token = getToken();
         $token .= $extension;
         downloadImage($website, TEMP_PATH . $token);
         echo json_encode(array("token" => $token));

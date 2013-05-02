@@ -8,6 +8,9 @@ $method = "";
 echo "ECHO\n";
 while(fscanf(STDIN, "%s", $method) === 1) {
     switch ($method) {
+        case "update":
+            require_once "update_database.php";
+            return;
         case "obtain_category":
             require_once "obtain_category.php";
             echo "Source: ";

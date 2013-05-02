@@ -68,14 +68,14 @@ function getCacheName($condition) {
 }
 
 require_once "setting.php";
-require_once "../database/SQLQuery.class.php";
+
 if (isset($_GET["token"]) && isset($_GET["index"]) && isset($_GET["number"])) {
     $condition = getCondition();
     $cacheName = getCacheName($condition);
     $cachePath = TEMP_PATH . $cacheName;
     if (!file_exists($cachePath)) {
         $originImagePath = TEMP_PATH . $_GET["token"];
-        $command = "{$condition->type},{$condition->startPrice},{$condition->endPrice},{$condition->seller},{$condition->category},{$originImagePath},{$cachePath}";
+        $command = "{$condition->type},{$condition->startPrice},{$condition->endPrice},{$condition->category},{$condition->seller},{$originImagePath},{$cachePath}";
         exec(FILE_ROOT . "exec/RecordSearch_client.exe " . $command);
     }
     $result = array();

@@ -9,21 +9,8 @@ require_once "setting.php";
  * 获得一个唯一的字符串，用来进行搜索的区分。
  * @return string 32位的字符串。
  */
-function getTempToken() {
+function getToken() {
     return substr(md5(uniqid(mt_rand(), true)), 0, 32);
-}
-
-/**
- * 通过图片的特征获得唯一的字符串。
- * 图片文件的地址。
- * @return string 32位的字符串。
- */
-function getToken($originImagePath) {
-    $feature = exec(FILE_ROOT . "exec/EHD_RGB_80.exe " . $originImagePath);
-    if ($feature === "-1") {
-        return "error";
-    }
-    return md5($feature);
 }
 
 function getRedirectURL($token) {

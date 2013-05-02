@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * 进行API的请求。
  * @author ZHG <CyberZHG@gmail.com>
@@ -62,7 +62,7 @@ class ApiRequestFiftynine {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
         $this->result = curl_exec($ch);
         $this->error = curl_error($ch);
         curl_close($ch);
