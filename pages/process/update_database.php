@@ -3,16 +3,38 @@
  * 通过文本中的数据定向更新数据库的内容。
  * @author ZHG <CyberZHG@gmail.com>
  */
-$source = new DataSourceManager("fiftynine");
-$filePath = "D:/Apache2.2/htdocs/ZShopping_web/exec/Item.list";
-$savePath = "D:/Apache2.2/htdocs/ZShopping_web/exec/Item.save";
-$dataFile = fopen($filePath, "r");
-if ($dataFile) {
-    $data = "";
-    while (!feof($dataFile)) {
-        $data .= fread($dataFile, 1024);
+function downloadImage($url, $targetPath) {
+    createDir(dirname($targetPath));
+    $originFile = fopen($url, "rb");
+    if ($originFile) {
+        $targetFile = fopen($targetPath . ".temp", "wb");
+        if ($targetFile) {
+            while (!feof($originFile)) {
+                fwrite($targetFile, fread($originFile, 1024 * 4), 1024 * 4);
+            }
+            fclose($targetFile);
+            fclose($originFile);
+            rename($targetPath . ".temp", $targetPath);
+            return true;
+        }
     }
-    fclose($dataFile);
+    return false;
+}
+
+$source = new DataSourceManager("fiftynine");
+$filePath = "E:/zhg/scripts/item/item";
+$savePath = "Item_Update.save";
+$dataFile = opendir($filePath);
+if ($dataFile) {
+    $ids = array();
+    while (($file = readdir($dataFile)) !== false) {
+        $id = "";
+        for ($i = 5; $i < strlen($file); ++$i) {
+            $id .= $file[$i];
+        }
+        $ids[] = $id;
+    }
+    closedir($dataFile);
     $saveFile = fopen($savePath, "r");
     if ($saveFile) {
         $startIndex = fread($saveFile, 1024);
@@ -20,7 +42,7 @@ if ($dataFile) {
         if ($startIndex === "") {
             $startIndex = 0;
         }
-        $lines = array();
+        /*$lines = array();
         $temp = "";
         $data = preg_replace('/\n|\r\n/', '_', $data);
         $len = strlen($data);
@@ -42,7 +64,7 @@ if ($dataFile) {
                 $temp .= $lines[$i][$j];
             }
             $ids[] = $temp;
-        }
+        }*/
         for ($i = $startIndex; $i < count($ids);) {
             $iids = "";
             for ($j = 0; $i + $j < count($ids) && $j < 10; ++$j) {
@@ -59,11 +81,10 @@ if ($dataFile) {
                 $result->url = $items[$j]->itemUrl;
                 $result->image = $items[$j]->itemImage;
                 $result = json_encode($result);
-                $file = fopen("D:/Apache2.2/htdocs/ZShopping_web/temp/search/item_" . $items[$j]->itemID, "w");
-                if ($file) {
-                    echo "D:/Apache2.2/htdocs/ZShopping_web/temp/search/item_" . $items[$j]->itemID . "\n";
-                    fwrite($file, $result);
-                    fclose($file);
+                $overFile = fopen("item.list", "a");
+                if ($overFile) {
+                    fwrite($overFile, "{$items[$j]->itemID} {$items[$j]->categoryID} {$items[$j]->sellerID} {$items[$j]->itemPrice}\n");
+                    fclose($overFile);
                 }
             }
             $i += 10;

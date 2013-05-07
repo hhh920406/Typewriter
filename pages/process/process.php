@@ -13,9 +13,7 @@ while(fscanf(STDIN, "%s", $method) === 1) {
             return;
         case "obtain_category":
             require_once "obtain_category.php";
-            echo "Source: ";
-            fscanf(STDIN, "%s", $method);
-            obtainCategory($method);
+            obtainCategory("fiftynine");
             return;
         case "fiftynine.seller":
             require_once "fiftynine/obtain_seller.php";

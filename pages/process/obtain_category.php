@@ -9,17 +9,9 @@
  * @param string $sourceName 数据来源的名称。
  */
 function obtainCategory($sourceName) {
-    $source = new DataSourceManager($sourceName);
-    $sql = SQLQuery::getInstance();
-    $query = "DELETE FROM D_Category WHERE Source = '" . $sourceName . "';";
-    echo $query . "\n";
-    $sql->query($query);
-    if ($sql->getError()) {
-        echo "Error: " . $sql->getError() . "\n";
-        return;
-    } 
     $queue = array(0);
     $depth = array(0);
+    $source = new DataSourceManager($sourceName);
     for ($i = 0; $i < count($queue); ++ $i) {
         $parentID = $queue[$i];
         echo "Parent ID: " . $parentID . " Remaining: " . (count($queue) - $i - 1) . "\n";
@@ -34,25 +26,20 @@ function obtainCategory($sourceName) {
             sleep(3);
         }
         if ($errorCount <= 1) {
+            $jsonResult = array();
             foreach ($result as $item) {
-                $query = "INSERT INTO D_Category " . 
-                         "(RemoteID, Name, Parent, IsParent, Source) " .
-                         "VALUES " .
-                         "('" . $item->categoryID . "', '" . $item->categoryName . 
-                         "', '" . $item->parentID . "', '" . (int)$item->isParent . 
-                         "', '" . $sourceName . "');";
-                echo $query . "\n";
-                $sql->query($query);
-                if ($sql->getError()) {
-                    echo "Error: " . $sql->getError() . "\n";
-                }
+                $jsonResult[] = array("id" => $item->categoryID, "name" => $item->categoryName);
                 if ($item->isParent) {
-                    if ($depth[$i] < 1) {
+                    if ($depth[$i] < 2) {
                         $queue[] = $item->categoryID;
                         $depth[] = $depth[$i] + 1;
                     }
                 }
             }
+            $jsonResult = json_encode($jsonResult);
+            $file = fopen("Category_" . $parentID, "w");
+            fwrite($file, $jsonResult);
+            fclose($file);
         }
     }
 }

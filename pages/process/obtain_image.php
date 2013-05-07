@@ -63,7 +63,11 @@ if ($dataFile) {
             }
             $ids[] = $temp;
         }
-        for ($i = 0; $i < count($ids); ++$i) {
+        //for ($i = 0; $i < count($ids); ++$i) {
+            for ($i = count($ids) - 1; $i >= 0; --$i) {
+            /*if (rand(1, 100) > 20) {
+                continue;
+        }*/
             $infoFilePath = DATA_PATH . "info/item_" . $ids[$i];
             $item = "";
             if (file_exists($infoFilePath)) {
