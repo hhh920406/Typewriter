@@ -5,7 +5,11 @@
  */
 require_once "setting.php";
 
-$fileName = DATA_PATH . "category.list";
+$parentID = "0";
+if (isset($_GET["parent"])) {
+    $parentID = $_GET["parent"];
+}
+$fileName = DATA_PATH . "category/Category_" . $parentID;
 $file = fopen($fileName, "r");
 if ($file) {
     $category = "";

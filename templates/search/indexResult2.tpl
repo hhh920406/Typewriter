@@ -81,13 +81,16 @@
                     <div>
                         <span>商家：</span>
                         <select id = Select_Seller style = max-width:200px>
-                            <option value = null>不限制</option>
+                            <option value = 0>不限制</option>
                         </select>
                     </div>
                     <div>
                         <span>类别：</span>
                         <select id = Select_Category style = max-width:200px>
-                            <option value = null>不限制</option>
+                            <option value = 0>不限制</option>
+                        </select>
+                        <select id = Select_Category_Sub style = max-width:200px disabled = true >
+                            <option value = 0>不限制</option>
                         </select>
                     </div>
                     <div>

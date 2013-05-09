@@ -100,7 +100,7 @@ function getResult(token) {
         return;
     }
     querying = true;
-    columnNum = parseInt(($(window).width() - $(".searchConfigDetailDiv").width() - 20) / ($("#Div_Result_Column_0").width() + 10));
+    columnNum = parseInt(($(window).width() - $(".searchConfigDetailDiv").width() - 40) / ($("#Div_Result_Column_0").width() + 20));
     for (var i = 1; i < columnNum; ++i) {
         $(".resultDiv").append("<div id = Div_Result_Column_" + i + " class = resultColumnDiv></div>");
     }
@@ -110,7 +110,7 @@ function getResult(token) {
         method : "get.image.result",
         token : token,
         index : index,
-        number : 16
+        number : 50
     };
     if (getQueryString("start_price") !== "" && getQueryString("end_price") !== "") {
         data.start_price = getQueryString("start_price");
@@ -196,28 +196,15 @@ function getCondition() {
         }
         condition += "&end_price=" + endPrice;
     }
-    if ($("#Select_Seller").val().length > 0) {
-        if (flag) {
-            condition += "&";
-        } else {
-            flag = true;
-        }
-        condition += "seller=" + encodeURI($("#Select_Seller").val());
-    }
-    if ($("#Select_Category").val() !== "null") {
-        if (flag) {
-            condition += "&";
-        } else {
-            flag = true;
-        }
-        condition += "category=" + encodeURI($("#Select_Category").val());
-    }
     if (flag) {
         condition += "&";
     } else {
         flag = true;
     }
-    condition += "prefer=" + getPreferString();
+    condition += "seller=" + $("#Select_Seller").val();
+    condition += "&category=" + $("#Select_Category").val();
+    condition += "_" + $("#Select_Category_Sub").val();
+    condition += "&prefer=" + getPreferString();
     return condition;
 }
 
@@ -304,13 +291,70 @@ function getCategory() {
             }
             var value = getQueryString("category");
             if (value !== "") {
-                $("#Select_Category option[value=" + value + "]").attr("selected","true");
+                var id = "";
+                for (var i = 0; i < value.length; ++i) {
+                    if (value[i] === '_') {
+                        break;
+                    }
+                    id += value[i];
+                }
+                $("#Select_Category option[value=" + id + "]").attr("selected","true");
+                getCategorySub();
             }
         },
         error : function(a, b, c) {
             alert("Categroy Error: " + a + " / " + b + " / " + c);
         }
     });
+}
+
+function getCategorySub() {
+    if ($("#Select_Category").val() === "0") {
+        $("#Select_Category_Sub").prop("disabled", true);
+        $("#Select_Category_Sub option[value=0]").attr("selected", "true");
+    }
+    else
+    {
+        $("#Select_Category_Sub").prop("disabled", false);
+        $.ajax({
+            url : SERVER_URL,
+            type : "GET", 
+            data : {
+                method : "get.category.list",
+                parent : $("#Select_Category").val()
+            },
+            dataType : "json",
+            timeout : 10000,
+            success : function(json) {
+                $("#Select_Category_Sub").html("<option value = 0>不限制</option>");
+                for (var i = 0; i < json.length; ++i) {
+                    $("#Select_Category_Sub").append("<option value = " + json[i].id + ">" + json[i].name + "</option>");
+                }
+                var value = getQueryString("category");
+                if (value !== "") {
+                    var id = "";
+                    var i;
+                    for (i = 0; i < value.length; ++i) {
+                        if (value[i] === '_') {
+                            break;
+                        }
+                    }
+                    for (++i; i < value.length; ++i) {
+                        id += value[i];
+                    }
+                    if (id === "") {
+                        id = "0";
+                    }
+                    $("#Select_Category_Sub option[value=" + id + "]").attr("selected","true");
+                } else {
+                    $("#Select_Category_Sub option[value=0]").attr("selected", "true");
+                }
+            },
+            error : function(a, b, c) {
+                alert("Sub Categroy Error: " + a + " / " + b + " / " + c);
+            }
+        });
+    }
 }
 
 function uploadImage(file) {
@@ -452,5 +496,8 @@ $(function() {
     });
     $("#Button_Sketch").click(function() {
         window.location = "wpaint/wpaint.html";
+    });
+    $("#Select_Category").change(function() {
+        getCategorySub();
     });
 });
