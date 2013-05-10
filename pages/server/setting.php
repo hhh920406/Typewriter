@@ -29,7 +29,7 @@ function strSplit($str) {
     return $result;
 }
 
-define("URL", "http://localhost/");
+define("URL", "http://202.118.98.163/");
 define("TEMP_URL", URL . "ZShopping_web/temp/search/");
 define("TEMP_PATH", "D:/Apache2.2/htdocs/ZShopping_web/temp/search/");
 define("DATA_URL", URL . "ZShopping_web/data/");

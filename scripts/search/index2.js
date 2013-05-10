@@ -23,7 +23,7 @@ function getQueryString(name){
  * 获取查询图片的地址并显示。
  * @param {string} token 传入的令牌名。
  */
-function getOriginImageUrl(token) {
+function getOriginImageUrl(token, id) {
     $.ajax({
         url : SERVER_URL,
         type : "GET", 
@@ -34,7 +34,7 @@ function getOriginImageUrl(token) {
         dataType : "json",
         timeout : 3000,
         success : function(json) {
-            $("#Img_Origin").prop("src", json);
+            $("#" + id).prop("src", json);
         }
     });
 }
@@ -411,6 +411,54 @@ function uploadWithFile() {
     uploadImage(file);
 }
 
+
+function reloadHistory(token) {
+    var condition = getCondition();
+    window.location = "http://" + window.location.host + window.location.pathname + "?token=" + token + "&" + condition;
+}
+
+function showHistory() {
+    if (getCookie("history_num") !== "") {
+        var historyNum = parseInt(getCookie("history_num"));
+        for (var i = 0; i < historyNum; ++i) {
+            var token = getCookie("history_" + i);
+            $(".historyDiv").append(
+                "<div class = historyItem onclick = reloadHistory('" + token + "') >" +
+                    "<img id = history_img_" + i + " src = " + getOriginImageUrl(token, "history_img_" + i) + " >" + 
+                    "</img>" + 
+                "</div>");
+        }
+    }
+}
+
+function addHistory() {
+    var token = getQueryString("token");
+    if (token === "") {
+        return;
+    }
+    var historyNum = 0;
+    if (getCookie("history_num") === "") {
+        historyNum = 1;
+    } else {
+        historyNum = parseInt(getCookie("history_num"));
+    }
+    for (var i = 0; i < historyNum; ++i) {
+        if (token === getCookie("history_" + i)) {
+            return;
+        }
+    }
+    if (historyNum >= 20) {
+        historyNum = 20;
+    } else {
+        historyNum = historyNum + 1;
+    }
+    setCookie("history_num", historyNum);
+    for (var i = historyNum - 1; i > 0; --i) {
+        setCookie("history_" + i, getCookie("history_" + (i - 1)));
+    }
+    setCookie("history_0", token);
+}
+
 $(function() {
     // 详细配置的显示和隐藏。
     $("#Link_Config").click(function() {
@@ -442,12 +490,14 @@ $(function() {
         $("#Result_Number").val(0);
         var token = getQueryString("token");
         if (token !== "") {
-            getOriginImageUrl(token);
+            getOriginImageUrl(token, "Img_Origin");
             getResult(token);
+            addHistory();
         }
         loadCondition();
         getSeller();
         getCategory();
+        showHistory();
     });
     // 页面滚动到低端后获取搜索结果。
     $(window).bind("scroll", function(){
@@ -493,9 +543,6 @@ $(function() {
     });
     $("#File_Upload").change(function() {
         uploadWithFile();
-    });
-    $("#Button_Sketch").click(function() {
-        window.location = "wpaint/wpaint.html";
     });
     $("#Select_Category").change(function() {
         getCategorySub();

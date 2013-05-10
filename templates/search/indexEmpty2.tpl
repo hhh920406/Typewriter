@@ -15,6 +15,7 @@
         <link rel = stylesheet href = ./wpaint/inc/wColorPicker.css />
         <link rel = stylesheet href = ./wpaint/wPaint.css />
         <!-- wPaint -->
+        <script src = ../../scripts/util/cookie.js></script>
         <script src = ../../scripts/search/setting.js ></script>
         <script src = ../../scripts/search/index2.js ></script>
     </head>

@@ -6,36 +6,48 @@ html, body {
 .menuLineBack {
     width: 100%;
     height: 100px;
-    background-color: black;
+    background-color: darkgreen;
 }
 
 .menuLine {
     width: 100%;
-    height: 84px;
+    min-width: 400px;
+    height: 90px;
     background-color: white;
 }
 
 .menuLine a {
     display: inline-block;
-    width: 116px;
-    height: 64px;
-    line-height: 70px;
+    width: 16%;
+    height: 90px;
+    line-height: 90px;
     text-align: center;
     text-decoration: none;
-    border-radius: 20px 20px 0 0;
-    margin: 0px;
-    padding: 10px;
-    font-size: 20px;
-    background: rgb(220, 220, 220);
-}
-
-.menuLine a.selected {
-    background-color: black;
+    font-size: 24px;
+    color: black;
+    background: rgb(245, 245, 245);
 }
 
 .menuLine a img {
-    width: 64px;
-    height: 64px;
+    max-width: 30px;
+    max-height: 30px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.menuLine a .small {
+    max-width: 36px;
+    max-height: 36px;
+}
+
+.menuLine a .logo {
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.menuLine a.selected {
+    color: white;
+    background-color: darkgreen;
 }
 
 .searchDiv {
@@ -44,17 +56,10 @@ html, body {
     overflow: hidden;
 }
 
-.searchDiv a {
-    display: inline-block;
-    width: 200px;
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-    text-decoration: none;
-    color: black;
-    background: rgb(200, 200, 200);
-    margin: 10px;
-    border-radius: 0 10px 0 10px;
+.searchDiv img {
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
 }
 
 .searchDiv input[name=upload] {
@@ -62,20 +67,90 @@ html, body {
 }
 
 #Div_Upload_Click {
-    width: 425px;
-    height: 263px;
-    line-height: 263px;
-    margin: 10px;
+    width: 100%;
+    height: 250px;
+    line-height: 250px;
+    margin-top: 5px;
     text-align: center;
     cursor: pointer;
-    background: rgb(200, 200, 200);
+    color: white;
+    background: steelblue;
     font-size: 30px;
+}
+
+.paintDiv {
+    width: 100%;
+    overflow: hidden;
+    display: none;
+}
+
+.paintDiv .buttonDiv {
+    display: inline-block;
+    width: 49%;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    color: white;
+    margin: 2px;
+    font-size: 24px;
+    background: #9C2F2F;
+    cursor: pointer;
+}
+
+.paintDiv .buttonDiv img {
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
 }
 
 .settingDiv {
     width: 100%;
     overflow: hidden;
     display: none;
+    margin: 10px;
+    font-size: 24px;
+    line-height: 120%;
+}
+
+.settingDiv input[type=text] {
+    font-size: 24px;
+    height: 60px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.settingDiv input[type=checkbox] {
+    width: 80px;
+    height: 80px;
+}
+
+.settingDiv select {
+    width: 95%;
+    height: 80px;
+    line-height: 80px;
+    font-size: 24px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.settingDiv .buttonDiv {
+    width: 100%;
+    border: 0;
+    color: white;
+    background: #7E354D;
+    height: 150px;
+    line-height: 150px;
+    text-align: center;
+    font-size: 24px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+
+.settingDiv .buttonDiv img {
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
 }
 
 .resultDiv {
@@ -84,8 +159,91 @@ html, body {
     display: none;
 }
 
+.resultDiv {
+    width: 100%;
+    padding-top: 10px;
+    overflow: hidden;
+}
+
+.resultColumnDiv {
+    display: inline-block;
+    width: 200px;
+    margin: 5px;
+    vertical-align: top;
+    overflow: hidden;
+}
+
+.resultItemDiv {
+    overflow: hidden;
+    display: none;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding: 15px;
+    font-size: 14px;
+    background-color: rgb(240, 240, 240);
+    border-radius: 10px;
+    opacity: 0.9;
+}
+
+.resultItemDiv:hover {
+    padding: 15px 5px 15px 5px;
+    font-size: 16px;
+    background-color: rgb(200, 200, 200);
+}
+
+.resultItemDiv img {
+    width: 170px;
+    min-height: 20px;
+    cursor: pointer;
+}
+
+.resultItemDiv:hover img {
+    width: 190px;
+}
+
+.resultItemTitle {
+}
+
+.resultItemPrice {
+    padding: 3px;
+    font-size: 20px;
+    font-weight: bold;
+    color: darkred;
+}
+
+#Div_Show_Back {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100000px;
+    height: 100000px;
+    background-color: black;
+    opacity: 0.8;
+}
+
+#Div_Show_Image {
+    display: none;
+    position: fixed;
+}
+
 .historyDiv {
     width: 100%;
     overflow: hidden;
     display: none;
+}
+
+.historyItem {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    margin: 4px;
+    cursor: pointer;
+}
+
+.historyItem img {
+    width: 150px;
+    height: 150px;
+    border: solid 1px rgb(220, 220, 220);
+    border-radius: 25px;
 }

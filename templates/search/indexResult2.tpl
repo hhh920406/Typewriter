@@ -15,6 +15,7 @@
         <link rel = stylesheet href = ./wpaint/inc/wColorPicker.css />
         <link rel = stylesheet href = ./wpaint/wPaint.css />
         <!-- wPaint -->
+        <script src = ../../scripts/util/cookie.js></script>
         <script src = ../../scripts/search/setting.js ></script>
         <script src = ../../scripts/search/index2.js ></script>
     </head>
@@ -59,54 +60,60 @@
             </div>
         </div>
         <div class = resultDiv>
-            <div class = searchConfigDetailDiv>
-                <div>
-                    <div>
-                        原始图像：
-                    </div>
-                    <div class = originImageDiv>
-                        <img id = Img_Origin></img>
-                    </div>
+            <div class = infoDiv>
+                <div class = searchConfigDetailDiv>
                     <div>
                         <div>
-                            搜索设置
+                            原始图像：
+                        </div>
+                        <div class = originImageDiv>
+                            <img id = Img_Origin ></img>
+                        </div>
+                        <div>
+                            <div>
+                                搜索设置
+                            </div>
+                            <hr/>
+                            <div>价格范围：</div>
+                            <input id = Input_Price_Start type = text></input>
+                            -
+                            <input id = Input_Price_End type = text></input>
+                            <span>元</span>
+                        </div>
+                        <div>
+                            <span>商家：</span>
+                            <select id = Select_Seller style = max-width:200px>
+                                <option value = 0>不限制</option>
+                            </select>
+                        </div>
+                        <div>
+                            <span>类别：</span>
+                            <select id = Select_Category style = max-width:200px>
+                                <option value = 0>不限制</option>
+                            </select>
+                            <select id = Select_Category_Sub style = max-width:200px disabled = true >
+                                <option value = 0>不限制</option>
+                            </select>
+                        </div>
+                        <div>
+                            <div>
+                                关注内容：
+                            </div>
+                            <input id = CheckBox_Shape type = checkbox checked = checked>形状</input>
+                            <input id = CheckBox_Color type = checkbox>颜色</input>
+                            <input id = CheckBox_Stripe type = checkbox>轮廓</input>
                         </div>
                         <hr/>
-                        <div>价格范围：</div>
-                        <input id = Input_Price_Start type = text></input>
-                        -
-                        <input id = Input_Price_End type = text></input>
-                        <span>元</span>
+                        <input id = Button_Search type = button value = 搜索></input>
                     </div>
-                    <div>
-                        <span>商家：</span>
-                        <select id = Select_Seller style = max-width:200px>
-                            <option value = 0>不限制</option>
-                        </select>
-                    </div>
-                    <div>
-                        <span>类别：</span>
-                        <select id = Select_Category style = max-width:200px>
-                            <option value = 0>不限制</option>
-                        </select>
-                        <select id = Select_Category_Sub style = max-width:200px disabled = true >
-                            <option value = 0>不限制</option>
-                        </select>
-                    </div>
-                    <div>
-                        <div>
-                            关注内容：
-                        </div>
-                        <input id = CheckBox_Shape type = checkbox checked = checked>形状</input>
-                        <input id = CheckBox_Color type = checkbox>颜色</input>
-                        <input id = CheckBox_Stripe type = checkbox>轮廓</input>
-                    </div>
-                    <hr/>
-                    <input id = Button_Search type = button value = 搜索></input>
+                </div>
+                <div class = historyDiv >
+                    搜索历史：<br/>
                 </div>
             </div>
             <div id = Div_Result_Column_0 class = resultColumnDiv></div>
         </div>
+        
         <div id = Div_Show_Back></div>
         <div id = Div_Show_Image>
             <img id = Img_Show></img>
