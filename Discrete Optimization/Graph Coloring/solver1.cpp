@@ -1,3 +1,7 @@
+/**
+ * Binary Search and Depth-first Search.
+ * Solved Problem 1.
+ */
 #include <cstdio>
 #include <cstring>
 #include <algorithm>

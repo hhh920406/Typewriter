@@ -1,3 +1,7 @@
+/**
+ * Depth-first Search.
+ * Solved Problem 3.
+ */
 #include <cstdio>
 #include <cstring>
 #include <algorithm>
