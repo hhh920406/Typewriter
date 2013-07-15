@@ -14,7 +14,6 @@ bool path[MAXN];
 
 int main()
 {
-    freopen("ks_400_0__", "r", stdin);
     scanf("%d%d", &itemNum, &capacity);
     for (int i = 0; i < itemNum; ++i)
     {
@@ -22,10 +21,6 @@ int main()
     }
     for (int i = 0; i < itemNum; ++i)
     {
-        if ((i + 1) % 10 == 0)
-        {
-            printf("%d\n", i);
-        }
         int cur = i & 1;
         int pre = cur ^ 1;
         for (int j = capacity; j >= 0; --j)
@@ -58,7 +53,6 @@ int main()
     {
         path[take[lastWeight][i]] = true;
     }
-    freopen("ks_400_0", "w", stdout);
     printf("%d 1\n", maxValue);
     for (int i = 0; i < itemNum; ++i)
     {
