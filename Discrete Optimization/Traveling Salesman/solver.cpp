@@ -24,10 +24,20 @@ struct Node
 vector<Node> node;
 
 vector<int> next;
+vector<int> prev;
 double totalLength;
 double minimumLength;
 
 char *outputFileName;
+
+inline int getNext(int x, int p)
+{
+    if (prev[x] == p)
+    {
+        return next[x];
+    }
+    return prev[x];
+}
 
 inline double dist(double x, double y)
 {
@@ -89,11 +99,16 @@ void createInitPath()
     for (int i = 0; i < n; ++i)
     {
         next.push_back(0);
+        prev.push_back(0);
     }
+    totalLength = 0.0;
     for (int i = 0; i < n; ++i)
     {
+        totalLength += dist(node[path[i]], node[path[(i + 1) % n]]);
         next[path[i]] = path[(i + 1) % n];
+        prev[path[i]] = path[(i + n - 1) % n];
     }
+    minimumLength = totalLength;
     #ifdef DEBUG_INIT
     printf("Init Length: %lf\n", minimumLength);
     for (int i = 0; i < n; ++i)
@@ -110,10 +125,13 @@ void savePath()
     FILE *file = fopen(outputFileName, "w");
     fprintf(file, "%lf 0\n", minimumLength);
     int cur = 0;
+    int p = prev[cur];
     for (int i = 0; i < n; ++i)
     {
         fprintf(file, "%d ", cur);
-        cur = next[cur];
+        int temp = cur;
+        cur = getNext(cur, p);
+        p = temp;
     }
     fclose(file);
 }
@@ -122,6 +140,7 @@ void savePath()
 bool isNextValid()
 {
     int cur = 0;
+    int p = prev[0];
     vector<bool> visit(n);
     for (int i = 0; i < n; ++i)
     {
@@ -134,7 +153,9 @@ bool isNextValid()
             return false;
         }
         visit[cur] = true;
-        cur = next[cur];
+        int temp = cur;
+        cur = getNext(cur, p);
+        p = temp;
     }
     return cur == 0;
 }
@@ -142,94 +163,54 @@ bool isNextValid()
 
 void opt2()
 {
-    int iter = 0;
-    for (int t1 = 0; ; t1 = (t1 + 1) % n)
+    vector<int> nextCopy;
+    vector<int> prevCopy;
+    nextCopy.assign(next.begin(), next.end());
+    prevCopy.assign(prev.begin(), prev.end());
+    while (true)
     {
-        for (int t3 = t1 + 2; t3 < n; ++t3)
+        printf("2 Opt Loop\n");
+        for (int t1 = 0; t1 < n; ++t1)
         {
-            if (++iter % 1000 == 0)
+            for (int t3 = 0; t3 < n; ++t3)
             {
-                //printf("Iter %d %lf\n", iter, minimumLength);
-            }
-            int t2 = next[t1];
-            int t4 = next[t3];
-            if (dist(node[t1], node[t3]) + dist(node[t2], node[t4]) <
-                dist(node[t1], node[t2]) + dist(node[t3], node[t4]))
-            {
-                next[t1] = t3;
-                int prev = t4;
-                for (int i = t2; i != t4;)
-                {
-                    int temp = next[i];
-                    next[i] = prev;
-                    prev = i;
-                    i = temp;
-                }
-            }
-            #ifdef DEBUG
-            if (!isNextValid())
-            {
-                printf("The next array is broken.\n");
-                exit(0);
-            }
-            #endif
-            totalLength = 0;
-            for (int i = 0; i < n; ++i)
-            {
-                int u = i;
-                int v = next[i];
-                totalLength += dist(node[u], node[v]);
-            }
-            if (totalLength < minimumLength)
-            {
-                minimumLength = totalLength;
-                savePath();
-            }
-        }
-    }
-}
-
-void opt3()
-{
-    int iter = 0;
-    for (int t1 = 0; ; t1 = (t1 + 1) % n)
-    {
-        int t5 = next[t1];
-        for (int ii = 2; ii < n; ++ii)
-        {
-            t5 = next[t5];
-            int t3 = next[t5];
-            for (int jj = 6; jj < n; ++jj)
-            {
-                t3 = next[t3];
-                if (++iter % 1000 == 0)
-                {
-                    printf("Iter %d %lf\n", iter, minimumLength);
-                }
                 int t2 = next[t1];
                 int t4 = next[t3];
-                int t6 = next[t5];
-                if (dist(node[t1], node[t3]) + dist(node[t6], node[t2]) + dist(node[t5], node[t4]) <
-                    dist(node[t1], node[t2]) + dist(node[t3], node[t4]) + dist(node[t5], node[t6]))
+                if (t1 == t3 || t1 == t4 || t2 == t3 || t2 == t4)
+                {
+                    continue;
+                }
+                if (dist(node[t1], node[t3]) + dist(node[t2], node[t4]) <
+                    dist(node[t1], node[t2]) + dist(node[t3], node[t4]))
                 {
                     next[t1] = t3;
-                    next[t5] = t4;
-                    int prev = t2;
-                    for (int i = t6; i != t4;)
+                    prev[t3] = t1;
+                    if (prev[t2] == t1)
                     {
-                        int temp = next[i];
-                        next[i] = prev;
-                        prev = i;
-                        i = temp;
+                        prev[t2] = t4;
                     }
+                    else
+                    {
+                        next[t2] = t4;
+                    }
+                    if (prev[t4] == t3)
+                    {
+                        prev[t4] = t2;
+                    }
+                    else
+                    {
+                        next[t4] = t2;
+                    }
+                    #ifdef DEBUG
+                    if (!isNextValid())
+                    {
+                        //printf("The next array is broken.\n");
+                        next.assign(nextCopy.begin(), nextCopy.end());
+                        prev.assign(prevCopy.begin(), prevCopy.end());
+                        continue;
+                    }
+                    #endif
                 }
-                #ifdef DEBUG
-                if (!isNextValid())
-                {
-                    printf("The next array is broken.\n");
-                    exit(0);
-                }
-                #endif
                 totalLength = 0;
                 for (int i = 0; i < n; ++i)
                 {
@@ -239,8 +220,113 @@ void opt3()
                 }
                 if (totalLength < minimumLength)
                 {
+                    nextCopy.assign(next.begin(), next.end());
+                    prevCopy.assign(prev.begin(), prev.end());
                     minimumLength = totalLength;
                     savePath();
+                }
+            }
+        }
+    }
+}
+
+bool isConnect(int t1, int t3, int t5)
+{
+    vector<int> test;
+    test.push_back(t1);
+    test.push_back(t3);
+    test.push_back(t5);
+    test.push_back(next[t1]);
+    test.push_back(next[t3]);
+    test.push_back(next[t5]);
+    test.push_back(prev[t1]);
+    test.push_back(prev[t3]);
+    test.push_back(prev[t5]);
+    test.push_back(getNext(next[t1], t1));
+    test.push_back(getNext(next[t3], t3));
+    test.push_back(getNext(next[t5], t5));
+    sort(test.begin(), test.end());
+    for (unsigned int i = 1; i < test.size(); ++i)
+    {
+        if (test[i] == test[i - 1])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+void opt3()
+{
+    vector<int> nextCopy;
+    vector<int> prevCopy;
+    nextCopy.assign(next.begin(), next.end());
+    prevCopy.assign(prev.begin(), prev.end());
+    while (true)
+    {
+        printf("3 Opt Loop\n");
+        for (int t1 = 0; t1 < n; ++t1)
+        {
+            for (int t3 = 0; t3 < n; ++t3)
+            {
+                for (int t5 = 0; t5 < n; ++t5)
+                {
+                    if (isConnect(t1, t3, t5))
+                    {
+                        continue;
+                    }
+                    int t2 = next[t1];
+                    int t4 = next[t3];
+                    int t6 = next[t5];
+                    if (dist(node[t1], node[t3]) + dist(node[t6], node[t2]) + dist(node[t5], node[t4]) <
+                        dist(node[t1], node[t2]) + dist(node[t3], node[t4]) + dist(node[t5], node[t6]))
+                    {
+                        next[t1] = t6;
+                        if (prev[t6] == t5)
+                        {
+                            prev[t6] = t1;
+                        }
+                        else
+                        {
+                            next[t6] = t1;
+                        }
+                        next[t3] = t2;
+                        if (prev[t2] == t1)
+                        {
+                            prev[t2] = t3;
+                        }
+                        else
+                        {
+                            next[t2] = t3;
+                        }
+                        next[t5] = t4;
+                        if (prev[t4] == t3)
+                        {
+                            prev[t4] = t5;
+                        }
+                        else
+                        {
+                            next[t4] = t5;
+                        }
+                        #ifdef DEBUG
+                        if (!isNextValid())
+                        {
+                            //printf("The next array is broken.\n");
+                            next.assign(nextCopy.begin(), nextCopy.end());
+                            prev.assign(prevCopy.begin(), prevCopy.end());
+                            continue;
+                        }
+                        #endif
+                    }
+                    totalLength += dist(node[t1], node[t3]) + dist(node[t6], node[t2]) + dist(node[t5], node[t4]) -
+                                    dist(node[t1], node[t2]) + dist(node[t3], node[t4]) + dist(node[t5], node[t6]);
+                    if (totalLength < minimumLength)
+                    {
+                        nextCopy.assign(next.begin(), next.end());
+                        prevCopy.assign(prev.begin(), prev.end());
+                        minimumLength = totalLength;
+                        savePath();
+                    }
                 }
             }
         }
@@ -340,9 +426,10 @@ int main(int argc, char *argv[])
             node.push_back(newNode);
         }
         createInitPath();
-        opt3();
-        opt2();
+        savePath();
         optK();
+        opt2();
+        opt3();
     }
     return 0;
 }
