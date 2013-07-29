@@ -27,21 +27,14 @@ gf2_lc_rep_3 = [1, 0, 0, 1, 0, 0, 0, 0]
 gf2_lc_rep_4 = [1, 0, 1, 0, 0, 0, 0, 0]
 
 ## Problem 5
-# For each part, please provide your solution as a list of the coefficients for
-# the generators of V.
-
-lin_dep_R_1 = [...]
-lin_dep_R_2 = [...]
-lin_dep_R_3 = [...]
-
-
+lin_dep_R_1 = [-2, 1, 1]
+lin_dep_R_2 = [-28, 7, -4]
+lin_dep_R_3 = [-3, 0, 0, 10, 30]
 
 ## Problem 6
-# Please record your solution as a list of coefficients
-
-linear_dep_R_1 = [...]
-linear_dep_R_2 = [...]
-linear_dep_R_3 = [...]
+linear_dep_R_1 = [-1, 1, -3]
+linear_dep_R_2 = [2 * pi, 1, pi * sqrt(2) / 2]
+linear_dep_R_3 = [1, 1, 1, 1, 1]
 
 
 
