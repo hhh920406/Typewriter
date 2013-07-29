@@ -1,9 +1,8 @@
 from GF2 import one
 from math import sqrt, pi
-from matutil import *
+from matutil import coldict2mat
 from solver import solve
 from vec import Vec, scalar_mul
-from vecutil import *
 
 ## Problem 1
 rep_1 = [1, 1, 0]
@@ -76,7 +75,7 @@ def rep2vec(u, veclist):
 
 ## Problem 14
 def vec2rep(veclist, v):
-    return Vec({i for i in range(len(veclist))}, {i : (veclist[i] * v) for i in range(len(veclist))})
+    return Vec({i for i in range(len(veclist))}, {i : veclist[i] * v for i in range(len(veclist))})
 
 ## Problem 15
 def is_superfluous(L, i):
