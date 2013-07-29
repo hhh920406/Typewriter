@@ -75,63 +75,19 @@ def rep2vec(u, veclist):
 
 ## Problem 14
 def vec2rep(veclist, v):
-    return Vec({i for i in range(len(veclist))}, {i : veclist[i] * v for i in range(len(veclist))})
+    return solve(coldict2mat({i: veclist[i] for i in range(len(veclist))}), v)
 
 ## Problem 15
 def is_superfluous(L, i):
-    '''
-    Input:
-        - L: list of vectors as instances of Vec class
-        - i: integer in range(len(L))
-    Output:
-        True if the span of the vectors of L is the same
-        as the span of the vectors of L, excluding L[i].
-
-        False otherwise.
-    Examples:
-        >>> a0 = Vec({'a','b','c','d'}, {'a':1})
-        >>> a1 = Vec({'a','b','c','d'}, {'b':1})
-        >>> a2 = Vec({'a','b','c','d'}, {'c':1})
-        >>> a3 = Vec({'a','b','c','d'}, {'a':1,'c':3})
-        >>> is_superfluous(L, 3)
-        True
-        >>> is_superfluous([a0,a1,a2,a3], 3)
-        True
-        >>> is_superfluous([a0,a1,a2,a3], 0)
-        True
-        >>> is_superfluous([a0,a1,a2,a3], 1)
-        False
-    '''
-    pass
-
-
+    A = coldict2mat({j: L[j] for j in range(len(L)) if i != j})
+    b = L[i]
+    u = solve(A, b)
+    residual = b - A * u
+    return residual * residual < 1e-14
 
 ## Problem 16
 def is_independent(L):
-    '''
-    input: a list L of vectors (using vec class)
-    output: True if the vectors form a linearly independent list.
-    >>> vlist = [Vec({0, 1, 2},{0: 1, 1: 0, 2: 0}), Vec({0, 1, 2},{0: 0, 1: 1, 2: 0}), Vec({0, 1, 2},{0: 0, 1: 0, 2: 1}), Vec({0, 1, 2},{0: 1, 1: 1, 2: 1}), Vec({0, 1, 2},{0: 0, 1: 1, 2: 1}), Vec({0, 1, 2},{0: 1, 1: 1, 2: 0})]
-    >>> is_independent(vlist)
-    False
-    >>> is_independent(vlist[:3])
-    True
-    >>> is_independent(vlist[:2])
-    True
-    >>> is_independent(vlist[1:4])
-    True
-    >>> is_independent(vlist[2:5])
-    True
-    >>> is_independent(vlist[2:6])
-    False
-    >>> is_independent(vlist[1:3])
-    True
-    >>> is_independent(vlist[5:])
-    True
-    '''
-    pass
-
-
+    return all(not is_superfluous(L, i) for i in range(len(L)))
 
 ## Problem 17
 def superset_basis(S, L):
