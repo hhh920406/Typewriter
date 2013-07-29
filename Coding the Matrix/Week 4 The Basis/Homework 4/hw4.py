@@ -1,8 +1,9 @@
 from GF2 import one
 from math import sqrt, pi
-from matutil import coldict2mat
+from matutil import *
 from solver import solve
 from vec import Vec, scalar_mul
+from vecutil import *
 
 ## Problem 1
 rep_1 = [1, 1, 0]
@@ -75,7 +76,23 @@ def rep2vec(u, veclist):
 
 ## Problem 14
 def vec2rep(veclist, v):
-    return Vec({i for i in range(len(veclist))}, {i : veclist[i] * v for i in range(len(veclist))})
+    return Vec({i for i in range(len(veclist))}, {i : (veclist[i] * v) for i in range(len(veclist))})
+    '''
+    Input:
+        - veclist: a list of vectors (as instances of your Vec class)
+        - v: a vector (as Vec instance) with domain set(range(len(veclist)))
+             with v in the span of set(veclist).
+    Output:
+        Vec instance u whose coordinate representation w.r.t. veclist is v
+    Example:
+        >>> a0 = Vec({'a','b','c','d'}, {'a':1})
+        >>> a1 = Vec({'a','b','c','d'}, {'b':1})
+        >>> a2 = Vec({'a','b','c','d'}, {'c':1})
+        >>> vec2rep([a0,a1,a2], Vec({'a','b','c','d'}, {'a':3, 'c':-2})) == Vec({0, 1, 2},{0: 3.0, 1: 0.0, 2: -2.0})
+        True
+    '''
+
+
 
 ## Problem 15
 def is_superfluous(L, i):
