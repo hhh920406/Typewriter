@@ -2,7 +2,7 @@ from GF2 import one
 from math import sqrt, pi
 from matutil import coldict2mat
 from solver import solve
-from vec import Vec
+from vec import Vec, scalar_mul
 
 ## Problem 1
 rep_1 = [1, 1, 0]
@@ -59,63 +59,23 @@ sum_to_zero_2 = [0, 1, 0, 1, 1, 0, 0]
 sum_to_zero_3 = [1, 0, 1, 1, 1]
 sum_to_zero_4 = [1, 1, 1, 1, 1, 0, 0]
 
-
-
 ## Problem 11
-## Please express your answer a list of ints, such as [1,0,0,0,0]
-
-exchange_1 = [...]
-exchange_2 = [...]
-exchange_3 = [...]
-
+exchange_1 = [0, 0, 1, 0, 0]
+exchange_2 = [0, 0, 0, 1, 0]
+exchange_3 = [0, 0, 0, 0, 1]
 
 ## Problem 12
-# Please give the name of the vector you want to replace as a string (e.g. 'v1')
-
-replace_1 = ...
-replace_2 = ...
-replace_3 = ...
-
-
+replace_1 = [1, 0, 0, 1, 0, 0, 0, 0]
+replace_2 = [1, 1, 0, 0, 0, 0, 0, 0]
+replace_3 = [0, 1, 0, 0, 1, 0, 0, 0]
 
 ## Problem 13
 def rep2vec(u, veclist):
-    '''
-    Input:
-        - u: a vector as an instance of your Vec class with domain set(range(len(veclist)))
-        - veclist: a list of n vectors (as Vec instances)
-    Output:
-        vector v (as Vec instance) whose coordinate representation is u
-    Example:
-        >>> a0 = Vec({'a','b','c','d'}, {'a':1})
-        >>> a1 = Vec({'a','b','c','d'}, {'b':1})
-        >>> a2 = Vec({'a','b','c','d'}, {'c':1})
-        >>> rep2vec(Vec({0,1,2}, {0:2, 1:4, 2:6}), [a0,a1,a2]) == Vec({'a', 'c', 'b', 'd'},{'a': 2, 'c': 6, 'b': 4, 'd': 0})
-        True
-    '''
-    pass
-
-
+    return sum([scalar_mul(veclist[i], u[i]) for i in range(len(veclist))])
 
 ## Problem 14
 def vec2rep(veclist, v):
-    '''
-    Input:
-        - veclist: a list of vectors (as instances of your Vec class)
-        - v: a vector (as Vec instance) with domain set(range(len(veclist)))
-             with v in the span of set(veclist).
-    Output:
-        Vec instance u whose coordinate representation w.r.t. veclist is v
-    Example:
-        >>> a0 = Vec({'a','b','c','d'}, {'a':1})
-        >>> a1 = Vec({'a','b','c','d'}, {'b':1})
-        >>> a2 = Vec({'a','b','c','d'}, {'c':1})
-        >>> vec2rep([a0,a1,a2], Vec({'a','b','c','d'}, {'a':3, 'c':-2})) == Vec({0, 1, 2},{0: 3.0, 1: 0.0, 2: -2.0})
-        True
-    '''
-    pass
-
-
+    return Vec({i for i in range(len(veclist))}, {i : veclist[i] * v for i in range(len(veclist))})
 
 ## Problem 15
 def is_superfluous(L, i):
