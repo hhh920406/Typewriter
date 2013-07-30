@@ -93,32 +93,17 @@ def is_independent(L):
 ## Problem 17
 def superset_basis(S, L):
     T = []
+    for i in range(len(S)):
+        T.append(S[i])
+        if len(T) > 1:
+            if is_superfluous(T, len(T) - 1):
+                T.pop()
     for i in range(len(L)):
-        S.append(L[i])
         T.append(L[i])
-        if len(S) > 1:
-            if is_superfluous(S, len(S) - 1):
-                S.remove(L[i])
-                T.remove(L[i])
+        if len(T) > 1:
+            if is_superfluous(T, len(T) - 1):
+                T.pop()
     return T
-    '''
-    Input: 
-        - S: linearly independent list of Vec instances
-        - L: list of Vec instances such that every vector in S is in Span(L)
-    Output:
-        Linearly independent list T containing all vectors (as instances of Vec)
-        such that the span of T is the span of L (i.e. T is a basis for the span
-        of L).
-    Example:
-a0 = Vec({'a','b','c','d'}, {'a':1})
-a1 = Vec({'a','b','c','d'}, {'b':1})
-a2 = Vec({'a','b','c','d'}, {'c':1})
-a3 = Vec({'a','b','c','d'}, {'a':1,'c':3})
-superset_basis([a0, a3], [a0, a1, a2]) == [Vec({'a', 'c', 'b', 'd'},{'a': 1}), Vec({'a', 'c', 'b', 'd'},{'b':1}),Vec({'a', 'c', 'b', 'd'},{'c': 1})]
-        True
-    '''
-
-
 
 ## Problem 18
 def exchange(S, A, z):
