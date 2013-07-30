@@ -1,4 +1,7 @@
-from mat import *
+from vec import Vec
+from vecutil import *
+from mat import Mat
+from matutil import *
 import math
 
 ## Task 1
@@ -29,8 +32,8 @@ def rotation(angle):
     return m
 
 ## Task 5
-def rotate_about(angle,x,y):
-    return translation(-x, -y) * rotation(angle) * translation(x, y)
+def rotate_about(x,y,angle):
+    return translation(x, y) * rotation(angle) * translation(-x, -y)
 
 ## Task 6
 def reflect_y():
@@ -62,10 +65,7 @@ def grayscale():
 
 ## Task 10
 def reflect_about(p1,p2):
-    '''
-    Input: 2 points that define a line to reflect about.
-    Output:  Corresponding 3x3 reflect about matrix.
-    '''
-    pass
+    theta = math(p2.y - p1.y, p2.x - p1.x)
+    m = rotate_about(p1.x, p1.y, -theta) * translation(0, -p1.y) * reflect_x() * translation(0, p1.y) * rotate_about(p1.x, p1.y, theta)
 
 
