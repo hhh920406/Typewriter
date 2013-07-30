@@ -3,7 +3,7 @@ from math import sqrt, pi
 from matutil import *
 from solver import solve
 from vec import Vec, scalar_mul
-from vecutil import *
+from vecutil import list2vec
 
 ## Problem 1
 rep_1 = [1, 1, 0]
@@ -17,9 +17,9 @@ lin_comb_coefficients_3 = [0.5, -5.5, 4]
 lin_comb_coefficients_4 = [1, -2, 1]
 
 ## Problem 3
-gf2_rep_1 = [1, 0, 1, 0]
-gf2_rep_2 = [1, 0, 0, 1]
-gf2_rep_3 = [1, 1, 0, 1]
+gf2_rep_1 = [one, 0, one, 0]
+gf2_rep_2 = [one, 0, 0, one]
+gf2_rep_3 = [one, one, 0, one]
 
 ## Problem 4
 gf2_lc_rep_1 = [0, 0, 0, 0, 1, 1, 0, 0]
@@ -55,10 +55,10 @@ zero_comb_2 = [0, 1, 1, 1]
 zero_comb_3 = [1, 1, 0, 0, 1]
 
 ## Problem 10
-sum_to_zero_1 = [0, 1, 0, 1, 1]
-sum_to_zero_2 = [0, 1, 0, 1, 1, 0, 0]
-sum_to_zero_3 = [1, 0, 1, 1, 1]
-sum_to_zero_4 = [1, 1, 1, 1, 1, 0, 0]
+sum_to_zero_1 = [0, one, 0, one, one]
+sum_to_zero_2 = [0, one, 0, one, one, 0, 0]
+sum_to_zero_3 = [one, 0, one, one, one]
+sum_to_zero_4 = [one, one, one, one, one, 0, 0]
 
 ## Problem 11
 exchange_1 = [0, 0, 1, 0, 0]
@@ -66,9 +66,9 @@ exchange_2 = [0, 0, 0, 1, 0]
 exchange_3 = [0, 0, 0, 0, 1]
 
 ## Problem 12
-replace_1 = [1, 0, 0, 1, 0, 0, 0, 0]
-replace_2 = [1, 1, 0, 0, 0, 0, 0, 0]
-replace_3 = [0, 1, 0, 0, 1, 0, 0, 0]
+replace_1 = 'v3'
+replace_2 = 'v1'
+replace_3 = 'v1'
 
 ## Problem 13
 def rep2vec(u, veclist):
@@ -76,117 +76,38 @@ def rep2vec(u, veclist):
 
 ## Problem 14
 def vec2rep(veclist, v):
-    return Vec({i for i in range(len(veclist))}, {i : (veclist[i] * v) for i in range(len(veclist))})
-    '''
-    Input:
-        - veclist: a list of vectors (as instances of your Vec class)
-        - v: a vector (as Vec instance) with domain set(range(len(veclist)))
-             with v in the span of set(veclist).
-    Output:
-        Vec instance u whose coordinate representation w.r.t. veclist is v
-    Example:
-        >>> a0 = Vec({'a','b','c','d'}, {'a':1})
-        >>> a1 = Vec({'a','b','c','d'}, {'b':1})
-        >>> a2 = Vec({'a','b','c','d'}, {'c':1})
-        >>> vec2rep([a0,a1,a2], Vec({'a','b','c','d'}, {'a':3, 'c':-2})) == Vec({0, 1, 2},{0: 3.0, 1: 0.0, 2: -2.0})
-        True
-    '''
-
-
+    return solve(coldict2mat({i: veclist[i] for i in range(len(veclist))}), v)
 
 ## Problem 15
 def is_superfluous(L, i):
-    '''
-    Input:
-        - L: list of vectors as instances of Vec class
-        - i: integer in range(len(L))
-    Output:
-        True if the span of the vectors of L is the same
-        as the span of the vectors of L, excluding L[i].
-
-        False otherwise.
-    Examples:
-        >>> a0 = Vec({'a','b','c','d'}, {'a':1})
-        >>> a1 = Vec({'a','b','c','d'}, {'b':1})
-        >>> a2 = Vec({'a','b','c','d'}, {'c':1})
-        >>> a3 = Vec({'a','b','c','d'}, {'a':1,'c':3})
-        >>> is_superfluous(L, 3)
-        True
-        >>> is_superfluous([a0,a1,a2,a3], 3)
-        True
-        >>> is_superfluous([a0,a1,a2,a3], 0)
-        True
-        >>> is_superfluous([a0,a1,a2,a3], 1)
-        False
-    '''
-    pass
-
-
+    A = coldict2mat({j: L[j] for j in range(len(L)) if i != j})
+    b = L[i]
+    u = solve(A, b)
+    residual = b - A * u
+    return residual * residual < 1e-14
 
 ## Problem 16
 def is_independent(L):
-    '''
-    input: a list L of vectors (using vec class)
-    output: True if the vectors form a linearly independent list.
-    >>> vlist = [Vec({0, 1, 2},{0: 1, 1: 0, 2: 0}), Vec({0, 1, 2},{0: 0, 1: 1, 2: 0}), Vec({0, 1, 2},{0: 0, 1: 0, 2: 1}), Vec({0, 1, 2},{0: 1, 1: 1, 2: 1}), Vec({0, 1, 2},{0: 0, 1: 1, 2: 1}), Vec({0, 1, 2},{0: 1, 1: 1, 2: 0})]
-    >>> is_independent(vlist)
-    False
-    >>> is_independent(vlist[:3])
-    True
-    >>> is_independent(vlist[:2])
-    True
-    >>> is_independent(vlist[1:4])
-    True
-    >>> is_independent(vlist[2:5])
-    True
-    >>> is_independent(vlist[2:6])
-    False
-    >>> is_independent(vlist[1:3])
-    True
-    >>> is_independent(vlist[5:])
-    True
-    '''
-    pass
-
-
+    return all(not is_superfluous(L, i) for i in range(len(L)))
 
 ## Problem 17
 def superset_basis(S, L):
-    '''
-    Input: 
-        - S: linearly independent list of Vec instances
-        - L: list of Vec instances such that every vector in S is in Span(L)
-    Output:
-        Linearly independent list T containing all vectors (as instances of Vec)
-        such that the span of T is the span of L (i.e. T is a basis for the span
-        of L).
-    Example:
-        >>> a0 = Vec({'a','b','c','d'}, {'a':1})
-        >>> a1 = Vec({'a','b','c','d'}, {'b':1})
-        >>> a2 = Vec({'a','b','c','d'}, {'c':1})
-        >>> a3 = Vec({'a','b','c','d'}, {'a':1,'c':3})
-        >>> superset_basis([a0, a3], [a0, a1, a2]) == [Vec({'a', 'c', 'b', 'd'},{'a': 1}), Vec({'a', 'c', 'b', 'd'},{'b':1}),Vec({'a', 'c', 'b', 'd'},{'c': 1})]
-        True
-    '''
-    pass
-
-
+    T = []
+    for i in range(len(S)):
+        T.append(S[i])
+        if len(T) > 1:
+            if is_superfluous(T, len(T) - 1):
+                T.pop()
+    for i in range(len(L)):
+        T.append(L[i])
+        if len(T) > 1:
+            if is_superfluous(T, len(T) - 1):
+                T.pop()
+    return T
 
 ## Problem 18
 def exchange(S, A, z):
-    '''
-    Input:
-        - S: a list of vectors, as instances of your Vec class
-        - A: a list of vectors, each of which are in S, with len(A) < len(S)
-        - z: an instance of Vec such that A+[z] is linearly independent
-    Output: a vector w in S but not in A such that Span S = Span ({z} U S - {w})
-    Example:
-        >>> S = [list2vec(v) for v in [[0,0,5,3],[2,0,1,3],[0,0,1,0],[1,2,3,4]]]
-        >>> A = [list2vec(v) for v in [[0,0,5,3],[2,0,1,3]]]
-        >>> z = list2vec([0,2,1,1])
-        >>> exchange(S, A, z) == Vec({0, 1, 2, 3},{0: 0, 1: 0, 2: 1, 3: 0})
-        True
-    '''
-    pass
-
-
+    u = solve(coldict2mat({i: S[i] for i in range(len(S))}), z)
+    for i in range(len(S)):
+        if S[i] not in A and u[i] > 1e-7:
+            return S[i]
