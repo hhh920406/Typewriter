@@ -1,14 +1,10 @@
-# version code 938
-# Please fill out this stencil and submit using the provided submission script.
-
 from vecutil import list2vec
 from solver import solve
 from matutil import listlist2mat, coldict2mat
 from mat import Mat
 from GF2 import one
 from vec import Vec
-
-
+from hw4 import *
 
 ## Problem 1
 w0 = list2vec([1,0,0])
@@ -19,15 +15,10 @@ v0 = list2vec([1,2,3])
 v1 = list2vec([1,3,3])
 v2 = list2vec([0,3,3])
 
-# Fill in exchange_S1 and exchange_S2
-# with appropriate lists of 3 vectors
-
 exchange_S0 = [w0, w1, w2]
-exchange_S1 = [...]
-exchange_S2 = [...]
+exchange_S1 = [v0, w1, w2]
+exchange_S2 = [v0, v1, w2]
 exchange_S3 = [v0, v1, v2]
-
-
 
 ## Problem 2
 w0 = list2vec([0,one,0])
@@ -39,14 +30,19 @@ v1 = list2vec([one,0,0])
 v2 = list2vec([one,one,0])
 
 exchange_2_S0 = [w0, w1, w2]
-exchange_2_S1 = [...]
-exchange_2_S2 = [...]
+exchange_2_S1 = [w0, w1, v1]
+exchange_2_S2 = [w0, v0, v1]
 exchange_2_S3 = [v0, v1, v2]
-
-
 
 ## Problem 3
 def morph(S, B):
+    res = []
+    for i in range(len(B)):
+        w = exchange(S, B[0 : i], B[i])
+        S.remove(w)
+        S.append(B[i])
+        res.append((B[i], w))
+    return res
     '''
     Input:
         - S: a list of distinct Vec instances
