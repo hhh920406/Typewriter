@@ -4,6 +4,7 @@ from matutil import listlist2mat, coldict2mat
 from mat import Mat
 from GF2 import one
 from vec import Vec
+from independence import *
 from hw4 import *
 
 ## Problem 1
@@ -59,70 +60,39 @@ def morph(S, B):
     '''
     pass
 
-
-
 ## Problem 4
-# Please express each solution as a list of vectors (Vec instances)
+row_space_1 = [list2vec(v) for v in [[1, 2, 0], [0, 2, 1]]]
+col_space_1 = [list2vec(v) for v in [[1, 0], [0, 1]]]
 
-row_space_1 = [...]
-col_space_1 = [...]
+row_space_2 = [list2vec(v) for v in [[1, 4, 0, 0], [0, 2, 2, 0], [0, 0, 1, 1]]]
+col_space_2 = [list2vec(v) for v in [[1, 0, 0], [4, 2, 0], [0, 2, 1]]]
 
-row_space_2 = [...]
-col_space_2 = [...]
+row_space_3 = [list2vec(v) for v in [[1]]]
+col_space_3 = [list2vec(v) for v in [[1, 2, 3]]]
 
-row_space_3 = [...]
-col_space_3 = [...]
-
-row_space_4 = [...]
-col_space_4 = [...]
-
-
+row_space_4 = [list2vec(v) for v in [[1, 0], [2, 1]]]
+col_space_4 = [list2vec(v) for v in [[1, 2, 3], [0, 1, 4]]]
 
 ## Problem 5
 def my_is_independent(L): 
-    '''
-    input:  A list, L, of Vecs
-    output: A boolean indicating if the list is linearly independent
-    
-    >>> L = [Vec({0, 1, 2},{0: 1, 1: 0, 2: 0}), Vec({0, 1, 2},{0: 0, 1: 1, 2: 0}), Vec({0, 1, 2},{0: 0, 1: 0, 2: 1}), Vec({0, 1, 2},{0: 1, 1: 1, 2: 1}), Vec({0, 1, 2},{0: 1, 1: 1, 2: 0}), Vec({0, 1, 2},{0: 0, 1: 1, 2: 1})]
-    >>> my_is_independent(L)
-    False
-    >>> my_is_independent(L[:2])
-    True
-    >>> my_is_independent(L[:3])
-    True
-    >>> my_is_independent(L[1:4])
-    True
-    >>> my_is_independent(L[0:4])
-    False
-    >>> my_is_independent(L[2:])
-    False
-    >>> my_is_independent(L[2:5])
-    False
-    '''
-    pass
-
+    return rank(L) == len(L)
 
 ## Problem 6
 def subset_basis(T): 
-    '''
-    input: A list, T, of Vecs
-    output: A list, S, containing Vecs from T, that is a basis for the
-    space spanned by T.
-    
-    >>> a0 = Vec({'a','b','c','d'}, {'a':1})
-    >>> a1 = Vec({'a','b','c','d'}, {'b':1})
-    >>> a2 = Vec({'a','b','c','d'}, {'c':1})
-    >>> a3 = Vec({'a','b','c','d'}, {'a':1,'c':3})
-    >>> subset_basis([a0,a1,a2,a3]) == [Vec({'c', 'b', 'a', 'd'},{'a': 1}), Vec({'c', 'b', 'a', 'd'},{'b': 1}), Vec({'c', 'b', 'a', 'd'},{'c': 1})]
-    True
-    '''
-    pass
-
-
+    S = [T[0]]
+    T.remove(T[0])
+    for i in range(len(T)):
+        for j in range(len(T)):
+            S.append(T[j])
+            if not is_superfluous(S, len(S) - 1):
+                T.remove(T[j])
+                break
+            S.remove(T[j])
+    return S
 
 ## Problem 7
 def my_rank(L): 
+    return len(subset_basis(L))
     '''
     input: A list, L, of Vecs
     output: The rank of the list of Vecs
