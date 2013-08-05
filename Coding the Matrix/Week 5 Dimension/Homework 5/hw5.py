@@ -3,7 +3,7 @@ from solver import solve
 from matutil import listlist2mat, coldict2mat
 from mat import Mat
 from GF2 import one
-from vec import Vec
+from vec import *
 from independence import *
 from hw4 import *
 
@@ -93,27 +93,27 @@ def subset_basis(T):
 ## Problem 7
 def my_rank(L): 
     return len(subset_basis(L))
-    '''
-    input: A list, L, of Vecs
-    output: The rank of the list of Vecs
-    
-    >>> my_rank([list2vec(v) for v in [[1,2,3],[4,5,6],[1.1,1.1,1.1]]])
-    2
-    '''
-    pass
-
 
 ## Problem 8
-# Please give each answer as a boolean
-
-only_share_the_zero_vector_1 = ...
-only_share_the_zero_vector_2 = ...
-only_share_the_zero_vector_3 = ...
-
-
+only_share_the_zero_vector_1 = True
+only_share_the_zero_vector_2 = True
+only_share_the_zero_vector_3 = True
 
 ## Problem 9
 def direct_sum_decompose(U_basis, V_basis, w):
+    T = []
+    for u in U_basis:
+        T.append(u)
+    for v in V_basis:
+        T.append(v)
+    rep = vec2rep(T, w)
+    u = Vec(w.D, {})
+    v = Vec(v.D, {})
+    for i in range(len(U_basis)):
+        u = u + scalar_mul(U_basis[i], rep[i])
+    for i in range(len(V_basis)):
+        v = v + scalar_mul(V_basis[i], rep[i + len(U_basis)])
+    return (u, v)
     '''
     input:  A list of Vecs, U_basis, containing a basis for a vector space, U.
     A list of Vecs, V_basis, containing a basis for a vector space, V.
