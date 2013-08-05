@@ -130,7 +130,7 @@ def find_matrix_inverse(A):
     for i in A.D[0]:
         x = solve(A, E[i])
         for j in A.D[1]:
-            B[(j, i)] = l[j]
+            B[(j, i)] = x[j]
     return B
     '''
     input: An invertible matrix, A, over GF(2)

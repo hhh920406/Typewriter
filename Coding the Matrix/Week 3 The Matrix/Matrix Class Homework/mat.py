@@ -63,10 +63,13 @@ def matrix_matrix_mul(A, B):
     C = Mat((A.D[0], B.D[1]), {})
     for i in A.D[0]:
         for j in B.D[1]:
-            temp = 0.0
+            temp = 0
             for k in A.D[1]:
                 temp += A[(i, k)] * B[(k, j)]
-            if abs(temp) > 1e-14:
+            if type(temp) == float:
+                if abs(temp) > 1e-14:
+                    C[(i, j)] = temp
+            else:
                 C[(i, j)] = temp
     return C
 
