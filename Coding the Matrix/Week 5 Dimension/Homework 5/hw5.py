@@ -1,11 +1,12 @@
 from vecutil import list2vec
 from solver import solve
-from matutil import listlist2mat, coldict2mat
+from matutil import *
 from mat import Mat
 from GF2 import one
 from vec import *
 from independence import *
 from hw4 import *
+from triangular import *
 
 ## Problem 1
 w0 = list2vec([1,0,0])
@@ -114,38 +115,23 @@ def direct_sum_decompose(U_basis, V_basis, w):
     for i in range(len(V_basis)):
         v = v + scalar_mul(V_basis[i], rep[i + len(U_basis)])
     return (u, v)
-    '''
-    input:  A list of Vecs, U_basis, containing a basis for a vector space, U.
-    A list of Vecs, V_basis, containing a basis for a vector space, V.
-    A Vec, w, that belongs to the direct sum of these spaces.
-    output: A pair, (u, v), such that u+v=w and u is an element of U and
-    v is an element of V.
-    
-    >>> U_basis = [Vec({0, 1, 2, 3, 4, 5},{0: 2, 1: 1, 2: 0, 3: 0, 4: 6, 5: 0}), Vec({0, 1, 2, 3, 4, 5},{0: 11, 1: 5, 2: 0, 3: 0, 4: 1, 5: 0}), Vec({0, 1, 2, 3, 4, 5},{0: 3, 1: 1.5, 2: 0, 3: 0, 4: 7.5, 5: 0})]
-    >>> V_basis = [Vec({0, 1, 2, 3, 4, 5},{0: 0, 1: 0, 2: 7, 3: 0, 4: 0, 5: 1}), Vec({0, 1, 2, 3, 4, 5},{0: 0, 1: 0, 2: 15, 3: 0, 4: 0, 5: 2})]
-    >>> w = Vec({0, 1, 2, 3, 4, 5},{0: 2, 1: 5, 2: 0, 3: 0, 4: 1, 5: 0})
-    >>> direct_sum_decompose(U_basis, V_basis, w) == (Vec({0, 1, 2, 3, 4, 5},{0: 2.0, 1: 4.999999999999972, 2: 0.0, 3: 0.0, 4: 1.0, 5: 0.0}), Vec({0, 1, 2, 3, 4, 5},{0: 0.0, 1: 0.0, 2: 0.0, 3: 0.0, 4: 0.0, 5: 0.0}))
-    True
-    '''
-    pass
-
-
 
 ## Problem 10
 def is_invertible(M): 
-    '''
-    input: A matrix, M
-    outpit: A boolean indicating if M is invertible.
-    
-    >>> M = Mat(({0, 1, 2, 3}, {0, 1, 2, 3}), {(0, 1): 0, (1, 2): 1, (3, 2): 0, (0, 0): 1, (3, 3): 4, (3, 0): 0, (3, 1): 0, (1, 1): 2, (2, 1): 0, (0, 2): 1, (2, 0): 0, (1, 3): 0, (2, 3): 1, (2, 2): 3, (1, 0): 0, (0, 3): 0})
-    >>> is_invertible(M)
-    True
-    '''
-    pass
-
+    if len(M.D[0]) != len(M.D[1]):
+        return False
+    L = [v for v in mat2rowdict(M).values()]
+    return rank(L) == len(L)
 
 ## Problem 11
 def find_matrix_inverse(A):
+    B = Mat((A.D[1], A.D[0]), {})
+    E = mat2coldict(identity(A.D[0], one))
+    for i in A.D[0]:
+        x = solve(A, E[i])
+        for j in A.D[1]:
+            B[(j, i)] = l[j]
+    return B
     '''
     input: An invertible matrix, A, over GF(2)
     output: Inverse of A
@@ -159,12 +145,12 @@ def find_matrix_inverse(A):
 
 
 ## Problem 12
-def find_triangular_matrix_inverse(A): 
-    '''
-    input: An upper triangular Mat, A, with nonzero diagonal elements
-    output: Inverse of A
-    >>> A = listlist2mat([[1, .5, .2, 4],[0, 1, .3, .9],[0,0,1,.1],[0,0,0,1]])
-    >>> find_triangular_matrix_inverse(A) == Mat(({0, 1, 2, 3}, {0, 1, 2, 3}), {(0, 1): -0.5, (1, 2): -0.3, (3, 2): 0.0, (0, 0): 1.0, (3, 3): 1.0, (3, 0): 0.0, (3, 1): 0.0, (2, 1): 0.0, (0, 2): -0.05000000000000002, (2, 0): 0.0, (1, 3): -0.87, (2, 3): -0.1, (2, 2): 1.0, (1, 0): 0.0, (0, 3): -3.545, (1, 1): 1.0})
-    True
-    '''
-    pass
+def find_triangular_matrix_inverse(A):
+    LA = [v for v in mat2rowdict(A).values()]
+    B = Mat((A.D[1], A.D[0]), {})
+    E = mat2coldict(identity(A.D[0], 1))
+    for i in A.D[0]:
+        x = triangular_solve_n(LA, E[i])
+        for j in x.D:
+            B[(j, i)] = x[j]
+    return B
