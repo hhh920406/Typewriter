@@ -38,36 +38,24 @@ exchange_2_S3 = [v0, v1, v2]
 
 ## Problem 3
 def morph(S, B):
+    TS = []
+    for i in range(len(S)):
+        TS.append(S[i])
     res = []
     for i in range(len(B)):
-        for j in range(len(S)):
+        for j in range(len(TS)):
             T = []
-            for k in range(len(S)):
+            for k in range(len(TS)):
                 if j != k:
-                    T.append(S[k])
+                    T.append(TS[k])
             for k in range(i + 1):
                 T.append(B[k])
             if rank(T) == len(B):
-                w = S[j]
-                S.remove(S[j])
+                w = TS[j]
+                TS.remove(TS[j])
                 break
         res.append((B[i], w))
     return res
-    '''
-    Input:
-        - S: a list of distinct Vec instances
-        - B: a list of linearly independent Vec instances
-        - Span S == Span B
-    Output: a list of pairs of vectors to inject and eject
-    Example:
-        >>> #This is how our morph works.  Yours may yield different results.
-        S = [list2vec(v) for v in [[1,0,0],[0,1,0],[0,0,1]]]
-        B = [list2vec(v) for v in [[1,1,0],[0,1,1],[1,0,1]]]
-        morph(S, B)
-        [(Vec({0, 1, 2},{0: 1, 1: 1, 2: 0}), Vec({0, 1, 2},{0: 1, 1: 0, 2: 0})), (Vec({0, 1, 2},{0: 0, 1: 1, 2: 1}), Vec({0, 1, 2},{0: 0, 1: 1, 2: 0})), (Vec({0, 1, 2},{0: 1, 1: 0, 2: 1}), Vec({0, 1, 2},{0: 0, 1: 0, 2: 1}))]
-
-    '''
-    pass
 
 ## Problem 4
 row_space_1 = [list2vec(v) for v in [[1, 2, 0], [0, 2, 1]]]
