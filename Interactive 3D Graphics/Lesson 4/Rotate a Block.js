@@ -1,0 +1,1 @@
+cube.rotation.y = - 60 * Math.PI / 180;
