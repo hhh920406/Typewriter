@@ -40,9 +40,17 @@ exchange_2_S3 = [v0, v1, v2]
 def morph(S, B):
     res = []
     for i in range(len(B)):
-        w = exchange(S, B[0 : i], B[i])
-        S.remove(w)
-        S.append(B[i])
+        for j in range(len(S)):
+            T = []
+            for k in range(len(S)):
+                if j != k:
+                    T.append(S[k])
+            for k in range(i + 1):
+                T.append(B[k])
+            if rank(T) == len(B):
+                w = S[j]
+                S.remove(S[j])
+                break
         res.append((B[i], w))
     return res
     '''
@@ -53,9 +61,9 @@ def morph(S, B):
     Output: a list of pairs of vectors to inject and eject
     Example:
         >>> #This is how our morph works.  Yours may yield different results.
-        >>> S = [list2vec(v) for v in [[1,0,0],[0,1,0],[0,0,1]]]
-        >>> B = [list2vec(v) for v in [[1,1,0],[0,1,1],[1,0,1]]]
-        >>> morph(S, B)
+        S = [list2vec(v) for v in [[1,0,0],[0,1,0],[0,0,1]]]
+        B = [list2vec(v) for v in [[1,1,0],[0,1,1],[1,0,1]]]
+        morph(S, B)
         [(Vec({0, 1, 2},{0: 1, 1: 1, 2: 0}), Vec({0, 1, 2},{0: 1, 1: 0, 2: 0})), (Vec({0, 1, 2},{0: 0, 1: 1, 2: 1}), Vec({0, 1, 2},{0: 0, 1: 1, 2: 0})), (Vec({0, 1, 2},{0: 1, 1: 0, 2: 1}), Vec({0, 1, 2},{0: 0, 1: 0, 2: 1}))]
 
     '''
@@ -132,17 +140,6 @@ def find_matrix_inverse(A):
         for j in A.D[1]:
             B[(j, i)] = x[j]
     return B
-    '''
-    input: An invertible matrix, A, over GF(2)
-    output: Inverse of A
-
-    >>> M = Mat(({0, 1, 2}, {0, 1, 2}), {(0, 1): one, (1, 2): 0, (0, 0): 0, (2, 0): 0, (1, 0): one, (2, 2): one, (0, 2): 0, (2, 1): 0, (1, 1): 0})
-    >>> find_matrix_inverse(M) == Mat(({0, 1, 2}, {0, 1, 2}), {(0, 1): one, (2, 0): 0, (0, 0): 0, (2, 2): one, (1, 0): one, (1, 2): 0, (1, 1): 0, (2, 1): 0, (0, 2): 0})
-    True
-    '''
-    pass
-
-
 
 ## Problem 12
 def find_triangular_matrix_inverse(A):
