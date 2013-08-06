@@ -1,0 +1,1 @@
+var teapotMaterial = new THREE.MeshPhongMaterial( { color: 0x770000, specular:0xffaaaa, envMap: textureCube } );
