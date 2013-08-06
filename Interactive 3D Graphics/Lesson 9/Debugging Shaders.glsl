@@ -1,0 +1,1 @@
+gl_FragColor = vec4( diffuse, uGainAlpha, attenuation, 1.0 );
