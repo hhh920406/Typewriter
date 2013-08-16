@@ -1,5 +1,5 @@
-from mat import Mat
-from vec import Vec
+from mat import *
+from vec import *
 from matutil import *
 from vecutil import *
 from GF2 import one
@@ -87,44 +87,70 @@ def echelon_solve(rowlist, label_list, b):
     return x
 
 ## Problem 6
-rowlist = [ ... ]    # Provide as a list of Vec instances
-label_list = [ ... ] # Provide as a list
-b = [ ... ]          # Provide as a list
+rowlist = [Vec({'A', 'B', 'C', 'D'}, {'A': one, 'B': one, 'D': one}), Vec({'A', 'B', 'C', 'D'}, {'B': one}),  Vec({'A', 'B', 'C', 'D'}, {'C': one}), Vec({'A', 'B', 'C', 'D'}, {'D': one}),]
+label_list = ['A', 'B', 'C', 'D']
+b = [one, one, 0, 0]
 
 ## Problem 7
-null_space_rows_a = {...} # Put the row numbers of M from the PDF
-
-
+null_space_rows_a = {3, 4}
 
 ## Problem 8
-null_space_rows_b = {...}
-
-
+null_space_rows_b = {4}
 
 ## Problem 9
-# Write each vector as a list
-closest_vector_1 = [...]
-closest_vector_2 = [...]
-closest_vector_3 = [...]
+def project_along(a, b):
+    scale = (a * b) / (a * a)
+    return scalar_mul(a, scale)
 
+def project_orthogonal(a, b):
+    return b - project_along(a, b)
 
+def vec2list(v):
+    res = []
+    for k in v.D:
+        res.append(v[k])
+    return res
+
+a = Vec({0, 1}, {0: 1, 1: 2})
+b = Vec({0, 1}, {0: 2, 1: 3})
+c = project_along(a, b)
+closest_vector_1 = vec2list(c)
+a = Vec({0, 1, 2}, {1: 1})
+b = Vec({0, 1, 2}, {0: 1.414, 1: 1, 2: 1.732})
+c = project_along(a, b)
+closest_vector_2 = vec2list(c)
+a = Vec({0, 1, 2, 3}, {0: -3, 1: -2, 2: -1, 3: 4})
+b = Vec({0, 1, 2, 3}, {0: 7, 1: 2, 2: 5})
+c = project_along(a, b)
+closest_vector_3 = vec2list(c)
 
 ## Problem 10
-# Write each vector as a list
-
-project_onto_1 = [...]
-projection_orthogonal_1 = [...]
-
-project_onto_2 = [...]
-projection_orthogonal_2 = [...]
-
-project_onto_3 = [...]
-projection_orthogonal_3 = [...]
-
-
+a = Vec({0, 1}, {0: 3, 1: 0})
+b = Vec({0, 1}, {0: 2, 1: 1})
+c = project_along(a, b)
+project_onto_1 = vec2list(c)
+c = project_orthogonal(a, b)
+projection_orthogonal_1 = vec2list(c)
+a = Vec({0, 1, 2}, {0: 1, 1: 2, 2: -1})
+b = Vec({0, 1, 2}, {0: 1, 1: 1, 2: 4})
+c = project_along(a, b)
+project_onto_2 = vec2list(c)
+c = project_orthogonal(a, b)
+projection_orthogonal_2 = vec2list(c)
+a = Vec({0, 1, 2}, {0: 3, 1: 3, 2: 12})
+b = Vec({0, 1, 2}, {0: 1, 1: 1, 2: 4})
+c = project_along(a, b)
+project_onto_3 = vec2list(c)
+c = project_orthogonal(a, b)
+projection_orthogonal_3 = vec2list(c)
 
 ## Problem 11
-norm1 = ...
-norm2 = ...
-norm3 = ...
+def norm(v):
+    return sqrt(v * v)
+
+v = Vec({0, 1, 2}, {0: 2, 1: 2, 2: 1})
+norm1 = norm(v)
+v = Vec({0, 1, 2, 3}, {0: sqrt(2), 1: sqrt(3), 2: sqrt(5), 3: sqrt(6)})
+norm2 = norm(v)
+norm3 = 1
 
