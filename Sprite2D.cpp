@@ -5,6 +5,7 @@
 
 Sprite2D::Sprite2D(const float width, const float height)
 {
+    this->_vertexBuffer = NULL;
     this->_shape.setPos(- width * 0.5f, - height * 0.5f);
     this->_shape.setSize(width, height);
     this->_centerPos.setPos(0, 0);
@@ -25,6 +26,11 @@ Point2D Sprite2D::centerPos() const
     return this->_centerPos;
 }
 
+unsigned int Sprite2D::vertexSize() const
+{
+    return sizeof(stD3DVertex);
+}
+
 LPDIRECT3DVERTEXBUFFER9 Sprite2D::vertexBuffer() const
 {
     return this->_vertexBuffer;
@@ -32,17 +38,12 @@ LPDIRECT3DVERTEXBUFFER9 Sprite2D::vertexBuffer() const
 
 bool Sprite2D::createShape()
 {
-    struct stD3DVertex
-    {
-        float x, y, z, rhw;
-        unsigned long color;
-    };
     stD3DVertex data[] =
     {
-        {this->_shape.x(), this->_shape.y(), 0.5f, 1, D3DCOLOR_XRGB(255, 255, 255),},
-        {this->_shape.x(), this->_shape.height(), 0.5f, 1, D3DCOLOR_XRGB(255, 255, 255),},
         {this->_shape.width(), this->_shape.y(), 0.5f, 1, D3DCOLOR_XRGB(255, 255, 255),},
         {this->_shape.width(), this->_shape.height(), 0.5f, 1, D3DCOLOR_XRGB(255, 255, 255),},
+        {this->_shape.x(), this->_shape.y(), 0.5f, 1, D3DCOLOR_XRGB(255, 255, 255),},
+        {this->_shape.x(), this->_shape.height(), 0.5f, 1, D3DCOLOR_XRGB(255, 255, 255),},
     };
     LPDIRECT3DDEVICE9 device = Framework::getInstance()->device();
     if (FAILED(device->CreateVertexBuffer(sizeof(data), 0,

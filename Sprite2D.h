@@ -14,6 +14,7 @@ public:
     virtual ~Sprite2D();
     Rect2D shape() const;
     Point2D centerPos() const;
+    unsigned int vertexSize() const;
     LPDIRECT3DVERTEXBUFFER9 vertexBuffer() const;
 
 protected:
@@ -23,6 +24,11 @@ private:
     Rect2D _shape;
     Point2D _centerPos;
     LPDIRECT3DVERTEXBUFFER9 _vertexBuffer;
+    struct stD3DVertex
+    {
+        float x, y, z, rhw;
+        unsigned long color;
+    };
 };
 
 #endif // SPRITE2D_H
