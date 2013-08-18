@@ -61,6 +61,10 @@
 			<Add directory="D:/Microsoft DirectX SDK (June 2010)/lib" />
 			<Add directory="D:/Microsoft DirectX SDK (June 2010)/lib/x86" />
 		</Linker>
+		<Unit filename="Point2D.cpp" />
+		<Unit filename="Point2D.h" />
+		<Unit filename="Vector2D.cpp" />
+		<Unit filename="Vector2D.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

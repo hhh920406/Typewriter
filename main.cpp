@@ -83,7 +83,7 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, INT)
         ShowWindow(hWnd, SW_SHOWDEFAULT);
         UpdateWindow(hWnd);
         MSG msg;
-        while (GetMessage(&msg, NULL, 0, 0 ))
+        while (GetMessage(&msg, NULL, 0, 0))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
