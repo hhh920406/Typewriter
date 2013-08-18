@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ZSTG" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Windows_Debug">
+				<Option output="bin/Windows_Debug/ZSTG" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Windows_Debug/" />
+				<Option object_output="obj/Windows_Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-ggdb" />
+					<Add option="-DDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add library="d3dx9" />
+				</Linker>
+			</Target>
+			<Target title="Windows_Release">
+				<Option output="bin/Windows_Release/ZSTG" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Windows_Release/" />
+				<Option object_output="obj/Windows_Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="d3dx9" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-DWIN32" />
+			<Add option="-DNDEBUG" />
+			<Add option="-D_WINDOWS" />
+			<Add option="-D_MBCS" />
+			<Add directory="D:/Microsoft DirectX SDK (June 2010)/include" />
+		</Compiler>
+		<Linker>
+			<Add library="kernel32" />
+			<Add library="user32" />
+			<Add library="gdi32" />
+			<Add library="winspool" />
+			<Add library="comdlg32" />
+			<Add library="advapi32" />
+			<Add library="shell32" />
+			<Add library="ole32" />
+			<Add library="oleaut32" />
+			<Add library="uuid" />
+			<Add library="odbc32" />
+			<Add library="odbccp32" />
+			<Add library="d3d9" />
+			<Add directory="D:/Microsoft DirectX SDK (June 2010)/lib" />
+			<Add directory="D:/Microsoft DirectX SDK (June 2010)/lib/x86" />
+		</Linker>
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
+			<envvars />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

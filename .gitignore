@@ -1,7 +1,7 @@
 # Build Folders 
-Debug
-Release
+bin
+obj
 
-# Visual Studio Files
-*.opensdf
-*.suo
+# Code::Blocks Files
+*.depend
+*.layout

@@ -47,35 +47,35 @@ VOID Render()
     {
         g_pd3dDevice->EndScene();
     }
-    g_pd3dDevice->Present( NULL, NULL, NULL, NULL );
+    g_pd3dDevice->Present(NULL, NULL, NULL, NULL);
 }
 
 LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     switch (msg)
     {
-        case WM_DESTROY:
-            Cleanup();
-            PostQuitMessage(0);
-            return 0;
-        case WM_PAINT:
-            Render();
-            ValidateRect(hWnd, NULL);
-            return 0;
+    case WM_DESTROY:
+        Cleanup();
+        PostQuitMessage(0);
+        return 0;
+    case WM_PAINT:
+        Render();
+        ValidateRect(hWnd, NULL);
+        return 0;
     }
     return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
-INT WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
+INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, INT)
 {
     WNDCLASSEX wc =
     {
         sizeof(WNDCLASSEX), CS_CLASSDC, MsgProc, 0L, 0L,
         GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
-        L"ZSTG", NULL
+        "ZSTG", NULL
     };
     RegisterClassEx(&wc);
-    HWND hWnd = CreateWindow(L"ZSTG", L"ZSTG",
+    HWND hWnd = CreateWindow("ZSTG", "ZSTG",
                              WS_OVERLAPPEDWINDOW, 100, 100, 960, 720,
                              NULL, NULL, wc.hInstance, NULL);
     if (SUCCEEDED(InitD3D(hWnd)))
@@ -89,6 +89,6 @@ INT WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
             DispatchMessage(&msg);
         }
     }
-    UnregisterClass(L"ZSTG", wc.hInstance);
+    UnregisterClass("ZSTG", wc.hInstance);
     return 0;
 }
