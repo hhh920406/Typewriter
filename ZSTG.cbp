@@ -7,9 +7,9 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Windows_Debug">
-				<Option output="bin/Windows_Debug/ZSTG" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin/Windows_Debug/" />
-				<Option object_output="obj/Windows_Debug/" />
+				<Option output="bin\Windows_Debug\ZSTG" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin\Windows_Debug\" />
+				<Option object_output="obj\Windows_Debug\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -23,9 +23,9 @@
 				</Linker>
 			</Target>
 			<Target title="Windows_Release">
-				<Option output="bin/Windows_Release/ZSTG" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin/Windows_Release/" />
-				<Option object_output="obj/Windows_Release/" />
+				<Option output="bin\Windows_Release\ZSTG" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin\Windows_Release\" />
+				<Option object_output="obj\Windows_Release\" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -42,7 +42,7 @@
 			<Add option="-DNDEBUG" />
 			<Add option="-D_WINDOWS" />
 			<Add option="-D_MBCS" />
-			<Add directory="D:/Microsoft DirectX SDK (June 2010)/include" />
+			<Add directory="D:\Microsoft DirectX SDK (June 2010)\include" />
 		</Compiler>
 		<Linker>
 			<Add library="kernel32" />
@@ -58,11 +58,13 @@
 			<Add library="odbc32" />
 			<Add library="odbccp32" />
 			<Add library="d3d9" />
-			<Add directory="D:/Microsoft DirectX SDK (June 2010)/lib" />
-			<Add directory="D:/Microsoft DirectX SDK (June 2010)/lib/x86" />
+			<Add directory="D:\Microsoft DirectX SDK (June 2010)\lib" />
+			<Add directory="D:\Microsoft DirectX SDK (June 2010)\lib\x86" />
 		</Linker>
 		<Unit filename="Point2D.cpp" />
 		<Unit filename="Point2D.h" />
+		<Unit filename="Rect2D.cpp" />
+		<Unit filename="Rect2D.h" />
 		<Unit filename="Vector2D.cpp" />
 		<Unit filename="Vector2D.h" />
 		<Unit filename="main.cpp" />
