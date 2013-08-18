@@ -1,7 +1,6 @@
+#include <cmath>
 #include "Framework.h"
 #include "Sprite2D.h"
-
-#include <cstdio>
 
 Framework* Framework::_instance = NULL;
 
@@ -75,10 +74,10 @@ void Framework::init(const char *title, int width, int height, bool fullScreen)
     {
         sizeof(WNDCLASSEX), CS_CLASSDC, messageProcess, 0L, 0L,
         GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
-        "ZSTG", NULL
+        "ZFramework", NULL
     };
     RegisterClassEx(&this->_window);
-    HWND hWnd = CreateWindow("ZSTG", title,
+    HWND hWnd = CreateWindow("ZFramework", title,
                              WS_OVERLAPPEDWINDOW, 100, 100, this->windowWidth(), this->windowHeight(),
                              NULL, NULL, this->_window.hInstance, NULL);
     if (this->initD3D(hWnd))
@@ -87,7 +86,7 @@ void Framework::init(const char *title, int width, int height, bool fullScreen)
         UpdateWindow(hWnd);
     }
 }
-
+#include <cstdio>
 bool Framework::initD3D(HWND hWnd)
 {
     D3DDISPLAYMODE displayMode;
@@ -120,8 +119,22 @@ bool Framework::initD3D(HWND hWnd)
     {
         return false;
     }
+    D3DXMATRIX projection;
+    D3DXMatrixOrthoLH(&projection, this->windowWidth(), this->windowHeight(), 0.1f, 1000.0f);
+    this->_device->SetTransform(D3DTS_PROJECTION, &projection);
+    this->_device->SetRenderState(D3DRS_LIGHTING, FALSE);
+    this->_device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     // 测试开始
-    this->_testSprite = new Sprite2D(200, 200);
+    const double PI = acos(-1.0);
+    for (int i = 0; i < 100; ++i)
+    {
+        this->_testSprite[i] = new Sprite2D(((i % 10) + 1) / 10.0 * 30, ((i % 10) + 1) / 10.0 * 30);
+        x[i] = 0.0f;
+        y[i] = 0.0f;
+        vx[i] = 2.0 * cos(PI * 2 * i / 100);
+        vy[i] = 2.0 * sin(PI * 2 * i / 100);
+        r[i] = PI * 2 * i / 100;
+    }
     // 测试结束
     return true;
 }
@@ -136,10 +149,23 @@ void Framework::render()
     if (SUCCEEDED(this->_device->BeginScene()))
     {
         // 测试开始
-        this->_device->SetStreamSource(0, this->_testSprite->vertexBuffer(),
-                                        0, this->_testSprite->vertexSize());
-        this->_device->SetFVF(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
-        this->_device->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+        for (int i = 0; i < 100; ++i)
+        {
+            x[i] += vx[i];
+            y[i] += vy[i];
+            if (x[i] < -this->windowWidth() / 2 || x[i] > this->windowWidth() / 2)
+            {
+                vx[i] = -vx[i];
+            }
+            if (y[i] < -this->windowHeight() / 2 || y[i] > this->windowHeight() / 2)
+            {
+                vy[i] = -vy[i];
+            }
+            this->_testSprite[i]->testMoveTo(x[i], y[i]);
+            this->_testSprite[i]->testRotateTo(r[i]);
+            r[i] += 0.02;
+            this->_testSprite[i]->render();
+        }
         // 测试结束
         this->_device->EndScene();
     }

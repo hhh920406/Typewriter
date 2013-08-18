@@ -6,7 +6,11 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include <d3d9.h>
+#include <d3dx9.h>
 #include <windows.h>
+
+#pragma comment(lib, "d3d9.lib")
+#pragma comment(lib, "d3dx9.lib")
 
 #define main zmain
 int zmain();
@@ -36,7 +40,12 @@ private:
     int _windowWidth;
     int _windowHeight;
 
-    Sprite2D *_testSprite;
+    Sprite2D *_testSprite[10000];
+    float x[10000];
+    float y[10000];
+    float vx[10000];
+    float vy[10000];
+    float r[10000];
 
     Framework();
     bool initD3D(HWND hWnd);
