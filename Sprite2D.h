@@ -9,8 +9,9 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 
-class Point2D;
-class Vector2D;
+#include "Point2D.h"
+#include "Vector2D.h"
+
 class Texture2D;
 class VertexBuffer2D;
 

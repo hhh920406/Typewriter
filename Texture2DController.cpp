@@ -52,19 +52,20 @@ void Texture2DController::loadNewTextures(vector<int> indices)
 {
     for (vector<int>::iterator it = indices.begin(); it != indices.end(); ++it)
     {
-        if (NULL == this->getTexture(*it))
-        {
-            this->loadTexture(*it);
-        }
+        this->getTexture(*it);
     }
 }
 
+/**
+ * 获得对应纹理，当不存在时会自动加载纹理。
+ */
 Texture2D* Texture2DController::getTexture(const int index)
 {
     map<int, Texture2D*>::iterator it = this->_textures.find(index);
     if (it == this->_textures.end())
     {
-        return NULL;
+        loadTexture(index);
+        return this->_textures[index];
     }
     return it->second;
 }
@@ -73,5 +74,10 @@ void Texture2DController::loadTexture(const int index)
 {
     Texture2D *texture = new Texture2D();
     texture->readFromFile(this->_locations[index]);
+    std::map<int, Texture2D*>::iterator it = this->_textures.find(index);
+    if (it != this->_textures.end())
+    {
+        delete it->second;
+    }
     this->_textures[index] = texture;
 }

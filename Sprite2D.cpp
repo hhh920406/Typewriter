@@ -1,7 +1,5 @@
 #include <cstring>
 #include <windows.h>
-#include "Point2D.h"
-#include "Vector2D.h"
 #include "Texture2D.h"
 #include "VertexBuffer2D.h"
 #include "Sprite2D.h"

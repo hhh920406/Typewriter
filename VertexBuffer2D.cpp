@@ -1,4 +1,3 @@
-#include "Point2D.h"
 #include "VertexBuffer2D.h"
 
 struct stD3DVertex

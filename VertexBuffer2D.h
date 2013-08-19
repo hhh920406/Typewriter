@@ -4,6 +4,7 @@
  * 顶点缓存。
  * @author ZHG <CyberZHG@gmail.com>
  */
+#include "Point2D.h"
 #include "Framework.h"
 
 class VertexBuffer2D

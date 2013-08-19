@@ -91,10 +91,22 @@
 		<Unit filename="Sprite2D.h">
 			<Option virtualFolder="Game Framework\Graphics\" />
 		</Unit>
+		<Unit filename="Sprite2DController.cpp">
+			<Option virtualFolder="Game Framework\Graphics\" />
+		</Unit>
+		<Unit filename="Sprite2DController.h">
+			<Option virtualFolder="Game Framework\Graphics\" />
+		</Unit>
 		<Unit filename="Texture2D.cpp">
 			<Option virtualFolder="Game Framework\Graphics\" />
 		</Unit>
 		<Unit filename="Texture2D.h">
+			<Option virtualFolder="Game Framework\Graphics\" />
+		</Unit>
+		<Unit filename="Texture2DController.cpp">
+			<Option virtualFolder="Game Framework\Graphics\" />
+		</Unit>
+		<Unit filename="Texture2DController.h">
 			<Option virtualFolder="Game Framework\Graphics\" />
 		</Unit>
 		<Unit filename="Vector2D.cpp">
@@ -107,6 +119,12 @@
 			<Option virtualFolder="Game Framework\Graphics\" />
 		</Unit>
 		<Unit filename="VertexBuffer2D.h">
+			<Option virtualFolder="Game Framework\Graphics\" />
+		</Unit>
+		<Unit filename="VertexBuffer2DController.cpp">
+			<Option virtualFolder="Game Framework\Graphics\" />
+		</Unit>
+		<Unit filename="VertexBuffer2DController.h">
 			<Option virtualFolder="Game Framework\Graphics\" />
 		</Unit>
 		<Unit filename="main.cpp">

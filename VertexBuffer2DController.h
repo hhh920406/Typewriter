@@ -13,35 +13,39 @@ class VertexBuffer2DController
 public:
     VertexBuffer2DController();
     virtual ~VertexBuffer2DController();
-    VertexBuffer2D* getVertexBuffer(int width, int height, int tun[4], int tud[4], int tvn[4], int tvd[4]);
+    VertexBuffer2D* getVertexBuffer(int textureX1, int textureY1,
+                                    int textureX2, int textureY2,
+                                    int textureWidth, int textureHeight);
 
 private:
     struct VertexBufferInfo
     {
-        int width, height;
-        int tun[4], tvn[4];
-        int tud[4], tvd[4];
+        int textureX1, textureY1;
+        int textureX2, textureY2;
+        int textureWidth, textureHeight;
         friend bool operator <(const VertexBufferInfo &a, const VertexBufferInfo &b)
         {
-            if (a.width == b.width)
+            if (a.textureX1 == b.textureX1)
             {
-                if (a.height == b.height)
+                if (a.textureY1 == b.textureY1)
                 {
-                    for (int i = 0; i < 4; ++i)
+                    if (a.textureX2 == b.textureX2)
                     {
-                        if (a.tun[i] * b.tud[i] != a.tud[i] * b.tun[i])
+                        if (a.textureY2 == b.textureY2)
                         {
-                            return a.tun[i] * b.tud[i] < a.tud[i] * b.tun[i];
+                            if (a.textureWidth == b.textureWidth)
+                            {
+                                return a.textureHeight < b.textureHeight;
+                            }
+                            return a.textureWidth < b.textureWidth;
                         }
-                        if (a.tvn[i] * b.tvd[i] != a.tvd[i] * b.tun[i])
-                        {
-                            return a.tvn[i] * b.tvd[i] < a.tvd[i] * b.tun[i];
-                        }
+                        return a.textureY2 < b.textureY2;
                     }
+                    return a.textureX2 < b.textureX2;
                 }
-                return a.height < b.height;
+                return a.textureY1 < b.textureY1;
             }
-            return a.width < b.width;
+            return a.textureX1 < b.textureX1;
         }
     };
     std::map<VertexBufferInfo, VertexBuffer2D*> _buffers;
