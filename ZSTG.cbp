@@ -5,7 +5,7 @@
 		<Option title="ZSTG" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="Framework\;Framework\Basic\;" />
+		<Option virtualFolders="Game Framework\;Game Framework\Basic\;Game Framework\;STG Framework\;Implement\;Game Framework\Graphics\;" />
 		<Build>
 			<Target title="Windows_Debug">
 				<Option output="bin\Windows_Debug\ZSTG" prefix_auto="1" extension_auto="1" />
@@ -14,8 +14,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-Wall" />
-					<Add option="-g" />
+					<Add option="-w" />
 					<Add option="-ggdb" />
 					<Add option="-DDEBUG" />
 				</Compiler>
@@ -30,7 +29,13 @@
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-fexpensive-optimizations" />
+					<Add option="-Os" />
+					<Add option="-O3" />
 					<Add option="-O2" />
+					<Add option="-O1" />
+					<Add option="-O" />
+					<Add option="-w" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -63,36 +68,50 @@
 			<Add directory="D:\Microsoft DirectX SDK (June 2010)\lib\x86" />
 		</Linker>
 		<Unit filename="Framework.cpp">
-			<Option virtualFolder="Framework\" />
+			<Option virtualFolder="Game Framework\" />
 		</Unit>
 		<Unit filename="Framework.h">
-			<Option virtualFolder="Framework\" />
+			<Option virtualFolder="Game Framework\" />
 		</Unit>
 		<Unit filename="Point2D.cpp">
-			<Option virtualFolder="Framework\Basic\" />
+			<Option virtualFolder="Game Framework\Basic\" />
 		</Unit>
 		<Unit filename="Point2D.h">
-			<Option virtualFolder="Framework\Basic\" />
+			<Option virtualFolder="Game Framework\Basic\" />
 		</Unit>
 		<Unit filename="Rect2D.cpp">
-			<Option virtualFolder="Framework\Basic\" />
+			<Option virtualFolder="Game Framework\Basic\" />
 		</Unit>
 		<Unit filename="Rect2D.h">
-			<Option virtualFolder="Framework\Basic\" />
+			<Option virtualFolder="Game Framework\Basic\" />
 		</Unit>
 		<Unit filename="Sprite2D.cpp">
-			<Option virtualFolder="Framework\Basic\" />
+			<Option virtualFolder="Game Framework\Graphics\" />
 		</Unit>
 		<Unit filename="Sprite2D.h">
-			<Option virtualFolder="Framework\Basic\" />
+			<Option virtualFolder="Game Framework\Graphics\" />
+		</Unit>
+		<Unit filename="Texture2D.cpp">
+			<Option virtualFolder="Game Framework\Graphics\" />
+		</Unit>
+		<Unit filename="Texture2D.h">
+			<Option virtualFolder="Game Framework\Graphics\" />
 		</Unit>
 		<Unit filename="Vector2D.cpp">
-			<Option virtualFolder="Framework\Basic\" />
+			<Option virtualFolder="Game Framework\Basic\" />
 		</Unit>
 		<Unit filename="Vector2D.h">
-			<Option virtualFolder="Framework\Basic\" />
+			<Option virtualFolder="Game Framework\Basic\" />
 		</Unit>
-		<Unit filename="main.cpp" />
+		<Unit filename="VertexBuffer2D.cpp">
+			<Option virtualFolder="Game Framework\Graphics\" />
+		</Unit>
+		<Unit filename="VertexBuffer2D.h">
+			<Option virtualFolder="Game Framework\Graphics\" />
+		</Unit>
+		<Unit filename="main.cpp">
+			<Option virtualFolder="Implement\" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<debugger />

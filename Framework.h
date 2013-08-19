@@ -15,8 +15,6 @@
 #define main zmain
 int zmain();
 
-class Sprite2D;
-
 class Framework
 {
 public:
@@ -30,6 +28,8 @@ public:
     bool isFullscreen() const;
     int windowWidth() const;
     int windowHeight() const;
+    int windowHalfWidth() const;
+    int windowHalfHeight() const;
 
 private:
     static Framework* _instance;
@@ -39,14 +39,6 @@ private:
     bool _isFullscreen;
     int _windowWidth;
     int _windowHeight;
-
-    Sprite2D *_testSprite[10000];
-    float x[10000];
-    float y[10000];
-    float vx[10000];
-    float vy[10000];
-    float r[10000];
-    LPDIRECT3DTEXTURE9 _texture;
 
     Framework();
     bool initD3D(HWND hWnd);

@@ -1,98 +1,127 @@
 #include <cstring>
 #include <windows.h>
+#include "Point2D.h"
+#include "Vector2D.h"
+#include "Texture2D.h"
+#include "VertexBuffer2D.h"
 #include "Sprite2D.h"
 #include "Framework.h"
 
-struct stD3DVertex
+Sprite2D::Sprite2D(const float width, const float height)
 {
-    float x, y, z;
-    unsigned long color;
-    float tu, tv;
-};
-
-#define D3DFVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
-
-Sprite2D::Sprite2D(const float width, const float height, const float tu[4], const float tv[4])
-{
-    this->_vertexBuffer = NULL;
-    this->_shape.setPos(- width * 0.5f, - height * 0.5f);
-    this->_shape.setSize(width, height);
-    this->_move.setPos(0.0f, 0.0f);
+    this->_texture = NULL;
+    this->_vertex = NULL;
+    this->_size.setPos(width * 0.5f, height * 0.5f);
     this->_scale.setPos(1.0f, 1.0f);
     this->_rotate = 0.0f;
-    for (int i = 0; i < 4; ++i)
-    {
-        this->_tu[i] = tu[i];
-        this->_tv[i] = tv[i];
-    }
-    this->createShape();
+    this->_translate.setPos(0.0f, 0.0f);
 }
 
 Sprite2D::~Sprite2D()
 {
 }
 
-Rect2D Sprite2D::shape() const
+void Sprite2D::setTexture(Texture2D *texture)
 {
-    return this->_shape;
+    this->_texture = texture;
 }
 
-bool Sprite2D::createShape()
+/**
+ * 设置顶点缓存。
+ * 由于定点缓存的尺寸和当前图形的尺寸不一定相同，这里会清空以前的缩放设定。
+ */
+void Sprite2D::setVertexBuffer(VertexBuffer2D *vertex)
 {
-    stD3DVertex data[] =
-    {
-        {this->_shape.width(), this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[2], this->_tv[3]},
-        {this->_shape.width(), this->_shape.height(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[3], this->_tv[3]},
-        {this->_shape.x(), this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[0], this->_tv[0]},
-        {this->_shape.x(), this->_shape.height(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[1], this->_tv[1]},
-    };
-    LPDIRECT3DDEVICE9 device = Framework::getInstance()->device();
-    if (FAILED(device->CreateVertexBuffer(sizeof(data), 0,
-                                          D3DFVF_VERTEX,
-                                          D3DPOOL_DEFAULT,
-                                          &this->_vertexBuffer, NULL)))
-    {
-        return false;
-    }
-    void *ptr;
-    if (FAILED(this->_vertexBuffer->Lock(0, sizeof(data), (void**)&ptr, 0)))
-    {
-        return false;
-    }
-    memcpy(ptr, data, sizeof(data));
-    this->_vertexBuffer->Unlock();
-    return true;
+    this->_vertex = vertex;
+    this->scaleTo(1.0f, 1.0f);
+}
+
+/**
+ * 设置顶点缓存，保留原来的缩放。
+ * 当顶点缓存尺寸不变的情况下使用。
+ */
+void Sprite2D::setVertexBufferKeepScale(VertexBuffer2D *vertex)
+{
+    this->_vertex = vertex;
 }
 
 void Sprite2D::render()
 {
-    LPDIRECT3DDEVICE9 device = Framework::getInstance()->device();
-    D3DXMATRIX worldMatrix;
-    D3DXMATRIX scale;
-    D3DXMATRIX rotate;
-    D3DXMATRIX translation;
-    D3DXMatrixScaling(&scale, this->_scale.x(), this->_scale.y(), 1.0f);
-    D3DXMatrixRotationZ(&rotate, this->_rotate);
-    D3DXMatrixTranslation(&translation, this->_move.x(), this->_move.y(), 0.0f);
-    D3DXMatrixMultiply(&worldMatrix, &scale, &rotate);
-    D3DXMatrixMultiply(&worldMatrix, &worldMatrix, &translation);
-    device->SetTransform(D3DTS_WORLD, &worldMatrix);
-    device->SetStreamSource(0, this->_vertexBuffer, 0, sizeof(stD3DVertex));
-    device->SetFVF(D3DFVF_VERTEX);
-    device->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+    if (NULL != this->_vertex)
+    {
+        LPDIRECT3DDEVICE9 device = Framework::getInstance()->device();
+        D3DXMATRIX worldMatrix;
+        D3DXMATRIX scale;
+        D3DXMATRIX rotate;
+        D3DXMATRIX translate;
+        D3DXMatrixScaling(&scale, this->_scale.x(), this->_scale.y(), 1.0f);
+        D3DXMatrixRotationZ(&rotate, this->_rotate);
+        float x = this->_translate.x() - Framework::getInstance()->windowHalfWidth();
+        float y = this->_translate.y() - Framework::getInstance()->windowHalfHeight();
+        D3DXMatrixTranslation(&translate, x, y, 0.0f);
+        D3DXMatrixMultiply(&worldMatrix, &scale, &rotate);
+        D3DXMatrixMultiply(&worldMatrix, &worldMatrix, &translate);
+        device->SetTransform(D3DTS_WORLD, &worldMatrix);
+        if (NULL != this->_texture)
+        {
+            device->SetTexture(0, this->_texture->texture());
+        }
+        device->SetStreamSource(0, this->_vertex->vertexBuffer(), 0, sizeof(this->_vertex->vertexSize()));
+        device->SetFVF(this->_vertex->getFVF());
+        device->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+    }
 }
 
-void Sprite2D::testScaleTo(float x, float y)
+float Sprite2D::width() const
 {
-    this->_scale.setPos(x, y);
+    return this->_size.x() * 2.0f;
 }
 
-void Sprite2D::testRotateTo(float angle)
+float Sprite2D::height() const
+{
+    return this->_size.y() * 2.0f;
+}
+
+float Sprite2D::halfWidth() const
+{
+    return this->_size.x();
+}
+
+float Sprite2D::halfHeight() const
+{
+    return this->_size.y();
+}
+
+/**
+ * 立即改变缩放的数值。
+ * 类中的_size记录的是显示时的大小，
+ */
+void Sprite2D::scaleTo(float x, float y)
+{
+    if (NULL != this->_vertex)
+    {
+        float sx = this->halfWidth() / this->_vertex->halfWidth() * x;
+        float sy = this->halfHeight() / this->_vertex->halfHeight() * y;
+        this->_scale.setPos(sx, sy);
+    }
+    else
+    {
+        this->_scale.setPos(x, y);
+    }
+}
+
+/**
+ * 立即改变缩放的数值。
+ */
+void Sprite2D::rotateTo(float angle)
 {
     this->_rotate = angle;
 }
 
-void Sprite2D::testMoveTo(float x, float y)
+/**
+ * 立即改变旋转的数值。
+ */
+void Sprite2D::translateTo(float x, float y)
 {
-    this->_move.setPos(x, y);
+    this->_translate.setPos(x, y);
 }
