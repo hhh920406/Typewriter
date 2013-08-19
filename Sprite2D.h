@@ -23,6 +23,7 @@ public:
     void setTexture(Texture2D *texture);
     void setVertexBuffer(VertexBuffer2D *vertex);
     void setVertexBufferKeepScale(VertexBuffer2D *vertex);
+    virtual void act();
     void render();
     float width() const;
     float height() const;
@@ -31,6 +32,8 @@ public:
     void scaleTo(float x, float y);
     void rotateTo(float angle);
     void translateTo(float x, float y);
+    void deleteLater();
+    bool isDeleteLater();
 
 private:
     Texture2D *_texture;        /**纹理。*/
@@ -39,6 +42,7 @@ private:
     Point2D _scale;             /**当前的缩放量。*/
     Vector2D _translate;        /**当前的平移量。*/
     float _rotate;              /**当前的旋转量，逆时针为正方向。*/
+    bool _deleteLater;          /**是否删除。*/
 };
 
 #endif // SPRITE2D_H

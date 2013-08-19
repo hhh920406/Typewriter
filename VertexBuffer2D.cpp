@@ -15,10 +15,10 @@ VertexBuffer2D::VertexBuffer2D(const float width, const float height)
     this->_shape.setPos(width * 0.5f, height * 0.5f);
     this->_tu[0] = 0.0f;
     this->_tv[0] = 0.0f;
-    this->_tu[1] = 0.0f;
-    this->_tv[1] = 1.0f;
-    this->_tu[2] = 1.0f;
-    this->_tv[2] = 0.0f;
+    this->_tu[1] = 1.0f;
+    this->_tv[1] = 0.0f;
+    this->_tu[2] = 0.0f;
+    this->_tv[2] = 1.0f;
     this->_tu[3] = 1.0f;
     this->_tv[3] = 1.0f;
     this->createShape();
@@ -83,10 +83,10 @@ bool VertexBuffer2D::createShape()
 {
     stD3DVertex data[] =
     {
-        {this->_shape.x(), -this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[2], this->_tv[3]},
+        {this->_shape.x(), -this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[1], this->_tv[1]},
         {this->_shape.x(), this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[3], this->_tv[3]},
         {-this->_shape.x(), -this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[0], this->_tv[0]},
-        {-this->_shape.x(), this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[1], this->_tv[1]},
+        {-this->_shape.x(), this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[2], this->_tv[2]},
     };
     LPDIRECT3DDEVICE9 device = Framework::getInstance()->device();
     if (FAILED(device->CreateVertexBuffer(sizeof(data), 0,

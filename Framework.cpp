@@ -31,6 +31,7 @@ Framework::Framework()
 {
     this->_d3d = NULL;
     this->_device = NULL;
+    this->_spriteController = new Sprite2DController();
 }
 
 Framework::~Framework()
@@ -43,6 +44,7 @@ Framework::~Framework()
     {
         this->_d3d->Release();
     }
+    delete this->_spriteController;
 }
 
 Framework* Framework::getInstance()
@@ -140,6 +142,8 @@ void Framework::render()
     this->_device->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
     if (SUCCEEDED(this->_device->BeginScene()))
     {
+        this->_spriteController->act();
+        this->_spriteController->render();
         this->_device->EndScene();
     }
     this->_device->Present(NULL, NULL, NULL, NULL);
@@ -186,4 +190,9 @@ int Framework::windowHalfWidth() const
 int Framework::windowHalfHeight() const
 {
     return this->_windowHeight >> 1;
+}
+
+Sprite2DController* Framework::spriteController() const
+{
+    return this->_spriteController;
 }

@@ -8,6 +8,8 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <windows.h>
+#include "Sprite2D.h"
+#include "Sprite2DController.h"
 
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
@@ -30,6 +32,7 @@ public:
     int windowHeight() const;
     int windowHalfWidth() const;
     int windowHalfHeight() const;
+    Sprite2DController* spriteController() const;
 
 private:
     static Framework* _instance;
@@ -39,6 +42,7 @@ private:
     bool _isFullscreen;
     int _windowWidth;
     int _windowHeight;
+    Sprite2DController *_spriteController;
 
     Framework();
     bool initD3D(HWND hWnd);

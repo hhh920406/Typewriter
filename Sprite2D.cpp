@@ -13,6 +13,7 @@ Sprite2D::Sprite2D(const float width, const float height)
     this->_scale.setPos(1.0f, 1.0f);
     this->_rotate = 0.0f;
     this->_translate.setPos(0.0f, 0.0f);
+    this->_deleteLater = false;
 }
 
 Sprite2D::~Sprite2D()
@@ -43,6 +44,10 @@ void Sprite2D::setVertexBufferKeepScale(VertexBuffer2D *vertex)
     this->_vertex = vertex;
 }
 
+void Sprite2D::act()
+{
+}
+
 void Sprite2D::render()
 {
     if (NULL != this->_vertex)
@@ -55,7 +60,7 @@ void Sprite2D::render()
         D3DXMatrixScaling(&scale, this->_scale.x(), this->_scale.y(), 1.0f);
         D3DXMatrixRotationZ(&rotate, this->_rotate);
         float x = this->_translate.x() - Framework::getInstance()->windowHalfWidth();
-        float y = this->_translate.y() - Framework::getInstance()->windowHalfHeight();
+        float y = Framework::getInstance()->windowHalfHeight() - this->_translate.y();
         D3DXMatrixTranslation(&translate, x, y, 0.0f);
         D3DXMatrixMultiply(&worldMatrix, &scale, &rotate);
         D3DXMatrixMultiply(&worldMatrix, &worldMatrix, &translate);
@@ -64,7 +69,7 @@ void Sprite2D::render()
         {
             device->SetTexture(0, this->_texture->texture());
         }
-        device->SetStreamSource(0, this->_vertex->vertexBuffer(), 0, sizeof(this->_vertex->vertexSize()));
+        device->SetStreamSource(0, this->_vertex->vertexBuffer(), 0, this->_vertex->vertexSize());
         device->SetFVF(this->_vertex->getFVF());
         device->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
     }
@@ -122,4 +127,14 @@ void Sprite2D::rotateTo(float angle)
 void Sprite2D::translateTo(float x, float y)
 {
     this->_translate.setPos(x, y);
+}
+
+void Sprite2D::deleteLater()
+{
+    this->_deleteLater = true;
+}
+
+bool Sprite2D::isDeleteLater()
+{
+    return this->_deleteLater;
 }
