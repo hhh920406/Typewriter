@@ -78,7 +78,7 @@ void Framework::init(const char *title, int width, int height, bool fullScreen)
     };
     RegisterClassEx(&this->_window);
     HWND hWnd = CreateWindow("ZFramework", title,
-                             WS_OVERLAPPEDWINDOW, 100, 100, this->windowWidth(), this->windowHeight(),
+                             WS_OVERLAPPEDWINDOW, 100, 10, this->windowWidth(), this->windowHeight(),
                              NULL, NULL, this->_window.hInstance, NULL);
     if (this->initD3D(hWnd))
     {
@@ -124,16 +124,61 @@ bool Framework::initD3D(HWND hWnd)
     this->_device->SetTransform(D3DTS_PROJECTION, &projection);
     this->_device->SetRenderState(D3DRS_LIGHTING, FALSE);
     this->_device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+    this->_device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+    this->_device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+    this->_device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
     // 测试开始
-    const double PI = acos(-1.0);
-    for (int i = 0; i < 100; ++i)
+    if (D3DXCreateTextureFromFile(this->_device, "bullet_2.png", &this->_texture) != D3D_OK)
     {
-        this->_testSprite[i] = new Sprite2D(((i % 10) + 1) / 10.0 * 30, ((i % 10) + 1) / 10.0 * 30);
-        x[i] = 0.0f;
-        y[i] = 0.0f;
-        vx[i] = 2.0 * cos(PI * 2 * i / 100);
-        vy[i] = 2.0 * sin(PI * 2 * i / 100);
+        return false;
+    }
+    this->_device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+    this->_device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+    const double PI = acos(-1.0);
+    float tu1[4] = {0.0f, 0.5f, 0.0f, 0.5f};
+    float tv1[4] = {0.0f, 0.0f, 0.5f, 0.5f};
+    float tu2[4] = {0.5f, 1.0f, 0.5f, 1.0f};
+    float tv2[4] = {0.0f, 0.0f, 0.5f, 0.5f};
+    float tu3[4] = {0.0f, 0.5f, 0.0f, 0.5f};
+    float tv3[4] = {0.5f, 0.5f, 1.0f, 1.0f};
+    float tu4[4] = {0.5f, 1.0f, 0.5f, 1.0f};
+    float tv4[4] = {0.5f, 0.5f, 1.0f, 1.0f};
+    int cluster = 100;
+    for (int i = 0; i < cluster; ++i)
+    {
+        this->_testSprite[i] = new Sprite2D(20, 20, tu1, tv1);
+        x[i] = -100;
+        y[i] = -100;
+        vx[i] = 1.0 * cos(PI * 2 * i / 100);
+        vy[i] = 1.0 * sin(PI * 2 * i / 100);
         r[i] = PI * 2 * i / 100;
+    }
+    for (int i = 0; i < cluster; ++i)
+    {
+        this->_testSprite[i + cluster] = new Sprite2D(20, 20, tu2, tv2);
+        x[i + cluster] = -100;
+        y[i + cluster] = 100;
+        vx[i + cluster] = 1.0 * cos(PI * 2 * i / 100 + PI / 2);
+        vy[i + cluster] = 1.0 * sin(PI * 2 * i / 100 + PI / 2);
+        r[i + cluster] = PI * 2 * i / 100 + PI / 2;
+    }
+    for (int i = 0; i < cluster; ++i)
+    {
+        this->_testSprite[i + cluster * 2] = new Sprite2D(20, 20, tu3, tv3);
+        x[i + cluster * 2] = 100;
+        y[i + cluster * 2] = -100;
+        vx[i + cluster * 2] = 1.0 * cos(PI * 2 * i / 100 + PI);
+        vy[i + cluster * 2] = 1.0 * sin(PI * 2 * i / 100 + PI);
+        r[i + cluster * 2] = PI * 2 * i / 100 + PI;
+    }
+    for (int i = 0; i < cluster; ++i)
+    {
+        this->_testSprite[i + cluster * 3] = new Sprite2D(20, 20, tu4, tv4);
+        x[i + cluster * 3] = 100;
+        y[i + cluster * 3] = 100;
+        vx[i + cluster * 3] = 1.0 * cos(PI * 2 * i / 100 - PI / 2);
+        vy[i + cluster * 3] = 1.0 * sin(PI * 2 * i / 100 - PI / 2);
+        r[i + cluster * 3] = PI * 2 * i / 100 - PI / 2;
     }
     // 测试结束
     return true;
@@ -149,21 +194,23 @@ void Framework::render()
     if (SUCCEEDED(this->_device->BeginScene()))
     {
         // 测试开始
-        for (int i = 0; i < 100; ++i)
+        int tick = GetTickCount();
+        for (int i = 0; i < 400; ++i)
         {
             x[i] += vx[i];
             y[i] += vy[i];
             if (x[i] < -this->windowWidth() / 2 || x[i] > this->windowWidth() / 2)
             {
-                vx[i] = -vx[i];
+                //vx[i] = -vx[i];
             }
             if (y[i] < -this->windowHeight() / 2 || y[i] > this->windowHeight() / 2)
             {
-                vy[i] = -vy[i];
+                //vy[i] = -vy[i];
             }
             this->_testSprite[i]->testMoveTo(x[i], y[i]);
             this->_testSprite[i]->testRotateTo(r[i]);
             r[i] += 0.02;
+            this->_device->SetTexture(0, this->_texture);
             this->_testSprite[i]->render();
         }
         // 测试结束

@@ -46,6 +46,7 @@ private:
     float vx[10000];
     float vy[10000];
     float r[10000];
+    LPDIRECT3DTEXTURE9 _texture;
 
     Framework();
     bool initD3D(HWND hWnd);

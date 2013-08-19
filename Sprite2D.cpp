@@ -7,9 +7,12 @@ struct stD3DVertex
 {
     float x, y, z;
     unsigned long color;
+    float tu, tv;
 };
 
-Sprite2D::Sprite2D(const float width, const float height)
+#define D3DFVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
+
+Sprite2D::Sprite2D(const float width, const float height, const float tu[4], const float tv[4])
 {
     this->_vertexBuffer = NULL;
     this->_shape.setPos(- width * 0.5f, - height * 0.5f);
@@ -17,6 +20,11 @@ Sprite2D::Sprite2D(const float width, const float height)
     this->_move.setPos(0.0f, 0.0f);
     this->_scale.setPos(1.0f, 1.0f);
     this->_rotate = 0.0f;
+    for (int i = 0; i < 4; ++i)
+    {
+        this->_tu[i] = tu[i];
+        this->_tv[i] = tv[i];
+    }
     this->createShape();
 }
 
@@ -33,14 +41,14 @@ bool Sprite2D::createShape()
 {
     stD3DVertex data[] =
     {
-        {this->_shape.width(), this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255),},
-        {this->_shape.width(), this->_shape.height(), 0.5f, D3DCOLOR_XRGB(255, 255, 255),},
-        {this->_shape.x(), this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255),},
-        {this->_shape.x(), this->_shape.height(), 0.5f, D3DCOLOR_XRGB(255, 255, 255),},
+        {this->_shape.width(), this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[2], this->_tv[3]},
+        {this->_shape.width(), this->_shape.height(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[3], this->_tv[3]},
+        {this->_shape.x(), this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[0], this->_tv[0]},
+        {this->_shape.x(), this->_shape.height(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[1], this->_tv[1]},
     };
     LPDIRECT3DDEVICE9 device = Framework::getInstance()->device();
     if (FAILED(device->CreateVertexBuffer(sizeof(data), 0,
-                                          D3DFVF_XYZ | D3DFVF_DIFFUSE,
+                                          D3DFVF_VERTEX,
                                           D3DPOOL_DEFAULT,
                                           &this->_vertexBuffer, NULL)))
     {
@@ -70,8 +78,13 @@ void Sprite2D::render()
     D3DXMatrixMultiply(&worldMatrix, &worldMatrix, &translation);
     device->SetTransform(D3DTS_WORLD, &worldMatrix);
     device->SetStreamSource(0, this->_vertexBuffer, 0, sizeof(stD3DVertex));
-    device->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE);
+    device->SetFVF(D3DFVF_VERTEX);
     device->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+}
+
+void Sprite2D::testScaleTo(float x, float y)
+{
+    this->_scale.setPos(x, y);
 }
 
 void Sprite2D::testRotateTo(float angle)
