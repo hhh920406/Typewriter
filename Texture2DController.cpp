@@ -20,6 +20,9 @@ void Texture2DController::setLocation(int index, const char *location)
     this->_locations[index] = location;
 }
 
+/**
+ * 加载纹理。不在参数内的纹理将被释放。
+ */
 void Texture2DController::loadTextures(vector<int> indices)
 {
     this->loadNewTextures(indices);
@@ -42,6 +45,9 @@ void Texture2DController::loadTextures(vector<int> indices)
     }
 }
 
+/**
+ * 加载需要的纹理。
+ */
 void Texture2DController::loadNewTextures(vector<int> indices)
 {
     for (vector<int>::iterator it = indices.begin(); it != indices.end(); ++it)
