@@ -3,6 +3,7 @@ using namespace std;
 
 SceneController::SceneController()
 {
+    this->_currentScene = NULL;
 }
 
 SceneController::~SceneController()
@@ -17,12 +18,14 @@ SceneController::~SceneController()
 void SceneController::bindScene(const int index, Scene *scene)
 {
     this->_scenes[index] = scene;
+    scene->setSceneIndex(index);
 }
 
 void SceneController::setFirstScene(const int index)
 {
     this->_currentIndex = index;
     this->_currentScene = this->_scenes[index];
+    this->_currentScene->load();
 }
 
 void SceneController::setScene(const int index)
@@ -38,35 +41,56 @@ void SceneController::setScene(const int index)
 
 void SceneController::act()
 {
-    this->setScene(this->_currentScene->act());
+    if (this->_currentScene != NULL)
+    {
+        this->setScene(this->_currentScene->act());
+    }
 }
 
 void SceneController::render()
 {
-    this->setScene(this->_currentScene->render());
+    if (this->_currentScene != NULL)
+    {
+        this->setScene(this->_currentScene->render());
+    }
 }
 
 void SceneController::keyPressEvent(KeyState::Key key)
 {
-    this->setScene(this->_currentScene->keyPressEvent(key));
+    if (this->_currentScene != NULL)
+    {
+        this->setScene(this->_currentScene->keyPressEvent(key));
+    }
 }
 
 void SceneController::keyReleaseEvent(KeyState::Key key)
 {
-    this->setScene(this->_currentScene->keyReleaseEvent(key));
+    if (this->_currentScene != NULL)
+    {
+        this->setScene(this->_currentScene->keyReleaseEvent(key));
+    }
 }
 
 void SceneController::mousePressEvent(MouseState::Key key, int x, int y)
 {
-    this->setScene(this->_currentScene->mousePressEvent(key, x, y));
+    if (this->_currentScene != NULL)
+    {
+        this->setScene(this->_currentScene->mousePressEvent(key, x, y));
+    }
 }
 
 void SceneController::mouseReleaseEvent(MouseState::Key key, int x, int y)
 {
-    this->setScene(this->_currentScene->mouseReleaseEvent(key, x, y));
+    if (this->_currentScene != NULL)
+    {
+        this->setScene(this->_currentScene->mouseReleaseEvent(key, x, y));
+    }
 }
 
 void SceneController::mouseMoveEvent(int x, int y)
 {
-    this->setScene(this->_currentScene->mouseMoveEvent(x, y));
+    if (this->_currentScene != NULL)
+    {
+        this->setScene(this->_currentScene->mouseMoveEvent(x, y));
+    }
 }

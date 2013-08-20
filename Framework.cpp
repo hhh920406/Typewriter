@@ -170,7 +170,7 @@ bool Framework::initD3D(HWND hWnd)
     this->_device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
     return true;
 }
-
+#include <cstdio>
 void Framework::render()
 {
     if (NULL == this->_device)
