@@ -9,16 +9,12 @@ Sprite2DController::Sprite2DController()
 {
     this->_textureController = new Texture2DController();
     this->_vertexBufferController = new VertexBuffer2DController();
-    this->_currentSprites = new vector<Sprite2D*>();
-    this->_nextSprites = new vector<Sprite2D*>();
 }
 
 Sprite2DController::~Sprite2DController()
 {
     delete this->_textureController;
     delete this->_vertexBufferController;
-    delete this->_currentSprites;
-    delete this->_nextSprites;
 }
 
 void Sprite2DController::setTextureLocation(int index, const char *location)
@@ -36,34 +32,6 @@ void Sprite2DController::initSprite(Sprite2D* sprite,
     Texture2D *texture = this->_textureController->getTexture(textureIndex);
     sprite->setVertexBuffer(vertexBuffer);
     sprite->setTexture(texture);
-    this->_currentSprites->push_back(sprite);
-}
-
-void Sprite2DController::act()
-{
-    for (int i = 0; i < this->_currentSprites->size(); ++i)
-    {
-        if ((*this->_currentSprites)[i]->isDeleteLater())
-        {
-            delete (*this->_currentSprites)[i];
-            (*this->_currentSprites)[i] = NULL;
-        }
-        else
-        {
-            (*this->_currentSprites)[i]->act();
-            this->_nextSprites->push_back((*this->_currentSprites)[i]);
-        }
-    }
-    swap(this->_currentSprites, this->_nextSprites);
-    this->_nextSprites->clear();
-}
-
-void Sprite2DController::render()
-{
-    for (int i = 0; i < this->_currentSprites->size(); ++i)
-    {
-        (*this->_currentSprites)[i]->render();
-    }
 }
 
 Texture2DController* Sprite2DController::textureController() const

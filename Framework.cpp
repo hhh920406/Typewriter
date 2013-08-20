@@ -63,6 +63,7 @@ Framework::Framework()
     this->_d3d = NULL;
     this->_device = NULL;
     this->_spriteController = new Sprite2DController();
+    this->_sceneController = new SceneController();
     this->_keyState = new KeyState();
     this->_mouseState = new MouseState();
 }
@@ -78,6 +79,7 @@ Framework::~Framework()
         this->_d3d->Release();
     }
     delete this->_spriteController;
+    delete this->_sceneController;
     delete this->_keyState;
     delete this->_mouseState;
 }
@@ -178,8 +180,8 @@ void Framework::render()
     this->_device->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
     if (SUCCEEDED(this->_device->BeginScene()))
     {
-        this->_spriteController->act();
-        this->_spriteController->render();
+        this->sceneController()->act();
+        this->sceneController()->render();
         this->_device->EndScene();
     }
     this->_device->Present(NULL, NULL, NULL, NULL);
@@ -233,6 +235,11 @@ Sprite2DController* Framework::spriteController() const
     return this->_spriteController;
 }
 
+SceneController* Framework::sceneController() const
+{
+    return this->_sceneController;
+}
+
 KeyState* Framework::keyState() const
 {
     return this->_keyState;
@@ -246,26 +253,31 @@ MouseState* Framework::mouseState() const
 void Framework::keyPressEvent(const KeyState::Key key)
 {
     this->_keyState->press(key);
+    this->_sceneController->keyPressEvent(key);
 }
 
 void Framework::keyReleaseEvent(const KeyState::Key key)
 {
     this->_keyState->release(key);
+    this->_sceneController->keyReleaseEvent(key);
 }
 
 void Framework::mousePressEvent(const MouseState::Key key, int x, int y)
 {
     this->_mouseState->press(key);
     this->_mouseState->setPos(x, y);
+    this->_sceneController->mousePressEvent(key, x, y);
 }
 
 void Framework::mouseReleaseEvent(const MouseState::Key key, int x, int y)
 {
     this->_mouseState->release(key);
     this->_mouseState->setPos(x, y);
+    this->_sceneController->mouseReleaseEvent(key, x, y);
 }
 
 void Framework::mouseMoveEvent(int x, int y)
 {
     this->_mouseState->setPos(x, y);
+    this->_sceneController->mouseMoveEvent(x, y);
 }

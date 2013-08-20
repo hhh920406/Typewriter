@@ -12,6 +12,8 @@
 #include "Sprite2DController.h"
 #include "KeyState.h"
 #include "MouseState.h"
+#include "Scene.h"
+#include "SceneController.h"
 
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
@@ -34,7 +36,9 @@ public:
     int windowHeight() const;
     int windowHalfWidth() const;
     int windowHalfHeight() const;
+
     Sprite2DController* spriteController() const;
+    SceneController* sceneController() const;
 
     KeyState* keyState() const;
     MouseState* mouseState() const;
@@ -53,6 +57,7 @@ private:
     int _windowWidth;
     int _windowHeight;
     Sprite2DController *_spriteController;
+    SceneController *_sceneController;
     KeyState *_keyState;
     MouseState *_mouseState;
 

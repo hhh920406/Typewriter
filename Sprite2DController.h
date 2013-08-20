@@ -21,16 +21,12 @@ public:
                     int textureX1, int textureY1,
                     int textureX2, int textureY2,
                     int textureWidth, int textureHeight);
-    void act();
-    void render();
     Texture2DController* textureController() const;
     VertexBuffer2DController* vertexBufferController() const;
 
 private:
     Texture2DController *_textureController;
     VertexBuffer2DController *_vertexBufferController;
-    std::vector<Sprite2D*> *_currentSprites;
-    std::vector<Sprite2D*> *_nextSprites;
 };
 
 #endif // SPRITE2DCONTROLLER_H
