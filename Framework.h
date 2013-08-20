@@ -8,18 +8,19 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <windows.h>
-#include "Sprite2D.h"
-#include "Sprite2DController.h"
 #include "KeyState.h"
 #include "MouseState.h"
-#include "Scene.h"
-#include "SceneController.h"
 
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
 
 #define main zmain
 int zmain();
+
+class Scene;
+class SceneController;
+class Sprite2DController;
+class WidgetController;
 
 class Framework
 {
@@ -38,6 +39,7 @@ public:
     int windowHalfHeight() const;
 
     Sprite2DController* spriteController() const;
+    WidgetController* widgetController() const;
     SceneController* sceneController() const;
 
     KeyState* keyState() const;
@@ -57,6 +59,7 @@ private:
     int _windowWidth;
     int _windowHeight;
     Sprite2DController *_spriteController;
+    WidgetController *_widgetController;
     SceneController *_sceneController;
     KeyState *_keyState;
     MouseState *_mouseState;

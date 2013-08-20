@@ -26,6 +26,8 @@ private:
     Rect2D _bounding;
     int _birthCount;
     int _kickTime;
+    float _a;
+    float _ax, _ay;
 };
 
 #endif // TESTSPRITE2D_H

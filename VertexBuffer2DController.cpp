@@ -39,7 +39,12 @@ VertexBuffer2D* VertexBuffer2DController::getVertexBuffer(int textureX1, int tex
     tu[1] = tu[3] = 1.0f * textureX2 / textureWidth;
     tv[0] = tv[1] = 1.0f * textureY1 / textureHeight;
     tv[2] = tv[3] = 1.0f * textureY2 / textureHeight;
-    VertexBuffer2D *vertexBuffer = new VertexBuffer2D(width, height, tu, tv);
+    VertexBuffer2D *vertexBuffer = this->createVertexBuffer(width, height, tu, tv);
     this->_buffers[info] = vertexBuffer;
     return vertexBuffer;
+}
+
+VertexBuffer2D* VertexBuffer2DController::createVertexBuffer(float width, float height, float tu[4], float tv[4])
+{
+    return new VertexBuffer2D(width, height, tu, tv);
 }

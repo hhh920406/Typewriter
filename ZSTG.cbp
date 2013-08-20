@@ -5,7 +5,7 @@
 		<Option title="ZSTG" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="Game Framework\;Game Framework\Basic\;Game Framework\;STG Framework\;Implement\;Game Framework\Graphics\;" />
+		<Option virtualFolders="Game Framework\;Game Framework\Test\;Game Framework\Basic\;Game Framework\;Game Framework\Test\;STG Framework\;Implement\;Game Framework\Graphics\;Game Framework\Widget\;Game Framework\Interact\;" />
 		<Build>
 			<Target title="Windows_Debug">
 				<Option output="bin\Windows_Debug\ZSTG" prefix_auto="1" extension_auto="1" />
@@ -73,6 +73,18 @@
 		<Unit filename="Framework.h">
 			<Option virtualFolder="Game Framework\" />
 		</Unit>
+		<Unit filename="KeyState.cpp">
+			<Option virtualFolder="Game Framework\Interact\" />
+		</Unit>
+		<Unit filename="KeyState.h">
+			<Option virtualFolder="Game Framework\Interact\" />
+		</Unit>
+		<Unit filename="MouseState.cpp">
+			<Option virtualFolder="Game Framework\Interact\" />
+		</Unit>
+		<Unit filename="MouseState.h">
+			<Option virtualFolder="Game Framework\Interact\" />
+		</Unit>
 		<Unit filename="Point2D.cpp">
 			<Option virtualFolder="Game Framework\Basic\" />
 		</Unit>
@@ -85,6 +97,18 @@
 		<Unit filename="Rect2D.h">
 			<Option virtualFolder="Game Framework\Basic\" />
 		</Unit>
+		<Unit filename="Scene.cpp">
+			<Option virtualFolder="Game Framework\Interact\" />
+		</Unit>
+		<Unit filename="Scene.h">
+			<Option virtualFolder="Game Framework\Interact\" />
+		</Unit>
+		<Unit filename="SceneController.cpp">
+			<Option virtualFolder="Game Framework\Interact\" />
+		</Unit>
+		<Unit filename="SceneController.h">
+			<Option virtualFolder="Game Framework\Interact\" />
+		</Unit>
 		<Unit filename="Sprite2D.cpp">
 			<Option virtualFolder="Game Framework\Graphics\" />
 		</Unit>
@@ -96,6 +120,22 @@
 		</Unit>
 		<Unit filename="Sprite2DController.h">
 			<Option virtualFolder="Game Framework\Graphics\" />
+		</Unit>
+		<Unit filename="TestScene.cpp">
+			<Option virtualFolder="Game Framework\Test\" />
+			<Option target="Windows_Debug" />
+		</Unit>
+		<Unit filename="TestScene.h">
+			<Option virtualFolder="Game Framework\Test\" />
+			<Option target="Windows_Debug" />
+		</Unit>
+		<Unit filename="TestSprite2D.cpp">
+			<Option virtualFolder="Game Framework\Test\" />
+			<Option target="Windows_Debug" />
+		</Unit>
+		<Unit filename="TestSprite2D.h">
+			<Option virtualFolder="Game Framework\Test\" />
+			<Option target="Windows_Debug" />
 		</Unit>
 		<Unit filename="Texture2D.cpp">
 			<Option virtualFolder="Game Framework\Graphics\" />
@@ -126,6 +166,24 @@
 		</Unit>
 		<Unit filename="VertexBuffer2DController.h">
 			<Option virtualFolder="Game Framework\Graphics\" />
+		</Unit>
+		<Unit filename="Widget.cpp">
+			<Option virtualFolder="Game Framework\Widget\" />
+		</Unit>
+		<Unit filename="Widget.h">
+			<Option virtualFolder="Game Framework\Widget\" />
+		</Unit>
+		<Unit filename="WidgetBuffer2D.cpp">
+			<Option virtualFolder="Game Framework\Widget\" />
+		</Unit>
+		<Unit filename="WidgetBuffer2D.h">
+			<Option virtualFolder="Game Framework\Widget\" />
+		</Unit>
+		<Unit filename="WidgetBuffer2DController.cpp">
+			<Option virtualFolder="Game Framework\Widget\" />
+		</Unit>
+		<Unit filename="WidgetBuffer2DController.h">
+			<Option virtualFolder="Game Framework\Widget\" />
 		</Unit>
 		<Unit filename="main.cpp">
 			<Option virtualFolder="Implement\" />

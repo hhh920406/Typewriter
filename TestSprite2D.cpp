@@ -2,6 +2,7 @@
 #include "TestSprite2D.h"
 #include "Framework.h"
 #include "VertexBuffer2DController.h"
+#include "Sprite2DController.h"
 
 TestSprite2D::TestSprite2D(const float width, const float height) : Sprite2D(width, height)
 {
@@ -37,8 +38,7 @@ void TestSprite2D::setBirth(int num)
 void TestSprite2D::act()
 {
     --this->_birthCount;
-    this->_speed.setX(this->_speed.x() * 1.0001);
-    this->_speed.setY(this->_speed.y() * 1.0001);
+    this->setSpeed(this->_speed.x() * 1.0001f, this->_speed.y() * 1.0001f);
     if (this->_kickTime >= 0)
     {
         this->rotateTo(-atan2(this->_speed.y(), this->_speed.x()));
@@ -51,14 +51,11 @@ void TestSprite2D::act()
     {
         this->_pos = this->_pos + this->_speed;
         this->translateTo(this->_pos.x(), this->_pos.y());
-        if (this->_birthCount <= -100000)
-        {
-            this->_pos.setPos(960 / 2, 720 / 2);
-            this->_birthCount += 100000;
-        }
         this->_pos = this->_pos + this->_speed;
         if (this->_kickTime >= 0)
         {
+            this->_speed.setPos(this->_speed.x() * 0.999, this->_speed.y() * 0.999);
+            this->_scale.setPos(this->_scale.x() * 0.999, this->_scale.y() * 0.999);
             if (this->_pos.x() < this->_bounding.x())
             {
                 this->_pos.setX((this->_bounding.x()) * 2 - this->_pos.x());
@@ -86,7 +83,7 @@ void TestSprite2D::act()
         }
         if (this->_kickTime == -1)
         {
-            this->_speed.setPos(this->_speed.x() * 1.5f, this->_speed.y() * 1.5f);
+            this->_speed.setPos(this->_speed.x() * 1.6f, this->_speed.y() * 1.6f);
             this->setVertexBuffer(Framework::getInstance()->spriteController()->vertexBufferController()->getVertexBuffer(128, 256, 256, 384, 1024, 1024));
             this->scaleTo(1.0f, 2.0f);
         }
@@ -97,13 +94,15 @@ void TestSprite2D::act()
         }
         if (this->_kickTime == -5)
         {
-            this->setVertexBuffer(Framework::getInstance()->spriteController()->vertexBufferController()->getVertexBuffer(320, 64, 384, 128, 1024, 1024));
+            this->setVertexBuffer(Framework::getInstance()->spriteController()->vertexBufferController()->getVertexBuffer(320, 0, 384, 64, 1024, 1024));
             this->scaleTo(0.625f, 1.25f);
+            this->_a = sqrt(this->_speed.x() * this->_speed.x() + this->_speed.y() * this->_speed.y());
+            this->_ax = - this->_speed.x() / _a * 0.05f;
+            this->_ay = - this->_speed.y() / _a * 0.05f;
         }
         if (this->_kickTime < 0)
         {
             --this->_kickTime;
-            this->_rotate += 0.05;
             if (this->_pos.x() < this->_bounding.x() - halfWidth() ||
                 this->_pos.x() > this->_bounding.x() + this->_bounding.width() + halfWidth() ||
                 this->_pos.y() < this->_bounding.y() - halfHeight() ||

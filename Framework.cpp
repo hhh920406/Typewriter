@@ -1,5 +1,10 @@
 #include <cmath>
 #include "Framework.h"
+#include "Sprite2D.h"
+#include "Sprite2DController.h"
+#include "Scene.h"
+#include "SceneController.h"
+#include "WidgetController.h"
 
 Framework* Framework::_instance = NULL;
 
@@ -63,6 +68,7 @@ Framework::Framework()
     this->_d3d = NULL;
     this->_device = NULL;
     this->_spriteController = new Sprite2DController();
+    this->_widgetController = new WidgetController();
     this->_sceneController = new SceneController();
     this->_keyState = new KeyState();
     this->_mouseState = new MouseState();
@@ -79,6 +85,7 @@ Framework::~Framework()
         this->_d3d->Release();
     }
     delete this->_spriteController;
+    delete this->_widgetController;
     delete this->_sceneController;
     delete this->_keyState;
     delete this->_mouseState;
@@ -233,6 +240,11 @@ int Framework::windowHalfHeight() const
 Sprite2DController* Framework::spriteController() const
 {
     return this->_spriteController;
+}
+
+WidgetController* Framework::widgetController() const
+{
+    return this->_widgetController;
 }
 
 SceneController* Framework::sceneController() const

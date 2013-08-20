@@ -1,5 +1,7 @@
+#include <cstdlib>
 #include "TestScene.h"
 #include "Framework.h"
+#include "Sprite2DController.h"
 #include "TestSprite2D.h"
 
 TestScene::TestScene() : Scene()
@@ -12,26 +14,33 @@ void TestScene::load()
     Framework *framework = Framework::getInstance();
     framework->spriteController()->setTextureLocation(0, "bullet.png");
     framework->spriteController()->setTextureLocation(1, "back.jpg");
-    Sprite2D *back = new Sprite2D(800, 600);
+    Sprite2D *back = new Sprite2D(960, 720);
     framework->spriteController()->initSprite(back, 1, 0, 0, 554, 341, 554, 341);
-    back->translateTo(800 / 2, 600 / 2);
+    back->translateTo(960 / 2, 720 / 2);
     this->addSprite(back);
     const double PI = acos(-1.0);
+    int flag = 1;
+    int angle = 0;
     for (int i = 0; i < 20000; ++i)
     {
         TestSprite2D *sprite = new TestSprite2D(40, 20);
-        framework->spriteController()->initSprite(sprite, 0, 0, 0, 64, 64, 1024, 1024);
-        sprite->setPosition(800 / 2, 600 / 2);
+        framework->spriteController()->initSprite(sprite, 0, 320, 0, 384, 64, 1024, 1024);
+        sprite->setPosition(960 / 2, 720 / 2);
         float speed = 2.0f;
-        sprite->setSpeed(speed * cos(i / 800.0 * PI * 2 + PI / 4 * (i % 8)),
-                         speed * sin(i / 800.0 * PI * 2 + PI / 4 * (i % 8)));
-        sprite->setBirth(i);
-        sprite->setBounding(0, 800, 0, 600);
+        if ((rand() % 1000) == 1)
+        {
+            flag = -flag;
+        }
+        angle += flag;
+        sprite->setSpeed(speed * cos(angle / 1600.0 * PI * 2 + PI * (angle % 2)),
+                         speed * sin(angle / 1600.0 * PI * 2 + PI * (angle % 2)));
+        sprite->setBirth(i / 2);
+        sprite->setBounding(960 / 2 - 300, 960 / 2 + 300, 720 / 2 - 300, 720 / 2 + 300);
         this->addSprite(sprite);
     }
     this->_player = new Sprite2D(30, 30);
     framework->spriteController()->initSprite(this->_player, 0,
-                                              448, 0, 512, 64,
+                                              0, 0, 64, 64,
                                               1024, 1024);
     this->_x = 400;
     this->_y = 500;

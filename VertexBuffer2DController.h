@@ -17,7 +17,7 @@ public:
                                     int textureX2, int textureY2,
                                     int textureWidth, int textureHeight);
 
-private:
+protected:
     struct VertexBufferInfo
     {
         int textureX1, textureY1;
@@ -49,6 +49,8 @@ private:
         }
     };
     std::map<VertexBufferInfo, VertexBuffer2D*> _buffers;
+
+    virtual VertexBuffer2D* createVertexBuffer(float width, float height, float tu[4], float tv[4]);
 };
 
 #endif // VERTEXBUFFER2DCONTROLLER_H
