@@ -18,6 +18,8 @@ public:
     void setTextureLocation(int index, const char *location);
     void initWidget(Widget* widget,
                     int textureIndex,
+                    int x, int y,
+                    int width, int height,
                     int textureX1, int textureY1,
                     int textureX2, int textureY2,
                     int textureWidth, int textureHeight);

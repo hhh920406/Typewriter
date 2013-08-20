@@ -18,8 +18,8 @@ public:
     float height() const;
     float halfWidth() const;
     float halfHeight() const;
-    virtual unsigned int vertexSize() const;
-    virtual int getFVF() const;
+    unsigned int vertexSize() const;
+    int getFVF() const;
 
 protected:
     Point2D _shape;

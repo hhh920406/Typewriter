@@ -39,10 +39,7 @@ void TestSprite2D::act()
 {
     --this->_birthCount;
     this->setSpeed(this->_speed.x() * 1.0001f, this->_speed.y() * 1.0001f);
-    if (this->_kickTime >= 0)
-    {
-        this->rotateTo(-atan2(this->_speed.y(), this->_speed.x()));
-    }
+    this->rotateTo(-atan2(this->_speed.y(), this->_speed.x()));
     if (this->_birthCount > 0)
     {
         this->translateTo(this->_pos.x(), this->_pos.y());
@@ -84,21 +81,6 @@ void TestSprite2D::act()
         if (this->_kickTime == -1)
         {
             this->_speed.setPos(this->_speed.x() * 1.6f, this->_speed.y() * 1.6f);
-            this->setVertexBuffer(Framework::getInstance()->spriteController()->vertexBufferController()->getVertexBuffer(128, 256, 256, 384, 1024, 1024));
-            this->scaleTo(1.0f, 2.0f);
-        }
-        if (this->_kickTime < -1 && this->_kickTime > -5)
-        {
-            this->_scale.setX(this->_scale.x() * 0.95);
-            this->_scale.setY(this->_scale.y() * 0.95);
-        }
-        if (this->_kickTime == -5)
-        {
-            this->setVertexBuffer(Framework::getInstance()->spriteController()->vertexBufferController()->getVertexBuffer(320, 0, 384, 64, 1024, 1024));
-            this->scaleTo(0.625f, 1.25f);
-            this->_a = sqrt(this->_speed.x() * this->_speed.x() + this->_speed.y() * this->_speed.y());
-            this->_ax = - this->_speed.x() / _a * 0.05f;
-            this->_ay = - this->_speed.y() / _a * 0.05f;
         }
         if (this->_kickTime < 0)
         {

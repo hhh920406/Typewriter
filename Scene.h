@@ -8,7 +8,9 @@
 #include <vector>
 #include "KeyState.h"
 #include "MouseState.h"
-#include "Sprite2D.h"
+
+class Sprite2D;
+class Widget;
 
 class Scene
 {
@@ -20,6 +22,7 @@ public:
     void setSceneIndex(const int index);
 
     void addSprite(Sprite2D *sprite);
+    void addWidget(Widget *widget);
 
     virtual void load();
     virtual void release();
@@ -36,6 +39,7 @@ protected:
     int _sceneIndex;
     std::vector<Sprite2D*> *_currentSprites;
     std::vector<Sprite2D*> *_nextSprites;
+    std::vector<Widget*> *_widgets;
 };
 
 #endif // SCENE_H

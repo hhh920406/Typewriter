@@ -1,3 +1,6 @@
+#include "Framework.h"
+#include "Texture2D.h"
+#include "WidgetBuffer2D.h"
 #include "Widget.h"
 
 Widget::Widget()
@@ -28,4 +31,23 @@ void Widget::setTexture(Texture2D *texture)
 Texture2D* Widget::texture() const
 {
     return this->_texture;
+}
+
+void Widget::act()
+{
+}
+
+void Widget::render()
+{
+    if (NULL != this->_vertexBuffer)
+    {
+        LPDIRECT3DDEVICE9 device = Framework::getInstance()->device();
+        if (NULL != this->_texture)
+        {
+            device->SetTexture(0, this->_texture->texture());
+        }
+        device->SetStreamSource(0, this->_vertexBuffer->vertexBuffer(), 0, this->_vertexBuffer->vertexSize());
+        device->SetFVF(this->_vertexBuffer->getFVF());
+        device->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+    }
 }

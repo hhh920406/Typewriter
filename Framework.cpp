@@ -123,7 +123,7 @@ void Framework::init(const char *title, int width, int height, bool fullScreen)
     };
     RegisterClassEx(&this->_window);
     HWND hWnd = CreateWindow("ZFramework", title,
-                             WS_OVERLAPPEDWINDOW, 100, 10, this->windowWidth(), this->windowHeight(),
+                             WS_OVERLAPPEDWINDOW, 100, 10, this->windowWidth() + 16, this->windowHeight() + 32,
                              NULL, NULL, this->_window.hInstance, NULL);
     if (this->initD3D(hWnd))
     {

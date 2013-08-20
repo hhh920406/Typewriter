@@ -1,3 +1,5 @@
+#include "Sprite2D.h"
+#include "Widget.h"
 #include "Scene.h"
 using namespace std;
 
@@ -5,6 +7,7 @@ Scene::Scene()
 {
     this->_currentSprites = new vector<Sprite2D*>();
     this->_nextSprites = new vector<Sprite2D*>();
+    this->_widgets = new vector<Widget*>();
 }
 
 Scene::~Scene()
@@ -12,6 +15,7 @@ Scene::~Scene()
     this->release();
     delete this->_currentSprites;
     delete this->_nextSprites;
+    delete this->_widgets;
 }
 
 void Scene::load()
@@ -25,6 +29,11 @@ void Scene::release()
         delete (*this->_currentSprites)[i];
     }
     this->_currentSprites->clear();
+    for (int i = 0; i < this->_widgets->size(); ++i)
+    {
+        delete (*this->_widgets)[i];
+    }
+    this->_widgets->clear();
 }
 
 int Scene::sceneIndex() const
@@ -40,6 +49,11 @@ void Scene::setSceneIndex(const int index)
 void Scene::addSprite(Sprite2D *sprite)
 {
     this->_currentSprites->push_back(sprite);
+}
+
+void Scene::addWidget(Widget *widget)
+{
+    this->_widgets->push_back(widget);
 }
 
 int Scene::act()
@@ -59,6 +73,11 @@ int Scene::act()
     }
     swap(this->_currentSprites, this->_nextSprites);
     this->_nextSprites->clear();
+
+    for (int i = 0; i < this->_widgets->size(); ++i)
+    {
+        (*this->_widgets)[i]->act();
+    }
     return this->_sceneIndex;
 }
 
@@ -67,6 +86,10 @@ int Scene::render()
     for (int i = 0; i < this->_currentSprites->size(); ++i)
     {
         (*this->_currentSprites)[i]->render();
+    }
+    for (int i = 0; i < this->_widgets->size(); ++i)
+    {
+        (*this->_widgets)[i]->render();
     }
     return this->_sceneIndex;
 }

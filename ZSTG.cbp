@@ -179,10 +179,10 @@
 		<Unit filename="WidgetBuffer2D.h">
 			<Option virtualFolder="Game Framework\Widget\" />
 		</Unit>
-		<Unit filename="WidgetBuffer2DController.cpp">
+		<Unit filename="WidgetController.cpp">
 			<Option virtualFolder="Game Framework\Widget\" />
 		</Unit>
-		<Unit filename="WidgetBuffer2DController.h">
+		<Unit filename="WidgetController.h">
 			<Option virtualFolder="Game Framework\Widget\" />
 		</Unit>
 		<Unit filename="main.cpp">

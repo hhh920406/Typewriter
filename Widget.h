@@ -16,6 +16,8 @@ public:
     WidgetBuffer2D* vertexBuffer() const;
     void setTexture(Texture2D *texture);
     Texture2D* texture() const;
+    virtual void act();
+    virtual void render();
 
 protected:
     WidgetBuffer2D *_vertexBuffer;

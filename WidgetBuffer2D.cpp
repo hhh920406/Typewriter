@@ -7,14 +7,38 @@ struct stD3DVertex
     float tu, tv;
 };
 
-WidgetBuffer2D::WidgetBuffer2D(const float width, const float height) : VertexBuffer2D(width, height)
+WidgetBuffer2D::WidgetBuffer2D(const float x, const float y,
+                               const float width, const float height,
+                               const float tu[4], const float tv[4])
 {
+    this->_vertexBuffer = NULL;
+    stD3DVertex data[] =
+    {
+        {x + width, y, 0.5f, 1.0f, D3DCOLOR_XRGB(255, 255, 255), tu[1], tv[1]},
+        {x + width, y + height, 0.5f, 1.0f, D3DCOLOR_XRGB(255, 255, 255), tu[3], tv[3]},
+        {x, y, 0.5f, 1.0f, D3DCOLOR_XRGB(255, 255, 255), tu[0], tv[0]},
+        {x, y + height, 0.5f, 1.0f, D3DCOLOR_XRGB(255, 255, 255), tu[2], tv[2]},
+    };
+    LPDIRECT3DDEVICE9 device = Framework::getInstance()->device();
+    if (FAILED(device->CreateVertexBuffer(sizeof(data), 0,
+                                          this->getFVF(),
+                                          D3DPOOL_DEFAULT,
+                                          &this->_vertexBuffer, NULL)))
+    {
+        return;
+    }
+    void *ptr;
+    if (FAILED(this->_vertexBuffer->Lock(0, sizeof(data), (void**)&ptr, 0)))
+    {
+        return;
+    }
+    memcpy(ptr, data, sizeof(data));
+    this->_vertexBuffer->Unlock();
 }
 
-WidgetBuffer2D::WidgetBuffer2D(const float width, const float height, const float tu[4], const float tv[4]) :
-    VertexBuffer2D(width, height, tu, tv)
+WidgetBuffer2D::~WidgetBuffer2D()
 {
-
+    this->_vertexBuffer->Release();
 }
 
 unsigned int WidgetBuffer2D::vertexSize() const
@@ -27,29 +51,7 @@ int WidgetBuffer2D::getFVF() const
     return (D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
 }
 
-bool WidgetBuffer2D::createShape()
+LPDIRECT3DVERTEXBUFFER9 WidgetBuffer2D::vertexBuffer() const
 {
-    stD3DVertex data[] =
-    {
-        {this->_shape.x(), -this->_shape.y(), 0.5f, 1.0f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[3], this->_tv[3]},
-        {this->_shape.x(), this->_shape.y(), 0.5f, 1.0f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[1], this->_tv[1]},
-        {-this->_shape.x(), -this->_shape.y(), 0.5f, 1.0f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[2], this->_tv[2]},
-        {-this->_shape.x(), this->_shape.y(), 0.5f, 1.0f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[0], this->_tv[0]},
-    };
-    LPDIRECT3DDEVICE9 device = Framework::getInstance()->device();
-    if (FAILED(device->CreateVertexBuffer(sizeof(data), 0,
-                                          this->getFVF(),
-                                          D3DPOOL_DEFAULT,
-                                          &this->_vertexBuffer, NULL)))
-    {
-        return false;
-    }
-    void *ptr;
-    if (FAILED(this->_vertexBuffer->Lock(0, sizeof(data), (void**)&ptr, 0)))
-    {
-        return false;
-    }
-    memcpy(ptr, data, sizeof(data));
-    this->_vertexBuffer->Unlock();
-    return true;
+    return this->_vertexBuffer;
 }
