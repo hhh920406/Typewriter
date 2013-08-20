@@ -19,6 +19,37 @@ LRESULT WINAPI messageProcess(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_DESTROY:
         PostQuitMessage(0);
         return 0;
+    case WM_KEYDOWN:
+        Framework::getInstance()->keyPressEvent(KeyState::convertKey(wParam));
+        break;
+    case WM_KEYUP:
+        Framework::getInstance()->keyReleaseEvent(KeyState::convertKey(wParam));
+        break;
+    case WM_LBUTTONDOWN:
+        Framework::getInstance()->mousePressEvent(MouseState::KEY_LEFT, LOWORD(lParam), HIWORD(lParam));
+        break;
+    case WM_RBUTTONDOWN:
+        Framework::getInstance()->mousePressEvent(MouseState::KEY_RIGHT, LOWORD(lParam), HIWORD(lParam));
+        break;
+    case WM_MBUTTONDOWN:
+        Framework::getInstance()->mousePressEvent(MouseState::KEY_MIDDLE, LOWORD(lParam), HIWORD(lParam));
+        break;
+    case WM_LBUTTONUP:
+        Framework::getInstance()->mouseReleaseEvent(MouseState::KEY_LEFT, LOWORD(lParam), HIWORD(lParam));
+        break;
+    case WM_RBUTTONUP:
+        Framework::getInstance()->mouseReleaseEvent(MouseState::KEY_RIGHT, LOWORD(lParam), HIWORD(lParam));
+        break;
+    case WM_MBUTTONUP:
+        Framework::getInstance()->mouseReleaseEvent(MouseState::KEY_MIDDLE, LOWORD(lParam), HIWORD(lParam));
+        break;
+    case WM_MOUSEMOVE:
+        Framework::getInstance()->mouseMoveEvent(LOWORD(lParam), HIWORD(lParam));
+        break;
+    case WM_MOUSEWHEEL:
+        break;
+    case WM_MOUSELEAVE:
+        break;
     case WM_PAINT:
         Framework::getInstance()->render();
         ValidateRect(hWnd, NULL);
@@ -32,6 +63,8 @@ Framework::Framework()
     this->_d3d = NULL;
     this->_device = NULL;
     this->_spriteController = new Sprite2DController();
+    this->_keyState = new KeyState();
+    this->_mouseState = new MouseState();
 }
 
 Framework::~Framework()
@@ -45,6 +78,8 @@ Framework::~Framework()
         this->_d3d->Release();
     }
     delete this->_spriteController;
+    delete this->_keyState;
+    delete this->_mouseState;
 }
 
 Framework* Framework::getInstance()
@@ -107,6 +142,7 @@ bool Framework::initD3D(HWND hWnd)
         d3dpp.Windowed = FALSE;
         d3dpp.BackBufferWidth = 800;
         d3dpp.BackBufferHeight = 600;
+        ShowCursor(FALSE);
     }
     else
     {
@@ -195,4 +231,41 @@ int Framework::windowHalfHeight() const
 Sprite2DController* Framework::spriteController() const
 {
     return this->_spriteController;
+}
+
+KeyState* Framework::keyState() const
+{
+    return this->_keyState;
+}
+
+MouseState* Framework::mouseState() const
+{
+    return this->_mouseState;
+}
+
+void Framework::keyPressEvent(const KeyState::Key key)
+{
+    this->_keyState->press(key);
+}
+
+void Framework::keyReleaseEvent(const KeyState::Key key)
+{
+    this->_keyState->release(key);
+}
+
+void Framework::mousePressEvent(const MouseState::Key key, int x, int y)
+{
+    this->_mouseState->press(key);
+    this->_mouseState->setPos(x, y);
+}
+
+void Framework::mouseReleaseEvent(const MouseState::Key key, int x, int y)
+{
+    this->_mouseState->release(key);
+    this->_mouseState->setPos(x, y);
+}
+
+void Framework::mouseMoveEvent(int x, int y)
+{
+    this->_mouseState->setPos(x, y);
 }

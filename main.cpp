@@ -4,7 +4,7 @@
 int main()
 {
     Framework *framework = Framework::getInstance();
-    framework->init("Framework", 800, 600, false);
+    framework->init("Framework", 800, 600, true);
     framework->spriteController()->setTextureLocation(0, "bullet.png");
     framework->spriteController()->setTextureLocation(1, "back.jpg");
     Sprite2D *back = new Sprite2D(800, 600);

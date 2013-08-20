@@ -10,6 +10,8 @@
 #include <windows.h>
 #include "Sprite2D.h"
 #include "Sprite2DController.h"
+#include "KeyState.h"
+#include "MouseState.h"
 
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
@@ -34,6 +36,14 @@ public:
     int windowHalfHeight() const;
     Sprite2DController* spriteController() const;
 
+    KeyState* keyState() const;
+    MouseState* mouseState() const;
+    void keyPressEvent(const KeyState::Key key);
+    void keyReleaseEvent(const KeyState::Key key);
+    void mousePressEvent(const MouseState::Key key, int x, int y);
+    void mouseReleaseEvent(const MouseState::Key key, int x, int y);
+    void mouseMoveEvent(int x, int y);
+
 private:
     static Framework* _instance;
     WNDCLASSEX _window;
@@ -43,6 +53,8 @@ private:
     int _windowWidth;
     int _windowHeight;
     Sprite2DController *_spriteController;
+    KeyState *_keyState;
+    MouseState *_mouseState;
 
     Framework();
     bool initD3D(HWND hWnd);
