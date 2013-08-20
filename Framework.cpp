@@ -105,8 +105,8 @@ bool Framework::initD3D(HWND hWnd)
     if (this->isFullscreen())
     {
         d3dpp.Windowed = FALSE;
-        d3dpp.BackBufferWidth = this->windowWidth();
-        d3dpp.BackBufferHeight = this->windowHeight();
+        d3dpp.BackBufferWidth = 800;
+        d3dpp.BackBufferHeight = 600;
     }
     else
     {

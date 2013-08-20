@@ -24,7 +24,7 @@ public:
     void setVertexBuffer(VertexBuffer2D *vertex);
     void setVertexBufferKeepScale(VertexBuffer2D *vertex);
     virtual void act();
-    void render();
+    virtual void render();
     float width() const;
     float height() const;
     float halfWidth() const;
@@ -35,7 +35,7 @@ public:
     void deleteLater();
     bool isDeleteLater();
 
-private:
+protected:
     Texture2D *_texture;        /**纹理。*/
     VertexBuffer2D *_vertex;    /**顶点缓存。*/
     Point2D _size;              /**尺寸的一半。*/

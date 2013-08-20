@@ -7,8 +7,6 @@ struct stD3DVertex
     float tu, tv;
 };
 
-#define D3DFVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
-
 VertexBuffer2D::VertexBuffer2D(const float width, const float height)
 {
     this->_vertexBuffer = NULL;
@@ -76,21 +74,21 @@ unsigned int VertexBuffer2D::vertexSize() const
 
 int VertexBuffer2D::getFVF() const
 {
-    return D3DFVF_VERTEX;
+    return (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
 }
 
 bool VertexBuffer2D::createShape()
 {
     stD3DVertex data[] =
     {
-        {this->_shape.x(), -this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[1], this->_tv[1]},
-        {this->_shape.x(), this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[3], this->_tv[3]},
-        {-this->_shape.x(), -this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[0], this->_tv[0]},
-        {-this->_shape.x(), this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[2], this->_tv[2]},
+        {this->_shape.x(), -this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[3], this->_tv[3]},
+        {this->_shape.x(), this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[1], this->_tv[1]},
+        {-this->_shape.x(), -this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[2], this->_tv[2]},
+        {-this->_shape.x(), this->_shape.y(), 0.5f, D3DCOLOR_XRGB(255, 255, 255), this->_tu[0], this->_tv[0]},
     };
     LPDIRECT3DDEVICE9 device = Framework::getInstance()->device();
     if (FAILED(device->CreateVertexBuffer(sizeof(data), 0,
-                                          D3DFVF_VERTEX,
+                                          this->getFVF(),
                                           D3DPOOL_DEFAULT,
                                           &this->_vertexBuffer, NULL)))
     {

@@ -18,17 +18,16 @@ public:
     float height() const;
     float halfWidth() const;
     float halfHeight() const;
-    unsigned int vertexSize() const;
-    int getFVF() const;
+    virtual unsigned int vertexSize() const;
+    virtual int getFVF() const;
 
 protected:
-    bool createShape();
-
-private:
     Point2D _shape;
     float _tu[4];
     float _tv[4];
     LPDIRECT3DVERTEXBUFFER9 _vertexBuffer;
+
+    virtual bool createShape();
 };
 
 #endif // VERTEXBUFFER2D_H
