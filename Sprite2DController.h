@@ -23,6 +23,8 @@ public:
                     int textureWidth, int textureHeight);
     void act();
     void render();
+    Texture2DController* textureController() const;
+    VertexBuffer2DController* vertexBufferController() const;
 
 private:
     Texture2DController *_textureController;

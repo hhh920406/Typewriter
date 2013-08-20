@@ -38,7 +38,7 @@ void Sprite2DController::initSprite(Sprite2D* sprite,
     sprite->setTexture(texture);
     this->_currentSprites->push_back(sprite);
 }
-#include <cstdio>
+
 void Sprite2DController::act()
 {
     for (int i = 0; i < this->_currentSprites->size(); ++i)
@@ -56,7 +56,6 @@ void Sprite2DController::act()
     }
     swap(this->_currentSprites, this->_nextSprites);
     this->_nextSprites->clear();
-    printf("%d\n", this->_currentSprites->size());
 }
 
 void Sprite2DController::render()
@@ -65,4 +64,14 @@ void Sprite2DController::render()
     {
         (*this->_currentSprites)[i]->render();
     }
+}
+
+Texture2DController* Sprite2DController::textureController() const
+{
+    return this->_textureController;
+}
+
+VertexBuffer2DController* Sprite2DController::vertexBufferController() const
+{
+    return this->_vertexBufferController;
 }

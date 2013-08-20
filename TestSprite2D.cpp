@@ -1,5 +1,7 @@
 #include <cmath>
 #include "TestSprite2D.h"
+#include "Framework.h"
+#include "VertexBuffer2DController.h"
 
 TestSprite2D::TestSprite2D(const float width, const float height) : Sprite2D(width, height)
 {
@@ -35,11 +37,11 @@ void TestSprite2D::setBirth(int num)
 void TestSprite2D::act()
 {
     --this->_birthCount;
-    this->_rotate += 0.03f;
-    if (fabs(this->_speed.x()) < 20.0f && fabs(this->_speed.y()) < 20.0f)
+    this->_speed.setX(this->_speed.x() * 1.0001);
+    this->_speed.setY(this->_speed.y() * 1.0001);
+    if (this->_kickTime >= 0)
     {
-        this->_speed.setX(this->_speed.x() * 1.0005);
-        this->_speed.setY(this->_speed.y() * 1.0005);
+        this->rotateTo(-atan2(this->_speed.y(), this->_speed.x()));
     }
     if (this->_birthCount > 0)
     {
@@ -57,33 +59,51 @@ void TestSprite2D::act()
         this->_pos = this->_pos + this->_speed;
         if (this->_kickTime >= 0)
         {
-            if (this->_pos.x() < this->_bounding.x() + halfWidth())
+            if (this->_pos.x() < this->_bounding.x())
             {
-                this->_pos.setX((this->_bounding.x() + halfWidth()) * 2 - this->_pos.x());
+                this->_pos.setX((this->_bounding.x()) * 2 - this->_pos.x());
                 this->_speed.setX(-this->_speed.x());
                 --_kickTime;
             }
-            else if (this->_pos.x() > this->_bounding.x() + this->_bounding.width() - halfWidth())
+            else if (this->_pos.x() > this->_bounding.x() + this->_bounding.width())
             {
-                this->_pos.setX((this->_bounding.x() + this->_bounding.width() - halfWidth()) * 2 - this->_pos.x());
+                this->_pos.setX((this->_bounding.x() + this->_bounding.width()) * 2 - this->_pos.x());
                 this->_speed.setX(-this->_speed.x());
                 --_kickTime;
             }
-            else if (this->_pos.y() < this->_bounding.y() + halfHeight())
+            else if (this->_pos.y() < this->_bounding.y())
             {
-                this->_pos.setY((this->_bounding.y() + halfHeight()) * 2 - this->_pos.y());
+                this->_pos.setY((this->_bounding.y()) * 2 - this->_pos.y());
                 this->_speed.setY(-this->_speed.y());
                 --_kickTime;
             }
-            else if (this->_pos.y() > this->_bounding.y() + this->_bounding.height() - halfHeight())
+            else if (this->_pos.y() > this->_bounding.y() + this->_bounding.height())
             {
-                this->_pos.setY((this->_bounding.y() + this->_bounding.height() - halfHeight()) * 2 - this->_pos.y());
+                this->_pos.setY((this->_bounding.y() + this->_bounding.height()) * 2 - this->_pos.y());
                 this->_speed.setY(-this->_speed.y());
                 --_kickTime;
             }
         }
-        if (this->_kickTime <= 0)
+        if (this->_kickTime == -1)
         {
+            this->_speed.setPos(this->_speed.x() * 1.5f, this->_speed.y() * 1.5f);
+            this->setVertexBuffer(Framework::getInstance()->spriteController()->vertexBufferController()->getVertexBuffer(128, 256, 256, 384, 1024, 1024));
+            this->scaleTo(1.0f, 2.0f);
+        }
+        if (this->_kickTime < -1 && this->_kickTime > -5)
+        {
+            this->_scale.setX(this->_scale.x() * 0.95);
+            this->_scale.setY(this->_scale.y() * 0.95);
+        }
+        if (this->_kickTime == -5)
+        {
+            this->setVertexBuffer(Framework::getInstance()->spriteController()->vertexBufferController()->getVertexBuffer(320, 64, 384, 128, 1024, 1024));
+            this->scaleTo(0.625f, 1.25f);
+        }
+        if (this->_kickTime < 0)
+        {
+            --this->_kickTime;
+            this->_rotate += 0.05;
             if (this->_pos.x() < this->_bounding.x() - halfWidth() ||
                 this->_pos.x() > this->_bounding.x() + this->_bounding.width() + halfWidth() ||
                 this->_pos.y() < this->_bounding.y() - halfHeight() ||
