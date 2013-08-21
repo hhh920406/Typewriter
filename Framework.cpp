@@ -122,9 +122,21 @@ void Framework::init(const char *title, int width, int height, bool fullScreen)
         "ZFramework", NULL
     };
     RegisterClassEx(&this->_window);
-    HWND hWnd = CreateWindow("ZFramework", title,
-                             WS_OVERLAPPEDWINDOW, 100, 10, this->windowWidth() + 16, this->windowHeight() + 32,
-                             NULL, NULL, this->_window.hInstance, NULL);
+    RECT rect = {0, 0, width, height};
+    AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
+    HWND hWnd;
+    if (fullScreen)
+    {
+        hWnd = CreateWindow("ZFramework", title,
+                            WS_EX_TOPMOST | WS_POPUP, 100, 10, rect.right - rect.left, rect.bottom - rect.top,
+                            NULL, NULL, this->_window.hInstance, NULL);
+    }
+    else
+    {
+        hWnd = CreateWindow("ZFramework", title,
+                            WS_OVERLAPPEDWINDOW, 100, 10, rect.right - rect.left, rect.bottom - rect.top,
+                            NULL, NULL, this->_window.hInstance, NULL);
+    }
     if (this->initD3D(hWnd))
     {
         ShowWindow(hWnd, SW_SHOWDEFAULT);
@@ -146,11 +158,12 @@ bool Framework::initD3D(HWND hWnd)
     }
     D3DPRESENT_PARAMETERS d3dpp;
     ZeroMemory(&d3dpp, sizeof(d3dpp));
+    d3dpp.BackBufferFormat = displayMode.Format;
     if (this->isFullscreen())
     {
         d3dpp.Windowed = FALSE;
-        d3dpp.BackBufferWidth = 800;
-        d3dpp.BackBufferHeight = 600;
+        d3dpp.BackBufferWidth = 960;
+        d3dpp.BackBufferHeight = 720;
         ShowCursor(FALSE);
     }
     else
@@ -158,7 +171,6 @@ bool Framework::initD3D(HWND hWnd)
         d3dpp.Windowed = TRUE;
     }
     d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-    d3dpp.BackBufferFormat = displayMode.Format;
     if (FAILED(this->_d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
                                          D3DCREATE_SOFTWARE_VERTEXPROCESSING,
                                          &d3dpp, &this->_device)))

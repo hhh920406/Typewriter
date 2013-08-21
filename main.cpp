@@ -5,7 +5,7 @@
 int main()
 {
     Framework *framework = Framework::getInstance();
-    framework->init("Framework", 960, 720, false);
+    framework->init("Framework", 960, 720, true);
     TestScene *scene = new TestScene();
     framework->getInstance()->sceneController()->bindScene(0, scene);
     framework->getInstance()->sceneController()->setFirstScene(0);
