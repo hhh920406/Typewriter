@@ -100,6 +100,11 @@ float Sprite2D::halfHeight() const
     return this->_size.y();
 }
 
+Point2D Sprite2D::position() const
+{
+    return this->_translate;
+}
+
 /**
  * 立即改变缩放的数值。
  * 类中的_size记录的是显示时的大小，

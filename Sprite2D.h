@@ -28,6 +28,7 @@ public:
     float height() const;
     float halfWidth() const;
     float halfHeight() const;
+    Point2D position() const;
     void scaleTo(float x, float y);
     void rotateTo(float angle);
     void translateTo(float x, float y);
