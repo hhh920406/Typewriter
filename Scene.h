@@ -27,7 +27,7 @@ public:
     virtual void load();
     virtual void release();
 
-    virtual int act();
+    virtual int act(int milliseconds);
     virtual int render();
     virtual int keyPressEvent(KeyState::Key);
     virtual int keyReleaseEvent(KeyState::Key);

@@ -39,11 +39,11 @@ void SceneController::setScene(const int index)
     }
 }
 
-void SceneController::act()
+void SceneController::act(int milliseconds)
 {
     if (this->_currentScene != NULL)
     {
-        this->setScene(this->_currentScene->act());
+        this->setScene(this->_currentScene->act(milliseconds));
     }
 }
 

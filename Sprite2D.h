@@ -23,7 +23,7 @@ public:
     void setTexture(Texture2D *texture);
     void setVertexBuffer(VertexBuffer2D *vertex);
     void setVertexBufferKeepScale(VertexBuffer2D *vertex);
-    virtual void act();
+    virtual void act(int milliseconds);
     virtual void render();
     float width() const;
     float height() const;
@@ -35,6 +35,14 @@ public:
     void deleteLater();
     bool isDeleteLater();
 
+    const Vector2D velocity() const;
+    const Vector2D accelerated() const;
+    const Vector2D jerk() const;
+    void setVelocity(const Vector2D &velocity);
+    void setAccelerated(const Vector2D &accelerated);
+    void setJerk(const Vector2D &jerk);
+    void move(int milliSeconds);
+
 protected:
     Texture2D *_texture;        /**纹理。*/
     VertexBuffer2D *_vertex;    /**顶点缓存。*/
@@ -43,6 +51,10 @@ protected:
     Vector2D _translate;        /**当前的平移量。*/
     float _rotate;              /**当前的旋转量，逆时针为正方向。*/
     bool _deleteLater;          /**是否删除。*/
+
+    Vector2D _velocity;         /**移动的速度，以像素/毫秒为单位。*/
+    Vector2D _accelerated;      /**移动的加速度。*/
+    Vector2D _jerk;             /**移动的急动度。*/
 };
 
 #endif // SPRITE2D_H

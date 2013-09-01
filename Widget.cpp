@@ -33,7 +33,7 @@ Texture2D* Widget::texture() const
     return this->_texture;
 }
 
-void Widget::act()
+void Widget::act(int)
 {
 }
 

@@ -65,3 +65,19 @@ const double operator ^(const Vector2D &a, const Vector2D &b)
 {
     return a.x() * b.y() - a.y() * b.x();
 }
+
+const Vector2D operator *(const Vector2D &a, const double b)
+{
+    Vector2D c;
+    c.setX(a.x() * b);
+    c.setY(a.y() * b);
+    return c;
+}
+
+const Vector2D operator /(const Vector2D &a, const double b)
+{
+    Vector2D c;
+    c.setX(a.x() / b);
+    c.setY(a.y() / b);
+    return c;
+}

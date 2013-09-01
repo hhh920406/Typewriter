@@ -20,6 +20,9 @@ public:
     friend const Vector2D operator -(const Vector2D &a, const Vector2D &b);
     friend const double operator *(const Vector2D &a, const Vector2D &b);
     friend const double operator ^(const Vector2D &a, const Vector2D &b);
+
+    friend const Vector2D operator *(const Vector2D &a, const double b);
+    friend const Vector2D operator /(const Vector2D &a, const double b);
 };
 
 #endif // VECTOR2D_H

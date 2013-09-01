@@ -14,6 +14,10 @@ Sprite2D::Sprite2D(const float width, const float height)
     this->_rotate = 0.0f;
     this->_translate.setPos(0.0f, 0.0f);
     this->_deleteLater = false;
+
+    this->_velocity.setPos(0.0f, 0.0f);
+    this->_accelerated.setPos(0.0f, 0.0f);
+    this->_jerk.setPos(0.0f, 0.0f);
 }
 
 Sprite2D::~Sprite2D()
@@ -44,8 +48,9 @@ void Sprite2D::setVertexBufferKeepScale(VertexBuffer2D *vertex)
     this->_vertex = vertex;
 }
 
-void Sprite2D::act()
+void Sprite2D::act(int milliseconds)
 {
+    this->move(milliseconds);
 }
 
 void Sprite2D::render()
@@ -137,4 +142,41 @@ void Sprite2D::deleteLater()
 bool Sprite2D::isDeleteLater()
 {
     return this->_deleteLater;
+}
+
+const Vector2D Sprite2D::velocity() const
+{
+    return this->_velocity;
+}
+
+const Vector2D Sprite2D::accelerated() const
+{
+    return this->_accelerated;
+}
+
+const Vector2D Sprite2D::jerk() const
+{
+    return this->_jerk;
+}
+
+void Sprite2D::setVelocity(const Vector2D &velocity)
+{
+    this->_velocity = velocity;
+}
+
+void Sprite2D::setAccelerated(const Vector2D &accelerated)
+{
+    this->_accelerated = accelerated;
+}
+
+void Sprite2D::setJerk(const Vector2D &jerk)
+{
+    this->_jerk = jerk;
+}
+
+void Sprite2D::move(int milliSeconds)
+{
+    this->_accelerated = this->_accelerated + this->_jerk;
+    this->_velocity = this->_velocity + this->_accelerated;
+    this->_translate = this->_translate + this->_velocity * milliSeconds;
 }

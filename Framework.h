@@ -50,6 +50,8 @@ public:
     void mouseReleaseEvent(const MouseState::Key key, int x, int y);
     void mouseMoveEvent(int x, int y);
 
+    float fps() const;
+
 private:
     static Framework* _instance;
     WNDCLASSEX _window;
@@ -63,6 +65,12 @@ private:
     SceneController *_sceneController;
     KeyState *_keyState;
     MouseState *_mouseState;
+
+    int _lastTime;       // 上次刷新时间。
+    int _lastSecondTime; // 上次用于计算帧率的时间。
+    int _currentTime;    // 当前时间。
+    int _frameCount;     // 帧数。
+    float _fps;
 
     Framework();
     bool initD3D(HWND hWnd);

@@ -20,45 +20,49 @@ void TestScene::load()
     int angle = 0;
     for (int i = 0; i < 20000; ++i)
     {
-        TestSprite2D *sprite = new TestSprite2D(40, 20);
+        TestSprite2D *sprite = new TestSprite2D(40, 40);
         framework->spriteController()->initSprite(sprite, 0, 320, 0, 384, 64, 1024, 1024);
-        sprite->setPosition(50 + 500 / 2, 50 + 620 / 2);
+        sprite->translateTo(50 + 500 / 2, 50 + 500 / 2);
         float speed = 2.0f;
         if ((rand() % 1000) == 1)
         {
             flag = -flag;
         }
         angle += flag;
-        sprite->setSpeed(speed * cos(PI / 4 + 2 * PI / 13 * (angle % 13)),
-                        speed * sin(PI / 4 + 2 * PI / 13 * (angle % 13)));
-        sprite->setBirth(i / 13);
-        sprite->setBounding(50, 550, 50, 670);
+        sprite->setVelocity(Vector2D(0.1 * cos(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2),
+                                     0.1 * sin(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2)));
+        sprite->setAccelerated(Vector2D(0.003 * cos(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2),
+                                        0.003 * sin(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2)));
+        sprite->setJerk(Vector2D(- 0.0001 * cos(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2),
+                                 - 0.0001 * sin(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2)));
+        sprite->setBirth(i / 4);
+        sprite->setBounding(50, 550, 50, 550);
         this->addSprite(sprite);
     }
     framework->widgetController()->setTextureLocation(1, "back.png");
     Widget *widget;
     widget = new Widget();
     framework->widgetController()->initWidget(widget, 1,
-                                              0, 0, 50, 720,
-                                              0, 0, 50, 720,
-                                              960, 720);
+                                              0, 0, 50, 600,
+                                              0, 0, 50, 600,
+                                              800, 600);
     this->addWidget(widget);
     widget = new Widget();
     framework->widgetController()->initWidget(widget, 1,
-                                              50, 0, 550 - 50, 50,
                                               50, 0, 550, 50,
-                                              960, 720);
+                                              50, 0, 600, 50,
+                                              800, 600);
     this->addWidget(widget);
     widget = new Widget();
     framework->widgetController()->initWidget(widget, 1,
-                                              50, 670, 550 - 50, 720 - 670,
-                                              50, 670, 550, 720,
-                                              960, 720);
+                                              50, 550, 550, 50,
+                                              50, 550, 600, 600,
+                                              800, 600);
     this->addWidget(widget);
     widget = new Widget();
     framework->widgetController()->initWidget(widget, 1,
-                                              550, 0, 960 - 550, 720,
-                                              550, 0, 960, 720,
-                                              960, 720);
+                                              550, 0, 250, 600,
+                                              550, 0, 800, 600,
+                                              800, 600);
     this->addWidget(widget);
 }

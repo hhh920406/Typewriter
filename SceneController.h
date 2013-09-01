@@ -15,7 +15,7 @@ public:
     void bindScene(const int index, Scene *scene);
     void setFirstScene(const int index);
 
-    void act();
+    void act(int milliseconds);
     void render();
     void keyPressEvent(KeyState::Key key);
     void keyReleaseEvent(KeyState::Key key);

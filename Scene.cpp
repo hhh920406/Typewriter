@@ -56,7 +56,7 @@ void Scene::addWidget(Widget *widget)
     this->_widgets->push_back(widget);
 }
 
-int Scene::act()
+int Scene::act(int milliseconds)
 {
     for (int i = 0; i < this->_currentSprites->size(); ++i)
     {
@@ -67,7 +67,7 @@ int Scene::act()
         }
         else
         {
-            (*this->_currentSprites)[i]->act();
+            (*this->_currentSprites)[i]->act(milliseconds);
             this->_nextSprites->push_back((*this->_currentSprites)[i]);
         }
     }
@@ -76,7 +76,7 @@ int Scene::act()
 
     for (int i = 0; i < this->_widgets->size(); ++i)
     {
-        (*this->_widgets)[i]->act();
+        (*this->_widgets)[i]->act(milliseconds);
     }
     return this->_sceneIndex;
 }

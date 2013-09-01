@@ -162,8 +162,8 @@ bool Framework::initD3D(HWND hWnd)
     if (this->isFullscreen())
     {
         d3dpp.Windowed = FALSE;
-        d3dpp.BackBufferWidth = 960;
-        d3dpp.BackBufferHeight = 720;
+        d3dpp.BackBufferWidth = this->windowWidth();
+        d3dpp.BackBufferHeight = this->windowHeight();
         ShowCursor(FALSE);
     }
     else
@@ -189,26 +189,42 @@ bool Framework::initD3D(HWND hWnd)
     this->_device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
     return true;
 }
-#include <cstdio>
+
 void Framework::render()
 {
-    if (NULL == this->_device)
+    this->_currentTime = timeGetTime();
+    if ((this->_currentTime - this->_lastTime) * 61 > 1000)
     {
-        return;
+        int past = this->_currentTime - this->_lastTime;
+        if (NULL == this->_device)
+        {
+            return;
+        }
+        this->_device->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+        if (SUCCEEDED(this->_device->BeginScene()))
+        {
+            this->sceneController()->act(past);
+            this->sceneController()->render();
+            this->_device->EndScene();
+        }
+        this->_device->Present(NULL, NULL, NULL, NULL);
+        ++this->_frameCount;
+        if (this->_currentTime - this->_lastSecondTime > 1000)
+        {
+            this->_fps = 1000.0f * this->_frameCount / (this->_currentTime - this->_lastSecondTime);
+            this->_lastSecondTime = this->_currentTime;
+            this->_frameCount = 0;
+        }
+        this->_lastTime = this->_currentTime;
     }
-    this->_device->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-    if (SUCCEEDED(this->_device->BeginScene()))
-    {
-        this->sceneController()->act();
-        this->sceneController()->render();
-        this->_device->EndScene();
-    }
-    this->_device->Present(NULL, NULL, NULL, NULL);
 }
 
 void Framework::messageLoop()
 {
     MSG msg;
+    this->_lastTime = timeGetTime();
+    this->_lastSecondTime = this->_lastTime;
+    this->_frameCount = 0;
     while (msg.message != WM_QUIT)
     {
         if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
@@ -304,4 +320,9 @@ void Framework::mouseMoveEvent(int x, int y)
 {
     this->_mouseState->setPos(x, y);
     this->_sceneController->mouseMoveEvent(x, y);
+}
+
+float Framework::fps() const
+{
+    return this->_fps;
 }
