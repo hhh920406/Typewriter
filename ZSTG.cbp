@@ -64,6 +64,7 @@
 			<Add library="odbc32" />
 			<Add library="odbccp32" />
 			<Add library="d3d9" />
+			<Add library="winmm" />
 			<Add directory="D:\Microsoft DirectX SDK (June 2010)\lib" />
 			<Add directory="D:\Microsoft DirectX SDK (June 2010)\lib\x86" />
 		</Linker>

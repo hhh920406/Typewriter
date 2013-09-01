@@ -31,11 +31,11 @@ void TestScene::load()
         angle += flag;
         sprite->setVelocity(Vector2D(0.1 * cos(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2),
                                      0.1 * sin(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2)));
-        sprite->setAccelerated(Vector2D(0.003 * cos(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2),
-                                        0.003 * sin(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2)));
-        sprite->setJerk(Vector2D(- 0.0001 * cos(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2),
-                                 - 0.0001 * sin(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2)));
-        sprite->setBirth(i / 4);
+        sprite->setAccelerated(Vector2D((((i / 4) % 3) + 1) * 0.0035 * cos(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2),
+                                        (((i / 4) % 3) + 1) * 0.0035 * sin(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2)));
+        sprite->setJerk(Vector2D(- 0.0002 * cos(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2),
+                                 - 0.0002 * sin(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2)));
+        sprite->setBirth(i / 12);
         sprite->setBounding(50, 550, 50, 550);
         this->addSprite(sprite);
     }

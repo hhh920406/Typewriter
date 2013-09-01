@@ -8,7 +8,6 @@
  * 基本几何变换的执行顺序是：缩放->旋转->平移。
  * @author ZHG <CyberZHG@gmail.com>
  */
-
 #include "Point2D.h"
 #include "Vector2D.h"
 
