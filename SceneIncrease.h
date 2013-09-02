@@ -16,6 +16,8 @@ public:
     virtual int act(int milliseconds);
     virtual int render();
 
+    virtual int keyPressEvent(KeyState::Key);
+
 private:
     enum Status
     {

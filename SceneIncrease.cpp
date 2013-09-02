@@ -37,7 +37,7 @@ void SceneIncrease::load()
         this->addSprite(sprite);
     }
     restart();
-    this->_status = STATUS_MOVING;
+    this->_status = STATUS_WAITING;
 }
 
 int SceneIncrease::act(int milliseconds)
@@ -121,6 +121,16 @@ int SceneIncrease::render()
         this->_sprites[i]->render();
     }
     this->_player->render();
+    return this->sceneIndex();
+}
+
+int SceneIncrease::keyPressEvent(KeyState::Key)
+{
+    if (this->_status == STATUS_WAITING)
+    {
+        restart();
+        this->_status = STATUS_MOVING;
+    }
     return this->sceneIndex();
 }
 
