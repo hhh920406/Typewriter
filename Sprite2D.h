@@ -8,6 +8,7 @@
  * 基本几何变换的执行顺序是：缩放->旋转->平移。
  * @author ZHG <CyberZHG@gmail.com>
  */
+#include <vector>
 #include "Point2D.h"
 #include "Vector2D.h"
 
@@ -19,9 +20,13 @@ class Sprite2D
 public:
     Sprite2D(const float width, const float height);
     virtual ~Sprite2D();
-    void setTexture(Texture2D *texture);
-    void setVertexBuffer(VertexBuffer2D *vertex);
-    void setVertexBufferKeepScale(VertexBuffer2D *vertex);
+    int textureNum() const;
+    void setTextureNum(const int value);
+    int textureIndex() const;
+    void setTextureIndex(const int value);
+    void setTexture(Texture2D *texture, int index = 0);
+    void setVertexBuffer(VertexBuffer2D *vertex, int index = 0);
+    void setVertexBufferKeepScale(VertexBuffer2D *vertex, int index = 0);
     virtual void act(int milliseconds);
     virtual void render();
     float width() const;
@@ -44,8 +49,10 @@ public:
     void move(int milliSeconds);
 
 protected:
-    Texture2D *_texture;        /**纹理。*/
-    VertexBuffer2D *_vertex;    /**顶点缓存。*/
+    int _textureNum;                    /**纹理的数量。*/
+    int _textureIndex;                  /**当前纹理的索引。*/
+    std::vector<Texture2D*> _texture;        /**纹理。*/
+    std::vector<VertexBuffer2D*> _vertex;    /**顶点缓存。*/
     Point2D _size;              /**尺寸的一半。*/
     Point2D _scale;             /**当前的缩放量。*/
     Vector2D _translate;        /**当前的平移量。*/
