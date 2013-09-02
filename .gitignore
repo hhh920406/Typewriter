@@ -5,3 +5,4 @@ obj
 # Code::Blocks Files
 *.depend
 *.layout
+*.cbTemp
