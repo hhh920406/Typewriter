@@ -42,10 +42,8 @@ public:
 
     const Vector2D velocity() const;
     const Vector2D accelerated() const;
-    const Vector2D jerk() const;
     void setVelocity(const Vector2D &velocity);
     void setAccelerated(const Vector2D &accelerated);
-    void setJerk(const Vector2D &jerk);
     void move(int milliSeconds);
 
 protected:
@@ -61,7 +59,6 @@ protected:
 
     Vector2D _velocity;         /**移动的速度，以像素/毫秒为单位。*/
     Vector2D _accelerated;      /**移动的加速度。*/
-    Vector2D _jerk;             /**移动的急动度。*/
 };
 
 #endif // SPRITE2D_H
