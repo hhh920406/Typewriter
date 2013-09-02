@@ -110,12 +110,6 @@
 		<Unit filename="SceneController.h">
 			<Option virtualFolder="Game Framework\Interact\" />
 		</Unit>
-		<Unit filename="SceneIncrease.cpp">
-			<Option virtualFolder="Implement\" />
-		</Unit>
-		<Unit filename="SceneIncrease.h">
-			<Option virtualFolder="Implement\" />
-		</Unit>
 		<Unit filename="Sprite2D.cpp">
 			<Option virtualFolder="Game Framework\Graphics\" />
 		</Unit>
