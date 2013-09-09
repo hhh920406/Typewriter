@@ -11,13 +11,13 @@ def to_24_hour_clock(hours):
     return hours % 24
 
 def get_hours(time):
-    return int(time / 3600)
+    return (time // 3600) % 24
 
 def get_minutes(time):
-    return int((time % 3600) / 60)
+    return (time % 3600) // 60
 
 def get_seconds(time):
-    return int(time % 60)
+    return time % 60
 
 def time_to_utc(utc_offset, time):
     time -= utc_offset
