@@ -1,7 +1,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#define EPS 1e-3
+#define EPS 1e-2
 
 struct Pivot
 {
@@ -9,12 +9,18 @@ struct Pivot
     double objective;
 };
 
+struct Answer
+{
+    double maximum;
+    int stepNum;
+};
+
 char command[1024];
 
 int main()
 {
     int i;
-    struct Pivot p1, p2;
+    struct Answer a1, a2;
     FILE *file;
     for (i = 1; i <= 10; ++i)
     {
@@ -24,22 +30,19 @@ int main()
 
         sprintf(command, "dict%d.test", i);
         file = fopen(command, "r");
-        fscanf(file, "%d%d%lf", &p1.enter, &p1.leave, &p1.objective);
+        fscanf(file, "%lf%d", &a1.maximum, &a1.stepNum);
         fclose(file);
 
         sprintf(command, "dict%d.output", i);
         file = fopen(command, "r");
-        fscanf(file, "%d%d%lf", &p2.enter, &p2.leave, &p2.objective);
+        fscanf(file, "%lf%d", &a2.maximum, &a2.stepNum);
         fclose(file);
 
-        if (p1.enter != p2.enter ||
-            p1.leave != p2.leave ||
-            fabs(p1.objective - p2.objective) > EPS)
+        if (a1.stepNum != a2.stepNum || fabs(a1.maximum - a2.maximum) > EPS)
         {
             printf("No\n");
-            printf("%d\t\t%d\n", p1.enter, p2.enter);
-            printf("%d\t\t%d\n", p1.leave, p2.leave);
-            printf("%.3lf\t\t%.3lf\n", p1.objective, p2.objective);
+            printf("%lf\t\t%lf\n", a1.maximum, a2.maximum);
+            printf("%d\t\t%d\n", a1.stepNum, a2.stepNum);
         }
         else
         {

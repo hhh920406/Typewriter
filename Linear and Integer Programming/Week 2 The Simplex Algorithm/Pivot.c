@@ -239,14 +239,19 @@ void transformDict(PDict dict, int enterIndex, int leaveIndex)
 
 void pivot(PDict dict)
 {
-    int enterIndex, leaveIndex;
-    //printDict(dict);
-    enterIndex = getEnteringIndex(dict);
-    leaveIndex = getLeavingIndex(dict, enterIndex);
-    printf("%d\n%d\n", dict->N[enterIndex], dict->B[leaveIndex]);
-    transformDict(dict, enterIndex, leaveIndex);
-    printf("%lf\n", dict->z0);
-    //printDict(dict);
+    int enterIndex, leaveIndex, step = 0;
+    while (1)
+    {
+        enterIndex = getEnteringIndex(dict);
+        if (-1 == enterIndex)
+        {
+            break;
+        }
+        leaveIndex = getLeavingIndex(dict, enterIndex);
+        transformDict(dict, enterIndex, leaveIndex);
+        ++step;
+    }
+    printf("%lf\n%d\n", dict->z0, step);
 }
 
 int isUnbounded(PDict dict)
