@@ -5,7 +5,7 @@
 		<Option title="ZSTG" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="Game Framework\;Game Framework\Test\;Game Framework\Basic\;Game Framework\;Game Framework\Test\;STG Framework\;Implement\;Game Framework\Graphics\;Game Framework\Widget\;Game Framework\Interact\;" />
+		<Option virtualFolders="Game Framework\;Game Framework\Test\;Game Framework\Basic\;Game Framework\;Game Framework\Test\;Implement\;Game Framework\Graphics\;Game Framework\Widget\;Game Framework\Interact\;Implement\Define\;Implement\Scene\;" />
 		<Build>
 			<Target title="Windows_Debug">
 				<Option output="bin\Windows_Debug\ZSTG" prefix_auto="1" extension_auto="1" />
@@ -110,6 +110,10 @@
 		<Unit filename="SceneController.h">
 			<Option virtualFolder="Game Framework\Interact\" />
 		</Unit>
+		<Unit filename="SceneGameLoop.cpp" />
+		<Unit filename="SceneGameLoop.h" />
+		<Unit filename="SceneMainMenu.cpp" />
+		<Unit filename="SceneMainMenu.h" />
 		<Unit filename="Sprite2D.cpp">
 			<Option virtualFolder="Game Framework\Graphics\" />
 		</Unit>
@@ -185,6 +189,9 @@
 		</Unit>
 		<Unit filename="WidgetController.h">
 			<Option virtualFolder="Game Framework\Widget\" />
+		</Unit>
+		<Unit filename="defination.h">
+			<Option virtualFolder="Implement\Define\" />
 		</Unit>
 		<Unit filename="main.cpp">
 			<Option virtualFolder="Implement\" />

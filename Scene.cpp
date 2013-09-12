@@ -72,7 +72,15 @@ void Scene::setLayerNum(const int num)
 
 void Scene::addSprite(Sprite2D *sprite, int layer)
 {
-    if (layer < this->_sprites[this->_currentSpriteIndex].size())
+    if (layer < 0)
+    {
+        this->_sprites[this->_currentSpriteIndex][0].push_back(sprite);
+    }
+    else if (layer >= this->_spriteLayerNum)
+    {
+        this->_sprites[this->_currentSpriteIndex][this->_spriteLayerNum - 1].push_back(sprite);
+    }
+    else
     {
         this->_sprites[this->_currentSpriteIndex][layer].push_back(sprite);
     }

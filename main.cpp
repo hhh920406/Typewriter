@@ -1,14 +1,24 @@
+#include "defination.h"
 #include "Framework.h"
-#include "TestScene.h"
 #include "SceneController.h"
+#include "SceneMainMenu.h"
+#include "SceneGameLoop.h"
 
 int main()
 {
     Framework *framework = Framework::getInstance();
-    framework->init("Framework", 800, 600, false);
-    TestScene *scene = new TestScene();
-    framework->getInstance()->sceneController()->bindScene(0, scene);
-    framework->getInstance()->sceneController()->setFirstScene(0);
+    framework->init(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT, false);
+
+    // 绑定场景。
+    Scene *scene;
+
+    scene = new SceneMainMenu();
+    framework->getInstance()->sceneController()->bindScene(SCENE_MAIN_MENU, scene);
+    scene = new SceneGameLoop();
+    framework->getInstance()->sceneController()->bindScene(SCENE_GAME_LOOP, scene);
+
+    framework->getInstance()->sceneController()->setFirstScene(SCENE_MAIN_MENU);
+
     framework->messageLoop();
     return 0;
 }
