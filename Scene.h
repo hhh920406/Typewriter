@@ -21,7 +21,8 @@ public:
     int sceneIndex() const;
     void setSceneIndex(const int index);
 
-    void addSprite(Sprite2D *sprite);
+    void setLayerNum(const int num);
+    void addSprite(Sprite2D *sprite, int layer = 0);
     void addWidget(Widget *widget);
 
     virtual void load();
@@ -37,9 +38,10 @@ public:
 
 protected:
     int _sceneIndex;
-    std::vector<Sprite2D*> *_currentSprites;
-    std::vector<Sprite2D*> *_nextSprites;
-    std::vector<Widget*> *_widgets;
+    int _spriteLayerNum;
+    int _currentSpriteIndex;
+    std::vector< std::vector<Sprite2D*> > _sprites[2];
+    std::vector<Widget*> _widgets;
 };
 
 #endif // SCENE_H

@@ -5,17 +5,15 @@ using namespace std;
 
 Scene::Scene()
 {
-    this->_currentSprites = new vector<Sprite2D*>();
-    this->_nextSprites = new vector<Sprite2D*>();
-    this->_widgets = new vector<Widget*>();
+    this->_spriteLayerNum = 1;
+    this->_currentSpriteIndex = 0;
+    this->_sprites[0].push_back(vector<Sprite2D*>());
+    this->_sprites[1].push_back(vector<Sprite2D*>());
 }
 
 Scene::~Scene()
 {
     this->release();
-    delete this->_currentSprites;
-    delete this->_nextSprites;
-    delete this->_widgets;
 }
 
 void Scene::load()
@@ -24,16 +22,20 @@ void Scene::load()
 
 void Scene::release()
 {
-    for (int i = 0; i < this->_currentSprites->size(); ++i)
+    for (int i = 0; i < this->_sprites[this->_currentSpriteIndex].size(); ++i)
     {
-        delete (*this->_currentSprites)[i];
+        for (int j = 0; j < this->_sprites[this->_currentSpriteIndex][i].size(); ++j)
+        {
+            delete this->_sprites[this->_currentSpriteIndex][i][j];
+        }
+        this->_sprites[this->_currentSpriteIndex][i].clear();
     }
-    this->_currentSprites->clear();
-    for (int i = 0; i < this->_widgets->size(); ++i)
+    this->_sprites[this->_currentSpriteIndex].clear();
+    for (int i = 0; i < this->_widgets.size(); ++i)
     {
-        delete (*this->_widgets)[i];
+        delete this->_widgets[i];
     }
-    this->_widgets->clear();
+    this->_widgets.clear();
 }
 
 int Scene::sceneIndex() const
@@ -46,50 +48,84 @@ void Scene::setSceneIndex(const int index)
     this->_sceneIndex = index;
 }
 
-void Scene::addSprite(Sprite2D *sprite)
+void Scene::setLayerNum(const int num)
 {
-    this->_currentSprites->push_back(sprite);
+    while (num > this->_sprites[0].size())
+    {
+        this->_sprites[0].push_back(vector<Sprite2D*>());
+        this->_sprites[1].push_back(vector<Sprite2D*>());
+    }
+    while (num < this->_sprites[0].size())
+    {
+        int curr = this->_currentSpriteIndex;
+        int index = this->_sprites[0].size() - 1;
+        for (int i = 0; i < this->_sprites[curr][index].size(); ++i)
+        {
+            delete this->_sprites[curr][index][i];
+        }
+        this->_sprites[0][index].clear();
+        this->_sprites[1][index].clear();
+        this->_sprites[0].pop_back();
+        this->_sprites[1].pop_back();
+    }
+}
+
+void Scene::addSprite(Sprite2D *sprite, int layer)
+{
+    if (layer < this->_sprites[this->_currentSpriteIndex].size())
+    {
+        this->_sprites[this->_currentSpriteIndex][layer].push_back(sprite);
+    }
 }
 
 void Scene::addWidget(Widget *widget)
 {
-    this->_widgets->push_back(widget);
+    this->_widgets.push_back(widget);
 }
 
 int Scene::act(int milliseconds)
 {
-    for (int i = 0; i < this->_currentSprites->size(); ++i)
+    int curr = this->_currentSpriteIndex;
+    int next = this->_currentSpriteIndex ^ 1;
+    for (int i = 0; i < this->_sprites[curr].size(); ++i)
     {
-        if ((*this->_currentSprites)[i]->isDeleteLater())
+        this->_sprites[next][i].clear();
+        for (int j = 0; j < this->_sprites[curr][i].size(); ++j)
         {
-            delete (*this->_currentSprites)[i];
-            (*this->_currentSprites)[i] = NULL;
-        }
-        else
-        {
-            (*this->_currentSprites)[i]->act(milliseconds);
-            this->_nextSprites->push_back((*this->_currentSprites)[i]);
+            if (this->_sprites[curr][i][j]->isDeleteLater())
+            {
+                delete this->_sprites[curr][i][j];
+                this->_sprites[curr][i][j] = NULL;
+            }
+            else
+            {
+                this->_sprites[curr][i][j]->act(milliseconds);
+                this->_sprites[next][i].push_back(this->_sprites[curr][i][j]);
+            }
         }
     }
-    swap(this->_currentSprites, this->_nextSprites);
-    this->_nextSprites->clear();
+    this->_currentSpriteIndex = next;
 
-    for (int i = 0; i < this->_widgets->size(); ++i)
+    for (int i = 0; i < this->_widgets.size(); ++i)
     {
-        (*this->_widgets)[i]->act(milliseconds);
+        this->_widgets[i]->act(milliseconds);
     }
     return this->_sceneIndex;
 }
 
 int Scene::render()
 {
-    for (int i = 0; i < this->_currentSprites->size(); ++i)
+    int curr = this->_currentSpriteIndex;
+    for (int i = 0; i < this->_sprites[curr].size(); ++i)
     {
-        (*this->_currentSprites)[i]->render();
+        for (int j = 0; j < this->_sprites[curr][i].size(); ++j)
+        {
+            this->_sprites[curr][i][j]->render();
+        }
     }
-    for (int i = 0; i < this->_widgets->size(); ++i)
+    for (int i = 0; i < this->_widgets.size(); ++i)
     {
-        (*this->_widgets)[i]->render();
+        this->_widgets[i]->render();
     }
     return this->_sceneIndex;
 }
