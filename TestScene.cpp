@@ -15,37 +15,30 @@ void TestScene::load()
     Scene::load();
     Framework *framework = Framework::getInstance();
     framework->spriteController()->setTextureLocation(0, "bullet.png");
+    this->setLayerNum(2);
     const double PI = acos(-1.0);
     int flag = 1;
     int angle = 0;
     for (int i = 0; i < 20000; ++i)
     {
         TestSprite2D *sprite;
-        switch (i % 3)
-        {
-        case 0:
-            sprite = new TestSprite2D(30, 30);
-            framework->spriteController()->initSprite(sprite, 0, 384, 192, 448, 256, 1024, 1024);
-            sprite->setVelocity(Vector2D(0.09 * cos(PI * 2 * (i / 6) / 60.0 + (i % 6) * PI),
-                                         0.09 * sin(PI * 2 * (i / 6) / 60.0 + (i % 6) * PI)));
-            break;
-        case 1:
-            sprite = new TestSprite2D(30, 30);
-            framework->spriteController()->initSprite(sprite, 0, 320, 192, 384, 256, 1024, 1024);
-            sprite->setVelocity(Vector2D(0.08 * cos(PI * 2 * (i / 6) / 70.0 + (i % 6) * PI + PI / 3 * 2),
-                                         -0.08 * sin(PI * 2 * (i / 6) / 70.0 + (i % 6) * PI + PI / 3 * 2)));
-            break;
-        case 2:
-            sprite = new TestSprite2D(30, 30);
-            framework->spriteController()->initSprite(sprite, 0, 0, 192, 64, 256, 1024, 1024);
-            sprite->setVelocity(Vector2D(0.07 * cos(PI * 2 * (i / 6) / 80.0 + (i % 6) * PI - PI / 3 * 2),
-                                         0.07 * sin(PI * 2 * (i / 6) / 80.0 + (i % 6) * PI - PI / 3 * 2)));
-            break;
-        }
-        sprite->setBirth(i / 3);
+        double angle = i / 100.0 * PI + rand() % 30 / 180.0 * PI + (i % 4) * PI / 2;
+        double speed = 0.2 + rand() % 100 / 1000.0;
+        sprite = new TestSprite2D(80, 80);
+        framework->spriteController()->initSprite(sprite, 0, 192, 128, 256, 192, 1024, 1024);
+        sprite->setVelocity(Vector2D(speed * cos(angle), speed * sin(angle)));
+        sprite->setBirth(i);
         sprite->translateTo(50 + 500 / 2, 50 + 500 / 2);
         sprite->setBounding(50, 550, 50, 550);
-        this->addSprite(sprite);
+        this->addSprite(sprite, 0);
+
+        sprite = new TestSprite2D(30, 30);
+        framework->spriteController()->initSprite(sprite, 0, 512, 0, 576, 64, 1024, 1024);
+        sprite->setVelocity(Vector2D(speed * cos(angle), speed * sin(angle)));
+        sprite->setBirth(i);
+        sprite->translateTo(50 + 500 / 2, 50 + 500 / 2);
+        sprite->setBounding(50, 550, 50, 550);
+        this->addSprite(sprite, 1);
     }
     framework->widgetController()->setTextureLocation(1, "back.png");
     Widget *widget;

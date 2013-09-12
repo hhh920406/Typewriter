@@ -50,6 +50,7 @@ void Scene::setSceneIndex(const int index)
 
 void Scene::setLayerNum(const int num)
 {
+    this->_spriteLayerNum = num;
     while (num > this->_sprites[0].size())
     {
         this->_sprites[0].push_back(vector<Sprite2D*>());

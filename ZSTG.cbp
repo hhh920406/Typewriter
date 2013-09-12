@@ -110,10 +110,18 @@
 		<Unit filename="SceneController.h">
 			<Option virtualFolder="Game Framework\Interact\" />
 		</Unit>
-		<Unit filename="SceneGameLoop.cpp" />
-		<Unit filename="SceneGameLoop.h" />
-		<Unit filename="SceneMainMenu.cpp" />
-		<Unit filename="SceneMainMenu.h" />
+		<Unit filename="SceneGameLoop.cpp">
+			<Option virtualFolder="Implement\Scene\" />
+		</Unit>
+		<Unit filename="SceneGameLoop.h">
+			<Option virtualFolder="Implement\Scene\" />
+		</Unit>
+		<Unit filename="SceneMainMenu.cpp">
+			<Option virtualFolder="Implement\Scene\" />
+		</Unit>
+		<Unit filename="SceneMainMenu.h">
+			<Option virtualFolder="Implement\Scene\" />
+		</Unit>
 		<Unit filename="Sprite2D.cpp">
 			<Option virtualFolder="Game Framework\Graphics\" />
 		</Unit>
