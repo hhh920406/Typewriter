@@ -20,20 +20,30 @@ void TestScene::load()
     int angle = 0;
     for (int i = 0; i < 20000; ++i)
     {
-        TestSprite2D *sprite = new TestSprite2D(40, 40);
-        framework->spriteController()->initSprite(sprite, 0, 320, 0, 384, 64, 1024, 1024);
-        sprite->translateTo(50 + 500 / 2, 50 + 500 / 2);
-        float speed = 2.0f;
-        if ((rand() % 1000) == 1)
+        TestSprite2D *sprite;
+        switch (i % 3)
         {
-            flag = -flag;
+        case 0:
+            sprite = new TestSprite2D(30, 30);
+            framework->spriteController()->initSprite(sprite, 0, 384, 192, 448, 256, 1024, 1024);
+            sprite->setVelocity(Vector2D(0.09 * cos(PI * 2 * (i / 6) / 60.0 + (i % 6) * PI),
+                                         0.09 * sin(PI * 2 * (i / 6) / 60.0 + (i % 6) * PI)));
+            break;
+        case 1:
+            sprite = new TestSprite2D(30, 30);
+            framework->spriteController()->initSprite(sprite, 0, 320, 192, 384, 256, 1024, 1024);
+            sprite->setVelocity(Vector2D(0.08 * cos(PI * 2 * (i / 6) / 70.0 + (i % 6) * PI + PI / 3 * 2),
+                                         -0.08 * sin(PI * 2 * (i / 6) / 70.0 + (i % 6) * PI + PI / 3 * 2)));
+            break;
+        case 2:
+            sprite = new TestSprite2D(30, 30);
+            framework->spriteController()->initSprite(sprite, 0, 0, 192, 64, 256, 1024, 1024);
+            sprite->setVelocity(Vector2D(0.07 * cos(PI * 2 * (i / 6) / 80.0 + (i % 6) * PI - PI / 3 * 2),
+                                         0.07 * sin(PI * 2 * (i / 6) / 80.0 + (i % 6) * PI - PI / 3 * 2)));
+            break;
         }
-        angle += flag;
-        sprite->setVelocity(Vector2D(0.1 * cos(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2),
-                                     0.1 * sin(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2)));
-        sprite->setAccelerated(Vector2D(0.005 * cos(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2),
-                                        0.005 * sin(PI * 2 * (i / 4) / 100.0 + (i % 4) * PI / 2)));
-        sprite->setBirth(i / 4);
+        sprite->setBirth(i / 3);
+        sprite->translateTo(50 + 500 / 2, 50 + 500 / 2);
         sprite->setBounding(50, 550, 50, 550);
         this->addSprite(sprite);
     }

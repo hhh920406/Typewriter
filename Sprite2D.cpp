@@ -173,7 +173,7 @@ void Sprite2D::scaleTo(float x, float y)
  */
 void Sprite2D::rotateTo(float angle)
 {
-    this->_rotate = angle;
+    this->_rotate = -angle;
 }
 
 /**

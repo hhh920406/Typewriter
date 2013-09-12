@@ -28,6 +28,8 @@ void TestSprite2D::act(int milliseconds)
     if (--this->_birthCount < 0)
     {
         this->move(milliseconds);
+        double angle = atan2(this->_velocity.y(), this->_velocity.x());
+        this->rotateTo(angle);
         if (this->_translate.x() < this->_bounding.x() - halfWidth() ||
             this->_translate.x() > this->_bounding.x() + this->_bounding.width() + halfWidth() ||
             this->_translate.y() < this->_bounding.y() - halfHeight() ||

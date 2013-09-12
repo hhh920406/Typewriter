@@ -3,6 +3,7 @@
 #include "SceneController.h"
 #include "SceneMainMenu.h"
 #include "SceneGameLoop.h"
+#include "TestScene.h"
 
 int main()
 {
@@ -18,6 +19,10 @@ int main()
     framework->getInstance()->sceneController()->bindScene(SCENE_GAME_LOOP, scene);
 
     framework->getInstance()->sceneController()->setFirstScene(SCENE_MAIN_MENU);
+
+    scene = new TestScene();
+    framework->getInstance()->sceneController()->bindScene(SCENE_NULL, scene);
+    framework->getInstance()->sceneController()->setFirstScene(SCENE_NULL);
 
     framework->messageLoop();
     return 0;
