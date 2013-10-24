@@ -20,11 +20,43 @@ public:
     void setReal(const double real);
     void setImage(const double image);
     void setValue(const double real, const double image);
-    const double getReal(void) const;
-    const double getImage(void) const;
+    const double real(void) const;
+    const double image(void) const;
 
     void print(void) const;
     void printLine(void) const;
+
+    const double abs(void) const;
+    const double norm(void) const;
+    const double angle(void) const;
+    const ComplexNumber conjugate(void) const;
+
+    ComplexNumber& operator +=(const double value);
+    ComplexNumber& operator -=(const double value);
+    ComplexNumber& operator *=(const double value);
+    ComplexNumber& operator /=(const double value);
+
+    ComplexNumber& operator +=(const ComplexNumber &cn);
+    ComplexNumber& operator -=(const ComplexNumber &cn);
+    ComplexNumber& operator *=(const ComplexNumber &cn);
+    ComplexNumber& operator /=(const ComplexNumber &cn);
+
+    friend const ComplexNumber operator +(const double a, const ComplexNumber &b);
+    friend const ComplexNumber operator -(const double a, const ComplexNumber &b);
+    friend const ComplexNumber operator *(const double a, const ComplexNumber &b);
+    friend const ComplexNumber operator /(const double a, const ComplexNumber &b);
+
+    friend const ComplexNumber operator +(const ComplexNumber &a, const double b);
+    friend const ComplexNumber operator -(const ComplexNumber &a, const double b);
+    friend const ComplexNumber operator *(const ComplexNumber &a, const double b);
+    friend const ComplexNumber operator /(const ComplexNumber &a, const double b);
+
+    friend const ComplexNumber operator +(const ComplexNumber &a, const ComplexNumber &b);
+    friend const ComplexNumber operator -(const ComplexNumber &a, const ComplexNumber &b);
+    friend const ComplexNumber operator *(const ComplexNumber &a, const ComplexNumber &b);
+    friend const ComplexNumber operator /(const ComplexNumber &a, const ComplexNumber &b);
+
+    bool operator ==(const ComplexNumber &cn);
 
 protected:
     double _real;
