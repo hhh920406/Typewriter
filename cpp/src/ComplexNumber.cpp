@@ -1,10 +1,11 @@
 #include "ComplexNumber.h"
-using namespace zmat;
 
-ComplexNumber::ComplexNumber()
-{
+ZMAT_BEGIN_NAMESPACE
+
+ComplexNumber::ComplexNumber() {
 }
 
-ComplexNumber::~ComplexNumber()
-{
+ComplexNumber::~ComplexNumber() {
 }
+
+ZMAT_END_NAMESPACE

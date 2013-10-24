@@ -5,16 +5,19 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 
-namespace zmat
+#include "ZMat.h"
+
+ZMAT_BEGIN_NAMESPACE
+
+class ComplexNumber
 {
-    class ComplexNumber
-    {
-    public:
-        ComplexNumber();
-        virtual ~ComplexNumber();
-    protected:
-    private:
-    };
+public:
+    ComplexNumber();
+    virtual ~ComplexNumber();
+protected:
+private:
 };
+
+ZMAT_END_NAMESPACE
 
 #endif // COMPLEXNUMBER_H

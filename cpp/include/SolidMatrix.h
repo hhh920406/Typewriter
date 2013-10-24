@@ -6,20 +6,22 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 
+#include "ZMat.h"
 #include <vector>
 
-namespace zmat
-{
-    class SolidMatrix
-    {
-    public:
-        SolidMatrix();
-        virtual ~SolidMatrix();
+ZMAT_BEGIN_NAMESPACE
 
-    protected:
-        std::vector<int> _size;
-        std::vector<double> _data;
-    };
+class SolidMatrix
+{
+public:
+    SolidMatrix();
+    virtual ~SolidMatrix();
+
+protected:
+    std::vector<int> _size;
+    std::vector<double> _data;
 };
+
+ZMAT_END_NAMESPACE
 
 #endif // SOLIDMATRIX_H

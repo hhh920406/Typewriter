@@ -1,10 +1,11 @@
 #include "SolidMatrix.h"
-using namespace zmat;
 
-SolidMatrix::SolidMatrix()
-{
+ZMAT_BEGIN_NAMESPACE
+
+SolidMatrix::SolidMatrix() {
 }
 
-SolidMatrix::~SolidMatrix()
-{
+SolidMatrix::~SolidMatrix() {
 }
+
+ZMAT_END_NAMESPACE
