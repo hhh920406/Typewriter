@@ -11,3 +11,15 @@
 *.lai
 *.la
 *.a
+
+# Build folders
+obj
+bin
+
+# Code::Blocks files
+*.depend
+*.layout
+
+# Temp files
+*.autosave
+*~
