@@ -8,6 +8,7 @@
 
 #include "ZMat.h"
 #include <vector>
+#include "ComplexNumber.h"
 
 ZMAT_BEGIN_NAMESPACE
 
@@ -19,7 +20,7 @@ public:
 
 protected:
     std::vector<int> _size;
-    std::vector<double> _data;
+    std::vector<ComplexNumber> _data;
 };
 
 ZMAT_END_NAMESPACE

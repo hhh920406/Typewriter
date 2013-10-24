@@ -12,10 +12,23 @@ ZMAT_BEGIN_NAMESPACE
 class ComplexNumber
 {
 public:
-    ComplexNumber();
+    ComplexNumber(void);
+    ComplexNumber(const double real);
+    ComplexNumber(const double real, const double image);
     virtual ~ComplexNumber();
+
+    void setReal(const double real);
+    void setImage(const double image);
+    void setValue(const double real, const double image);
+    const double getReal(void) const;
+    const double getImage(void) const;
+
+    void print(void) const;
+    void printLine(void) const;
+
 protected:
-private:
+    double _real;
+    double _image;
 };
 
 ZMAT_END_NAMESPACE
