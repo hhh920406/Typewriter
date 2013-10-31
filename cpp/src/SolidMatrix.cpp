@@ -3,51 +3,43 @@ using namespace std;
 
 ZMAT_BEGIN_NAMESPACE
 
-template <typename T>
-SolidMatrix<T>::SolidMatrix(const T &value) {
+SolidMatrix::SolidMatrix(const ComplexNumber &value) {
     this->setSize(1, 1);
     this->setData(1, 1, value);
 }
 
-template <typename T>
-SolidMatrix<T>::SolidMatrix(const int rowNum, const int colNum) {
+SolidMatrix::SolidMatrix(const int rowNum, const int colNum) {
     this->setSize(rowNum, colNum);
 }
 
-template <typename T>
-SolidMatrix<T>::~SolidMatrix() {
+SolidMatrix::~SolidMatrix() {
 }
 
-template <typename T>
-inline const int SolidMatrix<T>::rowNum() const {
+inline const int SolidMatrix::rowNum() const {
     return this->_rowNum;
 }
 
-template <typename T>
-inline const int SolidMatrix<T>::colNum() const {
+inline const int SolidMatrix::colNum() const {
     return this->_colNum;
 }
 
-template <typename T>
-void SolidMatrix<T>::setRowNum(const int rowNum) {
-    this->_setSize(rowNum, this->_colNum);
+void SolidMatrix::setRowNum(const int rowNum) {
+    this->setSize(rowNum, this->_colNum);
 }
 
-template <typename T>
-void SolidMatrix<T>::setColNum(const int colNum) {
-    this->_setSize(this->_rowNum, colNum);
+void SolidMatrix::setColNum(const int colNum) {
+    this->setSize(this->_rowNum, colNum);
 }
 
-template <typename T>
-void SolidMatrix<T>::setSize(const int rowNum, const int colNum) {
-    vector< vector<T> > data;
+void SolidMatrix::setSize(const int rowNum, const int colNum) {
+    vector< vector<ComplexNumber> > data;
     for (int i = 0; i < rowNum; ++i) {
-        data.push_back(vector<T>());
+        data.push_back(vector<ComplexNumber>());
         for (int j = 0; j < colNum; ++j) {
             if (i < this->_rowNum && j < this->_colNum) {
-                data.push_back(this->_data[i][j]);
+                data[i].push_back(this->_data[i][j]);
             } else {
-                data.push_back(0);
+                data[i].push_back(0.0);
             }
         }
     }
@@ -56,8 +48,7 @@ void SolidMatrix<T>::setSize(const int rowNum, const int colNum) {
     this->_colNum = colNum;
 }
 
-template <typename T>
-const T& SolidMatrix<T>::data(const int r, const int c) const {
+const ComplexNumber& SolidMatrix::data(const int r, const int c) const {
     if (r >= 1 && r <= this->_rowNum) {
         if (c >= 1 && c <= this->_colNum) {
             return this->_data[r - 1][c - 1];
@@ -66,8 +57,7 @@ const T& SolidMatrix<T>::data(const int r, const int c) const {
     return 0;
 }
 
-template <typename T>
-void SolidMatrix<T>::setData(const int r, const int c, const T &value) {
+void SolidMatrix::setData(const int r, const int c, const ComplexNumber &value) {
     if (r >= 1 && r <= this->_rowNum) {
         if (c >= 1 && c <= this->_colNum) {
             this->_data[r - 1][c - 1] = value;
