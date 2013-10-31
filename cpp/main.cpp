@@ -1,9 +1,9 @@
+#include "SolidMatrix.h"
 #include "ComplexNumber.h"
 using namespace zmat;
 
 int main()
 {
-    ComplexNumber complex(1.0, 2.0);
-    complex.printLine();
+    SolidMatrix<double> matrix(0.0);
     return 0;
 }

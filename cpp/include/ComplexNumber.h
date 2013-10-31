@@ -9,8 +9,7 @@
 
 ZMAT_BEGIN_NAMESPACE
 
-class ComplexNumber
-{
+class ComplexNumber {
 public:
     ComplexNumber(void);
     ComplexNumber(const double real);
