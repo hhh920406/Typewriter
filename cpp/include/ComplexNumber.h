@@ -30,26 +30,7 @@ public:
     const double angle(void) const;
     const ComplexNumber conjugate(void) const;
 
-    ComplexNumber& operator +=(const double value);
-    ComplexNumber& operator -=(const double value);
-    ComplexNumber& operator *=(const double value);
-    ComplexNumber& operator /=(const double value);
-
-    ComplexNumber& operator +=(const ComplexNumber &cn);
-    ComplexNumber& operator -=(const ComplexNumber &cn);
-    ComplexNumber& operator *=(const ComplexNumber &cn);
-    ComplexNumber& operator /=(const ComplexNumber &cn);
-
-    friend const ComplexNumber operator +(const double a, const ComplexNumber &b);
-    friend const ComplexNumber operator -(const double a, const ComplexNumber &b);
-    friend const ComplexNumber operator *(const double a, const ComplexNumber &b);
-    friend const ComplexNumber operator /(const double a, const ComplexNumber &b);
-
-    friend const ComplexNumber operator +(const ComplexNumber &a, const double b);
-    friend const ComplexNumber operator -(const ComplexNumber &a, const double b);
-    friend const ComplexNumber operator *(const ComplexNumber &a, const double b);
-    friend const ComplexNumber operator /(const ComplexNumber &a, const double b);
-
+    friend const ComplexNumber operator -(const ComplexNumber &a);
     friend const ComplexNumber operator +(const ComplexNumber &a, const ComplexNumber &b);
     friend const ComplexNumber operator -(const ComplexNumber &a, const ComplexNumber &b);
     friend const ComplexNumber operator *(const ComplexNumber &a, const ComplexNumber &b);

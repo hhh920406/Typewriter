@@ -64,7 +64,7 @@ public:
      * @param c Column index.
      * @return The specific data.
      */
-    const ComplexNumber& data(const int r, const int c) const;
+    const ComplexNumber data(const int r, const int c) const;
     /**
      * Set the data of the matrix.
      * @param r Row index.

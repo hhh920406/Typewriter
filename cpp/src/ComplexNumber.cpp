@@ -73,82 +73,8 @@ inline const ComplexNumber ComplexNumber::conjugate(void) const {
     return ComplexNumber(this->real(), - this->image());
 }
 
-inline ComplexNumber& ComplexNumber::operator +=(const double value) {
-    this->setReal(this->real() + value);
-    return *this;
-}
-
-inline ComplexNumber& ComplexNumber::operator -=(const double value) {
-    this->setReal(this->real() - value);
-    return *this;
-}
-
-inline ComplexNumber& ComplexNumber::operator *=(const double value) {
-    this->setReal(this->real() * value);
-    this->setImage(this->image() * value);
-    return *this;
-}
-
-inline ComplexNumber& ComplexNumber::operator /=(const double value) {
-    this->setReal(this->real() / value);
-    this->setImage(this->image() / value);
-    return *this;
-}
-
-inline ComplexNumber& ComplexNumber::operator +=(const ComplexNumber &cn) {
-    this->setReal(this->real() + cn.real());
-    this->setImage(this->image() + cn.image());
-    return *this;
-}
-
-inline ComplexNumber& ComplexNumber::operator -=(const ComplexNumber &cn) {
-    this->setReal(this->real() - cn.real());
-    this->setImage(this->image() - cn.image());
-    return *this;
-}
-
-inline ComplexNumber& ComplexNumber::operator *=(const ComplexNumber &cn) {
-    this->setReal(this->real() * cn.real() - this->image() * cn.image());
-    this->setImage(this->real() * cn.image() + this->image() * cn.real());
-    return *this;
-}
-
-inline ComplexNumber& ComplexNumber::operator /=(const ComplexNumber &cn) {
-    ComplexNumber num = ((*this) * cn.conjugate()) / cn.norm();
-    this->setValue(num.real(), num.image());
-    return *this;
-}
-
-inline const ComplexNumber operator +(const double a, const ComplexNumber &b) {
-    return ComplexNumber(a + b.real(), b.image());
-}
-
-inline const ComplexNumber operator -(const double a, const ComplexNumber &b) {
-    return ComplexNumber(a - b.real(), b.image());
-}
-
-inline const ComplexNumber operator *(const double a, const ComplexNumber &b) {
-    return ComplexNumber(a * b.real(), a * b.image());
-}
-
-inline const ComplexNumber operator /(const double a, const ComplexNumber &b) {
-    return ComplexNumber(a / b.real(), a / b.image());
-}
-
-inline const ComplexNumber operator +(const ComplexNumber &a, const double b) {
-    return ComplexNumber(a.real() + b, a.image());
-}
-
-inline const ComplexNumber operator -(const ComplexNumber &a, const double b) {
-    return ComplexNumber(a.real() - b, a.image());
-}
-
-inline const ComplexNumber operator *(const ComplexNumber &a, const double b) {
-    return ComplexNumber(a.real() * b, a.image() * b);
-}
-
-inline const ComplexNumber operator /(const ComplexNumber &a, const double b) {
-    return ComplexNumber(a.real() / b, a.image() / b);
+inline const ComplexNumber operator -(const ComplexNumber &a) {
+    return a.conjugate();
 }
 
 inline const ComplexNumber operator +(const ComplexNumber &a, const ComplexNumber &b) {
