@@ -21,4 +21,9 @@ void output(const ComplexNumber &num) {
     printf("%.6lf i", fabs(num.image()));
 }
 
+void outputLine(const ComplexNumber &num) {
+    output(num);
+    putchar('\n');
+}
+
 ZMAT_END_NAMESPACE

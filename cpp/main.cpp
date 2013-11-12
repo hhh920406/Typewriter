@@ -1,8 +1,9 @@
-#include "SolidMatrix.h"
-using namespace zmat;
+#include "Test.h"
+#include "Test_ComplexNumber.h"
 
 int main()
 {
-    SolidMatrix matrix(0.0);
+    Test_ComplexNumber();
+    Test::test();
     return 0;
 }

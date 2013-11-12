@@ -22,7 +22,7 @@ inline const ComplexNumber operator /(const ComplexNumber &a, const ComplexNumbe
     return a * conjugate(b) / norm(b);
 }
 
-inline bool operator ==(const ComplexNumber &a, const ComplexNumber &b) {
+bool operator ==(const ComplexNumber &a, const ComplexNumber &b) {
     return fabs(a.real() - b.real()) < ZMAT_EPS && fabs(a.image() - b.image()) < ZMAT_EPS;
 }
 
