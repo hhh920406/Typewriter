@@ -12,6 +12,7 @@ class ComplexNumber;
 
 void input(ComplexNumber &num);
 void output(const ComplexNumber &num);
+void outputLine(const ComplexNumber &num);
 
 ZMAT_END_NAMESPACE
 

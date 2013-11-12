@@ -14,6 +14,7 @@ const ComplexNumber operator +(const ComplexNumber &a, const ComplexNumber &b);
 const ComplexNumber operator -(const ComplexNumber &a, const ComplexNumber &b);
 const ComplexNumber operator *(const ComplexNumber &a, const ComplexNumber &b);
 const ComplexNumber operator /(const ComplexNumber &a, const ComplexNumber &b);
+const ComplexNumber operator /(const ComplexNumber &a, const double b);
 
 bool operator ==(const ComplexNumber &a, const ComplexNumber &b);
 

@@ -1,4 +1,23 @@
-# Version 1.0.0
+# Version 1.0.1 - 2013.11.13
+
+Add:
+
+    0. Unit test.
+    1. Test ComplexNumber class.
+
+Fix:
+
+    0. The divide operation in ComplexNumber.
+
+Improve:
+
+    None.
+
+Remove:
+
+    None.
+
+# Version 1.0.0 - 2013.11.13
 
 Add:
 
