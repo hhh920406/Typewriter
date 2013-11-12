@@ -1,4 +1,4 @@
-# Version 1.0.1 - 2013.11.13
+# Version 1.0.1
 
 Add:
 
@@ -9,15 +9,7 @@ Fix:
 
     0. The divide operation in ComplexNumber.
 
-Improve:
-
-    None.
-
-Remove:
-
-    None.
-
-# Version 1.0.0 - 2013.11.13
+# Version 1.0.0
 
 Add:
 
@@ -28,14 +20,3 @@ Add:
     1. SolidMatrix class.
         0.0 Set and get functions.
 
-Fix:
-
-    None.
-
-Improve:
-
-    None.
-
-Remove:
-
-    None.
