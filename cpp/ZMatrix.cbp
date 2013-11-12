@@ -52,14 +52,32 @@
 			<Add option="-fexceptions" />
 			<Add directory="include" />
 		</Compiler>
-		<Unit filename="include\ComplexNumber.h" />
-		<Unit filename="include\SolidMatrix.h" />
-		<Unit filename="include\ZMat.h" />
+		<Unit filename="include\ComplexNumber.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="include\ComplexNumber_arithmetic.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="include\ComplexNumber_io.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="include\ComplexNumber_math.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="include\SolidMatrix.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="include\ZMat.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="main.cpp">
 			<Option target="Windows_Debug" />
 			<Option target="Linux_Debug" />
 		</Unit>
 		<Unit filename="src\ComplexNumber.cpp" />
+		<Unit filename="src\ComplexNumber_arithmetic.cpp" />
+		<Unit filename="src\ComplexNumber_io.cpp" />
+		<Unit filename="src\ComplexNumber_math.cpp" />
 		<Unit filename="src\SolidMatrix.cpp" />
 		<Extensions>
 			<code_completion />
