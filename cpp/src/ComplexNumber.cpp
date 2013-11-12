@@ -42,39 +42,31 @@ inline const double ComplexNumber::image(void) const {
     return this->_image;
 }
 
-void ComplexNumber::print(void) const {
-    printf("%.3lf ", this->_real);
-    if (this->_image <= 0.0) {
+ostream& operator <<(ostream& out, const ComplexNumber &num) {
+    printf("%.3lf ", num.real());
+    if (num.image() <= 0.0) {
         printf("- ");
     } else {
         printf("+ ");
     }
-    printf("%.3lf i", fabs(this->_image));
+    printf("%.3lf i", fabs(num.image()));
+    return out;
 }
 
-void ComplexNumber::printLine(void) const {
-    print();
-    putchar('\n');
+inline const double abs(const ComplexNumber &num) {
+    return sqrt(num.image() * num.image() + num.real() * num.real());
 }
 
-inline const double ComplexNumber::abs(void) const {
-    return sqrt(this->image() * this->image() + this->real() * this->real());
+inline const double norm(const ComplexNumber &num) {
+    return abs(num);
 }
 
-inline const double ComplexNumber::norm(void) const {
-    return abs();
+inline const double angle(const ComplexNumber &num) {
+    return atan2(num.image(), num.real());
 }
 
-inline const double ComplexNumber::angle(void) const {
-    return atan2(this->image(), this->real());
-}
-
-inline const ComplexNumber ComplexNumber::conjugate(void) const {
-    return ComplexNumber(this->real(), - this->image());
-}
-
-inline const ComplexNumber operator -(const ComplexNumber &a) {
-    return a.conjugate();
+inline const ComplexNumber conjugate(const ComplexNumber &num) {
+    return ComplexNumber(num.real(), - num.image());
 }
 
 inline const ComplexNumber operator +(const ComplexNumber &a, const ComplexNumber &b) {
@@ -91,12 +83,11 @@ inline const ComplexNumber operator *(const ComplexNumber &a, const ComplexNumbe
 }
 
 inline const ComplexNumber operator /(const ComplexNumber &a, const ComplexNumber &b) {
-    return a * b.conjugate() / b.norm();
+    return a * conjugate(b) / norm(b);
 }
 
-inline bool ComplexNumber::operator ==(const ComplexNumber &cn) {
-    return fabs(this->real() - cn.real()) < ZMAT_EPS &&
-           fabs(this->image() - cn.image()) < ZMAT_EPS;
+inline bool operator ==(const ComplexNumber &a, const ComplexNumber &b) {
+    return fabs(a.real() - b.real()) < ZMAT_EPS && fabs(a.image() - b.image()) < ZMAT_EPS;
 }
 
 ZMAT_END_NAMESPACE

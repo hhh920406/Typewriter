@@ -22,26 +22,26 @@ public:
     const double real(void) const;
     const double image(void) const;
 
-    void print(void) const;
-    void printLine(void) const;
-
-    const double abs(void) const;
-    const double norm(void) const;
-    const double angle(void) const;
-    const ComplexNumber conjugate(void) const;
-
-    friend const ComplexNumber operator -(const ComplexNumber &a);
-    friend const ComplexNumber operator +(const ComplexNumber &a, const ComplexNumber &b);
-    friend const ComplexNumber operator -(const ComplexNumber &a, const ComplexNumber &b);
-    friend const ComplexNumber operator *(const ComplexNumber &a, const ComplexNumber &b);
-    friend const ComplexNumber operator /(const ComplexNumber &a, const ComplexNumber &b);
-
-    bool operator ==(const ComplexNumber &cn);
-
 protected:
     double _real;
     double _image;
 };
+
+class ostream;
+
+ostream& operator <<(ostream& out, const ComplexNumber &num);
+
+const double abs(const ComplexNumber &num);
+const double norm(const ComplexNumber &num);
+const double angle(const ComplexNumber &num);
+const ComplexNumber conjugate(const ComplexNumber &num);
+
+const ComplexNumber operator +(const ComplexNumber &a, const ComplexNumber &b);
+const ComplexNumber operator -(const ComplexNumber &a, const ComplexNumber &b);
+const ComplexNumber operator *(const ComplexNumber &a, const ComplexNumber &b);
+const ComplexNumber operator /(const ComplexNumber &a, const ComplexNumber &b);
+
+bool operator ==(const ComplexNumber &a, const ComplexNumber &b);
 
 ZMAT_END_NAMESPACE
 
