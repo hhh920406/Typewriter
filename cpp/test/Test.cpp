@@ -85,6 +85,7 @@ void Test::test() {
             cout << red << "[  " << setw(3) << radio << "%  ]";
             cout << white << " " << testSuiteName <<endl;
         }
+        cout << endl;
     }
     if (totalPassed == totalNumber) {
         cout << green << "[  100%  ]";

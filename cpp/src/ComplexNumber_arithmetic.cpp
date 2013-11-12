@@ -5,21 +5,25 @@
 
 ZMAT_BEGIN_NAMESPACE
 
-inline const ComplexNumber operator +(const ComplexNumber &a, const ComplexNumber &b) {
+const ComplexNumber operator +(const ComplexNumber &a, const ComplexNumber &b) {
     return ComplexNumber(a.real() + b.real(), a.image() + b.image());
 }
 
-inline const ComplexNumber operator -(const ComplexNumber &a, const ComplexNumber &b) {
+const ComplexNumber operator -(const ComplexNumber &a, const ComplexNumber &b) {
     return ComplexNumber(a.real() - b.real(), a.image() - b.image());
 }
 
-inline const ComplexNumber operator *(const ComplexNumber &a, const ComplexNumber &b) {
+const ComplexNumber operator *(const ComplexNumber &a, const ComplexNumber &b) {
     return ComplexNumber(a.real() * b.real() - a.image() * b.image(),
                          a.real() * b.image() + a.image() * b.real());
 }
 
-inline const ComplexNumber operator /(const ComplexNumber &a, const ComplexNumber &b) {
-    return a * conjugate(b) / norm(b);
+const ComplexNumber operator /(const ComplexNumber &a, const ComplexNumber &b) {
+    return a * conjugate(b) / (b.real() * b.real() + b.image() * b.image());
+}
+
+const ComplexNumber operator /(const ComplexNumber &a, const double b) {
+    return ComplexNumber(a.real() / b, a.image() / b);
 }
 
 bool operator ==(const ComplexNumber &a, const ComplexNumber &b) {
