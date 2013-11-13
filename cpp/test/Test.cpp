@@ -99,18 +99,6 @@ void Test::test() {
     cout << white << endl;
 }
 
-bool Test::positive(const bool value) {
-    if (!value) {
-        Test::_passed = false;
-        cout << white << "Error: " << endl;
-    }
-    return !value;
-}
-
-bool Test::negative(const bool value) {
-    if (value) {
-        Test::_passed = false;
-        cout << white << "Error: " << endl;
-    }
-    return value;
+void Test::fail() {
+    Test::_passed = false;
 }
