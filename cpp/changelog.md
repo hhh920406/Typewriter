@@ -1,3 +1,9 @@
+# Version 1.0.3
+
+Add:
+
+    0. Doolittle decompose.
+
 # Version 1.0.2
 
 Add:
