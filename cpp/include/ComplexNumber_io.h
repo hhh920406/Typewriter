@@ -11,10 +11,6 @@ ZMAT_BEGIN_NAMESPACE
 
 class ComplexNumber;
 
-void input(ComplexNumber &num);
-void output(const ComplexNumber &num);
-void outputLine(const ComplexNumber &num);
-
 std::istream& operator >>(std::istream &in, ComplexNumber &num);
 std::ostream& operator <<(std::ostream &out, const ComplexNumber &num);
 
