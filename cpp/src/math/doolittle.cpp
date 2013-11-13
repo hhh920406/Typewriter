@@ -1,9 +1,10 @@
+#include "Matrix.h"
 #include "math/doolittle.h"
 using namespace std;
 
 ZMAT_BEGIN_NAMESPACE
 
-const Doolittle_Mat doolittle(SolidMatrix &A) {
+const Doolittle_Mat doolittle(Matrix &A) {
     Doolittle_Mat doo;
     int n = A.rowNum();
     doo.L.setSize(n, n);

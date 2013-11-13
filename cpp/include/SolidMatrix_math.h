@@ -1,6 +1,0 @@
-#ifndef SOLIDMATRIX_MATH_H_INCLUDED
-#define SOLIDMATRIX_MATH_H_INCLUDED
-
-#include "math/doolittle.h"
-
-#endif // SOLIDMATRIX_MATH_H_INCLUDED

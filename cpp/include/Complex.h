@@ -1,20 +1,23 @@
-#ifndef COMPLEXNUMBER_H
-#define COMPLEXNUMBER_H
+#ifndef COMPLEX_H
+#define COMPLEX_H
 /**
  * The basic defination of complex number.
  * The number contains real part and image part.
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include "ZMat.h"
+#include "Complex_io.h"
+#include "Complex_math.h"
+#include "Complex_arithmetic.h"
 
 ZMAT_BEGIN_NAMESPACE
 
-class ComplexNumber {
+class Complex {
 public:
-    ComplexNumber();
-    ComplexNumber(const double real);
-    ComplexNumber(const double real, const double image);
-    virtual ~ComplexNumber();
+    Complex();
+    Complex(const double real);
+    Complex(const double real, const double image);
+    virtual ~Complex();
 
     void setReal(const double real);
     void setImage(const double image);
@@ -29,4 +32,4 @@ protected:
 
 ZMAT_END_NAMESPACE
 
-#endif // COMPLEXNUMBER_H
+#endif // COMPLEX_H

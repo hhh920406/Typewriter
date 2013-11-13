@@ -2,16 +2,17 @@
 #define DOOLITTLE_H
 
 #include "ZMat.h"
-#include "SolidMatrix.h"
 
 ZMAT_BEGIN_NAMESPACE
 
+class Matrix;
+
 struct Doolittle_Mat {
-    SolidMatrix L;
-    SolidMatrix U;
+    Matrix L;
+    Matrix U;
 };
 
-const Doolittle_Mat doolittle(SolidMatrix &A);
+const Doolittle_Mat doolittle(Matrix &A);
 
 ZMAT_END_NAMESPACE
 

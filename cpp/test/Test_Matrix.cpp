@@ -1,16 +1,14 @@
 #include "Test.h"
-#include "SolidMatrix.h"
-#include "SolidMatrix_io.h"
-#include "SolidMatrix_arithmetic.h"
+#include "Matrix.h"
 #include <cmath>
 #include <iostream>
 using namespace std;
 using namespace zmat;
 
-void Test_SolidMatrix_Equal() {
-    SolidMatrix a(3, 3);
-    SolidMatrix b(3, 3);
-    SolidMatrix c(3, 3);
+void Test_Matrix_Equal() {
+    Matrix a(3, 3);
+    Matrix b(3, 3);
+    Matrix c(3, 3);
     for (int i = 1; i <= 3; ++i) {
         for (int j = 1; j <= 3; ++j) {
             a(i, j) = i + j;
@@ -26,10 +24,10 @@ void Test_SolidMatrix_Equal() {
     TEST_UNEQUAL(c, b);
 }
 
-void Test_SolidMatrix_Add() {
-    SolidMatrix a(3, 3);
-    SolidMatrix b(3, 3);
-    SolidMatrix c(3, 3);
+void Test_Matrix_Add() {
+    Matrix a(3, 3);
+    Matrix b(3, 3);
+    Matrix c(3, 3);
     for (int i = 1; i <= 3; ++i) {
         for (int j = 1; j <= 3; ++j) {
             a(i, j) = i + j;
@@ -41,10 +39,10 @@ void Test_SolidMatrix_Add() {
     TEST_EQUAL(b + a, c);
 }
 
-void Test_SolidMatrix_Subtract() {
-    SolidMatrix a(3, 3);
-    SolidMatrix b(3, 3);
-    SolidMatrix c(3, 3);
+void Test_Matrix_Subtract() {
+    Matrix a(3, 3);
+    Matrix b(3, 3);
+    Matrix c(3, 3);
     for (int i = 1; i <= 3; ++i) {
         for (int j = 1; j <= 3; ++j) {
             a(i, j) = i + j;
@@ -56,11 +54,11 @@ void Test_SolidMatrix_Subtract() {
     TEST_UNEQUAL(b - a, c);
 }
 
-void Test_SolidMatrix_Multiply() {
-    SolidMatrix a(3, 3);
-    SolidMatrix b(3, 3);
-    SolidMatrix c(3, 3);
-    SolidMatrix d(3, 3);
+void Test_Matrix_Multiply() {
+    Matrix a(3, 3);
+    Matrix b(3, 3);
+    Matrix c(3, 3);
+    Matrix d(3, 3);
     for (int i = 1; i <= 3; ++i) {
         for (int j = 1; j <= 3; ++j) {
             a(i, j) = i + j;
@@ -77,9 +75,9 @@ void Test_SolidMatrix_Multiply() {
     TEST_EQUAL(b * a, d);
 }
 
-void Test_SolidMatrix() {
-    Test::add("SolidMatrix", "Equal", Test_SolidMatrix_Equal);
-    Test::add("SolidMatrix", "Add", Test_SolidMatrix_Add);
-    Test::add("SolidMatrix", "Subtract", Test_SolidMatrix_Subtract);
-    Test::add("SolidMatrix", "Multiply", Test_SolidMatrix_Multiply);
+void Test_Matrix() {
+    Test::add("Matrix", "Equal", Test_Matrix_Equal);
+    Test::add("Matrix", "Add", Test_Matrix_Add);
+    Test::add("Matrix", "Subtract", Test_Matrix_Subtract);
+    Test::add("Matrix", "Multiply", Test_Matrix_Multiply);
 }
