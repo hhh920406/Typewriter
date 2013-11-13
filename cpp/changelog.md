@@ -1,3 +1,20 @@
+# Version 1.0.2
+
+Add:
+
+    0. Unit test.
+        0.0 Add time display.
+        0.1 Add equal, unequal, approximate equal function.
+    1. SolidMatrix class.
+        1.0 Input and output.
+        1.1 Add, subtract and multiply.
+    2. Test SolidMatrix class.
+        2.0 Equal, add, subtract, multiply.
+
+Fix:
+
+    0. Remove all inline declaration.
+
 # Version 1.0.1
 
 Add:

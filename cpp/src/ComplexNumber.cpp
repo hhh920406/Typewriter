@@ -21,15 +21,15 @@ ComplexNumber::ComplexNumber(const double real, const double image) {
 ComplexNumber::~ComplexNumber() {
 }
 
-inline void ComplexNumber::setReal(const double real) {
+void ComplexNumber::setReal(const double real) {
     this->_real = real;
 }
 
-inline void ComplexNumber::setImage(const double image) {
+void ComplexNumber::setImage(const double image) {
     this->_image = image;
 }
 
-inline void ComplexNumber::setValue(const double real, const double image) {
+void ComplexNumber::setValue(const double real, const double image) {
     this->setReal(real);
     this->setImage(image);
 }
