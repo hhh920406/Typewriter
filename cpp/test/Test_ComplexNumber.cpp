@@ -11,107 +11,59 @@ using namespace zmat;
 void Test_ComplexNumber_Equal() {
     ComplexNumber a(5, 3);
     ComplexNumber b;
-    if (Test::positive(b == ComplexNumber(0, 0))) {
-        outputLine(b);
-        outputLine(ComplexNumber(0, 0));
-    }
-    if (Test::negative(a == b)) {
-        outputLine(a);
-        outputLine(b);
-    }
+    TEST_EQUAL(b, ComplexNumber(0, 0));
+    TEST_UNEQUAL(b, a);
     b.setValue(5, 3);
-    if (Test::positive(a == b)) {
-        outputLine(a);
-        outputLine(b);
-    }
+    TEST_EQUAL(a, b);
 }
 
 void Test_ComplexNumber_Norm() {
     ComplexNumber a(-3, 4);
     ComplexNumber b(3, 4);
-    if (Test::positive(fabs(norm(a) - 5.0) < 1e-6)) {
-        outputLine(a);
-        cout << norm(a) << endl;
-    }
-    if (Test::positive(fabs(norm(b) - 5.0) < 1e-6)) {
-        outputLine(a);
-        cout << norm(a) << endl;
-    }
+    TEST_AEQUAL(norm(a), 5.0);
+    TEST_AEQUAL(norm(b), 5.0);
 }
 
 void Test_ComplexNumber_Angle() {
     ComplexNumber a(-3, 4);
     ComplexNumber b(3, 4);
-    if (Test::positive(fabs(angle(a) - atan2(4, -3)) < 1e-6)) {
-        outputLine(a);
-        cout << angle(a) << " " << atan2(4, -3) << endl;
-    }
-    if (Test::positive(fabs(angle(b) - atan2(4, 3)) < 1e-6)) {
-        outputLine(a);
-        cout << angle(b) << " " << atan2(4, 3) << endl;
-    }
+    TEST_AEQUAL(angle(a), atan2(4, -3));
+    TEST_AEQUAL(angle(b), atan2(4, 3));
 }
 
 void Test_ComplexNumber_Conjugate() {
     ComplexNumber a(3, 4);
     ComplexNumber b(3, -4);
-    if (Test::positive(conjugate(a) == b)) {
-        outputLine(a);
-        outputLine(b);
-    }
-    if (Test::positive(a == conjugate(b))) {
-        outputLine(a);
-        outputLine(b);
-    }
+    TEST_EQUAL(conjugate(a), b);
+    TEST_EQUAL(conjugate(b), a);
 }
 
 void Test_ComplexNumber_Add() {
     ComplexNumber a(-5, 8);
     ComplexNumber b(4, 5);
     ComplexNumber c(-1, 13);
-    if (Test::positive(a + b == c)) {
-        outputLine(a);
-        outputLine(b);
-        outputLine(a + b);
-        outputLine(c);
-    }
+    TEST_EQUAL(a + b, c);
 }
 
 void Test_ComplexNumber_Subtract() {
     ComplexNumber a(-5, 8);
     ComplexNumber b(4, 5);
     ComplexNumber c(-9, 3);
-    if (Test::positive(a - b == c)) {
-        outputLine(a);
-        outputLine(b);
-        outputLine(a - b);
-        outputLine(c);
-    }
+    TEST_EQUAL(a - b, c);
 }
 
 void Test_ComplexNumber_Multiply() {
     ComplexNumber a(-5, 8);
     ComplexNumber b(4, 5);
     ComplexNumber c(-60, 7);
-    if (Test::positive(a * b == c)) {
-        outputLine(a);
-        outputLine(b);
-        outputLine(a * b);
-        outputLine(c);
-    }
+    TEST_EQUAL(a * b, c);
 }
 
 void Test_ComplexNumber_Divide() {
     ComplexNumber a(-5, 8);
     ComplexNumber b(3, 4);
     ComplexNumber c(17 / 25.0, 44 / 25.0);
-    if (Test::positive(a / b == c)) {
-        outputLine(a);
-        outputLine(b);
-        outputLine(a * conjugate(b));
-        outputLine(a / b);
-        outputLine(c);
-    }
+    TEST_EQUAL(a / b, c);
 }
 
 void Test_ComplexNumber() {

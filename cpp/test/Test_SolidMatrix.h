@@ -1,0 +1,6 @@
+#ifndef TEST_SOLIDMATRIX_H_INCLUDED
+#define TEST_SOLIDMATRIX_H_INCLUDED
+
+void Test_SolidMatrix();
+
+#endif // TEST_SOLIDMATRIX_H_INCLUDED
