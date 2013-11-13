@@ -1,3 +1,4 @@
+#include <ctime>
 #include <iomanip>
 #include <iostream>
 #include "Test.h"
@@ -71,48 +72,55 @@ void Test::test() {
 
     int totalPassed = 0;
     int totalNumber = 0;
+    time_t testStart = clock();
     for (map< string, vector< pair<string, void (*)()> > >::iterator suite = Test::_tests.begin(); suite != Test::_tests.end(); ++suite) {
         int casePassed = 0;
         int caseNumber = 0;
         string testSuiteName = suite->first;
+        time_t suiteStart = clock();
         for (vector< pair<string, void (*)()> >::iterator testCase = suite->second.begin(); testCase != suite->second.end(); ++testCase) {
             string testCaseName = testCase->first;
             Test::_passed = true;
+            time_t caseStart = clock();
             try {
                 testCase->second();
             } catch (...) {
                 Test::_passed = false;
             }
+            time_t caseFinish = clock();
             ++caseNumber;
             ++totalNumber;
             if (Test::_passed) {
                 ++casePassed;
                 ++totalPassed;
                 cout << green << "[ PASSED ]";
-                cout << white << " " << testSuiteName << " : " << testCaseName << endl;
             } else {
                 cout << red << "[ FAILED ]";
-                cout << white <<  " " << testSuiteName << " : " << testCaseName << endl;
             }
+            int time = (int)((caseFinish - caseStart) * 1000.0 / CLOCKS_PER_SEC);
+            cout << white << setw(5) << time << " ms ";
+            cout << testSuiteName << " : " << testCaseName << endl;
         }
+        time_t suiteFinish = clock();
         if (casePassed == caseNumber) {
             cout << green << "[  100%  ]";
-            cout << white << " " << testSuiteName <<endl;
         } else {
             int radio = 100 * casePassed / caseNumber;
             cout << red << "[  " << setw(3) << radio << "%  ]";
-            cout << white << " " << testSuiteName <<endl;
         }
+        int time = (int)((suiteFinish - suiteStart) * 1000.0 / CLOCKS_PER_SEC);
+        cout << white << setw(5) << time << " ms " << testSuiteName <<endl;
         cout << endl;
     }
+    time_t testFinish = clock();
     if (totalPassed == totalNumber) {
         cout << green << "[  100%  ]";
-        cout << white << " Total" <<endl;
     } else {
         int radio = 100 * totalPassed / totalNumber;
         cout << red << "[  " << setw(3) << radio << "%  ]";
-        cout << white << " Total" <<endl;
     }
+    int time = (int)((testFinish - testStart) * 1000.0 / CLOCKS_PER_SEC);
+    cout << white << setw(5) << time << " ms Total" <<endl;
 
     cout << white << endl;
 }
