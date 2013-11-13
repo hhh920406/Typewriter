@@ -4,11 +4,15 @@ using namespace std;
 ZMAT_BEGIN_NAMESPACE
 
 SolidMatrix::SolidMatrix(const ComplexNumber &value) {
+    this->_rowNum = 0;
+    this->_colNum = 0;
     this->setSize(1, 1);
     this->setData(1, 1, value);
 }
 
 SolidMatrix::SolidMatrix(const int rowNum, const int colNum) {
+    this->_rowNum = 0;
+    this->_colNum = 0;
     this->setSize(rowNum, colNum);
 }
 

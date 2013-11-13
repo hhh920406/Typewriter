@@ -16,12 +16,14 @@ istream& operator >>(istream &in, ComplexNumber &num) {
 
 ostream& operator <<(ostream &out, const ComplexNumber &num) {
     out << num.real();
-    if (num.image() <= 0.0) {
-        out << " - ";
-    } else {
-        out << " + ";
+    if (fabs(num.image()) > ZMAT_EPS) {
+        if (num.image() <= 0.0) {
+            out << " - ";
+        } else {
+            out << " + ";
+        }
+        out << num.image() << " i";
     }
-    out << num.image() << " i";
     return out;
 }
 

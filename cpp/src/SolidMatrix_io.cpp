@@ -1,5 +1,6 @@
 #include "SolidMatrix.h"
 #include "SolidMatrix_io.h"
+#include "ComplexNumber_io.h"
 using namespace std;
 
 ZMAT_BEGIN_NAMESPACE
