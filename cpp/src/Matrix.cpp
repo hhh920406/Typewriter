@@ -1,49 +1,49 @@
-#include "SolidMatrix.h"
+#include "Matrix.h"
 using namespace std;
 
 ZMAT_BEGIN_NAMESPACE
 
-SolidMatrix::SolidMatrix(const ComplexNumber &value) {
+Matrix::Matrix(const Complex &value) {
     this->_rowNum = 0;
     this->_colNum = 0;
     this->setSize(1, 1);
     this->setData(1, 1, value);
 }
 
-SolidMatrix::SolidMatrix(const int rowNum, const int colNum) {
+Matrix::Matrix(const int rowNum, const int colNum) {
     this->_rowNum = 0;
     this->_colNum = 0;
     this->setSize(rowNum, colNum);
 }
 
-SolidMatrix::~SolidMatrix() {
+Matrix::~Matrix() {
 }
 
-const int SolidMatrix::rowNum() const {
+const int Matrix::rowNum() const {
     return this->_rowNum;
 }
 
-const int SolidMatrix::colNum() const {
+const int Matrix::colNum() const {
     return this->_colNum;
 }
 
-void SolidMatrix::setRowNum(const int rowNum) {
+void Matrix::setRowNum(const int rowNum) {
     this->setSize(rowNum, this->_colNum);
 }
 
-void SolidMatrix::setColNum(const int colNum) {
+void Matrix::setColNum(const int colNum) {
     this->setSize(this->_rowNum, colNum);
 }
 
-void SolidMatrix::setSize(const int rowNum, const int colNum) {
-    vector< vector<ComplexNumber> > data;
+void Matrix::setSize(const int rowNum, const int colNum) {
+    vector< vector<Complex> > data;
     for (int i = 0; i < rowNum; ++i) {
-        data.push_back(vector<ComplexNumber>());
+        data.push_back(vector<Complex>());
         for (int j = 0; j < colNum; ++j) {
             if (i < this->_rowNum && j < this->_colNum) {
                 data[i].push_back(this->_data[i][j]);
             } else {
-                data[i].push_back(0.0);
+                data[i].push_back(this->_zero);
             }
         }
     }
@@ -52,16 +52,25 @@ void SolidMatrix::setSize(const int rowNum, const int colNum) {
     this->_colNum = colNum;
 }
 
-const ComplexNumber SolidMatrix::data(const int r, const int c) const {
+Complex& Matrix::operator ()(const int r, const int c) {
     if (r >= 1 && r <= this->_rowNum) {
         if (c >= 1 && c <= this->_colNum) {
             return this->_data[r - 1][c - 1];
         }
     }
-    return 0;
+    return this->_zero;
 }
 
-void SolidMatrix::setData(const int r, const int c, const ComplexNumber &value) {
+const Complex Matrix::data(const int r, const int c) const {
+    if (r >= 1 && r <= this->_rowNum) {
+        if (c >= 1 && c <= this->_colNum) {
+            return this->_data[r - 1][c - 1];
+        }
+    }
+    return this->_zero;
+}
+
+void Matrix::setData(const int r, const int c, const Complex &value) {
     if (r >= 1 && r <= this->_rowNum) {
         if (c >= 1 && c <= this->_colNum) {
             this->_data[r - 1][c - 1] = value;

@@ -1,0 +1,6 @@
+#ifndef TEST_COMPLEX_H_INCLUDED
+#define TEST_COMPLEX_H_INCLUDED
+
+void Test_Complex();
+
+#endif // TEST_COMPLEX_H_INCLUDED

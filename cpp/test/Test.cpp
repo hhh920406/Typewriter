@@ -13,7 +13,7 @@ inline ostream& red(ostream &out) {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | 4);
     #endif
     #ifdef SYS_LINUX
-    out << "\033[31m";
+    out << "\e[31m\e[1m";
     #endif
     return out;
 }
@@ -23,7 +23,7 @@ inline ostream& green(ostream &out) {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | 2);
     #endif
     #ifdef SYS_LINUX
-    out << "\033[32m";
+    out << "\e[32m\e[1m";
     #endif
     return out;
 }
@@ -33,7 +33,7 @@ inline ostream& yellow(ostream &out) {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | 6);
     #endif
     #ifdef SYS_LINUX
-    out << "\033[33m";
+    out << "\e[33m\e[1m";
     #endif
     return out;
 }
@@ -43,7 +43,7 @@ inline ostream& white(ostream &out) {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | 7);
     #endif
     #ifdef SYS_LINUX
-    out << "\033[0m";
+    out << "\e[0m";
     #endif
     return out;
 }
@@ -98,8 +98,8 @@ void Test::test() {
                 cout << red << "[ FAILED ]";
             }
             int time = (int)((caseFinish - caseStart) * 1000.0 / CLOCKS_PER_SEC);
-            cout << white << setw(5) << time << " ms ";
-            cout << testSuiteName << " : " << testCaseName << endl;
+            cout << yellow << setw(5) << time << " ms ";
+            cout << white << testSuiteName << " : " << testCaseName << endl;
         }
         time_t suiteFinish = clock();
         if (casePassed == caseNumber) {
@@ -109,7 +109,8 @@ void Test::test() {
             cout << red << "[  " << setw(3) << radio << "%  ]";
         }
         int time = (int)((suiteFinish - suiteStart) * 1000.0 / CLOCKS_PER_SEC);
-        cout << white << setw(5) << time << " ms " << testSuiteName <<endl;
+        cout << yellow << setw(5) << time << " ms ";
+        cout << white << testSuiteName <<endl;
         cout << endl;
     }
     time_t testFinish = clock();
@@ -120,7 +121,8 @@ void Test::test() {
         cout << red << "[  " << setw(3) << radio << "%  ]";
     }
     int time = (int)((testFinish - testStart) * 1000.0 / CLOCKS_PER_SEC);
-    cout << white << setw(5) << time << " ms Total" <<endl;
+    cout << yellow << setw(5) << time << " ms ";
+    cout << white << "Total" <<endl;
 
     cout << white << endl;
 }
