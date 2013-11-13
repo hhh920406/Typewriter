@@ -4,30 +4,48 @@
 using namespace std;
 
 #ifdef SYS_WIN
-
 #include <windows.h>
+#endif
 
 inline ostream& red(ostream &out) {
+    #ifdef SYS_WIN
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | 4);
+    #endif
+    #ifdef SYS_LINUX
+    out << "\033[31m";
+    #endif
     return out;
 }
 
 inline ostream& green(ostream &out) {
+    #ifdef SYS_WIN
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | 2);
+    #endif
+    #ifdef SYS_LINUX
+    out << "\033[32m";
+    #endif
     return out;
 }
 
 inline ostream& yellow(ostream &out) {
+    #ifdef SYS_WIN
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | 6);
+    #endif
+    #ifdef SYS_LINUX
+    out << "\033[33m";
+    #endif
     return out;
 }
 
 inline ostream& white(ostream &out) {
+    #ifdef SYS_WIN
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | 7);
+    #endif
+    #ifdef SYS_LINUX
+    out << "\033[0m";
+    #endif
     return out;
 }
-
-#endif
 
 bool Test::_passed;
 std::map< std::string, std::vector< std::pair<std::string, void (*)()> > > Test::_tests;
