@@ -2,6 +2,7 @@
 #define SOLIDMATRIX_ARITHMETIC_H_INCLUDED
 
 #include "ZMat.h"
+#include <vector>
 
 ZMAT_BEGIN_NAMESPACE
 

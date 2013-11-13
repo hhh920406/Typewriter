@@ -43,7 +43,7 @@ void SolidMatrix::setSize(const int rowNum, const int colNum) {
             if (i < this->_rowNum && j < this->_colNum) {
                 data[i].push_back(this->_data[i][j]);
             } else {
-                data[i].push_back(0.0);
+                data[i].push_back(this->_zero);
             }
         }
     }
@@ -52,13 +52,22 @@ void SolidMatrix::setSize(const int rowNum, const int colNum) {
     this->_colNum = colNum;
 }
 
+ComplexNumber& SolidMatrix::operator ()(const int r, const int c) {
+    if (r >= 1 && r <= this->_rowNum) {
+        if (c >= 1 && c <= this->_colNum) {
+            return this->_data[r - 1][c - 1];
+        }
+    }
+    return this->_zero;
+}
+
 const ComplexNumber SolidMatrix::data(const int r, const int c) const {
     if (r >= 1 && r <= this->_rowNum) {
         if (c >= 1 && c <= this->_colNum) {
             return this->_data[r - 1][c - 1];
         }
     }
-    return 0;
+    return this->_zero;
 }
 
 void SolidMatrix::setData(const int r, const int c, const ComplexNumber &value) {

@@ -14,13 +14,14 @@
 #include <vector>
 #include "ZMat.h"
 #include "ComplexNumber.h"
+#include "ComplexNumber_arithmetic.h"
 
 ZMAT_BEGIN_NAMESPACE
 
 class SolidMatrix {
 public:
     SolidMatrix(const ComplexNumber &value);
-    SolidMatrix(const int rowNum, const int colNum);
+    SolidMatrix(const int rowNum = 1, const int colNum = 1);
     virtual ~SolidMatrix();
 
     const int rowNum() const;
@@ -29,12 +30,14 @@ public:
     void setColNum(const int colNum);
     void setSize(const int rowNum, const int colNum);
 
+    ComplexNumber& operator ()(const int r, const int c);
     const ComplexNumber data(const int r, const int c) const;
     void setData(const int r, const int c, const ComplexNumber &value);
 
 protected:
     int _rowNum;
     int _colNum;
+    ComplexNumber _zero;
     std::vector< std::vector<ComplexNumber> > _data;
 };
 

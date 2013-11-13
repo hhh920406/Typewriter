@@ -18,7 +18,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Windows_Release">
-				<Option output="bin/Windows_Release/libZMatrix" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Windows_Release/ZMatrix" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin/Windows_Release/" />
 				<Option object_output="obj/Windows_Release/" />
 				<Option type="3" />
@@ -78,9 +78,12 @@
 		</Unit>
 		<Unit filename="include/SolidMatrix_arithmetic.h" />
 		<Unit filename="include/SolidMatrix_io.h" />
+		<Unit filename="include/SolidMatrix_math" />
+		<Unit filename="include/SolidMatrix_math.h" />
 		<Unit filename="include/ZMat.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="include/math/doolittle.h" />
 		<Unit filename="main.cpp">
 			<Option target="Windows_Debug" />
 			<Option target="Linux_Debug" />
@@ -92,6 +95,7 @@
 		<Unit filename="src/SolidMatrix.cpp" />
 		<Unit filename="src/SolidMatrix_arithmetic.cpp" />
 		<Unit filename="src/SolidMatrix_io.cpp" />
+		<Unit filename="src/math/doolittle.cpp" />
 		<Unit filename="test/Test.cpp">
 			<Option target="Windows_Debug" />
 			<Option target="Linux_Debug" />
@@ -105,6 +109,14 @@
 			<Option target="Linux_Debug" />
 		</Unit>
 		<Unit filename="test/Test_ComplexNumber.h">
+			<Option target="Windows_Debug" />
+			<Option target="Linux_Debug" />
+		</Unit>
+		<Unit filename="test/Test_Decompose.cpp">
+			<Option target="Windows_Debug" />
+			<Option target="Linux_Debug" />
+		</Unit>
+		<Unit filename="test/Test_Decompose.h">
 			<Option target="Windows_Debug" />
 			<Option target="Linux_Debug" />
 		</Unit>

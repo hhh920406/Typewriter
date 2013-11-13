@@ -13,9 +13,9 @@ void Test_SolidMatrix_Equal() {
     SolidMatrix c(3, 3);
     for (int i = 1; i <= 3; ++i) {
         for (int j = 1; j <= 3; ++j) {
-            a.setData(i, j, i + j);
-            b.setData(i, j, j + i);
-            c.setData(i, j, i - j);
+            a(i, j) = i + j;
+            b(i, j) = j + i;
+            c(i, j) = i - j;
         }
     }
     TEST_EQUAL(a, b);
@@ -32,9 +32,9 @@ void Test_SolidMatrix_Add() {
     SolidMatrix c(3, 3);
     for (int i = 1; i <= 3; ++i) {
         for (int j = 1; j <= 3; ++j) {
-            a.setData(i, j, i + j);
-            b.setData(i, j, i - j);
-            c.setData(i, j, i * 2);
+            a(i, j) = i + j;
+            b(i, j) = i - j;
+            c(i, j) = i * 2;
         }
     }
     TEST_EQUAL(a + b, c);
@@ -47,9 +47,9 @@ void Test_SolidMatrix_Subtract() {
     SolidMatrix c(3, 3);
     for (int i = 1; i <= 3; ++i) {
         for (int j = 1; j <= 3; ++j) {
-            a.setData(i, j, i + j);
-            b.setData(i, j, i - j);
-            c.setData(i, j, j * 2);
+            a(i, j) = i + j;
+            b(i, j) = i - j;
+            c(i, j) = j * 2;
         }
     }
     TEST_EQUAL(a - b, c);
@@ -63,29 +63,17 @@ void Test_SolidMatrix_Multiply() {
     SolidMatrix d(3, 3);
     for (int i = 1; i <= 3; ++i) {
         for (int j = 1; j <= 3; ++j) {
-            a.setData(i, j, i + j);
-            b.setData(i, j, i - j);
+            a(i, j) = i + j;
+            b(i, j) = i - j;
         }
     }
-    c.setData(1, 1, 11);
-    c.setData(1, 2, 2);
-    c.setData(1, 3, -7);
-    c.setData(2, 1, 14);
-    c.setData(2, 2, 2);
-    c.setData(2, 3, -10);
-    c.setData(3, 1, 17);
-    c.setData(3, 2, 2);
-    c.setData(3, 3, -13);
+    c(1, 1) = 11;   c(1, 2) = 2;    c(1, 3) = -7;
+    c(2, 1) = 14;   c(2, 2) = 2;    c(2, 3) = -10;
+    c(3, 1) = 17;   c(3, 2) = 2;    c(3, 3) = -13;
     TEST_EQUAL(a * b, c);
-    d.setData(1, 1, -11);
-    d.setData(1, 2, -14);
-    d.setData(1, 3, -17);
-    d.setData(2, 1, -2);
-    d.setData(2, 2, -2);
-    d.setData(2, 3, -2);
-    d.setData(3, 1, 7);
-    d.setData(3, 2, 10);
-    d.setData(3, 3, 13);
+    d(1, 1) = -11;  d(1, 2) = -14;  d(1, 3) = -17;
+    d(2, 1) = -2;   d(2, 2) = -2;   d(2, 3) = -2;
+    d(3, 1) = 7;    d(3, 2) = 10;   d(3, 3) = 13;
     TEST_EQUAL(b * a, d);
 }
 
