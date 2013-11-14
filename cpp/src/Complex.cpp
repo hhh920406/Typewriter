@@ -6,39 +6,48 @@ using namespace std;
 
 ZMAT_BEGIN_NAMESPACE
 
-Complex::Complex() {
+Complex::Complex()
+{
     this->setValue(0.0, 0.0);
 }
 
-Complex::Complex(const double real) {
+Complex::Complex(const double real)
+{
     this->setValue(real, 0.0);
 }
 
-Complex::Complex(const double real, const double image) {
+Complex::Complex(const double real, const double image)
+{
     this->setValue(real, image);
 }
 
-Complex::~Complex() {
+Complex::~Complex()
+{
 }
 
-void Complex::setReal(const double real) {
+void Complex::setReal(const double real)
+{
     this->_real = real;
 }
 
-void Complex::setImage(const double image) {
+void Complex::setImage(const double image)
+{
     this->_image = image;
 }
 
-void Complex::setValue(const double real, const double image) {
+void Complex::setValue(const double real, const double image)
+{
     this->setReal(real);
     this->setImage(image);
 }
 
-const double Complex::real() const {
+const double Complex::real() const
+{
     return this->_real;
 }
 
-const double Complex::image() const {
+const double Complex::image() const
+{
     return this->_image;
 }
 

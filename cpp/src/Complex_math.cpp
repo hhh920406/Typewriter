@@ -3,19 +3,23 @@
 
 ZMAT_BEGIN_NAMESPACE
 
-const double abs(const Complex &num) {
+const double abs(const Complex &num)
+{
     return sqrt(num.image() * num.image() + num.real() * num.real());
 }
 
-const double norm(const Complex &num) {
+const double norm(const Complex &num)
+{
     return abs(num);
 }
 
-const double angle(const Complex &num) {
+const double angle(const Complex &num)
+{
     return atan2(num.image(), num.real());
 }
 
-const Complex conjugate(const Complex &num) {
+const Complex conjugate(const Complex &num)
+{
     return Complex(num.real(), - num.image());
 }
 

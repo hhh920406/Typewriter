@@ -19,7 +19,8 @@
 
 ZMAT_BEGIN_NAMESPACE
 
-class Matrix {
+class Matrix
+{
 public:
     Matrix(const Complex &value);
     Matrix(const int rowNum = 1, const int colNum = 1);
@@ -31,6 +32,8 @@ public:
     void setColNum(const int colNum);
     void setSize(const int rowNum, const int colNum);
 
+    const Matrix row(const int r) const;
+    const Matrix col(const int c) const;
     Complex& operator ()(const int r, const int c);
     const Complex data(const int r, const int c) const;
     void setData(const int r, const int c, const Complex &value);

@@ -70,7 +70,11 @@
 		<Unit filename="include/Matrix_io.h" />
 		<Unit filename="include/Matrix_math.h" />
 		<Unit filename="include/ZMat.h" />
+		<Unit filename="include/math/crout.h" />
 		<Unit filename="include/math/doolittle.h" />
+		<Unit filename="include/math/eye.h" />
+		<Unit filename="include/math/inv.h" />
+		<Unit filename="include/math/ldu.h" />
 		<Unit filename="main.cpp">
 			<Option target="Windows_Debug" />
 			<Option target="Linux_Debug" />
@@ -82,7 +86,11 @@
 		<Unit filename="src/Matrix.cpp" />
 		<Unit filename="src/Matrix_arithmetic.cpp" />
 		<Unit filename="src/Matrix_io.cpp" />
+		<Unit filename="src/math/crout.cpp" />
 		<Unit filename="src/math/doolittle.cpp" />
+		<Unit filename="src/math/eye.cpp" />
+		<Unit filename="src/math/inv.cpp" />
+		<Unit filename="src/math/ldu.cpp" />
 		<Unit filename="test/Test.cpp">
 			<Option target="Windows_Debug" />
 			<Option target="Linux_Debug" />
@@ -107,6 +115,14 @@
 			<Option target="Windows_Debug" />
 			<Option target="Linux_Debug" />
 		</Unit>
+		<Unit filename="test/Test_Generate.cpp">
+			<Option target="Windows_Debug" />
+			<Option target="Linux_Debug" />
+		</Unit>
+		<Unit filename="test/Test_Generate.h">
+			<Option target="Windows_Debug" />
+			<Option target="Linux_Debug" />
+		</Unit>
 		<Unit filename="test/Test_Matrix.cpp">
 			<Option target="Windows_Debug" />
 			<Option target="Linux_Debug" />
@@ -119,6 +135,15 @@
 			<code_completion />
 			<debugger />
 			<envvars />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

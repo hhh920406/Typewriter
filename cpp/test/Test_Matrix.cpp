@@ -1,16 +1,17 @@
 #include "Test.h"
 #include "Matrix.h"
-#include <cmath>
-#include <iostream>
-using namespace std;
+#include "Matrix_math.h"
 using namespace zmat;
 
-void Test_Matrix_Equal() {
+void Test_Matrix_Equal()
+{
     Matrix a(3, 3);
     Matrix b(3, 3);
     Matrix c(3, 3);
-    for (int i = 1; i <= 3; ++i) {
-        for (int j = 1; j <= 3; ++j) {
+    for (int i = 1; i <= 3; ++i)
+    {
+        for (int j = 1; j <= 3; ++j)
+            {
             a(i, j) = i + j;
             b(i, j) = j + i;
             c(i, j) = i - j;
@@ -24,12 +25,15 @@ void Test_Matrix_Equal() {
     TEST_UNEQUAL(c, b);
 }
 
-void Test_Matrix_Add() {
+void Test_Matrix_Add()
+{
     Matrix a(3, 3);
     Matrix b(3, 3);
     Matrix c(3, 3);
-    for (int i = 1; i <= 3; ++i) {
-        for (int j = 1; j <= 3; ++j) {
+    for (int i = 1; i <= 3; ++i)
+    {
+        for (int j = 1; j <= 3; ++j)
+            {
             a(i, j) = i + j;
             b(i, j) = i - j;
             c(i, j) = i * 2;
@@ -39,12 +43,15 @@ void Test_Matrix_Add() {
     TEST_EQUAL(b + a, c);
 }
 
-void Test_Matrix_Subtract() {
+void Test_Matrix_Subtract()
+{
     Matrix a(3, 3);
     Matrix b(3, 3);
     Matrix c(3, 3);
-    for (int i = 1; i <= 3; ++i) {
-        for (int j = 1; j <= 3; ++j) {
+    for (int i = 1; i <= 3; ++i)
+    {
+        for (int j = 1; j <= 3; ++j)
+            {
             a(i, j) = i + j;
             b(i, j) = i - j;
             c(i, j) = j * 2;
@@ -54,13 +61,16 @@ void Test_Matrix_Subtract() {
     TEST_UNEQUAL(b - a, c);
 }
 
-void Test_Matrix_Multiply() {
+void Test_Matrix_Multiply()
+{
     Matrix a(3, 3);
     Matrix b(3, 3);
     Matrix c(3, 3);
     Matrix d(3, 3);
-    for (int i = 1; i <= 3; ++i) {
-        for (int j = 1; j <= 3; ++j) {
+    for (int i = 1; i <= 3; ++i)
+    {
+        for (int j = 1; j <= 3; ++j)
+            {
             a(i, j) = i + j;
             b(i, j) = i - j;
         }
@@ -75,9 +85,21 @@ void Test_Matrix_Multiply() {
     TEST_EQUAL(b * a, d);
 }
 
+void Test_Matrix_Inverse()
+{
+    Matrix a(4, 4);
+    a(1, 1) = 2; a(1, 2) = 1; a(1, 3) = 1; a(1, 4) = 0;
+    a(2, 1) = 4; a(2, 2) = 3; a(2, 3) = 3; a(2, 4) = 1;
+    a(3, 1) = 8; a(3, 2) = 7; a(3, 3) = 9; a(3, 4) = 5;
+    a(4, 1) = 6; a(4, 2) = 7; a(4, 3) = 9; a(4, 4) = 8;
+    TEST_EQUAL(a * inv(a), eye(4));
+    TEST_EQUAL(inv(a) * a, eye(4));
+}
+
 void Test_Matrix() {
     Test::add("Matrix", "Equal", Test_Matrix_Equal);
     Test::add("Matrix", "Add", Test_Matrix_Add);
     Test::add("Matrix", "Subtract", Test_Matrix_Subtract);
     Test::add("Matrix", "Multiply", Test_Matrix_Multiply);
+    Test::add("Matrix", "Inverse", Test_Matrix_Inverse);
 }
