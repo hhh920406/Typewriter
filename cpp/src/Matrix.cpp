@@ -52,6 +52,26 @@ void Matrix::setSize(const int rowNum, const int colNum) {
     this->_colNum = colNum;
 }
 
+const Matrix Matrix::row(const int r) const
+{
+    Matrix R(1, this->_colNum);
+    for (int i = 1; i <= this->_colNum; ++i)
+    {
+        R(1, i) = this->data(r, i);
+    }
+    return R;
+}
+
+const Matrix Matrix::col(const int c) const
+{
+    Matrix C(this->_rowNum, 1);
+    for (int i = 1; i <= this->_rowNum; ++i)
+    {
+        C(i, 1) = this->data(i, c);
+    }
+    return C;
+}
+
 Complex& Matrix::operator ()(const int r, const int c) {
     if (r >= 1 && r <= this->_rowNum) {
         if (c >= 1 && c <= this->_colNum) {
