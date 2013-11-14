@@ -5,13 +5,13 @@ using namespace zmat;
 
 void Test_Matrix_Equal()
 {
-    Matrix a(3, 3);
-    Matrix b(3, 3);
-    Matrix c(3, 3);
+    Matrix<Complex> a(3, 3);
+    Matrix<Complex> b(3, 3);
+    Matrix<Complex> c(3, 3);
     for (int i = 1; i <= 3; ++i)
     {
         for (int j = 1; j <= 3; ++j)
-            {
+        {
             a(i, j) = i + j;
             b(i, j) = j + i;
             c(i, j) = i - j;
@@ -27,9 +27,9 @@ void Test_Matrix_Equal()
 
 void Test_Matrix_Add()
 {
-    Matrix a(3, 3);
-    Matrix b(3, 3);
-    Matrix c(3, 3);
+    Matrix<Complex> a(3, 3);
+    Matrix<Complex> b(3, 3);
+    Matrix<Complex> c(3, 3);
     for (int i = 1; i <= 3; ++i)
     {
         for (int j = 1; j <= 3; ++j)
@@ -45,9 +45,9 @@ void Test_Matrix_Add()
 
 void Test_Matrix_Subtract()
 {
-    Matrix a(3, 3);
-    Matrix b(3, 3);
-    Matrix c(3, 3);
+    Matrix<Complex> a(3, 3);
+    Matrix<Complex> b(3, 3);
+    Matrix<Complex> c(3, 3);
     for (int i = 1; i <= 3; ++i)
     {
         for (int j = 1; j <= 3; ++j)
@@ -63,14 +63,14 @@ void Test_Matrix_Subtract()
 
 void Test_Matrix_Multiply()
 {
-    Matrix a(3, 3);
-    Matrix b(3, 3);
-    Matrix c(3, 3);
-    Matrix d(3, 3);
+    Matrix<Complex> a(3, 3);
+    Matrix<Complex> b(3, 3);
+    Matrix<Complex> c(3, 3);
+    Matrix<Complex> d(3, 3);
     for (int i = 1; i <= 3; ++i)
     {
         for (int j = 1; j <= 3; ++j)
-            {
+        {
             a(i, j) = i + j;
             b(i, j) = i - j;
         }
@@ -87,23 +87,23 @@ void Test_Matrix_Multiply()
 
 void Test_Matrix_Inverse()
 {
-    Matrix a(4, 4);
+    Matrix<Complex> a(4, 4);
     a(1, 1) = 2; a(1, 2) = 1; a(1, 3) = 1; a(1, 4) = 0;
     a(2, 1) = 4; a(2, 2) = 3; a(2, 3) = 3; a(2, 4) = 1;
     a(3, 1) = 8; a(3, 2) = 7; a(3, 3) = 9; a(3, 4) = 5;
     a(4, 1) = 6; a(4, 2) = 7; a(4, 3) = 9; a(4, 4) = 8;
-    TEST_EQUAL(a * inv(a), eye(4));
-    TEST_EQUAL(inv(a) * a, eye(4));
+    TEST_EQUAL(a * inv(a), eye<Complex>(4));
+    TEST_EQUAL(inv(a) * a, eye<Complex>(4));
 }
 
 void Test_Matrix_Transpose()
 {
-    Matrix a(4, 4);
+    Matrix<Complex> a(4, 4);
     a(1, 1) = 2; a(1, 2) = 1; a(1, 3) = 1; a(1, 4) = 0;
     a(2, 1) = 4; a(2, 2) = 3; a(2, 3) = 3; a(2, 4) = 1;
     a(3, 1) = 8; a(3, 2) = 7; a(3, 3) = 9; a(3, 4) = 5;
     a(4, 1) = 6; a(4, 2) = 7; a(4, 3) = 9; a(4, 4) = 8;
-    Matrix b = transpose(a);
+    Matrix<Complex> b = transpose(a);
     for (int i = 1; i <= a.rowNum(); ++i)
     {
         for (int j = 1; j <= a.colNum(); ++j)
@@ -113,7 +113,8 @@ void Test_Matrix_Transpose()
     }
 }
 
-void Test_Matrix() {
+void Test_Matrix()
+{
     Test::add("Matrix", "Equal", Test_Matrix_Equal);
     Test::add("Matrix", "Add", Test_Matrix_Add);
     Test::add("Matrix", "Subtract", Test_Matrix_Subtract);

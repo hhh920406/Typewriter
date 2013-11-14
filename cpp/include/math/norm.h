@@ -8,10 +8,12 @@
 
 ZMAT_BEGIN_NAMESPACE
 
-class Complex;
-class Matrix;
-
-const Complex norm(Matrix &A, int p = 2);
+template<typename T>
+const T norm(Matrix<T> &A, int p)
+{
+    T res;
+    return res;
+}
 
 ZMAT_END_NAMESPACE
 
