@@ -6,11 +6,11 @@ using namespace zmat;
 
 void Test_Generate_Eye()
 {
-    Matrix I = eye();
+    Matrix<Complex> I = eye<Complex>();
     TEST_EQUAL(I.rowNum(), 1);
     TEST_EQUAL(I.colNum(), 1);
     TEST_EQUAL(I(1, 1), Complex(1.0));
-    I = eye(5);
+    I = eye<Complex>(5);
     TEST_EQUAL(I.rowNum(), 5);
     TEST_EQUAL(I.colNum(), 5);
     for (int i = 1; i <= 5; ++i)
@@ -27,7 +27,7 @@ void Test_Generate_Eye()
             }
         }
     }
-    I = eye(6, 10);
+    I = eye<Complex>(6, 10);
     TEST_EQUAL(I.rowNum(), 6);
     TEST_EQUAL(I.colNum(), 10);
     for (int i = 1; i <= 5; ++i)
@@ -44,7 +44,7 @@ void Test_Generate_Eye()
             }
         }
     }
-    I = eye(10, 2);
+    I = eye<Complex>(10, 2);
     TEST_EQUAL(I.rowNum(), 10);
     TEST_EQUAL(I.colNum(), 2);
     for (int i = 1; i <= 10; ++i)

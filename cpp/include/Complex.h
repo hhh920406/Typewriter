@@ -6,9 +6,7 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include "ZMat.h"
-#include "Complex_io.h"
-#include "Complex_math.h"
-#include "Complex_arithmetic.h"
+#include <iostream>
 
 ZMAT_BEGIN_NAMESPACE
 
@@ -30,6 +28,22 @@ protected:
     double _real;
     double _image;
 };
+
+std::istream& operator >>(std::istream &in, Complex &num);
+std::ostream& operator <<(std::ostream &out, const Complex &num);
+
+const Complex operator +(const Complex &a, const Complex &b);
+const Complex operator -(const Complex &a, const Complex &b);
+const Complex operator *(const Complex &a, const Complex &b);
+const Complex operator /(const Complex &a, const Complex &b);
+const Complex operator /(const Complex &a, const double b);
+
+bool operator ==(const Complex &a, const Complex &b);
+
+const double abs(const Complex &num);
+const double norm(const Complex &num);
+const double angle(const Complex &num);
+const Complex conjugate(const Complex &num);
 
 ZMAT_END_NAMESPACE
 
