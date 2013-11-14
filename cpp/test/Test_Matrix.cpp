@@ -3,12 +3,15 @@
 #include "Matrix_math.h"
 using namespace zmat;
 
-void Test_Matrix_Equal() {
+void Test_Matrix_Equal()
+{
     Matrix a(3, 3);
     Matrix b(3, 3);
     Matrix c(3, 3);
-    for (int i = 1; i <= 3; ++i) {
-        for (int j = 1; j <= 3; ++j) {
+    for (int i = 1; i <= 3; ++i)
+    {
+        for (int j = 1; j <= 3; ++j)
+            {
             a(i, j) = i + j;
             b(i, j) = j + i;
             c(i, j) = i - j;
@@ -22,12 +25,15 @@ void Test_Matrix_Equal() {
     TEST_UNEQUAL(c, b);
 }
 
-void Test_Matrix_Add() {
+void Test_Matrix_Add()
+{
     Matrix a(3, 3);
     Matrix b(3, 3);
     Matrix c(3, 3);
-    for (int i = 1; i <= 3; ++i) {
-        for (int j = 1; j <= 3; ++j) {
+    for (int i = 1; i <= 3; ++i)
+    {
+        for (int j = 1; j <= 3; ++j)
+            {
             a(i, j) = i + j;
             b(i, j) = i - j;
             c(i, j) = i * 2;
@@ -37,12 +43,15 @@ void Test_Matrix_Add() {
     TEST_EQUAL(b + a, c);
 }
 
-void Test_Matrix_Subtract() {
+void Test_Matrix_Subtract()
+{
     Matrix a(3, 3);
     Matrix b(3, 3);
     Matrix c(3, 3);
-    for (int i = 1; i <= 3; ++i) {
-        for (int j = 1; j <= 3; ++j) {
+    for (int i = 1; i <= 3; ++i)
+    {
+        for (int j = 1; j <= 3; ++j)
+            {
             a(i, j) = i + j;
             b(i, j) = i - j;
             c(i, j) = j * 2;
@@ -52,13 +61,16 @@ void Test_Matrix_Subtract() {
     TEST_UNEQUAL(b - a, c);
 }
 
-void Test_Matrix_Multiply() {
+void Test_Matrix_Multiply()
+{
     Matrix a(3, 3);
     Matrix b(3, 3);
     Matrix c(3, 3);
     Matrix d(3, 3);
-    for (int i = 1; i <= 3; ++i) {
-        for (int j = 1; j <= 3; ++j) {
+    for (int i = 1; i <= 3; ++i)
+    {
+        for (int j = 1; j <= 3; ++j)
+            {
             a(i, j) = i + j;
             b(i, j) = i - j;
         }

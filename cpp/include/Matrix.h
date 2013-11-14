@@ -19,7 +19,8 @@
 
 ZMAT_BEGIN_NAMESPACE
 
-class Matrix {
+class Matrix
+{
 public:
     Matrix(const Complex &value);
     Matrix(const int rowNum = 1, const int colNum = 1);

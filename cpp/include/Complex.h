@@ -12,7 +12,8 @@
 
 ZMAT_BEGIN_NAMESPACE
 
-class Complex {
+class Complex
+{
 public:
     Complex();
     Complex(const double real);

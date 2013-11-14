@@ -10,7 +10,8 @@
 #include <string>
 #include <iostream>
 
-class Test {
+class Test
+{
 public:
     Test();
     virtual ~Test();
@@ -31,8 +32,10 @@ std::ostream& yellow(std::ostream &out);
 std::ostream& white(std::ostream &out);
 
 template<typename T>
-bool TEST_EQUAL(const T &a, const T &b) {
-    if (!(a == b)) {
+bool TEST_EQUAL(const T &a, const T &b)
+{
+    if (!(a == b))
+    {
         Test::fail();
         std::cout << white << "Equal: " << std::endl;
         std::cout << a << std::endl;
@@ -43,8 +46,10 @@ bool TEST_EQUAL(const T &a, const T &b) {
 }
 
 template<typename T>
-bool TEST_UNEQUAL(const T &a, const T &b) {
-    if (a == b) {
+bool TEST_UNEQUAL(const T &a, const T &b)
+{
+    if (a == b)
+    {
         Test::fail();
         std::cout << white << "Unequal: " << std::endl;
         std::cout << a << std::endl;
@@ -55,8 +60,10 @@ bool TEST_UNEQUAL(const T &a, const T &b) {
 }
 
 template<typename T>
-bool TEST_AEQUAL(const T &a, const T &b) {
-    if (fabs(a - b) > 1e-8) {
+bool TEST_AEQUAL(const T &a, const T &b)
+{
+    if (fabs(a - b) > 1e-8)
+    {
         Test::fail();
         std::cout << white << "Approximate equal: " << std::endl;
         std::cout << a << std::endl;

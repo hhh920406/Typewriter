@@ -4,7 +4,8 @@
 #include "Test_Decompose.h"
 #include "Test_Generate.h"
 
-int main() {
+int main()
+{
     Test_Complex();
     Test_Matrix();
     Test_Decompose();

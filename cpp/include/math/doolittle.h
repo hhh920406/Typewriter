@@ -7,7 +7,8 @@ ZMAT_BEGIN_NAMESPACE
 
 class Matrix;
 
-struct Doolittle_Mat {
+struct Doolittle_Mat
+{
     Matrix L;
     Matrix U;
 };
