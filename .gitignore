@@ -23,3 +23,8 @@ bin
 # Temp files
 *.autosave
 *~
+*.user
+
+# Temp files
+*.autosave
+*~
