@@ -14,8 +14,6 @@
 #include <vector>
 #include "ZMat.h"
 #include "Complex.h"
-#include "Matrix_io.h"
-#include "Matrix_arithmetic.h"
 
 ZMAT_BEGIN_NAMESPACE
 
@@ -44,6 +42,15 @@ protected:
     Complex _zero;
     std::vector< std::vector<Complex> > _data;
 };
+
+std::istream& operator >>(std::istream &in, Matrix &mat);
+std::ostream& operator <<(std::ostream &out, const Matrix &mat);
+
+const Matrix operator +(const Matrix &a, const Matrix &b);
+const Matrix operator -(const Matrix &a, const Matrix &b);
+const Matrix operator *(const Matrix &a, const Matrix &b);
+
+const bool operator ==(const Matrix &a, const Matrix &b);
 
 ZMAT_END_NAMESPACE
 
