@@ -62,12 +62,7 @@
 			<Add directory="test" />
 		</Compiler>
 		<Unit filename="include/Complex.h" />
-		<Unit filename="include/Complex_arithmetic.h" />
-		<Unit filename="include/Complex_io.h" />
-		<Unit filename="include/Complex_math.h" />
 		<Unit filename="include/Matrix.h" />
-		<Unit filename="include/Matrix_arithmetic.h" />
-		<Unit filename="include/Matrix_io.h" />
 		<Unit filename="include/Matrix_math.h" />
 		<Unit filename="include/ZMat.h" />
 		<Unit filename="include/math/crout.h" />
@@ -75,22 +70,13 @@
 		<Unit filename="include/math/eye.h" />
 		<Unit filename="include/math/inv.h" />
 		<Unit filename="include/math/ldu.h" />
+		<Unit filename="include/math/norm.h" />
+		<Unit filename="include/math/transpose.h" />
 		<Unit filename="main.cpp">
 			<Option target="Windows_Debug" />
 			<Option target="Linux_Debug" />
 		</Unit>
 		<Unit filename="src/Complex.cpp" />
-		<Unit filename="src/Complex_arithmetic.cpp" />
-		<Unit filename="src/Complex_io.cpp" />
-		<Unit filename="src/Complex_math.cpp" />
-		<Unit filename="src/Matrix.cpp" />
-		<Unit filename="src/Matrix_arithmetic.cpp" />
-		<Unit filename="src/Matrix_io.cpp" />
-		<Unit filename="src/math/crout.cpp" />
-		<Unit filename="src/math/doolittle.cpp" />
-		<Unit filename="src/math/eye.cpp" />
-		<Unit filename="src/math/inv.cpp" />
-		<Unit filename="src/math/ldu.cpp" />
 		<Unit filename="test/Test.cpp">
 			<Option target="Windows_Debug" />
 			<Option target="Linux_Debug" />

@@ -1,3 +1,10 @@
+# Version 1.0.5
+
+Change:
+
+    0. Combine files.
+    1. Matrix is now template class.
+
 # Version 1.0.4
 
 Add:
