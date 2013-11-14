@@ -70,6 +70,7 @@
 		<Unit filename="include/Matrix_io.h" />
 		<Unit filename="include/Matrix_math.h" />
 		<Unit filename="include/ZMat.h" />
+		<Unit filename="include/math/crout.h" />
 		<Unit filename="include/math/doolittle.h" />
 		<Unit filename="include/math/eye.h" />
 		<Unit filename="include/math/inv.h" />
@@ -85,6 +86,7 @@
 		<Unit filename="src/Matrix.cpp" />
 		<Unit filename="src/Matrix_arithmetic.cpp" />
 		<Unit filename="src/Matrix_io.cpp" />
+		<Unit filename="src/math/crout.cpp" />
 		<Unit filename="src/math/doolittle.cpp" />
 		<Unit filename="src/math/eye.cpp" />
 		<Unit filename="src/math/inv.cpp" />

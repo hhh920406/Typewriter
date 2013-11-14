@@ -3,6 +3,7 @@
 
 #include "math/doolittle.h"
 #include "math/ldu.h"
+#include "math/crout.h"
 #include "math/eye.h"
 #include "math/inv.h"
 

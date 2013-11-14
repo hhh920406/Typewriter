@@ -1,5 +1,4 @@
 #include "Matrix.h"
-#include "math/doolittle.h"
 #include "math/ldu.h"
 
 ZMAT_BEGIN_NAMESPACE
