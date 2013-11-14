@@ -1,6 +1,5 @@
 #include "Matrix.h"
 #include "math/doolittle.h"
-using namespace std;
 
 ZMAT_BEGIN_NAMESPACE
 
