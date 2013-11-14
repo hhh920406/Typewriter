@@ -1,3 +1,18 @@
+# Version 1.0.4
+
+Add:
+
+    0. Fetch row or column from matrix.
+    1. LDU decompose.
+    2. Crout decompose.
+    3. Inverse matrix.
+
+# Version 1.0.3
+
+Add:
+
+    0. Doolittle decompose.
+
 # Version 1.0.2
 
 Add:

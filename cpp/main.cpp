@@ -1,11 +1,15 @@
 #include "Test.h"
-#include "Test_ComplexNumber.h"
-#include "Test_SolidMatrix.h"
+#include "Test_Complex.h"
+#include "Test_Matrix.h"
+#include "Test_Decompose.h"
+#include "Test_Generate.h"
 
 int main()
 {
-    Test_ComplexNumber();
-    Test_SolidMatrix();
+    Test_Complex();
+    Test_Matrix();
+    Test_Decompose();
+    Test_Generate();
     Test::test();
     return 0;
 }

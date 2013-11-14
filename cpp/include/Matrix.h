@@ -1,5 +1,5 @@
-#ifndef SOLIDMATRIX_H
-#define SOLIDMATRIX_H
+#ifndef MATRIX_H
+#define MATRIX_H
 /**
  * The matrix with no space optimization.
  *
@@ -13,15 +13,18 @@
 
 #include <vector>
 #include "ZMat.h"
-#include "ComplexNumber.h"
+#include "Complex.h"
+#include "Matrix_io.h"
+#include "Matrix_arithmetic.h"
 
 ZMAT_BEGIN_NAMESPACE
 
-class SolidMatrix {
+class Matrix
+{
 public:
-    SolidMatrix(const ComplexNumber &value);
-    SolidMatrix(const int rowNum, const int colNum);
-    virtual ~SolidMatrix();
+    Matrix(const Complex &value);
+    Matrix(const int rowNum = 1, const int colNum = 1);
+    virtual ~Matrix();
 
     const int rowNum() const;
     const int colNum() const;
@@ -29,15 +32,19 @@ public:
     void setColNum(const int colNum);
     void setSize(const int rowNum, const int colNum);
 
-    const ComplexNumber data(const int r, const int c) const;
-    void setData(const int r, const int c, const ComplexNumber &value);
+    const Matrix row(const int r) const;
+    const Matrix col(const int c) const;
+    Complex& operator ()(const int r, const int c);
+    const Complex data(const int r, const int c) const;
+    void setData(const int r, const int c, const Complex &value);
 
 protected:
     int _rowNum;
     int _colNum;
-    std::vector< std::vector<ComplexNumber> > _data;
+    Complex _zero;
+    std::vector< std::vector<Complex> > _data;
 };
 
 ZMAT_END_NAMESPACE
 
-#endif // SOLIDMATRIX_H
+#endif // MATRIX_H
