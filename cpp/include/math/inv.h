@@ -1,6 +1,9 @@
 #ifndef INV_H
 #define INV_H
-
+/**
+ * Calculate the inverse matrix.
+ * @author ZHG <CyberZHG@gmail.com>
+ */
 #include "ZMat.h"
 
 ZMAT_BEGIN_NAMESPACE

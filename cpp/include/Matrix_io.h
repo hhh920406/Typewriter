@@ -1,6 +1,9 @@
 #ifndef MATRIX_IO_H_INCLUDED
 #define MATRIX_IO_H_INCLUDED
-
+/**
+ * The input and output of the matrix.
+ * @author ZHG <CyberZHG@gmail.com>
+ */
 #include <iostream>
 #include "ZMat.h"
 

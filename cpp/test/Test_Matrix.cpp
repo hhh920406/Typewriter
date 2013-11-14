@@ -96,10 +96,28 @@ void Test_Matrix_Inverse()
     TEST_EQUAL(inv(a) * a, eye(4));
 }
 
+void Test_Matrix_Transpose()
+{
+    Matrix a(4, 4);
+    a(1, 1) = 2; a(1, 2) = 1; a(1, 3) = 1; a(1, 4) = 0;
+    a(2, 1) = 4; a(2, 2) = 3; a(2, 3) = 3; a(2, 4) = 1;
+    a(3, 1) = 8; a(3, 2) = 7; a(3, 3) = 9; a(3, 4) = 5;
+    a(4, 1) = 6; a(4, 2) = 7; a(4, 3) = 9; a(4, 4) = 8;
+    Matrix b = transpose(a);
+    for (int i = 1; i <= a.rowNum(); ++i)
+    {
+        for (int j = 1; j <= a.colNum(); ++j)
+        {
+            TEST_EQUAL(a(i, j), b(j, i));
+        }
+    }
+}
+
 void Test_Matrix() {
     Test::add("Matrix", "Equal", Test_Matrix_Equal);
     Test::add("Matrix", "Add", Test_Matrix_Add);
     Test::add("Matrix", "Subtract", Test_Matrix_Subtract);
     Test::add("Matrix", "Multiply", Test_Matrix_Multiply);
     Test::add("Matrix", "Inverse", Test_Matrix_Inverse);
+    Test::add("Matrix", "Transpose", Test_Matrix_Transpose);
 }

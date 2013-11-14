@@ -1,6 +1,11 @@
 #ifndef LDU_H
 #define LDU_H
-
+/**
+ * The LDU decompose.
+ * All the values in the diagonal of L and U equals one.
+ * D is a diagonal matrix.
+ * @author ZHG <CyberZHG@gmail.com>
+ */
 #include "ZMat.h"
 
 ZMAT_BEGIN_NAMESPACE

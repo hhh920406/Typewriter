@@ -1,6 +1,10 @@
 #ifndef DOOLITTLE_H
 #define DOOLITTLE_H
-
+/**
+ * The Doolittle LU decompose.
+ * All the values in the diagonal of L equals one.
+ * @author ZHG <CyberZHG@gmail.com>
+ */
 #include "ZMat.h"
 
 ZMAT_BEGIN_NAMESPACE

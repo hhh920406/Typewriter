@@ -75,6 +75,8 @@
 		<Unit filename="include/math/eye.h" />
 		<Unit filename="include/math/inv.h" />
 		<Unit filename="include/math/ldu.h" />
+		<Unit filename="include/math/norm.h" />
+		<Unit filename="include/math/transpose.h" />
 		<Unit filename="main.cpp">
 			<Option target="Windows_Debug" />
 			<Option target="Linux_Debug" />
@@ -91,6 +93,8 @@
 		<Unit filename="src/math/eye.cpp" />
 		<Unit filename="src/math/inv.cpp" />
 		<Unit filename="src/math/ldu.cpp" />
+		<Unit filename="src/math/norm.cpp" />
+		<Unit filename="src/math/transpose.cpp" />
 		<Unit filename="test/Test.cpp">
 			<Option target="Windows_Debug" />
 			<Option target="Linux_Debug" />

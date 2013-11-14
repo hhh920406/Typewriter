@@ -1,6 +1,9 @@
 #ifndef MATRIX_ARITHMETIC_H_INCLUDED
 #define MATRIX_ARITHMETIC_H_INCLUDED
-
+/**
+ * The arithmetic operations about matrix.
+ * @author ZHG <CyberZHG@gmail.com>
+ */
 #include "ZMat.h"
 #include <vector>
 
