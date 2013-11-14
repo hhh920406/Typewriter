@@ -3,7 +3,7 @@ ZMatrix
 
 C++         =>      1.0.5       High priority
 
-JavaScript  =>      0.0.0       Medium priority
+JavaScript  =>      1.0.0       Medium priority
 
 Java        =>      0.0.1       Low priority
 C#          =>      0.0.1       Very low priority
