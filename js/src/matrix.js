@@ -38,7 +38,7 @@ var Matrix = {
                         return this.data[this.pos(row, col)];
                     }
                 }
-                return Complex.New();
+                return Complex.zero();
             },
             /**
              * Set data to matrix.
@@ -100,6 +100,19 @@ var Matrix = {
                 return res;
             },
             /**
+             * Calculate the transposed matrix.
+             * @return {matrix} The transposed matrix.
+             */
+            trans: function() {
+                var mat = Matrix.New(this.colNum, this.rowNum);
+                for (var i = 1; i <= this.colNum; ++i) {
+                    for (var j = 1; j <= this.rowNum; ++j) {
+                        mat.set(i, j, this.get(j, i));
+                    }
+                }
+                return mat;
+            },
+            /**
              * Whether the matrix equals to another.
              * @param {matrix} mat Another matrix.
              * @return {boolean} Returns true if equals, otherwise false.
@@ -138,5 +151,19 @@ var Matrix = {
             }
         }
         return matrix;
+    },
+    /**
+     * Create an identity matrix.
+     * @param {int} rowNum The number of rows of the matrix.
+     * @param {int} colNum The number of columns of the matrix.
+     * @return {matrix} An identity matrix.
+     */
+    eye: function(rowNum, colNum) {
+        var mat = this.New(rowNum, colNum);
+        var n = rowNum > colNum ? rowNum : colNum;
+        for (var i = 1; i <= n; ++i) {
+            mat.set(i, i, Complex.one());
+        }
+        return mat;
     }
 };

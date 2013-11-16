@@ -132,5 +132,15 @@ var Complex = {
             }
         }
         return complex;
-    }
+    },
+    /**
+     * Create the complex 1.
+     * @return {complex} The complex.
+     */
+    one: function() {
+        return this.New(1.0);
+    },
+    zero: function() {
+        return this.New();
+    },
 };

@@ -28,4 +28,7 @@ test("Matrix", function() {
     a.set(2, 1, 234); a.set(2, 2, 294); a.set(2, 3, 354);
     a.set(3, 1, 360); a.set(3, 2, 456); a.set(3, 3, 552);
     ok(a.equal(c.mul(b)), "Multiply 2");
+    a = Matrix.eye(4, 3);
+    b = Matrix.eye(3, 4);
+    ok(a.equal(b.trans()), "Eye & Transpose");
 });
