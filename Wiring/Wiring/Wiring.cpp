@@ -184,6 +184,3 @@ void CWiringApp::OnAppAbout()
 }
 
 // CWiringApp message handlers
-
-
-
