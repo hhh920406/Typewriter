@@ -9,75 +9,23 @@
 class Wire
 {
 public:
-	/**
-	 * 构造函数。默认的节点数为0。
-	 */
 	Wire();
 	virtual ~Wire();
-	/**
-	 * 为连线添加新的节点。
-	 * @param x 新节点的横坐标。
-	 * @param y 新节点的纵坐标。
-	 */
 	void add(const double x, const double y);
-	/**
-	 * 移除指定位置的节点。
-	 * @param index 要移除的节点的下标，如果不合法则不进行操作。
-	 */
 	void remove(unsigned int index);
-	/**
-	 * 获取节点的数目。
-	 * @return 节点的数目。
-	 */
 	int count() const;
-	/**
-	 * 设置指点位置的节点的坐标。
-	 * @param index 要变更的节点的下标。
-	 * @param x 新的横坐标。
-	 * @param y 新的纵坐标。
-	 */
 	void set(const unsigned int index, const double x, const double y);
-	/**
-	 * 获取横坐标。
-	 * @param 要获取的节点的下标。
-	 * @return 横坐标。
-	 */
 	double x(const unsigned int index) const;
-	/**
-	* 获取纵坐标。
-	* @param 要获取的节点的下标。
-	* @return 纵坐标。
-	*/
 	double y(const unsigned int index) const;
-	/**
-	 * 设置连线的引脚的编号。
-	 * @param u 引脚编号。
-	 */
 	void setU(const unsigned int u);
-	/**
-	 * 设置连线的引脚的编号。
-	 * @param v 引脚编号。
-	 */
 	void setV(const unsigned int v);
-	/**
-	 * 返回引脚的编号。
-	 * @return 引脚编号。
-	 */
 	unsigned int u() const;
-	/**
-	 * 返回引脚的编号。
-	 * @return 引脚编号。
-	 */
 	unsigned int v() const;
-	/**
-	 * 序列化。
-	 * @param archive 归档对象。
-	 */
 	void serialize(CArchive &archive);
 
 private:
-	std::vector<double> _x; /** 横坐标的向量。 */
-	std::vector<double> _y; /** 纵坐标的向量。 */
+	std::vector<double> _x;
+	std::vector<double> _y;
 	unsigned int _u;
 	unsigned int _v;
 };
