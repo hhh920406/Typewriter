@@ -19,36 +19,36 @@ public:
 	 * @param x 新节点的横坐标。
 	 * @param y 新节点的纵坐标。
 	 */
-	void addNode(const double x, const double y);
+	void add(const double x, const double y);
 	/**
 	 * 移除指定位置的节点。
 	 * @param index 要移除的节点的下标，如果不合法则不进行操作。
 	 */
-	void removeNode(int index);
+	void remove(int index);
 	/**
 	 * 获取节点的数目。
 	 * @return 节点的数目。
 	 */
-	int nodeNum() const;
+	int count() const;
 	/**
 	 * 设置指点位置的节点的坐标。
 	 * @param index 要变更的节点的下标。
 	 * @param x 新的横坐标。
 	 * @param y 新的纵坐标。
 	 */
-	void setNode(const int index, const double x, const double y);
+	void set(const int index, const double x, const double y);
 	/**
 	 * 获取横坐标。
 	 * @param 要获取的节点的下标。
 	 * @return 横坐标。
 	 */
-	double getX(const int index) const;
+	double x(const int index) const;
 	/**
 	* 获取纵坐标。
 	* @param 要获取的节点的下标。
 	* @return 纵坐标。
 	*/
-	double getY(const int index) const;
+	double y(const int index) const;
 
 private:
 	std::vector<double> _x; /** 横坐标的向量。 */

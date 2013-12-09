@@ -11,13 +11,13 @@ Wire::~Wire()
 {
 }
 
-void Wire::addNode(const double x, const double y)
+void Wire::add(const double x, const double y)
 {
 	this->_x.push_back(x);
 	this->_y.push_back(y);
 }
 
-void Wire::removeNode(int index)
+void Wire::remove(int index)
 {
 	if (index >= 0 && index < this->_x.size())
 	{
@@ -26,12 +26,12 @@ void Wire::removeNode(int index)
 	}
 }
 
-int Wire::nodeNum() const
+int Wire::count() const
 {
 	return this->_x.size();
 }
 
-void Wire::setNode(const int index, const double x, const double y)
+void Wire::set(const int index, const double x, const double y)
 {
 	if (index >= 0 && index < this->_x.size())
 	{
@@ -40,7 +40,7 @@ void Wire::setNode(const int index, const double x, const double y)
 	}
 }
 
-double Wire::getX(const int index) const
+double Wire::x(const int index) const
 {
 	if (index >= 0 && index < this->_x.size())
 	{
@@ -49,7 +49,7 @@ double Wire::getX(const int index) const
 	return 0.0;
 }
 
-double Wire::getY(const int index) const
+double Wire::y(const int index) const
 {
 	if (index >= 0 && index < this->_y.size())
 	{
