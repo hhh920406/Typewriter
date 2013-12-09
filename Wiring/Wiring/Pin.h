@@ -6,7 +6,7 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 
-class Pin : public CObject
+class Pin
 {
 public:
 	enum Orientation
@@ -48,7 +48,7 @@ public:
 	 * 序列化。
 	 * @param archive 归档对象。
 	 */
-	void Serialize(CArchive &archive);
+	void serialize(CArchive &archive);
 
 private:
 	Orientation _orientation; /** 引脚的方位。 */

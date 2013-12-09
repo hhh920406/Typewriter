@@ -33,7 +33,7 @@ double Pin::shift() const
 	return this->_shift;
 }
 
-void Pin::Serialize(CArchive &archive)
+void Pin::serialize(CArchive &archive)
 {
 	if (archive.IsStoring())
 	{

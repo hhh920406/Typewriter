@@ -78,7 +78,7 @@ unsigned int Wire::v() const
 	return this->_v;
 }
 
-void Wire::Serialize(CArchive &archive)
+void Wire::serialize(CArchive &archive)
 {
 	if (archive.IsStoring())
 	{
@@ -91,11 +91,11 @@ void Wire::Serialize(CArchive &archive)
 	}
 	else
 	{
-		int size;
+		unsigned int size;
 		archive >> size;
 		this->_x.clear();
 		this->_y.clear();
-		for (int i = 0; i < size; ++i)
+		for (unsigned int i = 0; i < size; ++i)
 		{
 			double tx, ty;
 			archive >> tx >> ty;

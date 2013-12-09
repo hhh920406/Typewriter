@@ -6,7 +6,7 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 
-class Wire : public CObject
+class Wire
 {
 public:
 	/**
@@ -73,7 +73,7 @@ public:
 	 * 序列化。
 	 * @param archive 归档对象。
 	 */
-	void Serialize(CArchive &archive);
+	void serialize(CArchive &archive);
 
 private:
 	std::vector<double> _x; /** 横坐标的向量。 */
