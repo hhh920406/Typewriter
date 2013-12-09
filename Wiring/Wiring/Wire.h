@@ -6,7 +6,7 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 
-class Wire
+class Wire : public CObject
 {
 public:
 	/**
@@ -24,7 +24,7 @@ public:
 	 * 移除指定位置的节点。
 	 * @param index 要移除的节点的下标，如果不合法则不进行操作。
 	 */
-	void remove(int index);
+	void remove(unsigned int index);
 	/**
 	 * 获取节点的数目。
 	 * @return 节点的数目。
@@ -36,22 +36,49 @@ public:
 	 * @param x 新的横坐标。
 	 * @param y 新的纵坐标。
 	 */
-	void set(const int index, const double x, const double y);
+	void set(const unsigned int index, const double x, const double y);
 	/**
 	 * 获取横坐标。
 	 * @param 要获取的节点的下标。
 	 * @return 横坐标。
 	 */
-	double x(const int index) const;
+	double x(const unsigned int index) const;
 	/**
 	* 获取纵坐标。
 	* @param 要获取的节点的下标。
 	* @return 纵坐标。
 	*/
-	double y(const int index) const;
+	double y(const unsigned int index) const;
+	/**
+	 * 设置连线的引脚的编号。
+	 * @param u 引脚编号。
+	 */
+	void setU(const unsigned int u);
+	/**
+	 * 设置连线的引脚的编号。
+	 * @param v 引脚编号。
+	 */
+	void setV(const unsigned int v);
+	/**
+	 * 返回引脚的编号。
+	 * @return 引脚编号。
+	 */
+	unsigned int u() const;
+	/**
+	 * 返回引脚的编号。
+	 * @return 引脚编号。
+	 */
+	unsigned int v() const;
+	/**
+	 * 序列化。
+	 * @param archive 归档对象。
+	 */
+	void Serialize(CArchive &archive);
 
 private:
 	std::vector<double> _x; /** 横坐标的向量。 */
 	std::vector<double> _y; /** 纵坐标的向量。 */
+	unsigned int _u;
+	unsigned int _v;
 };
 

@@ -32,3 +32,18 @@ double Pin::shift() const
 {
 	return this->_shift;
 }
+
+void Pin::Serialize(CArchive &archive)
+{
+	if (archive.IsStoring())
+	{
+		int orientation = this->_orientation;
+		archive << orientation << this->_shift;
+	}
+	else
+	{
+		int orientation;
+		archive >> orientation >> this->_shift;
+		this->_orientation = Orientation(orientation);
+	}
+}
