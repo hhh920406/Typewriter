@@ -1,10 +1,9 @@
-#pragma once
-#include <vector>
-
 /**
  * 连接两个引脚的连线的结构，由一组有顺序的坐标表示。
  * @author ZHG <CyberZHG@gmail.com>
  */
+#pragma once
+#include <vector>
 
 class Wire
 {

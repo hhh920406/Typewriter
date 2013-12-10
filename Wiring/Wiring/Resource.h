@@ -8,6 +8,7 @@
 #define IDR_WiringTYPE                  130
 #define ID_WINDOW_MANAGER               131
 #define IDD_CHIPPROPERTY                310
+#define IDD_BOXPROPERTY                 310
 #define IDC_EDIT_TITLE                  1000
 #define IDC_RICHEDIT2_WIDTH             1002
 #define IDC_RICHEDIT2_HEIGHT            1003

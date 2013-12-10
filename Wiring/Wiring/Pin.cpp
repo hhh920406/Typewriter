@@ -72,3 +72,21 @@ void Pin::serialize(CArchive &archive)
 		this->_orientation = Orientation(orientation);
 	}
 }
+
+/**
+ * ÉèÖÃÒı½ÅµÄ±àºÅ¡£
+ * @param id ±àºÅ¡£
+ */
+void Pin::setId(const int id)
+{
+	this->_id = id;
+}
+
+/**
+ * »ñÈ¡Òı½ÅµÄ±àºÅ¡£
+ * @return ±àºÅ¡£
+ */
+int Pin::id() const
+{
+	return this->_id;
+}

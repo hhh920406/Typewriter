@@ -1,7 +1,7 @@
-
-// ChildFrm.h : interface of the CChildFrame class
-//
-
+/**
+ * ²¼ÏßºÐ×ÓÈÝÆ÷¡£
+ * @author ZHG <CyberZHG@gmail.com>
+ */
 #pragma once
 
 class CChildFrame : public CMDIChildWnd
@@ -9,25 +9,15 @@ class CChildFrame : public CMDIChildWnd
 	DECLARE_DYNCREATE(CChildFrame)
 public:
 	CChildFrame();
-
-// Attributes
-public:
-
-// Operations
-public:
-
-// Overrides
+	virtual ~CChildFrame();
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
-// Implementation
 public:
-	virtual ~CChildFrame();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-// Generated message map functions
 protected:
 	DECLARE_MESSAGE_MAP()
 };

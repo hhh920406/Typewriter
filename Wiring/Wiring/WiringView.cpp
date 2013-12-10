@@ -11,6 +11,7 @@
 
 #include "WiringDoc.h"
 #include "WiringView.h"
+#include "BoxPropertyDialog.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -26,14 +27,19 @@ BEGIN_MESSAGE_MAP(CWiringView, CView)
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
+	ON_WM_KEYDOWN()
+	ON_WM_KEYUP()
+	ON_WM_LBUTTONDOWN()
+	ON_WM_LBUTTONUP()
+	ON_WM_MOUSEMOVE()
+	ON_WM_CONTEXTMENU()
 END_MESSAGE_MAP()
 
 // CWiringView construction/destruction
 
 CWiringView::CWiringView()
 {
-	// TODO: add construction code here
-
+	this->_initialized = false;
 }
 
 CWiringView::~CWiringView()
@@ -102,3 +108,58 @@ CWiringDoc* CWiringView::GetDocument() const // non-debug version is inline
 
 
 // CWiringView message handlers
+
+
+void CWiringView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	// TODO:  在此添加消息处理程序代码和/或调用默认值
+
+	CView::OnKeyDown(nChar, nRepCnt, nFlags);
+}
+
+
+void CWiringView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	CView::OnKeyUp(nChar, nRepCnt, nFlags);
+}
+
+
+void CWiringView::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO:  在此添加消息处理程序代码和/或调用默认值
+
+	CView::OnLButtonDown(nFlags, point);
+}
+
+
+void CWiringView::OnLButtonUp(UINT nFlags, CPoint point)
+{
+	if (this->_initialized)
+	{
+		// TODO
+	}
+	else
+	{
+		BoxPropertyDialog dialog;
+		dialog.setSwitchBox(&this->_switchBox);
+		if (dialog.DoModal() == IDOK)
+		{
+			this->_initialized = true;
+		}
+	}
+	CView::OnLButtonUp(nFlags, point);
+}
+
+
+void CWiringView::OnMouseMove(UINT nFlags, CPoint point)
+{
+	// TODO:  在此添加消息处理程序代码和/或调用默认值
+
+	CView::OnMouseMove(nFlags, point);
+}
+
+
+void CWiringView::OnContextMenu(CWnd* /*pWnd*/, CPoint /*point*/)
+{
+	// TODO:  在此处添加消息处理程序代码
+}

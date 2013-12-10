@@ -77,6 +77,59 @@ vector<Wire>& SwitchBox::wire()
 }
 
 /**
+ * 设置引脚的数量，围绕布线盒均匀分布。
+ * @param pinNum 引脚的数量。
+ */
+void SwitchBox::setPinNum(const int pinNum)
+{
+	int hor = pinNum * this->_width / (this->_width + this->_height);
+	int ver = pinNum - hor;
+	int top = hor >> 1;
+	int bottom = hor - top;
+	int left = ver >> 1;
+	int right = ver - left;
+	int id = 0;
+	this->_wire.clear();
+	this->_pin.clear();
+	double margin = this->_width / (top + 1);
+	for (int i = 1; i <= top; ++i)
+	{
+		Pin pin;
+		pin.setOrientation(Pin::ORI_TOP);
+		pin.setShift(i * margin);
+		pin.setId(++id);
+		this->_pin.push_back(pin);
+	}
+	margin = this->_height / (right + 1);
+	for (int i = 1; i <= right; ++i)
+	{
+		Pin pin;
+		pin.setOrientation(Pin::ORI_RIGHT);
+		pin.setShift(i * margin);
+		pin.setId(++id);
+		this->_pin.push_back(pin);
+	}
+	margin = this->_width / (bottom + 1);
+	for (int i = 0; i < bottom; ++i)
+	{
+		Pin pin;
+		pin.setOrientation(Pin::ORI_BOTTOM);
+		pin.setShift((bottom - i) * margin);
+		pin.setId(++id);
+		this->_pin.push_back(pin);
+	}
+	margin = this->_height / (left + 1);
+	for (int i = 0; i < left; ++i)
+	{
+		Pin pin;
+		pin.setOrientation(Pin::ORI_LEFT);
+		pin.setShift((left - i) * margin);
+		pin.setId(++id);
+		this->_pin.push_back(pin);
+	}
+}
+
+/**
  * 序列化。
  * @param archive 归档对象。
  */
