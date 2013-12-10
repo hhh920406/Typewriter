@@ -103,7 +103,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BoxPropertyDialog.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Pin.h" />
@@ -117,7 +116,6 @@
     <ClInclude Include="WiringView.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BoxPropertyDialog.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="Pin.cpp" />

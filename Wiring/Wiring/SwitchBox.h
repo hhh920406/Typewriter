@@ -11,20 +11,22 @@ class SwitchBox
 public:
 	SwitchBox();
 	virtual ~SwitchBox();
-	void setTitle(const CStringW &title);
-	CStringW title() const;
-	void setSize(const double width, const double height);
-	double width() const;
-	double height() const;
+	void setPosition(const int x, const int y);
+	int x() const;
+	int y() const;
+	void setSize(const int width, const int height);
+	int width() const;
+	int height() const;
 	void setPinNum(const int pinNum);
 	std::vector<Pin>& pin();
 	std::vector<Wire>& wire();
 	void serialize(CArchive &archive);
 
 private:
-	CStringW _title;
-	double _width;
-	double _height;
+	int _x;
+	int _y;
+	int _width;
+	int _height;
 	std::vector<Pin> _pin;
 	std::vector<Wire> _wire;
 };

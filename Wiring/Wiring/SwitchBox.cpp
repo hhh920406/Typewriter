@@ -11,22 +11,20 @@ SwitchBox::~SwitchBox()
 {
 }
 
-/**
- * 设置布线盒的标题。
- * @param title 标题。
- */
-void SwitchBox::setTitle(const CStringW &title)
+void SwitchBox::setPosition(const int x, const int y)
 {
-	this->_title = title;
+	this->_x = x;
+	this->_y = y;
 }
 
-/**
- * 返回布线盒的标题。
- * @return 标题。
- */
-CStringW SwitchBox::title() const
+int SwitchBox::x() const
 {
-	return this->_title;
+	return this->_x;
+}
+
+int SwitchBox::y() const
+{
+	return this->_y;
 }
 
 /**
@@ -34,17 +32,17 @@ CStringW SwitchBox::title() const
  * @param width 宽度。
  * @param height 高度。
  */
-void SwitchBox::setSize(const double width, const double height)
+void SwitchBox::setSize(const int width, const int height)
 {
-	this->_width = width;
-	this->_height = height;
+	this->_width = width > 10 ? width : 10;
+	this->_height = height > 10 ? height : 10;
 }
 
 /**
  * 返回布线盒的宽度。
  * @return 宽度。
  */
-double SwitchBox::width() const
+int SwitchBox::width() const
 {
 	return this->_width;
 }
@@ -53,7 +51,7 @@ double SwitchBox::width() const
  * 返回布线盒的高度。
  * @return 高度。
  */
-double SwitchBox::height() const
+int SwitchBox::height() const
 {
 	return this->_height;
 }
@@ -96,7 +94,7 @@ void SwitchBox::setPinNum(const int pinNum)
 	{
 		Pin pin;
 		pin.setOrientation(Pin::ORI_TOP);
-		pin.setShift(i * margin);
+		pin.setShift((int)(i * margin));
 		pin.setId(++id);
 		this->_pin.push_back(pin);
 	}
@@ -105,7 +103,7 @@ void SwitchBox::setPinNum(const int pinNum)
 	{
 		Pin pin;
 		pin.setOrientation(Pin::ORI_RIGHT);
-		pin.setShift(i * margin);
+		pin.setShift((int)(i * margin));
 		pin.setId(++id);
 		this->_pin.push_back(pin);
 	}
@@ -114,7 +112,7 @@ void SwitchBox::setPinNum(const int pinNum)
 	{
 		Pin pin;
 		pin.setOrientation(Pin::ORI_BOTTOM);
-		pin.setShift((bottom - i) * margin);
+		pin.setShift((int)((bottom - i) * margin));
 		pin.setId(++id);
 		this->_pin.push_back(pin);
 	}
@@ -123,7 +121,7 @@ void SwitchBox::setPinNum(const int pinNum)
 	{
 		Pin pin;
 		pin.setOrientation(Pin::ORI_LEFT);
-		pin.setShift((left - i) * margin);
+		pin.setShift((int)((left - i) * margin));
 		pin.setId(++id);
 		this->_pin.push_back(pin);
 	}
@@ -137,9 +135,9 @@ void SwitchBox::serialize(CArchive &archive)
 {
 	if (archive.IsStoring())
 	{
-		archive << this->_title;
+		archive << this->_x << this->_y;
 		archive << this->_width << this->_height;
-		archive << this->_pin.size();
+		/*archive << this->_pin.size();
 		for (unsigned int i = 0; i < this->_pin.size(); ++i)
 		{
 			this->_pin[i].serialize(archive);
@@ -148,15 +146,15 @@ void SwitchBox::serialize(CArchive &archive)
 		for (unsigned int i = 0; i < this->_wire.size(); ++i)
 		{
 			this->_wire[i].serialize(archive);
-		}
+		}*/
 	}
 	else
 	{
 		unsigned int size;
-		archive >> this->_title;
+		archive >> this->_x >> this->_y;
 		archive >> this->_width >> this->_height;
 		archive >> size;
-		this->_pin.clear();
+		/*this->_pin.clear();
 		for (unsigned int i = 0; i < size; ++i)
 		{
 			Pin pin;
@@ -169,6 +167,6 @@ void SwitchBox::serialize(CArchive &archive)
 			Wire wire;
 			wire.serialize(archive);
 			this->_wire.push_back(wire);
-		}
+		}*/
 	}
 }

@@ -4,7 +4,6 @@
 #endif
 
 #include "WiringDoc.h"
-#include "BoxPropertyDialog.h"
 
 #include <propkey.h>
 
@@ -19,7 +18,9 @@ END_MESSAGE_MAP()
 
 CWiringDoc::CWiringDoc()
 {
-	this->_initialized = false;
+	this->_switchBox.setPosition(100, 100);
+	this->_switchBox.setSize(200, 200);
+	this->_switchBox.setPinNum(18);
 }
 
 CWiringDoc::~CWiringDoc()
@@ -32,45 +33,12 @@ CWiringDoc::~CWiringDoc()
  */
 void CWiringDoc::Serialize(CArchive& archive)
 {
-	if (archive.IsStoring())
-	{
-		if (this->_initialized)
-		{
-			this->_switchBox.serialize(archive);
-		}
-	}
-	else
-	{
-		this->_initialized = true;
-		this->_switchBox.serialize(archive);
-		this->SetTitle(this->_switchBox.title());
-	}
-}
-
-void CWiringDoc::setInitialized(bool value)
-{
-	this->_initialized = value;
-}
-
-bool CWiringDoc::initialized() const
-{
-	return this->_initialized;
+	this->_switchBox.serialize(archive);
 }
 
 SwitchBox& CWiringDoc::switchBox()
 {
 	return this->_switchBox;
-}
-
-void CWiringDoc::initSwitchBox()
-{
-	BoxPropertyDialog dialog;
-	dialog.setSwitchBox(&this->_switchBox);
-	if (dialog.DoModal() == IDOK)
-	{
-		this->setInitialized(true);
-		this->SetTitle(this->switchBox().title());
-	}
 }
 
 #ifdef _DEBUG
