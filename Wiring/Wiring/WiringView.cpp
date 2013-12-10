@@ -3,8 +3,10 @@
 #include "Wiring.h"
 #endif
 
+#include <cmath>
 #include "WiringDoc.h"
 #include "WiringView.h"
+const double PI = acos(-1.0);
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -129,6 +131,12 @@ void CWiringView::OnMouseMove(UINT nFlags, CPoint point)
 	case STATUS_IDLE:
 		this->mouseMoveIdle(point);
 		break;
+	case STATUS_PIN_MOVING:
+		this->mouseMovePin(point);
+		break;
+	case STATUS_WIRE_CONNECTING:
+		this->mouseMoveConnect(point);
+		break;
 	case STATUS_BORDER_RESIZING_LEFT:
 	case STATUS_BORDER_RESIZING_RIGHT:
 	case STATUS_BORDER_RESIZING_TOP:
@@ -151,6 +159,12 @@ void CWiringView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	switch (this->_status)
 	{
+	case STATUS_PIN_MOVING:
+		this->mouseLeftUpPin(point);
+		break;
+	case STATUS_WIRE_CONNECTING:
+		this->mouseLeftUpConnect(point);
+		break;
 	case STATUS_BORDER_RESIZING_LEFT:
 	case STATUS_BORDER_RESIZING_RIGHT:
 	case STATUS_BORDER_RESIZING_TOP:
@@ -185,12 +199,14 @@ void CWiringView::mouseLeftDownIdle(CPoint point)
 	{
 		this->_status = STATUS_PIN_MOVING;
 		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_HAND));
+		this->_lastIndex = pinIndex;
 		return;
 	}
 	int portIndex = switchBox.portHoverIndex(point);
 	if (portIndex != -1)
 	{
 		this->_status = STATUS_WIRE_CONNECTING;
+		this->_lastIndex = portIndex;
 		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_CROSS));
 		return;
 	}
@@ -265,6 +281,75 @@ void CWiringView::mouseMoveIdle(CPoint point)
 }
 
 /**
+ * 改变引脚的位置。
+ * @param point 鼠标的相对位置。
+ */
+void CWiringView::mouseMovePin(CPoint point)
+{
+	SwitchBox switchBox = this->GetDocument()->switchBox();
+	double cx = (switchBox.left() + switchBox.right()) * 0.5;
+	double cy = (switchBox.top() + switchBox.bottom()) * 0.5;
+	double hw = switchBox.width() * 0.5;
+	double hh = switchBox.height() * 0.5;
+	double angle = atan2(cy - point.y, point.x - cx);
+	double divideAngle = atan2(hh, hw);
+	if (angle < 0.0)
+	{
+		angle += PI * 2.0;
+	}
+	if (angle < divideAngle)
+	{
+		this->GetDocument()->switchBox().pin()[this->_lastIndex].setOrientation(Pin::ORI_RIGHT);
+		this->GetDocument()->switchBox().pin()[this->_lastIndex].setShift(hh - hw * tan(angle));
+	}
+	else if (angle < PI / 2)
+	{
+		this->GetDocument()->switchBox().pin()[this->_lastIndex].setOrientation(Pin::ORI_TOP);
+		this->GetDocument()->switchBox().pin()[this->_lastIndex].setShift(hw + hh * tan(PI / 2 - angle));
+	}
+	else if (angle < PI - divideAngle)
+	{
+		this->GetDocument()->switchBox().pin()[this->_lastIndex].setOrientation(Pin::ORI_TOP);
+		this->GetDocument()->switchBox().pin()[this->_lastIndex].setShift(hw - hh * tan(angle - PI / 2));
+	}
+	else if (angle < PI)
+	{
+		this->GetDocument()->switchBox().pin()[this->_lastIndex].setOrientation(Pin::ORI_LEFT);
+		this->GetDocument()->switchBox().pin()[this->_lastIndex].setShift(hh - hw * tan(PI - angle));
+	}
+	else if (angle < PI + divideAngle)
+	{
+		this->GetDocument()->switchBox().pin()[this->_lastIndex].setOrientation(Pin::ORI_LEFT);
+		this->GetDocument()->switchBox().pin()[this->_lastIndex].setShift(hh + hw * tan(angle - PI));
+	}
+	else if (angle < PI * 3 / 2)
+	{
+		this->GetDocument()->switchBox().pin()[this->_lastIndex].setOrientation(Pin::ORI_BOTTOM);
+		this->GetDocument()->switchBox().pin()[this->_lastIndex].setShift(hw - hh * tan(PI * 3 / 2 - angle));
+	}
+	else if (angle < PI * 2 - divideAngle)
+	{
+		this->GetDocument()->switchBox().pin()[this->_lastIndex].setOrientation(Pin::ORI_BOTTOM);
+		this->GetDocument()->switchBox().pin()[this->_lastIndex].setShift(hw + hh * tan(angle - PI * 3 / 2));
+	}
+	else
+	{
+		this->GetDocument()->switchBox().pin()[this->_lastIndex].setOrientation(Pin::ORI_RIGHT);
+		this->GetDocument()->switchBox().pin()[this->_lastIndex].setShift(hh + hw * tan(PI * 2 - angle));
+	}
+	SetCursor(AfxGetApp()->LoadStandardCursor(IDC_HAND));
+}
+
+/**
+ * 进行基本的连线。
+ * @param point 鼠标的相对位置。
+ */
+void CWiringView::mouseMoveConnect(CPoint point)
+{
+	SetCursor(AfxGetApp()->LoadStandardCursor(IDC_CROSS));
+}
+
+/**
  * 改变布线盒大小。
  * @param point 鼠标的相对位置。
  */
@@ -276,16 +361,20 @@ void CWiringView::mouseMoveResize(CPoint point)
 	case STATUS_BORDER_RESIZING_LEFT:
 		this->GetDocument()->switchBox().setPosition(switchBox.x() + point.x - this->_lastMousePos.x, switchBox.y());
 		this->GetDocument()->switchBox().setSize(switchBox.width() - point.x + this->_lastMousePos.x, switchBox.height());
+		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEWE));
 		break;
 	case STATUS_BORDER_RESIZING_RIGHT:
 		this->GetDocument()->switchBox().setSize(switchBox.width() + point.x - this->_lastMousePos.x, switchBox.height());
+		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEWE));
 		break;
 	case STATUS_BORDER_RESIZING_TOP:
 		this->GetDocument()->switchBox().setPosition(switchBox.x(), switchBox.y() + point.y - this->_lastMousePos.y);
 		this->GetDocument()->switchBox().setSize(switchBox.width(), switchBox.height() - point.y + this->_lastMousePos.y);
+		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZENS));
 		break;
 	case STATUS_BORDER_RESIZING_BOTTOM:
 		this->GetDocument()->switchBox().setSize(switchBox.width(), switchBox.height() + point.y - this->_lastMousePos.y);
+		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZENS));
 		break;
 	}
 }
@@ -300,6 +389,23 @@ void CWiringView::mouseMoveMoving(CPoint point)
 	this->GetDocument()->switchBox().setPosition(switchBox.x() + point.x - this->_lastMousePos.x, switchBox.y() + point.y - this->_lastMousePos.y);
 	SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEALL));
 }
+
+/**
+ * 移动引脚位置完成，恢复常态。
+ */
+void CWiringView::mouseLeftUpPin(CPoint)
+{
+	this->restoreIdle();
+}
+
+/**
+ * 连线完成，恢复常态。
+ */
+void CWiringView::mouseLeftUpConnect(CPoint)
+{
+	this->restoreIdle();
+}
+
 
 /**
  * 改变大小完成，恢复常态。

@@ -19,23 +19,32 @@ protected:
 	{
 		STATUS_IDLE, /** 空闲状态。 */
 		STATUS_PIN_MOVING, /** 移动引脚。 */
+		STATUS_WIRE_CONNECTING, /** 连线。 */
 		STATUS_BORDER_RESIZING_LEFT, /** 改变布线盒的左边界。 */
 		STATUS_BORDER_RESIZING_RIGHT, /** 改变布线盒的右边界。 */
 		STATUS_BORDER_RESIZING_TOP, /** 改变布线盒的上边界。 */
 		STATUS_BORDER_RESIZING_BOTTOM, /** 改变布线盒的下边界。 */
-		STATUS_WIRE_CONNECTING, /** 连线。 */
-		STATUS_MOVING /** 移动布线盒。 */
+		STATUS_MOVING, /** 移动布线盒。 */
+		STATUS_SOLVE_GREEDY, /** 贪心求解阶段。 */
+		STATUS_SOLVE_OPT /** 优化阶段。 */
 	} _status;
 	CPoint _lastMousePos;
 	CPoint _lastClickPos;
+	int _lastIndex;
 
 	void restoreIdle();
 	void mouseLeftDownIdle(CPoint point);
+
 	void mouseMoveIdle(CPoint point);
+	void mouseMovePin(CPoint point);
+	void mouseMoveConnect(CPoint point);
 	void mouseMoveResize(CPoint point);
 	void mouseMoveMoving(CPoint point);
-	void mouseLeftUpMoving(CPoint point);
+
+	void mouseLeftUpPin(CPoint point);
+	void mouseLeftUpConnect(CPoint point);
 	void mouseLeftUpResize(CPoint point);
+	void mouseLeftUpMoving(CPoint point);
 
 public:
 #ifdef _DEBUG
