@@ -2,6 +2,9 @@
 #include "SwitchBox.h"
 using namespace std;
 
+const int PADDING = 3;
+const int PIN_SIZE = 20;
+
 SwitchBox::SwitchBox()
 {
 }
@@ -169,4 +172,115 @@ void SwitchBox::serialize(CArchive &archive)
 			this->_wire.push_back(wire);
 		}*/
 	}
+}
+
+/**
+ * 获取外部边界。
+ * @return 边界。
+ */
+CRect SwitchBox::getOuterBorder() const
+{
+	return CRect(this->_x, this->_y, this->_x + this->_width, this->_y + this->_height);
+}
+
+/**
+* 获取内部边界。
+* @return 边界。
+*/
+CRect SwitchBox::getInnerBorder() const
+{
+	return CRect(this->_x + PADDING, this->_y + PADDING, this->_x + this->_width - PADDING, this->_y + this->_height - PADDING);
+}
+
+/**
+ * 获取引脚的中心位置。
+ * @param index 引脚下标。
+ * @return 引脚中心位置。
+ */
+CPoint SwitchBox::getPinCenter(const int index) const
+{
+	int cx, cy;
+	switch (this->_pin[index].orientation())
+	{
+	case Pin::ORI_TOP:
+		cx = this->_x + this->_pin[index].shift();
+		cy = this->_y - (PIN_SIZE >> 1) + 1;
+		break;
+	case Pin::ORI_BOTTOM:
+		cx = this->_x + this->_pin[index].shift();
+		cy = this->_y + this->_height + (PIN_SIZE >> 1) - 1;
+		break;
+	case Pin::ORI_LEFT:
+		cx = this->_x - (PIN_SIZE >> 1) + 1;
+		cy = this->_y + this->_pin[index].shift();
+		break;
+	case Pin::ORI_RIGHT:
+		cx = this->_x + this->_width + (PIN_SIZE >> 1) - 1;
+		cy = this->_y + this->_pin[index].shift();
+		break;
+	}
+	return CPoint(cx, cy);
+}
+
+/**
+* 获取内部端口的中心位置。
+* @param index 引脚下标。
+* @return 内部端口中心位置。
+*/
+CPoint SwitchBox::getPortCenter(const int index) const
+{
+	int px, py;
+	switch (this->_pin[index].orientation())
+	{
+	case Pin::ORI_TOP:
+		px = this->_x + this->_pin[index].shift();
+		py = this->_y + (PADDING << 1);
+		break;
+	case Pin::ORI_BOTTOM:
+		px = this->_x + this->_pin[index].shift();
+		py = this->_y + this->_height - (PADDING << 1);
+		break;
+	case Pin::ORI_LEFT:
+		px = this->_x + (PADDING << 1);
+		py = this->_y + this->_pin[index].shift();
+		break;
+	case Pin::ORI_RIGHT:
+		px = this->_x + this->_width - (PADDING << 1);
+		py = this->_y + this->_pin[index].shift();
+		break;
+	}
+	return CPoint(px, py);
+}
+
+/**
+* 获取引脚的矩形位置。
+* @param index 引脚下标。
+* @return 引脚矩形位置。
+*/
+CRect SwitchBox::getPinRect(const int index) const
+{
+	CPoint center = this->getPinCenter(index);
+	return CRect(center.x - (PIN_SIZE >> 1), center.y - (PIN_SIZE >> 1), center.x + (PIN_SIZE >> 1), center.y + (PIN_SIZE >> 1));
+}
+
+/**
+* 获取引脚文字的绘制位置。
+* @param index 引脚下标。
+* @return 引脚文字的绘制位置。
+*/
+CRect SwitchBox::getPinTextRect(const int index) const
+{
+	CPoint center = this->getPinCenter(index);
+	return CRect(center.x - 1000, center.y - 1000, center.x + 1000, center.y + 1000);
+}
+
+/**
+* 获取内部端口的矩形位置。
+* @param index 引脚下标。
+* @return 内部端口的矩形位置。
+*/
+CRect SwitchBox::getPortRect(const int index) const
+{
+	CPoint center = this->getPortCenter(index);
+	return CRect(center.x - PADDING, center.y - PADDING, center.x + PADDING, center.y + PADDING);
 }

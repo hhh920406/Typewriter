@@ -21,6 +21,13 @@ public:
 	std::vector<Pin>& pin();
 	std::vector<Wire>& wire();
 	void serialize(CArchive &archive);
+	CRect getOuterBorder() const;
+	CRect getInnerBorder() const;
+	CPoint getPinCenter(const int index) const;
+	CPoint getPortCenter(const int index) const;
+	CRect getPinRect(const int index) const;
+	CRect getPinTextRect(const int index) const;
+	CRect getPortRect(const int index) const;
 
 private:
 	int _x;

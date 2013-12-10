@@ -51,53 +51,16 @@ void CWiringView::OnDraw(CDC* pDC)
 		DEFAULT_PITCH | FF_SWISS, _T("Console"));
 	pDC->SelectObject(&font);
 	SwitchBox switchBox = this->GetDocument()->switchBox();
-	int x = switchBox.x();
-	int y = switchBox.y();
-	int width = switchBox.width();
-	int height = switchBox.height();
-	const int PADDING = 3;
-	pDC->Rectangle(x, y, x + width, y + height);
-	pDC->Rectangle(x + PADDING, y + PADDING, x + width - PADDING, y + height - PADDING);
-	const int PIN_SIZE = 20;
+	pDC->Rectangle(switchBox.getOuterBorder());
+	pDC->Rectangle(switchBox.getInnerBorder());
 	for (unsigned int i = 0; i < switchBox.pin().size(); ++i)
 	{
-		int cx, cy;
-		int px, py;
-		switch (switchBox.pin()[i].orientation())
-		{
-		case Pin::ORI_TOP:
-			cx = x + switchBox.pin()[i].shift();
-			cy = y - (PIN_SIZE >> 1) + 1;
-			px = cx;
-			py = y + (PADDING << 1);
-			break;
-		case Pin::ORI_BOTTOM:
-			cx = x + switchBox.pin()[i].shift();
-			cy = y + height + (PIN_SIZE >> 1) - 1;
-			px = cx;
-			py = y + height - (PADDING << 1);
-			break;
-		case Pin::ORI_LEFT:
-			cx = x - (PIN_SIZE >> 1) + 1;
-			cy = y + switchBox.pin()[i].shift();
-			px = x + (PADDING << 1);
-			py = cy;
-			break;
-		case Pin::ORI_RIGHT:
-			cx = x + width + (PIN_SIZE >> 1) - 1;
-			cy = y + switchBox.pin()[i].shift();
-			px = x + width - (PADDING << 1);
-			py = cy;
-			break;
-		}
-		CRect pinArea(cx - (PIN_SIZE >> 1), cy - (PIN_SIZE >> 1), cx + (PIN_SIZE >> 1), cy + (PIN_SIZE >> 1));
-		pDC->Rectangle(pinArea);
+		pDC->Rectangle(switchBox.getPinRect(i));
 		CString num;
 		num.Format(L"%d", switchBox.pin()[i].id());
-		CRect textArea(cx - 100, cy - 100, cx + 100, cy + 100);
 		pDC->SetBkMode(TRANSPARENT);
-		pDC->DrawText(num, textArea, DT_CENTER | DT_SINGLELINE | DT_VCENTER);
-		pDC->Ellipse(px - PADDING, py - PADDING, px + PADDING, py + PADDING);
+		pDC->DrawText(num, switchBox.getPinTextRect(i), DT_CENTER | DT_SINGLELINE | DT_VCENTER);
+		pDC->Ellipse(switchBox.getPortRect(i));
 	}
 }
 
