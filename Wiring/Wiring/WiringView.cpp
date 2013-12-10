@@ -22,6 +22,7 @@ BEGIN_MESSAGE_MAP(CWiringView, CView)
 	ON_WM_LBUTTONUP()
 	ON_WM_MOUSEMOVE()
 	ON_WM_CONTEXTMENU()
+	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
 CWiringView::CWiringView()
@@ -46,23 +47,41 @@ void CWiringView::OnDraw(CDC* pDC)
 	{
 		return;
 	}
+	CDC memDC;
+	CBitmap memBitmap;
+	CRect windowRect;
+	this->GetWindowRect(windowRect);
+	memDC.CreateCompatibleDC(NULL);
+	memBitmap.CreateCompatibleBitmap(pDC, windowRect.Width(), windowRect.Height());
+	CBitmap *pOldBit = memDC.SelectObject(&memBitmap);
+	memDC.FillSolidRect(0, 0, windowRect.Width(), windowRect.Height(), RGB(255, 255, 255));
+
 	CFont font;
 	font.CreateFontW(16, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0, ANSI_CHARSET,
 		OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
 		DEFAULT_PITCH | FF_SWISS, _T("Console"));
-	pDC->SelectObject(&font);
+	memDC.SelectObject(&font);
 	SwitchBox switchBox = this->GetDocument()->switchBox();
-	pDC->Rectangle(switchBox.getOuterBorder());
-	pDC->Rectangle(switchBox.getInnerBorder());
+	memDC.Rectangle(switchBox.getOuterBorder());
+	memDC.Rectangle(switchBox.getInnerBorder());
 	for (unsigned int i = 0; i < switchBox.pin().size(); ++i)
 	{
-		pDC->Rectangle(switchBox.getPinRect(i));
+		memDC.Rectangle(switchBox.getPinRect(i));
 		CString num;
 		num.Format(L"%d", switchBox.pin()[i].id());
-		pDC->SetBkMode(TRANSPARENT);
-		pDC->DrawText(num, switchBox.getPinTextRect(i), DT_CENTER | DT_SINGLELINE | DT_VCENTER);
-		pDC->Ellipse(switchBox.getPortRect(i));
+		memDC.SetBkMode(TRANSPARENT);
+		memDC.DrawText(num, switchBox.getPinTextRect(i), DT_CENTER | DT_SINGLELINE | DT_VCENTER);
+		memDC.Ellipse(switchBox.getPortRect(i));
 	}
+
+	pDC->BitBlt(0, 0, windowRect.Width(), windowRect.Height(), &memDC, 0, 0, SRCCOPY);
+	memBitmap.DeleteObject();
+	memDC.DeleteDC();
+}
+
+BOOL CWiringView::OnEraseBkgnd(CDC* pDC)
+{
+	return TRUE;
 }
 
 #ifdef _DEBUG
