@@ -19,15 +19,15 @@ public:
 	virtual ~Pin();
 	void setOrientation(const Orientation orientation);
 	Orientation orientation() const;
-	void setShift(const int shift);
-	int shift() const;
+	void setShift(const double shift);
+	double shift() const;
 	void serialize(CArchive &archive);
 	void setId(const int id);
 	int id() const;
 
 private:
 	Orientation _orientation;
-	int _shift;
+	double _shift;
 	int _id;
 };
 

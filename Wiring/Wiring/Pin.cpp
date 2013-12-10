@@ -39,7 +39,7 @@ Pin::Orientation Pin::orientation() const
  * 如果引脚在左右方位，则偏移量为纵向距芯片上端的距离。
  * @param shift 偏移量。
  */
-void Pin::setShift(const int shift)
+void Pin::setShift(const double shift)
 {
 	this->_shift = shift;
 }
@@ -49,7 +49,7 @@ void Pin::setShift(const int shift)
  * @see setShift
  * @return 偏移量。
  */
-int Pin::shift() const
+double Pin::shift() const
 {
 	return this->_shift;
 }

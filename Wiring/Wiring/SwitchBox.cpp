@@ -53,8 +53,8 @@ void SwitchBox::setSize(const int width, const int height)
 			break;
 		}
 	}
-	this->_width = width;
-	this->_height = height;
+	this->_width = nextWidth;
+	this->_height = nextHeight;
 }
 
 /**
