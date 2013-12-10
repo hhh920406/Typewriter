@@ -37,8 +37,24 @@ int SwitchBox::y() const
  */
 void SwitchBox::setSize(const int width, const int height)
 {
-	this->_width = width > 10 ? width : 10;
-	this->_height = height > 10 ? height : 10;
+	int nextWidth = width > 10 ? width : 10;
+	int nextHeight = height > 10 ? height : 10;
+	for (unsigned int i = 0; i < this->_pin.size(); ++i)
+	{
+		switch (this->_pin[i].orientation())
+		{
+		case Pin::ORI_TOP:
+		case Pin::ORI_BOTTOM:
+			this->_pin[i].setShift(this->_pin[i].shift() * nextWidth / this->_width);
+			break;
+		case Pin::ORI_LEFT:
+		case Pin::ORI_RIGHT:
+			this->_pin[i].setShift(this->_pin[i].shift() * nextHeight / this->_height);
+			break;
+		}
+	}
+	this->_width = width;
+	this->_height = height;
 }
 
 /**
@@ -57,6 +73,42 @@ int SwitchBox::width() const
 int SwitchBox::height() const
 {
 	return this->_height;
+}
+
+/**
+ * 返回左边界位置。
+ * @return 左边界位置。
+ */
+int SwitchBox::left() const
+{
+	return this->_x;
+}
+
+/**
+ * 返回右边界位置。
+ * @return 右边界位置。
+ */
+int SwitchBox::right() const
+{
+	return this->_x + this->_width;
+}
+
+/**
+ * 返回上边界位置。
+ * @return 上边界位置。
+ */
+int SwitchBox::top() const
+{
+	return this->_y;
+}
+
+/**
+ * 返回下边界位置。
+ * @return 下边界位置。
+ */
+int SwitchBox::bottom() const
+{
+	return this->_y + this->_height;
 }
 
 /**
@@ -193,6 +245,15 @@ CRect SwitchBox::getInnerBorder() const
 }
 
 /**
+ * 获取包含引脚在内的边界。
+ * @return 边界。
+ */
+CRect SwitchBox::getPinBorder() const
+{
+	return CRect(this->_x - PIN_SIZE, this->_y - PIN_SIZE, this->_x + this->_width + PIN_SIZE, this->_y + this->_height + PIN_SIZE);
+}
+
+/**
  * 获取引脚的中心位置。
  * @param index 引脚下标。
  * @return 引脚中心位置。
@@ -223,10 +284,10 @@ CPoint SwitchBox::getPinCenter(const int index) const
 }
 
 /**
-* 获取内部端口的中心位置。
-* @param index 引脚下标。
-* @return 内部端口中心位置。
-*/
+ * 获取内部端口的中心位置。
+ * @param index 引脚下标。
+ * @return 内部端口中心位置。
+ */
 CPoint SwitchBox::getPortCenter(const int index) const
 {
 	int px, py;
@@ -253,10 +314,10 @@ CPoint SwitchBox::getPortCenter(const int index) const
 }
 
 /**
-* 获取引脚的矩形位置。
-* @param index 引脚下标。
-* @return 引脚矩形位置。
-*/
+ * 获取引脚的矩形位置。
+ * @param index 引脚下标。
+ * @return 引脚矩形位置。
+ */
 CRect SwitchBox::getPinRect(const int index) const
 {
 	CPoint center = this->getPinCenter(index);
@@ -264,10 +325,10 @@ CRect SwitchBox::getPinRect(const int index) const
 }
 
 /**
-* 获取引脚文字的绘制位置。
-* @param index 引脚下标。
-* @return 引脚文字的绘制位置。
-*/
+ * 获取引脚文字的绘制位置。
+ * @param index 引脚下标。
+ * @return 引脚文字的绘制位置。
+ */
 CRect SwitchBox::getPinTextRect(const int index) const
 {
 	CPoint center = this->getPinCenter(index);
@@ -275,12 +336,112 @@ CRect SwitchBox::getPinTextRect(const int index) const
 }
 
 /**
-* 获取内部端口的矩形位置。
-* @param index 引脚下标。
-* @return 内部端口的矩形位置。
-*/
+ * 获取内部端口的矩形位置。
+ * @param index 引脚下标。
+ * @return 内部端口的矩形位置。
+ */
 CRect SwitchBox::getPortRect(const int index) const
 {
 	CPoint center = this->getPortCenter(index);
 	return CRect(center.x - PADDING, center.y - PADDING, center.x + PADDING, center.y + PADDING);
+}
+
+/**
+ * 判断当前点是否在布线盒的边界上。
+ * @param pos 要查询的位置。
+ * @return 如果在边界上返回true，否则返回false。
+ */
+bool SwitchBox::isOnBorder(const CPoint &pos) const
+{
+	return this->isInside(pos, this->getOuterBorder()) && !this->isInside(pos, this->getInnerBorder());
+}
+
+/**
+ * 判断当前点是否在左边界上。
+ * @param pos 要查询的位置。
+ * @return 如果在边界上返回true，否则返回false。
+ */
+bool SwitchBox::isOnLeftBorder(const CPoint &pos) const
+{
+	return this->isOnBorder(pos) && pos.x <= this->_x + PADDING;
+}
+
+/**
+ * 判断当前点是否在右边界上。
+ * @param pos 要查询的位置。
+ * @return 如果在边界上返回true，否则返回false。
+ */
+bool SwitchBox::isOnRightBorder(const CPoint &pos) const
+{
+	return this->isOnBorder(pos) && pos.x >= this->_x + this->_width - PADDING;
+}
+
+/**
+ * 判断当前点是否在上边界上。
+ * @param pos 要查询的位置。
+ * @return 如果在边界上返回true，否则返回false。
+ */
+bool SwitchBox::isOnTopBorder(const CPoint &pos) const
+{
+	return this->isOnBorder(pos) && pos.y <= this->_y + PADDING;
+}
+
+/**
+ * 判断当前点是否在下边界上。
+ * @param pos 要查询的位置。
+ * @return 如果在边界上返回true，否则返回false。
+ */
+bool SwitchBox::isOnBottomBorder(const CPoint &pos) const
+{
+	return this->isOnBorder(pos) && pos.y >= this->_y + this->_height - PADDING;
+}
+
+bool SwitchBox::isOnInner(const CPoint &pos) const
+{
+	return this->isInside(pos, this->getInnerBorder());
+}
+
+/**
+ * 判断当前点指向哪个引脚。
+ * @param pos 要查询的位置。
+ * @return 如果在引脚上则返回引脚的下标，否则返回-1。
+ */
+int SwitchBox::pinHoverIndex(const CPoint &pos) const
+{
+	for (unsigned int i = 0; i < this->_pin.size(); ++i)
+	{
+		if (this->isInside(pos, this->getPinRect(i)))
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+
+/**
+ * 判断当前点指向哪个端口。
+ * @param pos 要查询的位置。
+ * @return 如果在端口上则返回引脚的下标，否则返回-1。
+ */
+int SwitchBox::portHoverIndex(const CPoint &pos) const
+{
+	for (unsigned int i = 0; i < this->_pin.size(); ++i)
+	{
+		if (this->isInside(pos, this->getPortRect(i)))
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+
+/**
+ * 判断点是否在矩形中。
+ * @param pos 要判断的点。
+ * @param rect 要判断的矩形。
+ * @return 如果在矩形中返回true，否则返回false。
+ */
+bool SwitchBox::isInside(const CPoint &pos, const CRect &rect) const
+{
+	return pos.x >= rect.left && pos.x <= rect.right && pos.y >= rect.top && pos.y <= rect.bottom;
 }
