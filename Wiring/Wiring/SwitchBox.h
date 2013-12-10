@@ -24,6 +24,7 @@ public:
 	void setPinNum(const int pinNum);
 	std::vector<Pin>& pin();
 	std::vector<Wire>& wire();
+	void addWire(const int u, const int v);
 	void serialize(CArchive &archive);
 	CRect getOuterBorder() const;
 	CRect getInnerBorder() const;

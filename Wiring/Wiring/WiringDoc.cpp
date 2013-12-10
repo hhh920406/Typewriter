@@ -20,7 +20,7 @@ CWiringDoc::CWiringDoc()
 {
 	this->_switchBox.setPosition(100, 100);
 	this->_switchBox.setSize(200, 200);
-	this->_switchBox.setPinNum(18);
+	this->_switchBox.setPinNum(20);
 }
 
 CWiringDoc::~CWiringDoc()

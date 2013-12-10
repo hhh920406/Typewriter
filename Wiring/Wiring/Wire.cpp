@@ -94,7 +94,7 @@ double Wire::y(const unsigned int index) const
  * 设置连线的引脚的编号。
  * @param u 引脚编号。
  */
-void Wire::setU(const unsigned int u)
+void Wire::setU(const int u)
 {
 	this->_u = u;
 }
@@ -103,7 +103,7 @@ void Wire::setU(const unsigned int u)
  * 设置连线的引脚的编号。
  * @param v 引脚编号。
  */
-void Wire::setV(const unsigned int v)
+void Wire::setV(const int v)
 {
 	this->_v = v;
 }
@@ -112,7 +112,7 @@ void Wire::setV(const unsigned int v)
  * 返回引脚的编号。
  * @return 引脚编号。
  */
-unsigned int Wire::u() const
+int Wire::u() const
 {
 	return this->_u;
 }
@@ -121,7 +121,7 @@ unsigned int Wire::u() const
  * 返回引脚的编号。
  * @return 引脚编号。
  */
-unsigned int Wire::v() const
+int Wire::v() const
 {
 	return this->_v;
 }

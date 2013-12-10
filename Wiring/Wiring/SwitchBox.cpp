@@ -53,6 +53,13 @@ void SwitchBox::setSize(const int width, const int height)
 			break;
 		}
 	}
+	for (unsigned int i = 0; i < this->_wire.size(); ++i)
+	{
+		for (int j = 0; j < this->_wire[i].count(); ++j)
+		{
+			this->_wire[i].set(j, this->_wire[i].x(j) * nextWidth / this->_width, this->_wire[i].y(j) * nextHeight / this->_height);
+		}
+	}
 	this->_width = nextWidth;
 	this->_height = nextHeight;
 }
@@ -127,6 +134,28 @@ vector<Pin>& SwitchBox::pin()
 vector<Wire>& SwitchBox::wire()
 {
 	return this->_wire;
+}
+
+/**
+ * 添加一个初始布线。
+ * @param u 端口1。
+ * @param v 端口2。
+ */
+void SwitchBox::addWire(const int u, const int v)
+{
+	for (int i = this->_wire.size() - 1; i >= 0; --i)
+	{
+		if (this->_wire[i].u() == u || this->_wire[i].u() == v || this->_wire[i].v() == u || this->_wire[i].v() == v)
+		{
+			this->_wire.erase(this->_wire.begin() + i);
+		}
+	}
+	Wire wire;
+	wire.setU(u);
+	wire.setV(v);
+	wire.add(this->getPortCenter(u).x - this->_x, this->getPortCenter(u).y - this->_y);
+	wire.add(this->getPortCenter(v).x - this->_x, this->getPortCenter(v).y - this->_y);
+	this->_wire.push_back(wire);
 }
 
 /**
@@ -260,7 +289,7 @@ CRect SwitchBox::getPinBorder() const
  */
 CPoint SwitchBox::getPinCenter(const int index) const
 {
-	int cx, cy;
+	double cx, cy;
 	switch (this->_pin[index].orientation())
 	{
 	case Pin::ORI_TOP:
@@ -280,7 +309,7 @@ CPoint SwitchBox::getPinCenter(const int index) const
 		cy = this->_y + this->_pin[index].shift();
 		break;
 	}
-	return CPoint(cx, cy);
+	return CPoint((int)cx, (int)cy);
 }
 
 /**

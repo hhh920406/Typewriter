@@ -63,7 +63,7 @@ void CWiringView::OnDraw(CDC* pDC)
 		OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
 		DEFAULT_PITCH | FF_SWISS, _T("Console"));
 	memDC.SelectObject(&font);
-	SwitchBox switchBox = this->GetDocument()->switchBox();
+	SwitchBox& switchBox = this->GetDocument()->switchBox();
 	memDC.Rectangle(switchBox.getOuterBorder());
 	memDC.Rectangle(switchBox.getInnerBorder());
 	for (unsigned int i = 0; i < switchBox.pin().size(); ++i)
@@ -74,6 +74,22 @@ void CWiringView::OnDraw(CDC* pDC)
 		memDC.SetBkMode(TRANSPARENT);
 		memDC.DrawText(num, switchBox.getPinTextRect(i), DT_CENTER | DT_SINGLELINE | DT_VCENTER);
 		memDC.Ellipse(switchBox.getPortRect(i));
+	}
+	for (unsigned int i = 0; i < switchBox.wire().size(); ++i)
+	{
+		if (switchBox.wire()[i].count() > 0)
+		{
+			memDC.MoveTo(switchBox.x() + switchBox.wire()[i].x(0), switchBox.y() + switchBox.wire()[i].y(0));
+		}
+		for (int j = 1; j < switchBox.wire()[i].count(); ++j)
+		{
+			memDC.LineTo(switchBox.x() + switchBox.wire()[i].x(j), switchBox.y() + switchBox.wire()[i].y(j));
+		}
+	}
+	if (this->_status == STATUS_WIRE_CONNECTING)
+	{
+		memDC.MoveTo(this->_lastClickPos);
+		memDC.LineTo(this->_lastMousePos);
 	}
 
 	pDC->BitBlt(0, 0, windowRect.Width(), windowRect.Height(), &memDC, 0, 0, SRCCOPY);
@@ -118,7 +134,6 @@ void CWiringView::OnLButtonDown(UINT nFlags, CPoint point)
 	this->_lastMousePos = point;
 	this->_lastClickPos = point;
 	this->Invalidate();
-	CView::OnLButtonDown(nFlags, point);
 }
 
 /**
@@ -149,7 +164,6 @@ void CWiringView::OnMouseMove(UINT nFlags, CPoint point)
 	}
 	this->_lastMousePos = point;
 	this->Invalidate();
-	CView::OnMouseMove(nFlags, point);
 }
 
 /**
@@ -178,7 +192,6 @@ void CWiringView::OnLButtonUp(UINT nFlags, CPoint point)
 	this->_lastMousePos = point;
 	this->_lastClickPos = point;
 	this->Invalidate();
-	CView::OnLButtonUp(nFlags, point);
 }
 
 void CWiringView::restoreIdle()
@@ -193,7 +206,7 @@ void CWiringView::restoreIdle()
  */
 void CWiringView::mouseLeftDownIdle(CPoint point)
 {
-	SwitchBox switchBox = this->GetDocument()->switchBox();
+	SwitchBox& switchBox = this->GetDocument()->switchBox();
 	int pinIndex = switchBox.pinHoverIndex(point);
 	if (pinIndex != -1)
 	{
@@ -249,7 +262,7 @@ void CWiringView::mouseLeftDownIdle(CPoint point)
  */
 void CWiringView::mouseMoveIdle(CPoint point)
 {
-	SwitchBox switchBox = this->GetDocument()->switchBox();
+	SwitchBox& switchBox = this->GetDocument()->switchBox();
 	int pinIndex = switchBox.pinHoverIndex(point);
 	if (pinIndex != -1)
 	{
@@ -286,7 +299,7 @@ void CWiringView::mouseMoveIdle(CPoint point)
  */
 void CWiringView::mouseMovePin(CPoint point)
 {
-	SwitchBox switchBox = this->GetDocument()->switchBox();
+	SwitchBox& switchBox = this->GetDocument()->switchBox();
 	double cx = (switchBox.left() + switchBox.right()) * 0.5;
 	double cy = (switchBox.top() + switchBox.bottom()) * 0.5;
 	double hw = switchBox.width() * 0.5;
@@ -299,43 +312,58 @@ void CWiringView::mouseMovePin(CPoint point)
 	}
 	if (angle < divideAngle)
 	{
-		this->GetDocument()->switchBox().pin()[this->_lastIndex].setOrientation(Pin::ORI_RIGHT);
-		this->GetDocument()->switchBox().pin()[this->_lastIndex].setShift(hh - hw * tan(angle));
+		switchBox.pin()[this->_lastIndex].setOrientation(Pin::ORI_RIGHT);
+		switchBox.pin()[this->_lastIndex].setShift(hh - hw * tan(angle));
 	}
 	else if (angle < PI / 2)
 	{
-		this->GetDocument()->switchBox().pin()[this->_lastIndex].setOrientation(Pin::ORI_TOP);
-		this->GetDocument()->switchBox().pin()[this->_lastIndex].setShift(hw + hh * tan(PI / 2 - angle));
+		switchBox.pin()[this->_lastIndex].setOrientation(Pin::ORI_TOP);
+		switchBox.pin()[this->_lastIndex].setShift(hw + hh * tan(PI / 2 - angle));
 	}
 	else if (angle < PI - divideAngle)
 	{
-		this->GetDocument()->switchBox().pin()[this->_lastIndex].setOrientation(Pin::ORI_TOP);
-		this->GetDocument()->switchBox().pin()[this->_lastIndex].setShift(hw - hh * tan(angle - PI / 2));
+		switchBox.pin()[this->_lastIndex].setOrientation(Pin::ORI_TOP);
+		switchBox.pin()[this->_lastIndex].setShift(hw - hh * tan(angle - PI / 2));
 	}
 	else if (angle < PI)
 	{
-		this->GetDocument()->switchBox().pin()[this->_lastIndex].setOrientation(Pin::ORI_LEFT);
-		this->GetDocument()->switchBox().pin()[this->_lastIndex].setShift(hh - hw * tan(PI - angle));
+		switchBox.pin()[this->_lastIndex].setOrientation(Pin::ORI_LEFT);
+		switchBox.pin()[this->_lastIndex].setShift(hh - hw * tan(PI - angle));
 	}
 	else if (angle < PI + divideAngle)
 	{
-		this->GetDocument()->switchBox().pin()[this->_lastIndex].setOrientation(Pin::ORI_LEFT);
-		this->GetDocument()->switchBox().pin()[this->_lastIndex].setShift(hh + hw * tan(angle - PI));
+		switchBox.pin()[this->_lastIndex].setOrientation(Pin::ORI_LEFT);
+		switchBox.pin()[this->_lastIndex].setShift(hh + hw * tan(angle - PI));
 	}
 	else if (angle < PI * 3 / 2)
 	{
-		this->GetDocument()->switchBox().pin()[this->_lastIndex].setOrientation(Pin::ORI_BOTTOM);
-		this->GetDocument()->switchBox().pin()[this->_lastIndex].setShift(hw - hh * tan(PI * 3 / 2 - angle));
+		switchBox.pin()[this->_lastIndex].setOrientation(Pin::ORI_BOTTOM);
+		switchBox.pin()[this->_lastIndex].setShift(hw - hh * tan(PI * 3 / 2 - angle));
 	}
 	else if (angle < PI * 2 - divideAngle)
 	{
-		this->GetDocument()->switchBox().pin()[this->_lastIndex].setOrientation(Pin::ORI_BOTTOM);
-		this->GetDocument()->switchBox().pin()[this->_lastIndex].setShift(hw + hh * tan(angle - PI * 3 / 2));
+		switchBox.pin()[this->_lastIndex].setOrientation(Pin::ORI_BOTTOM);
+		switchBox.pin()[this->_lastIndex].setShift(hw + hh * tan(angle - PI * 3 / 2));
 	}
 	else
 	{
-		this->GetDocument()->switchBox().pin()[this->_lastIndex].setOrientation(Pin::ORI_RIGHT);
-		this->GetDocument()->switchBox().pin()[this->_lastIndex].setShift(hh + hw * tan(PI * 2 - angle));
+		switchBox.pin()[this->_lastIndex].setOrientation(Pin::ORI_RIGHT);
+		switchBox.pin()[this->_lastIndex].setShift(hh + hw * tan(PI * 2 - angle));
+	}
+	for (unsigned i = 0; i < switchBox.wire().size(); ++i)
+	{
+		if (switchBox.wire()[i].u() == this->_lastIndex)
+		{
+			switchBox.wire()[i].set(0,
+				switchBox.getPortCenter(this->_lastIndex).x - switchBox.x(),
+				switchBox.getPortCenter(this->_lastIndex).y - switchBox.y());
+		}
+		else if (switchBox.wire()[i].v() == this->_lastIndex)
+		{
+			switchBox.wire()[i].set(switchBox.wire()[i].count() - 1,
+				switchBox.getPortCenter(this->_lastIndex).x - switchBox.x(),
+				switchBox.getPortCenter(this->_lastIndex).y - switchBox.y());
+		}
 	}
 	SetCursor(AfxGetApp()->LoadStandardCursor(IDC_HAND));
 }
@@ -355,25 +383,25 @@ void CWiringView::mouseMoveConnect(CPoint point)
  */
 void CWiringView::mouseMoveResize(CPoint point)
 {
-	SwitchBox switchBox = this->GetDocument()->switchBox();
+	SwitchBox& switchBox = this->GetDocument()->switchBox();
 	switch (this->_status)
 	{
 	case STATUS_BORDER_RESIZING_LEFT:
-		this->GetDocument()->switchBox().setPosition(switchBox.x() + point.x - this->_lastMousePos.x, switchBox.y());
-		this->GetDocument()->switchBox().setSize(switchBox.width() - point.x + this->_lastMousePos.x, switchBox.height());
+		switchBox.setPosition(switchBox.x() + point.x - this->_lastMousePos.x, switchBox.y());
+		switchBox.setSize(switchBox.width() - point.x + this->_lastMousePos.x, switchBox.height());
 		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEWE));
 		break;
 	case STATUS_BORDER_RESIZING_RIGHT:
-		this->GetDocument()->switchBox().setSize(switchBox.width() + point.x - this->_lastMousePos.x, switchBox.height());
+		switchBox.setSize(switchBox.width() + point.x - this->_lastMousePos.x, switchBox.height());
 		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEWE));
 		break;
 	case STATUS_BORDER_RESIZING_TOP:
-		this->GetDocument()->switchBox().setPosition(switchBox.x(), switchBox.y() + point.y - this->_lastMousePos.y);
-		this->GetDocument()->switchBox().setSize(switchBox.width(), switchBox.height() - point.y + this->_lastMousePos.y);
+		switchBox.setPosition(switchBox.x(), switchBox.y() + point.y - this->_lastMousePos.y);
+		switchBox.setSize(switchBox.width(), switchBox.height() - point.y + this->_lastMousePos.y);
 		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZENS));
 		break;
 	case STATUS_BORDER_RESIZING_BOTTOM:
-		this->GetDocument()->switchBox().setSize(switchBox.width(), switchBox.height() + point.y - this->_lastMousePos.y);
+		switchBox.setSize(switchBox.width(), switchBox.height() + point.y - this->_lastMousePos.y);
 		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZENS));
 		break;
 	}
@@ -385,8 +413,8 @@ void CWiringView::mouseMoveResize(CPoint point)
  */
 void CWiringView::mouseMoveMoving(CPoint point)
 {
-	SwitchBox switchBox = this->GetDocument()->switchBox();
-	this->GetDocument()->switchBox().setPosition(switchBox.x() + point.x - this->_lastMousePos.x, switchBox.y() + point.y - this->_lastMousePos.y);
+	SwitchBox& switchBox = this->GetDocument()->switchBox();
+	switchBox.setPosition(switchBox.x() + point.x - this->_lastMousePos.x, switchBox.y() + point.y - this->_lastMousePos.y);
 	SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEALL));
 }
 
@@ -401,8 +429,14 @@ void CWiringView::mouseLeftUpPin(CPoint)
 /**
  * 连线完成，恢复常态。
  */
-void CWiringView::mouseLeftUpConnect(CPoint)
+void CWiringView::mouseLeftUpConnect(CPoint point)
 {
+	SwitchBox& switchBox = this->GetDocument()->switchBox();
+	int index = switchBox.portHoverIndex(point);
+	if (index != -1 && index != this->_lastIndex)
+	{
+		switchBox.addWire(this->_lastIndex, index);
+	}
 	this->restoreIdle();
 }
 
