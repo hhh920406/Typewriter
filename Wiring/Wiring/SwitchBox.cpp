@@ -82,7 +82,7 @@ vector<Wire>& SwitchBox::wire()
  */
 void SwitchBox::setPinNum(const int pinNum)
 {
-	int hor = pinNum * this->_width / (this->_width + this->_height);
+	int hor = (int)(pinNum * this->_width / (this->_width + this->_height));
 	int ver = pinNum - hor;
 	int top = hor >> 1;
 	int bottom = hor - top;
