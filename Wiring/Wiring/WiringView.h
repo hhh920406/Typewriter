@@ -31,13 +31,13 @@ protected:
 	CPoint _lastMousePos;
 	CPoint _lastClickPos;
 	int _lastIndex;
+	int _removeIndex;
 
 	void restoreIdle();
 	void mouseLeftDownIdle(CPoint point);
 
 	void mouseMoveIdle(CPoint point);
 	void mouseMovePin(CPoint point);
-	void mouseMoveConnect(CPoint point);
 	void mouseMoveResize(CPoint point);
 	void mouseMoveMoving(CPoint point);
 

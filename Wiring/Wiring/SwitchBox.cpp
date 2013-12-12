@@ -4,6 +4,7 @@ using namespace std;
 
 const int PADDING = 3;
 const int PIN_SIZE = 20;
+const int LEAVE = 50;
 
 SwitchBox::SwitchBox()
 {
@@ -143,16 +144,18 @@ vector<Wire>& SwitchBox::wire()
  */
 void SwitchBox::addWire(const int u, const int v)
 {
+	int uid = this->_pin[u].id();
+	int vid = this->_pin[v].id();
 	for (int i = this->_wire.size() - 1; i >= 0; --i)
 	{
-		if (this->_wire[i].u() == u || this->_wire[i].u() == v || this->_wire[i].v() == u || this->_wire[i].v() == v)
+		if (this->_wire[i].u() == uid || this->_wire[i].u() == vid || this->_wire[i].v() == uid || this->_wire[i].v() == vid)
 		{
 			this->_wire.erase(this->_wire.begin() + i);
 		}
 	}
 	Wire wire;
-	wire.setU(u);
-	wire.setV(v);
+	wire.setU(uid);
+	wire.setV(vid);
 	wire.add(this->getPortCenter(u).x - this->_x, this->getPortCenter(u).y - this->_y);
 	wire.add(this->getPortCenter(v).x - this->_x, this->getPortCenter(v).y - this->_y);
 	this->_wire.push_back(wire);
@@ -212,6 +215,51 @@ void SwitchBox::setPinNum(const int pinNum)
 }
 
 /**
+ * 添加一个引脚。
+ * @return 返回还未出现过的最小的引脚编号。
+ */
+int SwitchBox::addPin()
+{
+	for (int id = 1;; ++id)
+	{
+		bool flag = true;
+		for (unsigned int i = 0; i < this->_pin.size(); ++i)
+		{
+			if (this->_pin[i].id() == id)
+			{
+				flag = false;
+				break;
+			}
+		}
+		if (flag)
+		{
+			Pin pin;
+			pin.setId(id);
+			this->_pin.push_back(pin);
+			return this->_pin.size() - 1;
+		}
+	}
+}
+
+/**
+ * 删除一个引脚，对应的连线也会被删除。
+ * @param index 引脚的下标。
+ */
+void SwitchBox::removePin(const int index)
+{
+	int id = this->_pin[index].id();
+	for (vector<Wire>::iterator it = this->_wire.begin(); it != this->_wire.end(); ++it)
+	{
+		if (it->u() == id || it->v() == id)
+		{
+			this->_wire.erase(it);
+			break;
+		}
+	}
+	this->_pin.erase(this->_pin.begin() + index);
+}
+
+/**
  * 序列化。
  * @param archive 归档对象。
  */
@@ -221,7 +269,7 @@ void SwitchBox::serialize(CArchive &archive)
 	{
 		archive << this->_x << this->_y;
 		archive << this->_width << this->_height;
-		/*archive << this->_pin.size();
+		archive << this->_pin.size();
 		for (unsigned int i = 0; i < this->_pin.size(); ++i)
 		{
 			this->_pin[i].serialize(archive);
@@ -230,7 +278,7 @@ void SwitchBox::serialize(CArchive &archive)
 		for (unsigned int i = 0; i < this->_wire.size(); ++i)
 		{
 			this->_wire[i].serialize(archive);
-		}*/
+		}
 	}
 	else
 	{
@@ -238,7 +286,7 @@ void SwitchBox::serialize(CArchive &archive)
 		archive >> this->_x >> this->_y;
 		archive >> this->_width >> this->_height;
 		archive >> size;
-		/*this->_pin.clear();
+		this->_pin.clear();
 		for (unsigned int i = 0; i < size; ++i)
 		{
 			Pin pin;
@@ -251,7 +299,7 @@ void SwitchBox::serialize(CArchive &archive)
 			Wire wire;
 			wire.serialize(archive);
 			this->_wire.push_back(wire);
-		}*/
+		}
 	}
 }
 
@@ -376,6 +424,15 @@ CRect SwitchBox::getPortRect(const int index) const
 }
 
 /**
+* 获取离开区域的矩形位置。
+* @return 离开区域的矩形位置。
+*/
+CRect SwitchBox::getLeaveRect() const
+{
+	return CRect(this->left() - LEAVE, this->top() - LEAVE, this->right() + LEAVE, this->bottom() + LEAVE);
+}
+
+/**
  * 判断当前点是否在布线盒的边界上。
  * @param pos 要查询的位置。
  * @return 如果在边界上返回true，否则返回false。
@@ -425,9 +482,34 @@ bool SwitchBox::isOnBottomBorder(const CPoint &pos) const
 	return this->isOnBorder(pos) && pos.y >= this->_y + this->_height - PADDING;
 }
 
+/**
+ * 判断当前点是否在布线盒内部。
+ * @param pos 要查询的位置。
+ * @return 如果在内部返回true，否则返回false。
+ */
 bool SwitchBox::isOnInner(const CPoint &pos) const
 {
 	return this->isInside(pos, this->getInnerBorder());
+}
+
+/**
+ * 判断当前点是否在有绘制的区域内。
+ * @param pos 要查询的位置。
+ * @return 如果在内部返回true，否则返回false。
+ */
+bool SwitchBox::isOnPaint(const CPoint &pos) const
+{
+	return this->isInside(pos, this->getPinBorder());
+}
+
+/**
+ * 是否远离的绘制区域。
+ * @param pos 要查询的位置。
+ * @return 如果远离返回true，否则返回false。
+ */
+bool SwitchBox::isLeaveArea(const CPoint &pos) const
+{
+	return !this->isInside(pos, this->getLeaveRect());
 }
 
 /**

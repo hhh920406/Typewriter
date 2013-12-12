@@ -22,12 +22,15 @@ public:
 	int top() const;
 	int bottom() const;
 	void setPinNum(const int pinNum);
+	int addPin();
+	void removePin(const int index);
 	std::vector<Pin>& pin();
 	std::vector<Wire>& wire();
 	void addWire(const int u, const int v);
 	void serialize(CArchive &archive);
 	CRect getOuterBorder() const;
 	CRect getInnerBorder() const;
+	CRect getLeaveRect() const;
 	CRect getPinBorder() const;
 	CPoint getPinCenter(const int index) const;
 	CPoint getPortCenter(const int index) const;
@@ -40,6 +43,8 @@ public:
 	bool isOnTopBorder(const CPoint &pos) const;
 	bool isOnBottomBorder(const CPoint &pos) const;
 	bool isOnInner(const CPoint &pos) const;
+	bool isOnPaint(const CPoint &pos) const;
+	bool isLeaveArea(const CPoint &pos) const;
 	int pinHoverIndex(const CPoint &pos) const;
 	int portHoverIndex(const CPoint &pos) const;
 
