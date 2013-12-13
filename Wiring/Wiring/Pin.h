@@ -10,10 +10,10 @@ class Pin
 public:
 	enum Orientation
 	{
-		ORI_TOP,
-		ORI_BOTTOM,
-		ORI_LEFT,
-		ORI_RIGHT
+		ORI_TOP = 0,
+		ORI_RIGHT = 1,
+		ORI_BOTTOM = 2,
+		ORI_LEFT = 3
 	};
 	Pin();
 	virtual ~Pin();

@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <cmath>
 #include "Wire.h"
 using namespace std;
 
@@ -155,4 +156,55 @@ void Wire::serialize(CArchive &archive)
 		}
 		archive >> this->_u >> this->_v;
 	}
+}
+
+/**
+ * 获取连线的总长度。
+ * @return 总长度。
+ */
+double Wire::length() const
+{
+	double len = 0.0;
+	for (unsigned int i = 0; i < this->_x.size() - 1; ++i)
+	{
+		len += length(i);
+	}
+	return len;
+}
+
+double Wire::length(const unsigned int index) const
+{
+	return sqrt((this->_x[index + 1] - this->_x[index]) * (this->_x[index + 1] - this->_x[index]) +
+		(this->_y[index + 1] - this->_y[index]) * (this->_y[index + 1] - this->_y[index]));
+}
+
+/**
+ * 获取线段上的点。
+ * @param 点距起点的长度与总长度的比值。
+ * @return 线段上的点。
+ */
+CPoint Wire::getSegmentPoint(double seg) const
+{
+	double total = this->length();
+	double len = total * seg;
+	unsigned int i;
+	for (i = 0; i < this->_x.size() - 1; ++i)
+	{
+		double tempLen = this->length(i);
+		if (len > tempLen)
+		{
+			len -= tempLen;
+		}
+		else
+		{
+			break;
+		}
+	}
+	if (i == this->_x.size() - 1)
+	{
+		--i;
+	}
+	seg = len / this->length(i);
+	return CPoint((int)(this->_x[i] + seg * (this->_x[i + 1] - this->_x[i])), 
+		(int)(this->_y[i] + seg * (this->_y[i + 1] - this->_y[i])));
 }

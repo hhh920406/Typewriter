@@ -33,8 +33,12 @@ protected:
 	CPoint _lastMousePos;
 	CPoint _lastClickPos;
 	int _lastIndex;
+	int _lastPos;
+	int _tick;
 	int _removeIndex;
 	SwitchBoxSolver _solver;
+	std::vector<Wire> _wire;
+	bool _timer;
 
 	void restoreIdle();
 	void mouseLeftDownIdle(CPoint point);
@@ -62,6 +66,7 @@ public:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };
 
 #ifndef _DEBUG

@@ -20,6 +20,9 @@ public:
 	void setV(const int v);
 	int u() const;
 	int v() const;
+	double length() const;
+	double length(const unsigned int index) const;
+	CPoint getSegmentPoint(double seg) const;
 	void serialize(CArchive &archive);
 
 private:

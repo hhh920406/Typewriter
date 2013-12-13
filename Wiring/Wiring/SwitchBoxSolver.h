@@ -37,7 +37,7 @@ private:
 	int _col;
 	std::vector< std::vector<bool> > _graph;
 	std::vector< std::vector< std::vector<long long> > > _dist;
-	std::vector< std::vector< std::vector<int> > > _prev;
+	std::vector< std::vector< std::vector<long long> > > _prev;
 	std::vector< std::vector< std::vector<bool> > > _visit;
 	std::queue<long long> _queue;
 };

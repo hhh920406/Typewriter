@@ -138,7 +138,6 @@
     <None Include="res\Wiring.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\icon1.ico" />
     <Image Include="res\start.ico" />
     <Image Include="res\working.bmp" />
     <Image Include="res\start.bmp" />

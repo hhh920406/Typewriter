@@ -9,6 +9,9 @@
 #include "WiringView.h"
 using namespace std;
 const double PI = acos(-1.0);
+const int STEP_TIME = 40;
+
+#define ID_TIMER1 1
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -27,12 +30,14 @@ BEGIN_MESSAGE_MAP(CWiringView, CView)
 	ON_WM_MOUSEMOVE()
 	ON_WM_CONTEXTMENU()
 	ON_WM_ERASEBKGND()
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 CWiringView::CWiringView()
 {
 	this->_status = STATUS_IDLE;
 	this->_removeIndex = -1;
+	this->_timer = false;
 }
 
 CWiringView::~CWiringView()
@@ -80,7 +85,10 @@ void CWiringView::OnDraw(CDC* pDC)
 	}
 	SwitchBox& switchBox = this->GetDocument()->switchBox();
 	memDC.Rectangle(switchBox.getOuterBorder());
-	memDC.Rectangle(switchBox.getInnerBorder());
+	if (this->_status != STATUS_SOLVE_GREEDY && this->_status != STATUS_SOLVE_OPT)
+	{
+		memDC.Rectangle(switchBox.getInnerBorder());
+	}
 	for (unsigned int i = 0; i < switchBox.pin().size(); ++i)
 	{
 		memDC.Rectangle(switchBox.getPinRect(i));
@@ -92,20 +100,45 @@ void CWiringView::OnDraw(CDC* pDC)
 		}
 		memDC.SetBkMode(TRANSPARENT);
 		memDC.DrawText(num, switchBox.getPinTextRect(i), DT_CENTER | DT_SINGLELINE | DT_VCENTER);
-		memDC.Ellipse(switchBox.getPortRect(i));
+		if (this->_status != STATUS_SOLVE_GREEDY && this->_status != STATUS_SOLVE_OPT)
+		{
+			memDC.Ellipse(switchBox.getPortRect(i));
+		}
 	}
 	CPen pen;
 	pen.CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
 	memDC.SelectObject(&pen);
 	for (unsigned int i = 0; i < switchBox.wire().size(); ++i)
 	{
+		if (this->_status == STATUS_SOLVE_GREEDY || this->_status == STATUS_SOLVE_OPT)
+		{
+			if (i == this->_lastIndex)
+			{
+				for (int j = 0; j < 100; ++j)
+				{
+					CPoint s = switchBox.wire()[this->_lastIndex].getSegmentPoint(j / 100.0);
+					CPoint t = this->_wire[this->_lastPos].getSegmentPoint(j / 100.0);
+					CPoint pos(switchBox.x() + (int)(s.x + 1.0 * (t.x - s.x) * this->_tick / STEP_TIME), 
+						switchBox.y() + (int)(s.y + 1.0 * (t.y - s.y) * this->_tick / STEP_TIME));
+					if (j == 0)
+					{
+						memDC.MoveTo(pos);
+					}
+					else
+					{
+						memDC.LineTo(pos);
+					}
+				}
+				continue;
+			}
+		}
 		if (switchBox.wire()[i].count() > 0)
 		{
-			memDC.MoveTo(switchBox.x() + switchBox.wire()[i].x(0), switchBox.y() + switchBox.wire()[i].y(0));
+			memDC.MoveTo((int)(switchBox.x() + switchBox.wire()[i].x(0)), (int)(switchBox.y() + switchBox.wire()[i].y(0)));
 		}
 		for (int j = 1; j < switchBox.wire()[i].count(); ++j)
 		{
-			memDC.LineTo(switchBox.x() + switchBox.wire()[i].x(j), switchBox.y() + switchBox.wire()[i].y(j));
+			memDC.LineTo((int)(switchBox.x() + switchBox.wire()[i].x(j)), (int)(switchBox.y() + switchBox.wire()[i].y(j)));
 		}
 	}
 	if (this->_status == STATUS_WIRE_CONNECTING)
@@ -274,10 +307,21 @@ void CWiringView::mouseLeftDownIdle(CPoint point)
 	}
 	if (point.x > 10 && point.x < 34 && point.y > 10 && point.y < 34)
 	{
+		this->_wire = this->_solver.getGreedySolution(switchBox);
+		if (this->_wire.size() < switchBox.wire().size())
+		{
+			AfxMessageBox(L"Unable to find a solution. ");
+			return;
+		}
+		this->_lastIndex = -1;
+		this->_lastPos = 0;
+		this->_tick = 0;
 		this->_status = STATUS_SOLVE_GREEDY;
-		vector<Wire> wire = this->_solver.getGreedySolution(switchBox);
-		switchBox.setWire(wire);
-		this->Invalidate();
+		if (!this->_timer)
+		{
+			SetTimer(ID_TIMER1, 50, 0);
+			this->_timer = true;
+		}
 		return;
 	}
 }
@@ -289,6 +333,10 @@ void CWiringView::mouseLeftDownIdle(CPoint point)
 void CWiringView::mouseMoveIdle(CPoint point)
 {
 	SwitchBox& switchBox = this->GetDocument()->switchBox();
+	if (this->_timer)
+	{
+		KillTimer(ID_TIMER1);
+	}
 	int pinIndex = switchBox.pinHoverIndex(point);
 	if (pinIndex != -1)
 	{
@@ -480,4 +528,43 @@ void CWiringView::mouseLeftUpResize(CPoint)
 void CWiringView::mouseLeftUpMoving(CPoint)
 {
 	this->restoreIdle();
+}
+
+
+void CWiringView::OnTimer(UINT_PTR nIDEvent)
+{
+	if (nIDEvent == ID_TIMER1)
+	{
+		SwitchBox &switchBox = this->GetDocument()->switchBox();
+		if (this->_status = STATUS_SOLVE_GREEDY)
+		{
+			if (this->_lastIndex == -1)
+			{
+				if (this->_lastPos == this->_wire.size())
+				{
+					this->_status = STATUS_SOLVE_OPT;
+					this->Invalidate();
+					return;
+				}
+				for (unsigned int i = 0; i < switchBox.wire().size(); ++i)
+				{
+					if (switchBox.wire()[i].u() == this->_wire[this->_lastPos].u() &&
+						switchBox.wire()[i].v() == this->_wire[this->_lastPos].v())
+					{
+						this->_lastIndex = i;
+						break;
+					}
+				}
+			}
+			if (this->_tick++ > STEP_TIME)
+			{
+				switchBox.wire()[this->_lastIndex] = this->_wire[this->_lastPos];
+				this->_tick = 0;
+				this->_lastIndex = -1;
+				++this->_lastPos;
+			}
+			this->Invalidate();
+		}
+	}
+	CView::OnTimer(nIDEvent);
 }

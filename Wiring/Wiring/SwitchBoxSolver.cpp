@@ -4,9 +4,10 @@
 using namespace std;
 const long long INF = 0x3f3f3f3fLL;
 const long long INFL = 0x3f3f3f3f3f3f3f3fLL;
-const int DIR_X[4] = { 1, 0, -1, 0 };
+const int DIR_X[4] = { -1, 0, 1, 0 };
 const int DIR_Y[4] = { 0, 1, 0, -1 };
-const int MARGIN = 10;
+const int MARGIN = 5;
+const int PADDING = 5;
 
 SwitchBoxSolver::SwitchBoxSolver()
 {
@@ -122,20 +123,59 @@ void SwitchBoxSolver::initGraph(SwitchBox &box)
 	this->_visit.clear();
 	this->_graph.clear();
 
-	this->_row = box.height() / MARGIN - 1;
-	this->_col = box.width() / MARGIN - 1;
+	this->_row = box.height() / MARGIN;
+	this->_col = box.width() / MARGIN;
 	for (int i = 0; i < this->_row; ++i)
 	{
 		this->_graph.push_back(vector<bool>());
 		this->_dist.push_back(vector< vector<long long> >());
-		this->_prev.push_back(vector< vector<int> >());
+		this->_prev.push_back(vector< vector<long long> >());
 		this->_visit.push_back(vector< vector<bool> >());
 		for (int j = 0; j < this->_col; ++j)
 		{
 			this->_graph[i].push_back(false);
 			this->_dist[i].push_back(vector<long long>(4));
-			this->_prev[i].push_back(vector<int>(4));
+			this->_prev[i].push_back(vector<long long>(4));
 			this->_visit[i].push_back(vector<bool>(4));
+		}
+	}
+
+	for (int i = PADDING; i < this->_row - PADDING; ++i)
+	{
+		for (int j = PADDING; j < this->_col - PADDING; ++j)
+		{
+			this->_graph[i][j] = true;
+		}
+	}
+	for (unsigned int i = 0; i < box.pin().size(); ++i)
+	{
+		CPoint pos = this->getPinGraphPosition(box, box.pin()[i].id());
+		switch (box.pin()[i].orientation())
+		{
+		case Pin::ORI_TOP:
+			for (int j = 0; j < PADDING; ++j)
+			{
+				this->_graph[j][pos.y] = true;
+			}
+			break;
+		case Pin::ORI_BOTTOM:
+			for (int j = 0; j < PADDING; ++j)
+			{
+				this->_graph[this->_row - j - 1][pos.y] = true;
+			}
+			break;
+		case Pin::ORI_LEFT:
+			for (int j = 0; j < PADDING; ++j)
+			{
+				this->_graph[pos.x][j] = true;
+			}
+			break;
+		case Pin::ORI_RIGHT:
+			for (int j = 0; j < PADDING; ++j)
+			{
+				this->_graph[pos.x][this->_col - j - 1] = true;
+			}
+			break;
 		}
 	}
 }
@@ -159,20 +199,28 @@ int SwitchBoxSolver::getPinDist(int u, int v) const
 		return -1;
 	}
 	int count1 = 0;
-	for (int i = u + 1; i != v; ++i)
+	for (int i = u + 1; ; ++i)
 	{
-		if (i >= this->_pinPosition.size())
+		if (i >= (int)this->_pinPosition.size())
 		{
 			i = 0;
+		}
+		if (i == v)
+		{
+			break;
 		}
 		count1 += !this->_dealt[i];
 	}
 	int count2 = 0;
-	for (int i = u - 1; i != v; --i)
+	for (int i = u - 1; ; --i)
 	{
 		if (i < 0)
 		{
 			i = this->_pinPosition.size() - 1;
+		}
+		if (i == v)
+		{
+			break;
 		}
 		count2 += !this->_dealt[i];
 	}
@@ -204,6 +252,8 @@ int SwitchBoxSolver::getPinPosition(int id) const
  */
 Wire SwitchBoxSolver::getGreedySolution(SwitchBox &box, int u, int v)
 {
+	int pu = this->getPinPosition(u);
+	int pv = this->getPinPosition(v);
 	CPoint start = this->getPinGraphPosition(box, u);
 	CPoint end = this->getPinGraphPosition(box, v);
 	for (unsigned int i = 0; i < this->_dist.size(); ++i)
@@ -236,19 +286,22 @@ Wire SwitchBoxSolver::getGreedySolution(SwitchBox &box, int u, int v)
 			{
 				if (ty >= 0 && ty < this->_col)
 				{
-					long long dist = this->_dist[x][y][dir] + 1;
-					if (dir != i)
+					if (this->_graph[tx][ty])
 					{
-						dist += INF;
-					}
-					if (dist < this->_dist[tx][ty][i])
-					{
-						this->_dist[tx][ty][i] = dist;
-						this->_prev[tx][ty][i] = status;
-						if (!this->_visit[tx][ty][i])
+						long long dist = this->_dist[x][y][dir] + 1;
+						if (dir != i)
 						{
-							this->_visit[tx][ty][i] = true;
-							this->_queue.push(this->getStatus(tx, ty, i));
+							dist += INF;
+						}
+						if (dist < this->_dist[tx][ty][i])
+						{
+							this->_dist[tx][ty][i] = dist;
+							this->_prev[tx][ty][i] = status;
+							if (!this->_visit[tx][ty][i])
+							{
+								this->_visit[tx][ty][i] = true;
+								this->_queue.push(this->getStatus(tx, ty, i));
+							}
 						}
 					}
 				}
@@ -291,6 +344,7 @@ Wire SwitchBoxSolver::getGreedySolution(SwitchBox &box, int u, int v)
 		int y = getStatusY(status);
 		int dir = getStatusDir(status);
 		long long prev = this->_prev[x][y][dir];
+		this->_graph[x][y] = false;
 		if (prev == -1)
 		{
 			break;
@@ -307,10 +361,19 @@ Wire SwitchBoxSolver::getGreedySolution(SwitchBox &box, int u, int v)
 	points.push_back(CPoint(getOriginPosition(start.x, start.y)));
 	for (int i = points.size() - 1; i >= 0; --i)
 	{
+		if (i < (int)(points.size() - 1))
+		{
+			if (points[i].x == points[i + 1].x && points[i].y == points[i + 1].y)
+			{
+				continue;
+			}
+		}
 		wire.add(points[i].y, points[i].x);
 	}
-	this->_dealt[this->getPinPosition(u)] = true;
-	this->_dealt[this->getPinPosition(v)] = true;
+	this->_dealt[pu] = true;
+	this->_dealt[pv] = true;
+	wire.setU(u);
+	wire.setV(v);
 	return wire;
 }
 
@@ -362,7 +425,7 @@ long long SwitchBoxSolver::getStatus(int x, int y, int dir)
  */
 int SwitchBoxSolver::getStatusDir(long long status)
 {
-	return status / (this->_row * this->_col);
+	return (int)(status / (this->_row * this->_col));
 }
 
 /**
@@ -372,7 +435,7 @@ int SwitchBoxSolver::getStatusDir(long long status)
  */
 int SwitchBoxSolver::getStatusX(long long status)
 {
-	return ((status % (this->_row * this->_col)) / this->_col);
+	return (int)(((status % (this->_row * this->_col)) / this->_col));
 }
 
 /**
@@ -382,7 +445,7 @@ int SwitchBoxSolver::getStatusX(long long status)
  */
 int SwitchBoxSolver::getStatusY(long long status)
 {
-	return status % this->_col;
+	return (int)(status % this->_col);
 }
 
 /**
@@ -393,7 +456,7 @@ int SwitchBoxSolver::getStatusY(long long status)
  */
 CPoint SwitchBoxSolver::getOriginPosition(int x, int y)
 {
-	return CPoint(x * MARGIN + MARGIN / 2, y * MARGIN + MARGIN / 2);
+	return CPoint(x * MARGIN, y * MARGIN);
 }
 
 /**
