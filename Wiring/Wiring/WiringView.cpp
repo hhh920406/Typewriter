@@ -75,7 +75,7 @@ void CWiringView::OnDraw(CDC* pDC)
 		OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
 		DEFAULT_PITCH | FF_SWISS, _T("Console"));
 	memDC.SelectObject(&font); 
-	if (this->_status == STATUS_SOLVE_GREEDY || this->_status == STATUS_SOLVE_OPT)
+	if (this->_status == STATUS_SOLVE_GREEDY)
 	{
 		memDC.DrawIcon(10, 10, AfxGetApp()->LoadIconW(IDR_WORKING));
 	}
@@ -85,7 +85,7 @@ void CWiringView::OnDraw(CDC* pDC)
 	}
 	SwitchBox& switchBox = this->GetDocument()->switchBox();
 	memDC.Rectangle(switchBox.getOuterBorder());
-	if (this->_status != STATUS_SOLVE_GREEDY && this->_status != STATUS_SOLVE_OPT)
+	if (this->_status != STATUS_SOLVE_GREEDY)
 	{
 		memDC.Rectangle(switchBox.getInnerBorder());
 	}
@@ -100,7 +100,7 @@ void CWiringView::OnDraw(CDC* pDC)
 		}
 		memDC.SetBkMode(TRANSPARENT);
 		memDC.DrawText(num, switchBox.getPinTextRect(i), DT_CENTER | DT_SINGLELINE | DT_VCENTER);
-		if (this->_status != STATUS_SOLVE_GREEDY && this->_status != STATUS_SOLVE_OPT)
+		if (this->_status != STATUS_SOLVE_GREEDY)
 		{
 			memDC.Ellipse(switchBox.getPortRect(i));
 		}
@@ -110,7 +110,7 @@ void CWiringView::OnDraw(CDC* pDC)
 	memDC.SelectObject(&pen);
 	for (unsigned int i = 0; i < switchBox.wire().size(); ++i)
 	{
-		if (this->_status == STATUS_SOLVE_GREEDY || this->_status == STATUS_SOLVE_OPT)
+		if (this->_status == STATUS_SOLVE_GREEDY)
 		{
 			if (i == this->_lastIndex)
 			{
@@ -542,7 +542,7 @@ void CWiringView::OnTimer(UINT_PTR nIDEvent)
 			{
 				if (this->_lastPos == this->_wire.size())
 				{
-					this->_status = STATUS_SOLVE_OPT;
+					this->_status = STATUS_IDLE;
 					this->Invalidate();
 					return;
 				}

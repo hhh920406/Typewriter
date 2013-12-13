@@ -54,17 +54,6 @@ vector<Wire> SwitchBoxSolver::getGreedySolution(SwitchBox &box)
 	return greedyWire;
 }
 
-/** 
- * 优化布线盒的求解。
- * @param box 已经成功得到贪心解的布线盒。
- * @return 一组优化的布线，每一个布线都是一次优化。
- */
-vector<Wire> SwitchBoxSolver::optimizeSolution(SwitchBox &box)
-{
-	vector<Wire> optWire;
-	return optWire;
-}
-
 /**
  * 获取引脚的位置。
  * @param box 要布线的布线盒。

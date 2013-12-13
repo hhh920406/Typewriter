@@ -14,7 +14,6 @@ public:
 	virtual ~SwitchBoxSolver();
 	
 	std::vector<Wire> getGreedySolution(SwitchBox &box);
-	std::vector<Wire> optimizeSolution(SwitchBox &box);
 
 private:
 	void getPinPosition(SwitchBox &box);

@@ -27,8 +27,7 @@ protected:
 		STATUS_BORDER_RESIZING_TOP, /** 改变布线盒的上边界。 */
 		STATUS_BORDER_RESIZING_BOTTOM, /** 改变布线盒的下边界。 */
 		STATUS_MOVING, /** 移动布线盒。 */
-		STATUS_SOLVE_GREEDY, /** 贪心求解阶段。 */
-		STATUS_SOLVE_OPT /** 优化阶段。 */
+		STATUS_SOLVE_GREEDY /** 贪心求解阶段。 */
 	} _status;
 	CPoint _lastMousePos;
 	CPoint _lastClickPos;
