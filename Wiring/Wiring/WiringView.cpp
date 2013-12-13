@@ -5,11 +5,11 @@
 
 #include <cmath>
 #include <vector>
+#include "TimeControl.h"
 #include "WiringDoc.h"
 #include "WiringView.h"
 using namespace std;
 const double PI = acos(-1.0);
-const int STEP_TIME = 40;
 
 #define ID_TIMER1 1
 
@@ -118,8 +118,8 @@ void CWiringView::OnDraw(CDC* pDC)
 				{
 					CPoint s = switchBox.wire()[this->_lastIndex].getSegmentPoint(j / 100.0);
 					CPoint t = this->_wire[this->_lastPos].getSegmentPoint(j / 100.0);
-					CPoint pos(switchBox.x() + (int)(s.x + 1.0 * (t.x - s.x) * this->_tick / STEP_TIME), 
-						switchBox.y() + (int)(s.y + 1.0 * (t.y - s.y) * this->_tick / STEP_TIME));
+					CPoint pos(switchBox.x() + (int)(s.x + 1.0 * (t.x - s.x) * this->_tick / this->_step), 
+						switchBox.y() + (int)(s.y + 1.0 * (t.y - s.y) * this->_tick / this->_step));
 					if (j == 0)
 					{
 						memDC.MoveTo(pos);
@@ -146,6 +146,9 @@ void CWiringView::OnDraw(CDC* pDC)
 		memDC.MoveTo(this->_lastClickPos);
 		memDC.LineTo(this->_lastMousePos);
 	}
+	CString num;
+	num.Format(L"Time: %d ms", this->_solver.getElapsedTime());
+	memDC.DrawText(num, CRect(60, 30, 1000, 1000), 0);
 
 	pDC->BitBlt(0, 0, windowRect.Width(), windowRect.Height(), &memDC, 0, 0, SRCCOPY);
 	memBitmap.DeleteObject();
@@ -317,6 +320,7 @@ void CWiringView::mouseLeftDownIdle(CPoint point)
 		this->_lastPos = 0;
 		this->_tick = 0;
 		this->_status = STATUS_SOLVE_GREEDY;
+		this->_step = TimeControl::getTime();
 		if (!this->_timer)
 		{
 			SetTimer(ID_TIMER1, 50, 0);
@@ -556,7 +560,7 @@ void CWiringView::OnTimer(UINT_PTR nIDEvent)
 					}
 				}
 			}
-			if (this->_tick++ > STEP_TIME)
+			if (this->_tick++ > this->_step)
 			{
 				switchBox.wire()[this->_lastIndex] = this->_wire[this->_lastPos];
 				this->_tick = 0;

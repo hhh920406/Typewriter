@@ -54,6 +54,12 @@
     <ClInclude Include="SwitchBoxSolver.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="TimeDialog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeControl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Wiring.cpp">
@@ -84,6 +90,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="SwitchBoxSolver.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeDialog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeControl.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

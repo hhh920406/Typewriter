@@ -7,6 +7,7 @@
 #include "ChildFrm.h"
 #include "WiringDoc.h"
 #include "WiringView.h"
+#include "TimeDialog.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -18,6 +19,7 @@ BEGIN_MESSAGE_MAP(CWiringApp, CWinApp)
 	ON_COMMAND(ID_FILE_NEW, &CWinApp::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, &CWinApp::OnFileOpen)
 	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinApp::OnFilePrintSetup)
+	ON_COMMAND(ID_EDIT_SETINTERVAL, &CWiringApp::OnEditSetinterval)
 END_MESSAGE_MAP()
 
 CWiringApp::CWiringApp()
@@ -116,4 +118,10 @@ void CWiringApp::OnAppAbout()
 {
 	CAboutDlg aboutDlg;
 	aboutDlg.DoModal();
+}
+
+void CWiringApp::OnEditSetinterval()
+{
+	TimeDialog dialog;
+	dialog.DoModal();
 }

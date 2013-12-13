@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <ctime>
 #include <algorithm>
 #include "SwitchBoxSolver.h"
 using namespace std;
@@ -11,6 +12,7 @@ const int PADDING = 5;
 
 SwitchBoxSolver::SwitchBoxSolver()
 {
+	this->_time = 0;
 }
 
 
@@ -26,6 +28,7 @@ SwitchBoxSolver::~SwitchBoxSolver()
  */
 vector<Wire> SwitchBoxSolver::getGreedySolution(SwitchBox &box)
 {
+	DWORD start = GetTickCount();
 	vector<Wire> greedyWire;
 	this->getPinPosition(box);
 	this->initGraph(box);
@@ -51,7 +54,18 @@ vector<Wire> SwitchBoxSolver::getGreedySolution(SwitchBox &box)
 		}
 		greedyWire.push_back(singleWire);
 	}
+	DWORD end = GetTickCount();
+	this->_time = end - start;
 	return greedyWire;
+}
+
+/**
+ * 获取上次算法耗时。
+ * @return 时间差。
+ */
+int SwitchBoxSolver::getElapsedTime() const
+{
+	return this->_time;
 }
 
 /**

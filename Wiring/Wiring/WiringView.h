@@ -38,6 +38,7 @@ protected:
 	SwitchBoxSolver _solver;
 	std::vector<Wire> _wire;
 	bool _timer;
+	int _step;
 
 	void restoreIdle();
 	void mouseLeftDownIdle(CPoint point);

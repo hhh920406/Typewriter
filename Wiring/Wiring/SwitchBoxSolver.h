@@ -14,6 +14,7 @@ public:
 	virtual ~SwitchBoxSolver();
 	
 	std::vector<Wire> getGreedySolution(SwitchBox &box);
+	int getElapsedTime() const;
 
 private:
 	void getPinPosition(SwitchBox &box);
@@ -28,6 +29,8 @@ private:
 	int getStatusDir(long long status);
 	CPoint getOriginPosition(int x, int y);
 	int getStartOrientation(SwitchBox &box, int id);
+
+	int _time;
 
 	std::vector<int> _pinPosition;
 	std::vector<bool> _dealt;
