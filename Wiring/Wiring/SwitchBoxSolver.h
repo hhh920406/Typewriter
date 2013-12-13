@@ -28,6 +28,7 @@ private:
 	int getStatusY(long long status);
 	int getStatusDir(long long status);
 	CPoint getOriginPosition(int x, int y);
+	int getStartOrientation(SwitchBox &box, int id);
 
 	std::vector<int> _pinPosition;
 	std::vector<bool> _dealt;

@@ -218,12 +218,10 @@ Wire SwitchBoxSolver::getGreedySolution(SwitchBox &box, int u, int v)
 			}
 		}
 	}
-	for (int k = 0; k < 4; ++k)
-	{
-		this->_dist[start.x][start.y][k] = 0;
-		this->_visit[start.x][start.y][k] = true;
-		this->_queue.push(this->getStatus(start.x, start.y, k));
-	}
+	int startDir = this->getStartOrientation(box, u);
+	this->_dist[start.x][start.y][startDir] = 0;
+	this->_visit[start.x][start.y][startDir] = true;
+	this->_queue.push(this->getStatus(start.x, start.y, startDir));
 	while (!this->_queue.empty())
 	{
 		long long status = this->_queue.front();
@@ -259,16 +257,28 @@ Wire SwitchBoxSolver::getGreedySolution(SwitchBox &box, int u, int v)
 		this->_queue.pop();
 		this->_visit[x][y][dir] = false;
 	}
-	int finalDir = 0;
-	for (int i = 1; i < 4; ++i)
+	int endDir = this->getStartOrientation(box, v);
+	int finalDir = -1;
+	long long finalDist = INFL;
+	for (int i = 0; i < 4; ++i)
 	{
-		if (this->_dist[end.x][end.y][i] < this->_dist[end.x][end.y][finalDir])
+		if (this->_dist[end.x][end.y][i] == INFL)
 		{
+			continue;
+		}
+		long long dist = this->_dist[end.x][end.y][i];
+		if (i != finalDir)
+		{
+			dist += INF;
+		}
+		if (dist < finalDist)
+		{
+			finalDist = dist;
 			finalDir = i;
 		}
 	}
 	Wire wire;
-	if (this->_dist[end.x][end.y][finalDir] == INFL)
+	if (finalDir == -1)
 	{
 		return wire;
 	}
@@ -299,8 +309,8 @@ Wire SwitchBoxSolver::getGreedySolution(SwitchBox &box, int u, int v)
 	{
 		wire.add(points[i].y, points[i].x);
 	}
-	this->_dealt[u] = true;
-	this->_dealt[v] = true;
+	this->_dealt[this->getPinPosition(u)] = true;
+	this->_dealt[this->getPinPosition(v)] = true;
 	return wire;
 }
 
@@ -384,4 +394,26 @@ int SwitchBoxSolver::getStatusY(long long status)
 CPoint SwitchBoxSolver::getOriginPosition(int x, int y)
 {
 	return CPoint(x * MARGIN + MARGIN / 2, y * MARGIN + MARGIN / 2);
+}
+
+/**
+ * 获取起始方向，与引脚方向相反。
+ * @param box 要布线的布线盒。
+ * @param id 引脚编号。
+ * @return 起始方向。
+ */
+int SwitchBoxSolver::getStartOrientation(SwitchBox &box, int id)
+{
+	switch (box.pin()[this->getPinPosition(id)].orientation())
+	{
+	case Pin::ORI_TOP:
+		return Pin::ORI_BOTTOM;
+	case Pin::ORI_BOTTOM:
+		return Pin::ORI_TOP;
+	case Pin::ORI_LEFT:
+		return Pin::ORI_RIGHT;
+	case Pin::ORI_RIGHT:
+		return Pin::ORI_LEFT;
+	}
+	return -1;
 }
