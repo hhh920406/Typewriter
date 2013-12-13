@@ -3,7 +3,9 @@
 * @author ZHG <CyberZHG@gmail.com>
 */
 #pragma once
+#include "resource.h"
 #include "SwitchBox.h"
+#include "SwitchBoxSolver.h"
 
 class CWiringView : public CView
 {
@@ -32,6 +34,7 @@ protected:
 	CPoint _lastClickPos;
 	int _lastIndex;
 	int _removeIndex;
+	SwitchBoxSolver _solver;
 
 	void restoreIdle();
 	void mouseLeftDownIdle(CPoint point);

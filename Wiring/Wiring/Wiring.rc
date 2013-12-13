@@ -71,6 +71,8 @@ END
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "res\\Wiring.ico"
 IDR_WiringTYPE          ICON                    "res\\WiringDoc.ico"
+IDR_START               ICON                    "res\\start.ico"
+IDR_WORKING             ICON                    "res\\working.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -232,9 +234,9 @@ BEGIN
     EDITTEXT        IDC_EDIT_TITLE,65,6,195,14,ES_CENTER | ES_AUTOHSCROLL
     RTEXT           "Width: ",IDC_STATIC,35,31,24,8
     RTEXT           "Height: ",IDC_STATIC,150,30,26,8
-    CONTROL         "",IDC_RICHEDIT2_WIDTH,"RichEdit20W",ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER | WS_BORDER | WS_TABSTOP,64,28,66,14
-    CONTROL         "",IDC_RICHEDIT2_HEIGHT,"RichEdit20W",ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER | WS_BORDER | WS_TABSTOP,182,28,78,14
-    CONTROL         "",IDC_RICHEDIT2_PINNUM,"RichEdit20W",ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER | WS_BORDER | WS_TABSTOP,63,51,67,14
+    CONTROL         "",IDC_RICHEDIT2_WIDTH,"RichEdit20W",WS_BORDER | WS_TABSTOP | 0x2081,64,28,66,14
+    CONTROL         "",IDC_RICHEDIT2_HEIGHT,"RichEdit20W",WS_BORDER | WS_TABSTOP | 0x2081,182,28,78,14
+    CONTROL         "",IDC_RICHEDIT2_PINNUM,"RichEdit20W",WS_BORDER | WS_TABSTOP | 0x2081,63,51,67,14
     RTEXT           "Number of pins: ",IDC_STATIC,8,53,54,8
 END
 

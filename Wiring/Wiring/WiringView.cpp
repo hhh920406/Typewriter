@@ -4,8 +4,10 @@
 #endif
 
 #include <cmath>
+#include <vector>
 #include "WiringDoc.h"
 #include "WiringView.h"
+using namespace std;
 const double PI = acos(-1.0);
 
 #ifdef _DEBUG
@@ -67,7 +69,15 @@ void CWiringView::OnDraw(CDC* pDC)
 	font.CreateFontW(16, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0, ANSI_CHARSET,
 		OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
 		DEFAULT_PITCH | FF_SWISS, _T("Console"));
-	memDC.SelectObject(&font);
+	memDC.SelectObject(&font); 
+	if (this->_status == STATUS_SOLVE_GREEDY || this->_status == STATUS_SOLVE_OPT)
+	{
+		memDC.DrawIcon(10, 10, AfxGetApp()->LoadIconW(IDR_WORKING));
+	}
+	else
+	{
+		memDC.DrawIcon(10, 10, AfxGetApp()->LoadIconW(IDR_START));
+	}
 	SwitchBox& switchBox = this->GetDocument()->switchBox();
 	memDC.Rectangle(switchBox.getOuterBorder());
 	memDC.Rectangle(switchBox.getInnerBorder());
@@ -84,6 +94,9 @@ void CWiringView::OnDraw(CDC* pDC)
 		memDC.DrawText(num, switchBox.getPinTextRect(i), DT_CENTER | DT_SINGLELINE | DT_VCENTER);
 		memDC.Ellipse(switchBox.getPortRect(i));
 	}
+	CPen pen;
+	pen.CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
+	memDC.SelectObject(&pen);
 	for (unsigned int i = 0; i < switchBox.wire().size(); ++i)
 	{
 		if (switchBox.wire()[i].count() > 0)
@@ -256,8 +269,15 @@ void CWiringView::mouseLeftDownIdle(CPoint point)
 	{
 		this->_lastIndex = switchBox.addPin();
 		this->_status = STATUS_PIN_MOVING;
-		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_HAND));
 		this->mouseMovePin(point);
+		return;
+	}
+	if (point.x > 10 && point.x < 34 && point.y > 10 && point.y < 34)
+	{
+		this->_status = STATUS_SOLVE_GREEDY;
+		vector<Wire> wire = this->_solver.getGreedySolution(switchBox);
+		switchBox.setWire(wire);
+		this->Invalidate();
 		return;
 	}
 }

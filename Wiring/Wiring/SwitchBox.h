@@ -26,6 +26,7 @@ public:
 	void removePin(const int index);
 	std::vector<Pin>& pin();
 	std::vector<Wire>& wire();
+	void setWire(std::vector<Wire> &wire);
 	void addWire(const int u, const int v);
 	void serialize(CArchive &archive);
 	CRect getOuterBorder() const;

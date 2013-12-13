@@ -6,6 +6,7 @@ const long long INF = 0x3f3f3f3fLL;
 const long long INFL = 0x3f3f3f3f3f3f3f3fLL;
 const int DIR_X[4] = { 1, 0, -1, 0 };
 const int DIR_Y[4] = { 0, 1, 0, -1 };
+const int MARGIN = 10;
 
 SwitchBoxSolver::SwitchBoxSolver()
 {
@@ -83,7 +84,7 @@ void SwitchBoxSolver::getPinPosition(SwitchBox &box)
 	{
 		int u = wire[i].u();
 		int v = wire[i].v();
-		for (unsigned int j = 0; j < pin.size(); ++i)
+		for (unsigned int j = 0; j < pin.size(); ++j)
 		{
 			if (this->_pinPosition[j] == u)
 			{
@@ -121,8 +122,8 @@ void SwitchBoxSolver::initGraph(SwitchBox &box)
 	this->_visit.clear();
 	this->_graph.clear();
 
-	this->_row = (box.height() - 1) >> 1;
-	this->_col = (box.width() - 1) >> 1;
+	this->_row = box.height() / MARGIN - 1;
+	this->_col = box.width() / MARGIN - 1;
 	for (int i = 0; i < this->_row; ++i)
 	{
 		this->_graph.push_back(vector<bool>());
@@ -149,6 +150,10 @@ int SwitchBoxSolver::getPinDist(int u, int v) const
 {
 	u = getPinPosition(u);
 	v = getPinPosition(v);
+	if (this->_dealt[u] || this->_dealt[v])
+	{
+		return INF;
+	}
 	if (u == -1 || v == -1)
 	{
 		return -1;
@@ -160,7 +165,7 @@ int SwitchBoxSolver::getPinDist(int u, int v) const
 		{
 			i = 0;
 		}
-		count1 += this->_dealt[i];
+		count1 += !this->_dealt[i];
 	}
 	int count2 = 0;
 	for (int i = u - 1; i != v; --i)
@@ -169,7 +174,7 @@ int SwitchBoxSolver::getPinDist(int u, int v) const
 		{
 			i = this->_pinPosition.size() - 1;
 		}
-		count2 += this->_dealt[i];
+		count2 += !this->_dealt[i];
 	}
 	return min(count1, count2);
 }
@@ -241,7 +246,7 @@ Wire SwitchBoxSolver::getGreedySolution(SwitchBox &box, int u, int v)
 					if (dist < this->_dist[tx][ty][i])
 					{
 						this->_dist[tx][ty][i] = dist;
-						this->_prev[tx][ty][u] = status;
+						this->_prev[tx][ty][i] = status;
 						if (!this->_visit[tx][ty][i])
 						{
 							this->_visit[tx][ty][i] = true;
@@ -269,7 +274,7 @@ Wire SwitchBoxSolver::getGreedySolution(SwitchBox &box, int u, int v)
 	}
 	long long status = this->getStatus(end.x, end.y, finalDir);
 	vector<CPoint> points;
-	points.push_back(CPoint(end.x, end.y));
+	points.push_back(CPoint(getOriginPosition(end.x, end.y)));
 	while (true)
 	{
 		int x = getStatusX(status);
@@ -285,15 +290,17 @@ Wire SwitchBoxSolver::getGreedySolution(SwitchBox &box, int u, int v)
 		int pdir = getStatusDir(prev);
 		if (this->_dist[x][y][dir] - this->_dist[px][py][pdir] > INF)
 		{
-			points.push_back(CPoint(px, py));
+			points.push_back(CPoint(getOriginPosition(px, py)));
 		}
 		status = prev;
 	}
-	points.push_back(CPoint(start.x, start.y));
-	for (unsigned int i = points.size() - 1; i >= 0; --i)
+	points.push_back(CPoint(getOriginPosition(start.x, start.y)));
+	for (int i = points.size() - 1; i >= 0; --i)
 	{
-		wire.add(points[i].x, points[i].y);
+		wire.add(points[i].y, points[i].x);
 	}
+	this->_dealt[u] = true;
+	this->_dealt[v] = true;
 	return wire;
 }
 
@@ -313,13 +320,13 @@ CPoint SwitchBoxSolver::getPinGraphPosition(SwitchBox &box, int id)
 			switch (box.pin()[i].orientation())
 			{
 			case Pin::ORI_TOP:
-				return CPoint(0, shift >> 1);
+				return CPoint(0, shift / MARGIN);
 			case Pin::ORI_BOTTOM:
-				return CPoint(this->_row - 1, shift >> 1);
+				return CPoint(this->_row - 1, shift / MARGIN);
 			case Pin::ORI_LEFT:
-				return CPoint(shift >> 1, 0);
+				return CPoint(shift / MARGIN, 0);
 			case Pin::ORI_RIGHT:
-				return CPoint(shift >> 1, this->_col - 1);
+				return CPoint(shift / MARGIN, this->_col - 1);
 			}
 		}
 	}
@@ -376,5 +383,5 @@ int SwitchBoxSolver::getStatusY(long long status)
  */
 CPoint SwitchBoxSolver::getOriginPosition(int x, int y)
 {
-	return CPoint(x << 1, y << 1);
+	return CPoint(x * MARGIN + MARGIN / 2, y * MARGIN + MARGIN / 2);
 }

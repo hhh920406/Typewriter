@@ -9,6 +9,8 @@
 #define ID_WINDOW_MANAGER               131
 #define IDD_CHIPPROPERTY                310
 #define IDD_BOXPROPERTY                 310
+#define IDR_START                       314
+#define IDR_WORKING                     315
 #define IDC_EDIT_TITLE                  1000
 #define IDC_RICHEDIT2_WIDTH             1002
 #define IDC_RICHEDIT2_HEIGHT            1003
@@ -18,7 +20,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        311
+#define _APS_NEXT_RESOURCE_VALUE        316
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1003
 #define _APS_NEXT_SYMED_VALUE           310

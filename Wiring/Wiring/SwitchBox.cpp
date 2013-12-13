@@ -138,6 +138,15 @@ vector<Wire>& SwitchBox::wire()
 }
 
 /**
+ * 设置连线。
+ * @param wire 连线。
+ */
+void SwitchBox::setWire(std::vector<Wire> &wire)
+{
+	this->_wire = wire;
+}
+
+/**
  * 添加一个初始布线。
  * @param u 端口1。
  * @param v 端口2。
