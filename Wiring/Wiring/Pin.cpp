@@ -90,3 +90,25 @@ int Pin::id() const
 {
 	return this->_id;
 }
+
+/**
+ * 按圆周对引脚进行排序。
+ * @param a 引脚1。
+ * @param b 引脚2。
+ * @return 如果排名靠前返回true。
+ */
+bool operator <(const Pin &a, const Pin &b)
+{
+	if (a.orientation() == b.orientation())
+	{
+		if (a.orientation() == Pin::ORI_TOP || a.orientation() == Pin::ORI_RIGHT)
+		{
+			return a.shift() < b.shift();
+		}
+		else
+		{
+			return a.shift() > b.shift();
+		}
+	}
+	return a.orientation() < b.orientation();
+}

@@ -4,6 +4,7 @@
  */
 #pragma once
 #include <vector>
+#include <queue>
 #include "SwitchBox.h"
 
 class SwitchBoxSolver
@@ -16,9 +17,27 @@ public:
 	std::vector<Wire> optimizeSolution(SwitchBox &box);
 
 private:
-	void discreteSwitchBox(SwitchBox &box);
 	void getPinPosition(SwitchBox &box);
+	void initGraph(SwitchBox &box);
+	int getPinDist(int u, int v) const;
+	int getPinPosition(int id) const;
+	Wire getGreedySolution(SwitchBox &box, int u, int v);
+	CPoint getPinGraphPosition(SwitchBox &box, int id);
+	long long getStatus(int x, int y, int dir);
+	int getStatusX(long long status);
+	int getStatusY(long long status);
+	int getStatusDir(long long status);
+	CPoint getOriginPosition(int x, int y);
 
-	std::vector<double> _pinPosition;
+	std::vector<int> _pinPosition;
+	std::vector<bool> _dealt;
+
+	int _row;
+	int _col;
+	std::vector< std::vector<bool> > _graph;
+	std::vector< std::vector< std::vector<long long> > > _dist;
+	std::vector< std::vector< std::vector<int> > > _prev;
+	std::vector< std::vector< std::vector<bool> > > _visit;
+	std::queue<long long> _queue;
 };
 

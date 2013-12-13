@@ -24,6 +24,7 @@ public:
 	void serialize(CArchive &archive);
 	void setId(const int id);
 	int id() const;
+	friend bool operator <(const Pin &a, const Pin &b);
 
 private:
 	Orientation _orientation;
