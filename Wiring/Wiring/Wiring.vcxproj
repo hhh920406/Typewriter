@@ -103,6 +103,7 @@
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="NameDialog.h" />
+    <ClInclude Include="OpenFileDialog.h" />
     <ClInclude Include="Pin.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -121,6 +122,7 @@
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="NameDialog.cpp" />
+    <ClCompile Include="OpenFileDialog.cpp" />
     <ClCompile Include="Pin.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

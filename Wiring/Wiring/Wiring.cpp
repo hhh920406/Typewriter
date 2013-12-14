@@ -8,6 +8,8 @@
 #include "WiringDoc.h"
 #include "WiringView.h"
 #include "TimeDialog.h"
+#include "OpenFileDialog.h"
+#include "WiringSet.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -19,6 +21,7 @@ BEGIN_MESSAGE_MAP(CWiringApp, CWinApp)
 	ON_COMMAND(ID_FILE_NEW, &CWinApp::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, &CWinApp::OnFileOpen)
 	ON_COMMAND(ID_EDIT_SETINTERVAL, &CWiringApp::OnEditSetinterval)
+	ON_COMMAND(ID_FILE_OPEN32773, &CWiringApp::OnFileOpen)
 END_MESSAGE_MAP()
 
 CWiringApp::CWiringApp()
@@ -123,4 +126,28 @@ void CWiringApp::OnEditSetinterval()
 {
 	TimeDialog dialog;
 	dialog.DoModal();
+}
+
+/**
+* 从数据库中打开文件。
+* @author ZHG <CyberZHG@gmail.com>
+*/
+void CWiringApp::OnFileOpen()
+{
+	OpenFileDialog dialog;
+	if (dialog.DoModal() == IDOK)
+	{
+		int chipID = dialog.selectedID();
+		if (chipID != -1)
+		{
+			SwitchBox switchBox;
+			DataControl::load(switchBox, chipID);
+			this->OnFileNew(); 
+			CWiringDoc *document = (CWiringDoc*)((CMainFrame*)AfxGetMainWnd())->MDIGetActive()->GetActiveView()->GetDocument();
+			if (document != NULL)
+			{
+				document->setSwitchBox(switchBox);
+			}
+		}
+	}
 }

@@ -21,6 +21,7 @@ public:
 	afx_msg void OnAppAbout();
 	DECLARE_MESSAGE_MAP()
 	afx_msg void OnEditSetinterval();
+	afx_msg void OnFileOpen();
 };
 
 extern CWiringApp theApp;

@@ -3,6 +3,7 @@
 #include "WiringDoc.h"
 #include "WiringSet.h"
 #include "NameDialog.h"
+#include "OpenFileDialog.h"
 #include "MainFrm.h"
 
 #ifdef _DEBUG

@@ -14,7 +14,9 @@ DataChip::DataChip(CDatabase* pdb) : CRecordset(pdb)
 	m_D_Name = L"";
 	m_D_Width = 0;
 	m_D_Height = 0;
-	m_nFields = 4;
+	m_D_X = 0;
+	m_D_Y = 0;
+	m_nFields = 6;
 	m_nDefaultType = dynaset;
 }
 
@@ -35,6 +37,8 @@ void DataChip::DoFieldExchange(CFieldExchange* pFX)
 	RFX_Text(pFX, _T("[D_Name]"), m_D_Name);
 	RFX_Long(pFX, _T("[D_Width]"), m_D_Width);
 	RFX_Long(pFX, _T("[D_Height]"), m_D_Height);
+	RFX_Long(pFX, _T("[D_X]"), m_D_X);
+	RFX_Long(pFX, _T("[D_Y]"), m_D_Y);
 }
 
 
@@ -151,6 +155,9 @@ CDatabase* DataControl::database()
 	return database;
 }
 
+/**
+ * 保存到数据库。
+ */
 void DataControl::save(SwitchBox &switchBox)
 {
 	CDatabase *database = DataControl::database();
@@ -163,6 +170,8 @@ void DataControl::save(SwitchBox &switchBox)
 		dChip.m_D_Name = switchBox.name();
 		dChip.m_D_Width = switchBox.width();
 		dChip.m_D_Height = switchBox.height();
+		dChip.m_D_X = switchBox.x();
+		dChip.m_D_Y = switchBox.y();
 		dChip.Update();
 		dChip.Close();
 		CDBVariant ids;
@@ -219,6 +228,9 @@ void DataControl::save(SwitchBox &switchBox)
 	}
 }
 
+/**
+ * 从数据库中读取。
+ */
 void DataControl::load(SwitchBox &switchBox, long chipID)
 {
 	CDatabase *database = DataControl::database();
@@ -226,18 +238,21 @@ void DataControl::load(SwitchBox &switchBox, long chipID)
 	{
 		DataChip dChip(database);
 		CString sql;
-		sql.Format(L"SELECT * WHERE D_ChipID = %d", chipID);
+		sql.Format(L"SELECT * FROM T_Chip WHERE D_ChipID = %d", chipID);
+		dChip.Open(AFX_DB_USE_DEFAULT_TYPE, sql);
 		dChip.MoveFirst();
 		switchBox.setName(dChip.m_D_Name);
 		switchBox.setSize(dChip.m_D_Width, dChip.m_D_Height);
+		switchBox.setPosition(dChip.m_D_X, dChip.m_D_Y);
 		dChip.Close();
 		DataPin dPin(database);
-		dPin.Open(0, sql);
+		sql.Format(L"SELECT * FROM T_Pin WHERE D_ChipID = %d", chipID);
+		dPin.Open(AFX_DB_USE_DEFAULT_TYPE, sql);
 		dPin.MoveFirst();
 		while (!dPin.IsEOF())
 		{
 			Pin pin;
-			pin.setId(dPin.m_D_PinID);
+			pin.setId(dPin.m_D_No);
 			pin.setOrientation(Pin::Orientation(dPin.m_D_Orientation));
 			pin.setShift(dPin.m_D_Shift / 100.0);
 			switchBox.pin().push_back(pin);
@@ -245,11 +260,26 @@ void DataControl::load(SwitchBox &switchBox, long chipID)
 		}
 		dPin.Close();
 		DataWire dWire(database);
-		dWire.Open(0, sql);
+		sql.Format(L"SELECT * FROM T_Wire WHERE D_ChipID = %d", chipID);
+		dWire.Open(AFX_DB_USE_DEFAULT_TYPE, sql);
 		dWire.MoveFirst();
-		for (long i = 0; i < dWire.GetRecordCount(); ++i)
+		while (!dWire.IsEOF())
 		{
-			switchBox.wire().push_back(Wire());
+			Wire wire;
+			wire.setU(dWire.m_D_U);
+			wire.setV(dWire.m_D_V);
+			DataWireSub dWireSub(database);
+			sql.Format(L"SELECT * FROM T_WireSub WHERE D_WireID = %d", dWire.m_D_WireID);
+			dWireSub.Open(0, sql);
+			dWireSub.MoveFirst();
+			while (!dWireSub.IsEOF())
+			{
+				wire.add(dWireSub.m_D_X / 100.0, dWireSub.m_D_Y / 100.0);
+				dWireSub.MoveNext();
+			}
+			dWireSub.Close();
+			switchBox.wire().push_back(wire);
+			dWire.MoveNext();
 		}
 		dWire.Close();
 		database->Close();
@@ -262,7 +292,7 @@ DataChip* DataControl::list()
 	if (database != NULL)
 	{
 		DataChip *dChip = new DataChip(database);
-		dChip->Open(0, _T("SELECT *"));
+		dChip->Open(AFX_DB_USE_DEFAULT_TYPE, _T("SELECT * FROM T_Chip"));
 		return dChip;
 	}
 	return NULL;

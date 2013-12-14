@@ -11,8 +11,8 @@ public:
 	CWiringDoc();
 	virtual ~CWiringDoc();
 	DECLARE_DYNCREATE(CWiringDoc)
+	void setSwitchBox(SwitchBox &box);
 	SwitchBox& switchBox();
-	void initSwitchBox(); 
 
 private:
 	SwitchBox _switchBox;

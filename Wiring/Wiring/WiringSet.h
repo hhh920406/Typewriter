@@ -16,6 +16,8 @@ public:
 	CStringW	m_D_Name;
 	long	m_D_Width;
 	long	m_D_Height;
+	long	m_D_X;
+	long	m_D_Y;
 
 	virtual CString GetDefaultConnect();
 	virtual CString GetDefaultSQL();

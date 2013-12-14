@@ -27,6 +27,11 @@ CWiringDoc::~CWiringDoc()
 {
 }
 
+void CWiringDoc::setSwitchBox(SwitchBox &box)
+{
+	this->_switchBox = box;
+}
+
 SwitchBox& CWiringDoc::switchBox()
 {
 	return this->_switchBox;
