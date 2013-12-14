@@ -62,6 +62,7 @@ void CMainFrame::OnFileSave()
 			if (dialog.DoModal() == IDOK)
 			{
 				CStringW name = dialog.getName();
+				document->SetTitle(name);
 				document->switchBox().setName(name);
 			}
 			else
@@ -69,10 +70,6 @@ void CMainFrame::OnFileSave()
 				return;
 			}
 		}
-		CStringW name = document->switchBox().name();
-		int width = document->switchBox().width();
-		int height = document->switchBox().height();
-		DataChip set;
-		set.addNewChip(name, width, height);
+		DataControl::save(document->switchBox());
 	}
 }

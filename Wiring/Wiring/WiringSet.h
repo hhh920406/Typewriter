@@ -4,6 +4,7 @@
  */
 #pragma once
 #include "stdafx.h"
+#include "SwitchBox.h"
 
 class DataChip : public CRecordset
 {
@@ -19,8 +20,6 @@ public:
 	virtual CString GetDefaultConnect();
 	virtual CString GetDefaultSQL();
 	virtual void DoFieldExchange(CFieldExchange* pFX);
-
-	void addNewChip(CStringW name, int width, int height);
 };
 
 class DataPin : public CRecordset
@@ -33,7 +32,7 @@ public:
 	long	m_D_ChipID;
 	long	m_D_No;
 	long	m_D_Orientation;
-	double	m_D_Shift;
+	long	m_D_Shift;
 
 	virtual CString GetDefaultConnect();
 	virtual CString GetDefaultSQL();
@@ -47,14 +46,23 @@ public:
 	DECLARE_DYNAMIC(DataWire)
 
 	long	m_D_WireID;
-	long	m_D_PinID;
-	long	m_D_No;
-	double	m_D_StartX;
-	double	m_D_StartY;
-	double	m_D_EndX;
-	double	m_D_EndY;
+	long	m_D_ChipID;
+	long	m_D_No_Main;
+	long	m_D_No_Sub;
+	long	m_D_StartX;
+	long	m_D_StartY;
+	long	m_D_EndX;
+	long	m_D_EndY;
 
 	virtual CString GetDefaultConnect();
 	virtual CString GetDefaultSQL();
 	virtual void DoFieldExchange(CFieldExchange* pFX);
+};
+
+class DataControl
+{
+public:
+	static CDatabase* database();
+	static void save(SwitchBox &switchBox);
+	static void load(SwitchBox &switchBox);
 };
