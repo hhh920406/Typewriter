@@ -100,9 +100,6 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Pin.h" />
@@ -136,7 +133,9 @@
     <ClCompile Include="WiringView.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Wiring.rc" />
+    <ResourceCompile Include="Wiring.rc">
+      <Culture Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">0x0004</Culture>
+    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Wiring.rc2" />
