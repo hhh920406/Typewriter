@@ -47,12 +47,26 @@ public:
 
 	long	m_D_WireID;
 	long	m_D_ChipID;
-	long	m_D_No_Main;
-	long	m_D_No_Sub;
-	long	m_D_StartX;
-	long	m_D_StartY;
-	long	m_D_EndX;
-	long	m_D_EndY;
+	long	m_D_No;
+	long	m_D_U;
+	long	m_D_V;
+
+	virtual CString GetDefaultConnect();
+	virtual CString GetDefaultSQL();
+	virtual void DoFieldExchange(CFieldExchange* pFX);
+};
+
+class DataWireSub : public CRecordset
+{
+public:
+	DataWireSub(CDatabase* pDatabase = NULL);
+	DECLARE_DYNAMIC(DataWireSub)
+
+	long	m_D_WireSubID;
+	long	m_D_WireID;
+	long	m_D_No;
+	long	m_D_X;
+	long	m_D_Y;
 
 	virtual CString GetDefaultConnect();
 	virtual CString GetDefaultSQL();
@@ -64,5 +78,6 @@ class DataControl
 public:
 	static CDatabase* database();
 	static void save(SwitchBox &switchBox);
-	static void load(SwitchBox &switchBox);
+	static void load(SwitchBox &switchBox, long chipID);
+	static DataChip* list();
 };
