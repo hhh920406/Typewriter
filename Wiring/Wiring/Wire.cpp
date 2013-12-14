@@ -22,8 +22,8 @@ Wire::~Wire()
  */
 void Wire::add(const double x, const double y)
 {
-	this->_x.push_back(x);
-	this->_y.push_back(y);
+    this->_x.push_back(x);
+    this->_y.push_back(y);
 }
 
 /**
@@ -32,11 +32,11 @@ void Wire::add(const double x, const double y)
  */
 void Wire::remove(unsigned int index)
 {
-	if (index < this->_x.size())
-	{
-		this->_x.erase(this->_x.begin() + index);
-		this->_y.erase(this->_y.begin() + index);
-	}
+    if (index < this->_x.size())
+    {
+        this->_x.erase(this->_x.begin() + index);
+        this->_y.erase(this->_y.begin() + index);
+    }
 }
 
 /**
@@ -45,7 +45,7 @@ void Wire::remove(unsigned int index)
  */
 int Wire::count() const
 {
-	return this->_x.size();
+    return this->_x.size();
 }
 
 /**
@@ -56,11 +56,11 @@ int Wire::count() const
  */
 void Wire::set(const unsigned int index, const double x, const double y)
 {
-	if (index < this->_x.size())
-	{
-		this->_x[index] = x;
-		this->_y[index] = y;
-	}
+    if (index < this->_x.size())
+    {
+        this->_x[index] = x;
+        this->_y[index] = y;
+    }
 }
 
 /**
@@ -70,11 +70,11 @@ void Wire::set(const unsigned int index, const double x, const double y)
  */
 double Wire::x(const unsigned int index) const
 {
-	if (index < this->_x.size())
-	{
-		return this->_x[index];
-	}
-	return 0.0;
+    if (index < this->_x.size())
+    {
+        return this->_x[index];
+    }
+    return 0.0;
 }
 
 /**
@@ -84,11 +84,11 @@ double Wire::x(const unsigned int index) const
  */
 double Wire::y(const unsigned int index) const
 {
-	if (index < this->_y.size())
-	{
-		return this->_y[index];
-	}
-	return 0.0;
+    if (index < this->_y.size())
+    {
+        return this->_y[index];
+    }
+    return 0.0;
 }
 
 /**
@@ -97,7 +97,7 @@ double Wire::y(const unsigned int index) const
  */
 void Wire::setU(const int u)
 {
-	this->_u = u;
+    this->_u = u;
 }
 
 /**
@@ -106,7 +106,7 @@ void Wire::setU(const int u)
  */
 void Wire::setV(const int v)
 {
-	this->_v = v;
+    this->_v = v;
 }
 
 /**
@@ -115,7 +115,7 @@ void Wire::setV(const int v)
  */
 int Wire::u() const
 {
-	return this->_u;
+    return this->_u;
 }
 
 /**
@@ -124,7 +124,7 @@ int Wire::u() const
  */
 int Wire::v() const
 {
-	return this->_v;
+    return this->_v;
 }
 
 /**
@@ -133,18 +133,18 @@ int Wire::v() const
  */
 double Wire::length() const
 {
-	double len = 0.0;
-	for (unsigned int i = 0; i < this->_x.size() - 1; ++i)
-	{
-		len += length(i);
-	}
-	return len;
+    double len = 0.0;
+    for (unsigned int i = 0; i < this->_x.size() - 1; ++i)
+    {
+        len += length(i);
+    }
+    return len;
 }
 
 double Wire::length(const unsigned int index) const
 {
-	return sqrt((this->_x[index + 1] - this->_x[index]) * (this->_x[index + 1] - this->_x[index]) +
-		(this->_y[index + 1] - this->_y[index]) * (this->_y[index + 1] - this->_y[index]));
+    return sqrt((this->_x[index + 1] - this->_x[index]) * (this->_x[index + 1] - this->_x[index]) +
+        (this->_y[index + 1] - this->_y[index]) * (this->_y[index + 1] - this->_y[index]));
 }
 
 /**
@@ -154,26 +154,26 @@ double Wire::length(const unsigned int index) const
  */
 CPoint Wire::getSegmentPoint(double seg) const
 {
-	double total = this->length();
-	double len = total * seg;
-	unsigned int i;
-	for (i = 0; i < this->_x.size() - 1; ++i)
-	{
-		double tempLen = this->length(i);
-		if (len > tempLen)
-		{
-			len -= tempLen;
-		}
-		else
-		{
-			break;
-		}
-	}
-	if (i == this->_x.size() - 1)
-	{
-		--i;
-	}
-	seg = len / this->length(i);
-	return CPoint((int)(this->_x[i] + seg * (this->_x[i + 1] - this->_x[i])), 
-		(int)(this->_y[i] + seg * (this->_y[i + 1] - this->_y[i])));
+    double total = this->length();
+    double len = total * seg;
+    unsigned int i;
+    for (i = 0; i < this->_x.size() - 1; ++i)
+    {
+        double tempLen = this->length(i);
+        if (len > tempLen)
+        {
+            len -= tempLen;
+        }
+        else
+        {
+            break;
+        }
+    }
+    if (i == this->_x.size() - 1)
+    {
+        --i;
+    }
+    seg = len / this->length(i);
+    return CPoint((int)(this->_x[i] + seg * (this->_x[i + 1] - this->_x[i])), 
+        (int)(this->_y[i] + seg * (this->_y[i + 1] - this->_y[i])));
 }

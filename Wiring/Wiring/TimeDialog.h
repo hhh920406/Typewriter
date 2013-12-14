@@ -9,13 +9,13 @@
 class TimeDialog : public CDialogEx
 {
 public:
-	enum { IDD = IDD_TIMETICK };
+    enum { IDD = IDD_TIMETICK };
 
-	TimeDialog();
-	virtual ~TimeDialog();
-	DECLARE_MESSAGE_MAP()
-	afx_msg void OnBnClickedOk();
-	afx_msg void OnBnClickedCancel();
-	virtual BOOL OnInitDialog();
+    TimeDialog();
+    virtual ~TimeDialog();
+    DECLARE_MESSAGE_MAP()
+    afx_msg void OnBnClickedOk();
+    afx_msg void OnBnClickedCancel();
+    virtual BOOL OnInitDialog();
 };
 

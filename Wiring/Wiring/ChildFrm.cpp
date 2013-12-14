@@ -22,9 +22,9 @@ CChildFrame::~CChildFrame()
 
 BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
-	if (!CMDIChildWnd::PreCreateWindow(cs))
-	{
-		return FALSE;
-	}
-	return TRUE;
+    if (!CMDIChildWnd::PreCreateWindow(cs))
+    {
+        return FALSE;
+    }
+    return TRUE;
 }

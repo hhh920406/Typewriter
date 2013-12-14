@@ -6,12 +6,12 @@
 
 class CChildFrame : public CMDIChildWnd
 {
-	DECLARE_DYNCREATE(CChildFrame)
+    DECLARE_DYNCREATE(CChildFrame)
 public:
-	CChildFrame();
-	virtual ~CChildFrame();
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+    CChildFrame();
+    virtual ~CChildFrame();
+    virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
 protected:
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 };

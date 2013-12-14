@@ -18,9 +18,9 @@ END_MESSAGE_MAP()
 
 CWiringDoc::CWiringDoc()
 {
-	this->_switchBox.setPosition(100, 100);
-	this->_switchBox.setSize(200, 200);
-	this->_switchBox.setPinNum(20);
+    this->_switchBox.setPosition(100, 100);
+    this->_switchBox.setSize(200, 200);
+    this->_switchBox.setPinNum(20);
 }
 
 CWiringDoc::~CWiringDoc()
@@ -29,10 +29,10 @@ CWiringDoc::~CWiringDoc()
 
 void CWiringDoc::setSwitchBox(SwitchBox &box)
 {
-	this->_switchBox = box;
+    this->_switchBox = box;
 }
 
 SwitchBox& CWiringDoc::switchBox()
 {
-	return this->_switchBox;
+    return this->_switchBox;
 }

@@ -5,15 +5,15 @@
 class NameDialog : public CDialogEx
 {
 public:
-	enum { IDD = IDD_SETNAME };
+    enum { IDD = IDD_SETNAME };
 
-	NameDialog();
-	virtual ~NameDialog();
-	CStringW getName() const;
+    NameDialog();
+    virtual ~NameDialog();
+    CStringW getName() const;
 
 private:
-	CStringW _name;
+    CStringW _name;
 public:
-	DECLARE_MESSAGE_MAP()
-	afx_msg void OnBnClickedOk();
+    DECLARE_MESSAGE_MAP()
+    afx_msg void OnBnClickedOk();
 };

@@ -8,15 +8,15 @@
 class CWiringDoc : public CDocument
 {
 public:
-	CWiringDoc();
-	virtual ~CWiringDoc();
-	DECLARE_DYNCREATE(CWiringDoc)
-	void setSwitchBox(SwitchBox &box);
-	SwitchBox& switchBox();
+    CWiringDoc();
+    virtual ~CWiringDoc();
+    DECLARE_DYNCREATE(CWiringDoc)
+    void setSwitchBox(SwitchBox &box);
+    SwitchBox& switchBox();
 
 private:
-	SwitchBox _switchBox;
+    SwitchBox _switchBox;
 
 protected:
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 };

@@ -11,17 +11,17 @@
 class OpenFileDialog : public CDialogEx
 {
 public:
-	enum { IDD = IDD_OPENFILE };
+    enum { IDD = IDD_OPENFILE };
 
-	OpenFileDialog();
-	virtual ~OpenFileDialog();
-	virtual BOOL OnInitDialog();
-	int selectedID() const;
-	DECLARE_MESSAGE_MAP()
-	afx_msg void OnBnClickedOk();
+    OpenFileDialog();
+    virtual ~OpenFileDialog();
+    virtual BOOL OnInitDialog();
+    int selectedID() const;
+    DECLARE_MESSAGE_MAP()
+    afx_msg void OnBnClickedOk();
 
 private:
-	long _selectedID;
-	std::vector<long> _chipID;
+    long _selectedID;
+    std::vector<long> _chipID;
 };
 

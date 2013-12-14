@@ -7,10 +7,10 @@
 class TimeControl
 {
 public:
-	TimeControl();
-	virtual ~TimeControl();
-	
-	static int getTime();
-	static void saveTime(int time);
+    TimeControl();
+    virtual ~TimeControl();
+    
+    static int getTime();
+    static void saveTime(int time);
 };
 

@@ -13,16 +13,16 @@
 IMPLEMENT_DYNAMIC(CMainFrame, CMDIFrameWnd)
 
 BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
-	ON_WM_CREATE()
-	ON_COMMAND(ID_FILE_SAVE32772, &CMainFrame::OnFileSave)
+    ON_WM_CREATE()
+    ON_COMMAND(ID_FILE_SAVE32772, &CMainFrame::OnFileSave)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
 {
-	ID_SEPARATOR,         
-	ID_INDICATOR_CAPS,
-	ID_INDICATOR_NUM,
-	ID_INDICATOR_SCRL,
+    ID_SEPARATOR,         
+    ID_INDICATOR_CAPS,
+    ID_INDICATOR_NUM,
+    ID_INDICATOR_SCRL,
 };
 
 CMainFrame::CMainFrame()
@@ -35,16 +35,16 @@ CMainFrame::~CMainFrame()
 
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if (CMDIFrameWnd::OnCreate(lpCreateStruct) == -1)
-		return -1;
-	return 0;
+    if (CMDIFrameWnd::OnCreate(lpCreateStruct) == -1)
+        return -1;
+    return 0;
 }
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
-	if( !CMDIFrameWnd::PreCreateWindow(cs) )
-		return FALSE;
-	return TRUE;
+    if( !CMDIFrameWnd::PreCreateWindow(cs) )
+        return FALSE;
+    return TRUE;
 }
 
 /**
@@ -53,24 +53,24 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 */
 void CMainFrame::OnFileSave()
 {
-	CMDIChildWnd *wnd = MDIGetActive();
-	if (wnd != NULL)
-	{
-		CWiringDoc *document = (CWiringDoc*)wnd->GetActiveView()->GetDocument();
-		if (document->switchBox().name().IsEmpty())
-		{
-			NameDialog dialog;
-			if (dialog.DoModal() == IDOK)
-			{
-				CStringW name = dialog.getName();
-				document->SetTitle(name);
-				document->switchBox().setName(name);
-			}
-			else
-			{
-				return;
-			}
-		}
-		DataControl::save(document->switchBox());
-	}
+    CMDIChildWnd *wnd = MDIGetActive();
+    if (wnd != NULL)
+    {
+        CWiringDoc *document = (CWiringDoc*)wnd->GetActiveView()->GetDocument();
+        if (document->switchBox().name().IsEmpty())
+        {
+            NameDialog dialog;
+            if (dialog.DoModal() == IDOK)
+            {
+                CStringW name = dialog.getName();
+                document->SetTitle(name);
+                document->switchBox().setName(name);
+            }
+            else
+            {
+                return;
+            }
+        }
+        DataControl::save(document->switchBox());
+    }
 }

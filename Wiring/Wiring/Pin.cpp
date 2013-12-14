@@ -6,8 +6,8 @@
  */
 Pin::Pin()
 {
-	this->setOrientation(ORI_TOP);
-	this->setShift(0.0);
+    this->setOrientation(ORI_TOP);
+    this->setShift(0.0);
 }
 
 
@@ -21,7 +21,7 @@ Pin::~Pin()
  */
 void Pin::setOrientation(const Orientation orientation)
 {
-	this->_orientation = orientation;
+    this->_orientation = orientation;
 }
 
 /**
@@ -30,7 +30,7 @@ void Pin::setOrientation(const Orientation orientation)
  */
 Pin::Orientation Pin::orientation() const
 {
-	return this->_orientation;
+    return this->_orientation;
 }
 
 /**
@@ -41,7 +41,7 @@ Pin::Orientation Pin::orientation() const
  */
 void Pin::setShift(const double shift)
 {
-	this->_shift = shift;
+    this->_shift = shift;
 }
 
 /**
@@ -51,7 +51,7 @@ void Pin::setShift(const double shift)
  */
 double Pin::shift() const
 {
-	return this->_shift;
+    return this->_shift;
 }
 
 /**
@@ -60,7 +60,7 @@ double Pin::shift() const
  */
 void Pin::setId(const int id)
 {
-	this->_id = id;
+    this->_id = id;
 }
 
 /**
@@ -69,7 +69,7 @@ void Pin::setId(const int id)
  */
 int Pin::id() const
 {
-	return this->_id;
+    return this->_id;
 }
 
 /**
@@ -80,16 +80,16 @@ int Pin::id() const
  */
 bool operator <(const Pin &a, const Pin &b)
 {
-	if (a.orientation() == b.orientation())
-	{
-		if (a.orientation() == Pin::ORI_TOP || a.orientation() == Pin::ORI_RIGHT)
-		{
-			return a.shift() < b.shift();
-		}
-		else
-		{
-			return a.shift() > b.shift();
-		}
-	}
-	return a.orientation() < b.orientation();
+    if (a.orientation() == b.orientation())
+    {
+        if (a.orientation() == Pin::ORI_TOP || a.orientation() == Pin::ORI_RIGHT)
+        {
+            return a.shift() < b.shift();
+        }
+        else
+        {
+            return a.shift() > b.shift();
+        }
+    }
+    return a.orientation() < b.orientation();
 }

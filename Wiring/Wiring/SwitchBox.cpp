@@ -16,28 +16,28 @@ SwitchBox::~SwitchBox()
 
 void SwitchBox::setName(const CStringW &name)
 {
-	this->_name = name;
+    this->_name = name;
 }
 
 CStringW SwitchBox::name() const
 {
-	return this->_name;
+    return this->_name;
 }
 
 void SwitchBox::setPosition(const int x, const int y)
 {
-	this->_x = x;
-	this->_y = y;
+    this->_x = x;
+    this->_y = y;
 }
 
 int SwitchBox::x() const
 {
-	return this->_x;
+    return this->_x;
 }
 
 int SwitchBox::y() const
 {
-	return this->_y;
+    return this->_y;
 }
 
 /**
@@ -47,31 +47,31 @@ int SwitchBox::y() const
  */
 void SwitchBox::setSize(const int width, const int height)
 {
-	int nextWidth = width > 10 ? width : 10;
-	int nextHeight = height > 10 ? height : 10;
-	for (unsigned int i = 0; i < this->_pin.size(); ++i)
-	{
-		switch (this->_pin[i].orientation())
-		{
-		case Pin::ORI_TOP:
-		case Pin::ORI_BOTTOM:
-			this->_pin[i].setShift(this->_pin[i].shift() * nextWidth / this->_width);
-			break;
-		case Pin::ORI_LEFT:
-		case Pin::ORI_RIGHT:
-			this->_pin[i].setShift(this->_pin[i].shift() * nextHeight / this->_height);
-			break;
-		}
-	}
-	for (unsigned int i = 0; i < this->_wire.size(); ++i)
-	{
-		for (int j = 0; j < this->_wire[i].count(); ++j)
-		{
-			this->_wire[i].set(j, this->_wire[i].x(j) * nextWidth / this->_width, this->_wire[i].y(j) * nextHeight / this->_height);
-		}
-	}
-	this->_width = nextWidth;
-	this->_height = nextHeight;
+    int nextWidth = width > 10 ? width : 10;
+    int nextHeight = height > 10 ? height : 10;
+    for (unsigned int i = 0; i < this->_pin.size(); ++i)
+    {
+        switch (this->_pin[i].orientation())
+        {
+        case Pin::ORI_TOP:
+        case Pin::ORI_BOTTOM:
+            this->_pin[i].setShift(this->_pin[i].shift() * nextWidth / this->_width);
+            break;
+        case Pin::ORI_LEFT:
+        case Pin::ORI_RIGHT:
+            this->_pin[i].setShift(this->_pin[i].shift() * nextHeight / this->_height);
+            break;
+        }
+    }
+    for (unsigned int i = 0; i < this->_wire.size(); ++i)
+    {
+        for (int j = 0; j < this->_wire[i].count(); ++j)
+        {
+            this->_wire[i].set(j, this->_wire[i].x(j) * nextWidth / this->_width, this->_wire[i].y(j) * nextHeight / this->_height);
+        }
+    }
+    this->_width = nextWidth;
+    this->_height = nextHeight;
 }
 
 /**
@@ -80,7 +80,7 @@ void SwitchBox::setSize(const int width, const int height)
  */
 int SwitchBox::width() const
 {
-	return this->_width;
+    return this->_width;
 }
 
 /**
@@ -89,7 +89,7 @@ int SwitchBox::width() const
  */
 int SwitchBox::height() const
 {
-	return this->_height;
+    return this->_height;
 }
 
 /**
@@ -98,7 +98,7 @@ int SwitchBox::height() const
  */
 int SwitchBox::left() const
 {
-	return this->_x;
+    return this->_x;
 }
 
 /**
@@ -107,7 +107,7 @@ int SwitchBox::left() const
  */
 int SwitchBox::right() const
 {
-	return this->_x + this->_width;
+    return this->_x + this->_width;
 }
 
 /**
@@ -116,7 +116,7 @@ int SwitchBox::right() const
  */
 int SwitchBox::top() const
 {
-	return this->_y;
+    return this->_y;
 }
 
 /**
@@ -125,7 +125,7 @@ int SwitchBox::top() const
  */
 int SwitchBox::bottom() const
 {
-	return this->_y + this->_height;
+    return this->_y + this->_height;
 }
 
 /**
@@ -134,7 +134,7 @@ int SwitchBox::bottom() const
  */
 vector<Pin>& SwitchBox::pin()
 {
-	return this->_pin;
+    return this->_pin;
 }
 
 /**
@@ -143,7 +143,7 @@ vector<Pin>& SwitchBox::pin()
  */
 vector<Wire>& SwitchBox::wire()
 {
-	return this->_wire;
+    return this->_wire;
 }
 
 /**
@@ -152,7 +152,7 @@ vector<Wire>& SwitchBox::wire()
  */
 void SwitchBox::setWire(std::vector<Wire> &wire)
 {
-	this->_wire = wire;
+    this->_wire = wire;
 }
 
 /**
@@ -162,21 +162,21 @@ void SwitchBox::setWire(std::vector<Wire> &wire)
  */
 void SwitchBox::addWire(const int u, const int v)
 {
-	int uid = this->_pin[u].id();
-	int vid = this->_pin[v].id();
-	for (int i = this->_wire.size() - 1; i >= 0; --i)
-	{
-		if (this->_wire[i].u() == uid || this->_wire[i].u() == vid || this->_wire[i].v() == uid || this->_wire[i].v() == vid)
-		{
-			this->_wire.erase(this->_wire.begin() + i);
-		}
-	}
-	Wire wire;
-	wire.setU(uid);
-	wire.setV(vid);
-	wire.add(this->getPortCenter(u).x - this->_x, this->getPortCenter(u).y - this->_y);
-	wire.add(this->getPortCenter(v).x - this->_x, this->getPortCenter(v).y - this->_y);
-	this->_wire.push_back(wire);
+    int uid = this->_pin[u].id();
+    int vid = this->_pin[v].id();
+    for (int i = this->_wire.size() - 1; i >= 0; --i)
+    {
+        if (this->_wire[i].u() == uid || this->_wire[i].u() == vid || this->_wire[i].v() == uid || this->_wire[i].v() == vid)
+        {
+            this->_wire.erase(this->_wire.begin() + i);
+        }
+    }
+    Wire wire;
+    wire.setU(uid);
+    wire.setV(vid);
+    wire.add(this->getPortCenter(u).x - this->_x, this->getPortCenter(u).y - this->_y);
+    wire.add(this->getPortCenter(v).x - this->_x, this->getPortCenter(v).y - this->_y);
+    this->_wire.push_back(wire);
 }
 
 /**
@@ -185,51 +185,51 @@ void SwitchBox::addWire(const int u, const int v)
  */
 void SwitchBox::setPinNum(const int pinNum)
 {
-	int hor = (int)(pinNum * this->_width / (this->_width + this->_height));
-	int ver = pinNum - hor;
-	int top = hor >> 1;
-	int bottom = hor - top;
-	int left = ver >> 1;
-	int right = ver - left;
-	int id = 0;
-	this->_wire.clear();
-	this->_pin.clear();
-	double margin = this->_width / (top + 1);
-	for (int i = 1; i <= top; ++i)
-	{
-		Pin pin;
-		pin.setOrientation(Pin::ORI_TOP);
-		pin.setShift((int)(i * margin));
-		pin.setId(++id);
-		this->_pin.push_back(pin);
-	}
-	margin = this->_height / (right + 1);
-	for (int i = 1; i <= right; ++i)
-	{
-		Pin pin;
-		pin.setOrientation(Pin::ORI_RIGHT);
-		pin.setShift((int)(i * margin));
-		pin.setId(++id);
-		this->_pin.push_back(pin);
-	}
-	margin = this->_width / (bottom + 1);
-	for (int i = 0; i < bottom; ++i)
-	{
-		Pin pin;
-		pin.setOrientation(Pin::ORI_BOTTOM);
-		pin.setShift((int)((bottom - i) * margin));
-		pin.setId(++id);
-		this->_pin.push_back(pin);
-	}
-	margin = this->_height / (left + 1);
-	for (int i = 0; i < left; ++i)
-	{
-		Pin pin;
-		pin.setOrientation(Pin::ORI_LEFT);
-		pin.setShift((int)((left - i) * margin));
-		pin.setId(++id);
-		this->_pin.push_back(pin);
-	}
+    int hor = (int)(pinNum * this->_width / (this->_width + this->_height));
+    int ver = pinNum - hor;
+    int top = hor >> 1;
+    int bottom = hor - top;
+    int left = ver >> 1;
+    int right = ver - left;
+    int id = 0;
+    this->_wire.clear();
+    this->_pin.clear();
+    double margin = this->_width / (top + 1);
+    for (int i = 1; i <= top; ++i)
+    {
+        Pin pin;
+        pin.setOrientation(Pin::ORI_TOP);
+        pin.setShift((int)(i * margin));
+        pin.setId(++id);
+        this->_pin.push_back(pin);
+    }
+    margin = this->_height / (right + 1);
+    for (int i = 1; i <= right; ++i)
+    {
+        Pin pin;
+        pin.setOrientation(Pin::ORI_RIGHT);
+        pin.setShift((int)(i * margin));
+        pin.setId(++id);
+        this->_pin.push_back(pin);
+    }
+    margin = this->_width / (bottom + 1);
+    for (int i = 0; i < bottom; ++i)
+    {
+        Pin pin;
+        pin.setOrientation(Pin::ORI_BOTTOM);
+        pin.setShift((int)((bottom - i) * margin));
+        pin.setId(++id);
+        this->_pin.push_back(pin);
+    }
+    margin = this->_height / (left + 1);
+    for (int i = 0; i < left; ++i)
+    {
+        Pin pin;
+        pin.setOrientation(Pin::ORI_LEFT);
+        pin.setShift((int)((left - i) * margin));
+        pin.setId(++id);
+        this->_pin.push_back(pin);
+    }
 }
 
 /**
@@ -238,25 +238,25 @@ void SwitchBox::setPinNum(const int pinNum)
  */
 int SwitchBox::addPin()
 {
-	for (int id = 1;; ++id)
-	{
-		bool flag = true;
-		for (unsigned int i = 0; i < this->_pin.size(); ++i)
-		{
-			if (this->_pin[i].id() == id)
-			{
-				flag = false;
-				break;
-			}
-		}
-		if (flag)
-		{
-			Pin pin;
-			pin.setId(id);
-			this->_pin.push_back(pin);
-			return this->_pin.size() - 1;
-		}
-	}
+    for (int id = 1;; ++id)
+    {
+        bool flag = true;
+        for (unsigned int i = 0; i < this->_pin.size(); ++i)
+        {
+            if (this->_pin[i].id() == id)
+            {
+                flag = false;
+                break;
+            }
+        }
+        if (flag)
+        {
+            Pin pin;
+            pin.setId(id);
+            this->_pin.push_back(pin);
+            return this->_pin.size() - 1;
+        }
+    }
 }
 
 /**
@@ -265,16 +265,16 @@ int SwitchBox::addPin()
  */
 void SwitchBox::removePin(const int index)
 {
-	int id = this->_pin[index].id();
-	for (vector<Wire>::iterator it = this->_wire.begin(); it != this->_wire.end(); ++it)
-	{
-		if (it->u() == id || it->v() == id)
-		{
-			this->_wire.erase(it);
-			break;
-		}
-	}
-	this->_pin.erase(this->_pin.begin() + index);
+    int id = this->_pin[index].id();
+    for (vector<Wire>::iterator it = this->_wire.begin(); it != this->_wire.end(); ++it)
+    {
+        if (it->u() == id || it->v() == id)
+        {
+            this->_wire.erase(it);
+            break;
+        }
+    }
+    this->_pin.erase(this->_pin.begin() + index);
 }
 
 /**
@@ -283,7 +283,7 @@ void SwitchBox::removePin(const int index)
  */
 CRect SwitchBox::getOuterBorder() const
 {
-	return CRect(this->_x, this->_y, this->_x + this->_width, this->_y + this->_height);
+    return CRect(this->_x, this->_y, this->_x + this->_width, this->_y + this->_height);
 }
 
 /**
@@ -292,7 +292,7 @@ CRect SwitchBox::getOuterBorder() const
 */
 CRect SwitchBox::getInnerBorder() const
 {
-	return CRect(this->_x + PADDING, this->_y + PADDING, this->_x + this->_width - PADDING, this->_y + this->_height - PADDING);
+    return CRect(this->_x + PADDING, this->_y + PADDING, this->_x + this->_width - PADDING, this->_y + this->_height - PADDING);
 }
 
 /**
@@ -301,7 +301,7 @@ CRect SwitchBox::getInnerBorder() const
  */
 CRect SwitchBox::getPinBorder() const
 {
-	return CRect(this->_x - PIN_SIZE, this->_y - PIN_SIZE, this->_x + this->_width + PIN_SIZE, this->_y + this->_height + PIN_SIZE);
+    return CRect(this->_x - PIN_SIZE, this->_y - PIN_SIZE, this->_x + this->_width + PIN_SIZE, this->_y + this->_height + PIN_SIZE);
 }
 
 /**
@@ -311,27 +311,27 @@ CRect SwitchBox::getPinBorder() const
  */
 CPoint SwitchBox::getPinCenter(const int index) const
 {
-	double cx, cy;
-	switch (this->_pin[index].orientation())
-	{
-	case Pin::ORI_TOP:
-		cx = this->_x + this->_pin[index].shift();
-		cy = this->_y - (PIN_SIZE >> 1) + 1;
-		break;
-	case Pin::ORI_BOTTOM:
-		cx = this->_x + this->_pin[index].shift();
-		cy = this->_y + this->_height + (PIN_SIZE >> 1) - 1;
-		break;
-	case Pin::ORI_LEFT:
-		cx = this->_x - (PIN_SIZE >> 1) + 1;
-		cy = this->_y + this->_pin[index].shift();
-		break;
-	case Pin::ORI_RIGHT:
-		cx = this->_x + this->_width + (PIN_SIZE >> 1) - 1;
-		cy = this->_y + this->_pin[index].shift();
-		break;
-	}
-	return CPoint((int)cx, (int)cy);
+    double cx, cy;
+    switch (this->_pin[index].orientation())
+    {
+    case Pin::ORI_TOP:
+        cx = this->_x + this->_pin[index].shift();
+        cy = this->_y - (PIN_SIZE >> 1) + 1;
+        break;
+    case Pin::ORI_BOTTOM:
+        cx = this->_x + this->_pin[index].shift();
+        cy = this->_y + this->_height + (PIN_SIZE >> 1) - 1;
+        break;
+    case Pin::ORI_LEFT:
+        cx = this->_x - (PIN_SIZE >> 1) + 1;
+        cy = this->_y + this->_pin[index].shift();
+        break;
+    case Pin::ORI_RIGHT:
+        cx = this->_x + this->_width + (PIN_SIZE >> 1) - 1;
+        cy = this->_y + this->_pin[index].shift();
+        break;
+    }
+    return CPoint((int)cx, (int)cy);
 }
 
 /**
@@ -341,27 +341,27 @@ CPoint SwitchBox::getPinCenter(const int index) const
  */
 CPoint SwitchBox::getPortCenter(const int index) const
 {
-	double px, py;
-	switch (this->_pin[index].orientation())
-	{
-	case Pin::ORI_TOP:
-		px = this->_x + this->_pin[index].shift();
-		py = this->_y + (PADDING << 1);
-		break;
-	case Pin::ORI_BOTTOM:
-		px = this->_x + this->_pin[index].shift();
-		py = this->_y + this->_height - (PADDING << 1);
-		break;
-	case Pin::ORI_LEFT:
-		px = this->_x + (PADDING << 1);
-		py = this->_y + this->_pin[index].shift();
-		break;
-	case Pin::ORI_RIGHT:
-		px = this->_x + this->_width - (PADDING << 1);
-		py = this->_y + this->_pin[index].shift();
-		break;
-	}
-	return CPoint((int)px, (int)py);
+    double px, py;
+    switch (this->_pin[index].orientation())
+    {
+    case Pin::ORI_TOP:
+        px = this->_x + this->_pin[index].shift();
+        py = this->_y + (PADDING << 1);
+        break;
+    case Pin::ORI_BOTTOM:
+        px = this->_x + this->_pin[index].shift();
+        py = this->_y + this->_height - (PADDING << 1);
+        break;
+    case Pin::ORI_LEFT:
+        px = this->_x + (PADDING << 1);
+        py = this->_y + this->_pin[index].shift();
+        break;
+    case Pin::ORI_RIGHT:
+        px = this->_x + this->_width - (PADDING << 1);
+        py = this->_y + this->_pin[index].shift();
+        break;
+    }
+    return CPoint((int)px, (int)py);
 }
 
 /**
@@ -371,8 +371,8 @@ CPoint SwitchBox::getPortCenter(const int index) const
  */
 CRect SwitchBox::getPinRect(const int index) const
 {
-	CPoint center = this->getPinCenter(index);
-	return CRect(center.x - (PIN_SIZE >> 1), center.y - (PIN_SIZE >> 1), center.x + (PIN_SIZE >> 1), center.y + (PIN_SIZE >> 1));
+    CPoint center = this->getPinCenter(index);
+    return CRect(center.x - (PIN_SIZE >> 1), center.y - (PIN_SIZE >> 1), center.x + (PIN_SIZE >> 1), center.y + (PIN_SIZE >> 1));
 }
 
 /**
@@ -382,8 +382,8 @@ CRect SwitchBox::getPinRect(const int index) const
  */
 CRect SwitchBox::getPinTextRect(const int index) const
 {
-	CPoint center = this->getPinCenter(index);
-	return CRect(center.x - 1000, center.y - 1000, center.x + 1000, center.y + 1000);
+    CPoint center = this->getPinCenter(index);
+    return CRect(center.x - 1000, center.y - 1000, center.x + 1000, center.y + 1000);
 }
 
 /**
@@ -393,8 +393,8 @@ CRect SwitchBox::getPinTextRect(const int index) const
  */
 CRect SwitchBox::getPortRect(const int index) const
 {
-	CPoint center = this->getPortCenter(index);
-	return CRect(center.x - PADDING, center.y - PADDING, center.x + PADDING, center.y + PADDING);
+    CPoint center = this->getPortCenter(index);
+    return CRect(center.x - PADDING, center.y - PADDING, center.x + PADDING, center.y + PADDING);
 }
 
 /**
@@ -403,7 +403,7 @@ CRect SwitchBox::getPortRect(const int index) const
 */
 CRect SwitchBox::getLeaveRect() const
 {
-	return CRect(this->left() - LEAVE, this->top() - LEAVE, this->right() + LEAVE, this->bottom() + LEAVE);
+    return CRect(this->left() - LEAVE, this->top() - LEAVE, this->right() + LEAVE, this->bottom() + LEAVE);
 }
 
 /**
@@ -413,7 +413,7 @@ CRect SwitchBox::getLeaveRect() const
  */
 bool SwitchBox::isOnBorder(const CPoint &pos) const
 {
-	return this->isInside(pos, this->getOuterBorder()) && !this->isInside(pos, this->getInnerBorder());
+    return this->isInside(pos, this->getOuterBorder()) && !this->isInside(pos, this->getInnerBorder());
 }
 
 /**
@@ -423,7 +423,7 @@ bool SwitchBox::isOnBorder(const CPoint &pos) const
  */
 bool SwitchBox::isOnLeftBorder(const CPoint &pos) const
 {
-	return this->isOnBorder(pos) && pos.x <= this->_x + PADDING;
+    return this->isOnBorder(pos) && pos.x <= this->_x + PADDING;
 }
 
 /**
@@ -433,7 +433,7 @@ bool SwitchBox::isOnLeftBorder(const CPoint &pos) const
  */
 bool SwitchBox::isOnRightBorder(const CPoint &pos) const
 {
-	return this->isOnBorder(pos) && pos.x >= this->_x + this->_width - PADDING;
+    return this->isOnBorder(pos) && pos.x >= this->_x + this->_width - PADDING;
 }
 
 /**
@@ -443,7 +443,7 @@ bool SwitchBox::isOnRightBorder(const CPoint &pos) const
  */
 bool SwitchBox::isOnTopBorder(const CPoint &pos) const
 {
-	return this->isOnBorder(pos) && pos.y <= this->_y + PADDING;
+    return this->isOnBorder(pos) && pos.y <= this->_y + PADDING;
 }
 
 /**
@@ -453,7 +453,7 @@ bool SwitchBox::isOnTopBorder(const CPoint &pos) const
  */
 bool SwitchBox::isOnBottomBorder(const CPoint &pos) const
 {
-	return this->isOnBorder(pos) && pos.y >= this->_y + this->_height - PADDING;
+    return this->isOnBorder(pos) && pos.y >= this->_y + this->_height - PADDING;
 }
 
 /**
@@ -463,7 +463,7 @@ bool SwitchBox::isOnBottomBorder(const CPoint &pos) const
  */
 bool SwitchBox::isOnInner(const CPoint &pos) const
 {
-	return this->isInside(pos, this->getInnerBorder());
+    return this->isInside(pos, this->getInnerBorder());
 }
 
 /**
@@ -473,7 +473,7 @@ bool SwitchBox::isOnInner(const CPoint &pos) const
  */
 bool SwitchBox::isOnPaint(const CPoint &pos) const
 {
-	return this->isInside(pos, this->getPinBorder());
+    return this->isInside(pos, this->getPinBorder());
 }
 
 /**
@@ -483,7 +483,7 @@ bool SwitchBox::isOnPaint(const CPoint &pos) const
  */
 bool SwitchBox::isLeaveArea(const CPoint &pos) const
 {
-	return !this->isInside(pos, this->getLeaveRect());
+    return !this->isInside(pos, this->getLeaveRect());
 }
 
 /**
@@ -493,14 +493,14 @@ bool SwitchBox::isLeaveArea(const CPoint &pos) const
  */
 int SwitchBox::pinHoverIndex(const CPoint &pos) const
 {
-	for (unsigned int i = 0; i < this->_pin.size(); ++i)
-	{
-		if (this->isInside(pos, this->getPinRect(i)))
-		{
-			return i;
-		}
-	}
-	return -1;
+    for (unsigned int i = 0; i < this->_pin.size(); ++i)
+    {
+        if (this->isInside(pos, this->getPinRect(i)))
+        {
+            return i;
+        }
+    }
+    return -1;
 }
 
 /**
@@ -510,14 +510,14 @@ int SwitchBox::pinHoverIndex(const CPoint &pos) const
  */
 int SwitchBox::portHoverIndex(const CPoint &pos) const
 {
-	for (unsigned int i = 0; i < this->_pin.size(); ++i)
-	{
-		if (this->isInside(pos, this->getPortRect(i)))
-		{
-			return i;
-		}
-	}
-	return -1;
+    for (unsigned int i = 0; i < this->_pin.size(); ++i)
+    {
+        if (this->isInside(pos, this->getPortRect(i)))
+        {
+            return i;
+        }
+    }
+    return -1;
 }
 
 /**
@@ -528,5 +528,5 @@ int SwitchBox::portHoverIndex(const CPoint &pos) const
  */
 bool SwitchBox::isInside(const CPoint &pos, const CRect &rect) const
 {
-	return pos.x >= rect.left && pos.x <= rect.right && pos.y >= rect.top && pos.y <= rect.bottom;
+    return pos.x >= rect.left && pos.x <= rect.right && pos.y >= rect.top && pos.y <= rect.bottom;
 }
