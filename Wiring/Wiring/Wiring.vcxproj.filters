@@ -57,6 +57,12 @@
     <ClInclude Include="TimeControl.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="WiringSet.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NameDialog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Wiring.cpp">
@@ -93,6 +99,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="TimeControl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WiringSet.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NameDialog.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

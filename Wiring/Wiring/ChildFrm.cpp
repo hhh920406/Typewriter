@@ -28,15 +28,3 @@ BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
 	}
 	return TRUE;
 }
-
-#ifdef _DEBUG
-void CChildFrame::AssertValid() const
-{
-	CMDIChildWnd::AssertValid();
-}
-
-void CChildFrame::Dump(CDumpContext& dc) const
-{
-	CMDIChildWnd::Dump(dc);
-}
-#endif //_DEBUG

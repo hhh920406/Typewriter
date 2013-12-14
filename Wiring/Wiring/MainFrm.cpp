@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Wiring.h"
-
+#include "WiringDoc.h"
+#include "WiringSet.h"
+#include "NameDialog.h"
 #include "MainFrm.h"
 
 #ifdef _DEBUG
@@ -11,6 +13,7 @@ IMPLEMENT_DYNAMIC(CMainFrame, CMDIFrameWnd)
 
 BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_WM_CREATE()
+	ON_COMMAND(ID_FILE_SAVE32772, &CMainFrame::OnFileSave)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -33,34 +36,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CMDIFrameWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
-
-	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT | TBSTYLE_TRANSPARENT) ||
-		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
-	{
-		TRACE0("Failed to create toolbar\n");
-		return -1;
-	}
-	if (!m_wndDlgBar.Create(this, IDR_MAINFRAME, CBRS_ALIGN_TOP, AFX_IDW_DIALOGBAR))
-	{
-		TRACE0("Failed to create dialogbar\n");
-		return -1;
-	}
-
-	if (!m_wndReBar.Create(this) || !m_wndReBar.AddBar(&m_wndToolBar) || !m_wndReBar.AddBar(&m_wndDlgBar))
-	{
-		TRACE0("Failed to create rebar\n");
-		return -1;
-	}
-
-	if (!m_wndStatusBar.Create(this))
-	{
-		TRACE0("Failed to create status bar\n");
-		return -1;
-	}
-	m_wndStatusBar.SetIndicators(indicators, sizeof(indicators)/sizeof(UINT));
-
-	m_wndToolBar.SetBarStyle(m_wndToolBar.GetBarStyle() | CBRS_TOOLTIPS | CBRS_FLYBY);
-
 	return 0;
 }
 
@@ -71,16 +46,33 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 	return TRUE;
 }
 
-#ifdef _DEBUG
-void CMainFrame::AssertValid() const
+/**
+* 保存文件到数据库中。
+* @author ZHG <CyberZHG@gmail.com>
+*/
+void CMainFrame::OnFileSave()
 {
-	CMDIFrameWnd::AssertValid();
+	CMDIChildWnd *wnd = MDIGetActive();
+	if (wnd != NULL)
+	{
+		CWiringDoc *document = (CWiringDoc*)wnd->GetActiveView()->GetDocument();
+		if (document->switchBox().name().IsEmpty())
+		{
+			NameDialog dialog;
+			if (dialog.DoModal() == IDOK)
+			{
+				CStringW name = dialog.getName();
+				document->switchBox().setName(name);
+			}
+			else
+			{
+				return;
+			}
+		}
+		CStringW name = document->switchBox().name();
+		int width = document->switchBox().width();
+		int height = document->switchBox().height();
+		DataChip set;
+		set.addNewChip(name, width, height);
+	}
 }
-
-void CMainFrame::Dump(CDumpContext& dc) const
-{
-	CMDIFrameWnd::Dump(dc);
-}
-#endif //_DEBUG
-
-

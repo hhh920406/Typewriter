@@ -55,25 +55,6 @@ double Pin::shift() const
 }
 
 /**
- * 序列化。
- * @param archive 归档对象。
- */
-void Pin::serialize(CArchive &archive)
-{
-	if (archive.IsStoring())
-	{
-		int orientation = this->_orientation;
-		archive << orientation << this->_shift;
-	}
-	else
-	{
-		int orientation;
-		archive >> orientation >> this->_shift;
-		this->_orientation = Orientation(orientation);
-	}
-}
-
-/**
  * 设置引脚的编号。
  * @param id 编号。
  */

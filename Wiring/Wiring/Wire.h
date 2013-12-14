@@ -23,7 +23,6 @@ public:
 	double length() const;
 	double length(const unsigned int index) const;
 	CPoint getSegmentPoint(double seg) const;
-	void serialize(CArchive &archive);
 
 private:
 	std::vector<double> _x;

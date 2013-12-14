@@ -27,28 +27,7 @@ CWiringDoc::~CWiringDoc()
 {
 }
 
-/**
- * ÐòÁÐ»¯¡£
- * @param archive ¹éµµ¡£
- */
-void CWiringDoc::Serialize(CArchive& archive)
-{
-	this->_switchBox.serialize(archive);
-}
-
 SwitchBox& CWiringDoc::switchBox()
 {
 	return this->_switchBox;
 }
-
-#ifdef _DEBUG
-void CWiringDoc::AssertValid() const
-{
-	CDocument::AssertValid();
-}
-
-void CWiringDoc::Dump(CDumpContext& dc) const
-{
-	CDocument::Dump(dc);
-}
-#endif //_DEBUG

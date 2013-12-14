@@ -53,12 +53,6 @@ protected:
 	void mouseLeftUpResize(CPoint point);
 	void mouseLeftUpMoving(CPoint point);
 
-public:
-#ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
-#endif
-
 protected:
 	DECLARE_MESSAGE_MAP()
 public:
@@ -68,9 +62,7 @@ public:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };
-
 #ifndef _DEBUG
 inline CWiringDoc* CWiringView::GetDocument() const
-   { return reinterpret_cast<CWiringDoc*>(m_pDocument); }
+	{ return reinterpret_cast<CWiringDoc*>(m_pDocument); }
 #endif
-

@@ -1,46 +1,60 @@
-
-// WiringSet.h: CWiringSet 类的接口
-//
-
-
+/**
+ * 数据库管理。
+ * @author ZHG <CyberZHG@gmail.com>
+ */
 #pragma once
+#include "stdafx.h"
 
-// 代码生成在 Saturday, December 14, 2013, 2:03 PM
-
-class CWiringSet : public CRecordset
+class DataChip : public CRecordset
 {
 public:
-	CWiringSet(CDatabase* pDatabase = NULL);
-	DECLARE_DYNAMIC(CWiringSet)
-
-// 字段/参数数据
-
-// 以下字符串类型(如果存在)反映数据库字段(ANSI 数据类型的 CStringA 和 Unicode
-// 数据类型的 CStringW)的实际数据类型。
-//  这是为防止 ODBC 驱动程序执行可能
-// 不必要的转换。如果希望，可以将这些成员更改为
-// CString 类型，ODBC 驱动程序将执行所有必要的转换。
-// (注意: 必须使用 3.5 版或更高版本的 ODBC 驱动程序
-// 以同时支持 Unicode 和这些转换)。
+	DataChip(CDatabase* pDatabase = NULL);
+	DECLARE_DYNAMIC(DataChip)
 
 	long	m_D_ChipID;
 	CStringW	m_D_Name;
 	long	m_D_Width;
 	long	m_D_Height;
 
-// 重写
-	// 向导生成的虚函数重写
-	public:
-	virtual CString GetDefaultConnect();	// 默认连接字符串
+	virtual CString GetDefaultConnect();
+	virtual CString GetDefaultSQL();
+	virtual void DoFieldExchange(CFieldExchange* pFX);
 
-	virtual CString GetDefaultSQL(); 	// 记录集的默认 SQL
-	virtual void DoFieldExchange(CFieldExchange* pFX);	// RFX 支持
-
-// 实现
-#ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
-#endif
-
+	void addNewChip(CStringW name, int width, int height);
 };
 
+class DataPin : public CRecordset
+{
+public:
+	DataPin(CDatabase* pDatabase = NULL);
+	DECLARE_DYNAMIC(DataPin)
+
+	long	m_D_PinID;
+	long	m_D_ChipID;
+	long	m_D_No;
+	long	m_D_Orientation;
+	double	m_D_Shift;
+
+	virtual CString GetDefaultConnect();
+	virtual CString GetDefaultSQL();
+	virtual void DoFieldExchange(CFieldExchange* pFX);
+};
+
+class DataWire : public CRecordset
+{
+public:
+	DataWire(CDatabase* pDatabase = NULL);
+	DECLARE_DYNAMIC(DataWire)
+
+	long	m_D_WireID;
+	long	m_D_PinID;
+	long	m_D_No;
+	double	m_D_StartX;
+	double	m_D_StartY;
+	double	m_D_EndX;
+	double	m_D_EndY;
+
+	virtual CString GetDefaultConnect();
+	virtual CString GetDefaultSQL();
+	virtual void DoFieldExchange(CFieldExchange* pFX);
+};

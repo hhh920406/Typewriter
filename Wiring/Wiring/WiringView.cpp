@@ -160,24 +160,6 @@ BOOL CWiringView::OnEraseBkgnd(CDC* pDC)
 	return TRUE;
 }
 
-#ifdef _DEBUG
-void CWiringView::AssertValid() const
-{
-	CView::AssertValid();
-}
-
-void CWiringView::Dump(CDumpContext& dc) const
-{
-	CView::Dump(dc);
-}
-
-CWiringDoc* CWiringView::GetDocument() const
-{
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CWiringDoc)));
-	return (CWiringDoc*)m_pDocument;
-}
-#endif
-
 /**
  * 对鼠标左键按下事件的处理。
  */
@@ -517,7 +499,6 @@ void CWiringView::mouseLeftUpConnect(CPoint point)
 	this->restoreIdle();
 }
 
-
 /**
  * 改变大小完成，恢复常态。
  */
@@ -572,3 +553,11 @@ void CWiringView::OnTimer(UINT_PTR nIDEvent)
 	}
 	CView::OnTimer(nIDEvent);
 }
+
+#ifdef _DEBUG
+CWiringDoc* CWiringView::GetDocument() const
+{
+	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CWiringDoc)));
+	return (CWiringDoc*)m_pDocument;
+}
+#endif

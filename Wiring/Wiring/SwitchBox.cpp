@@ -10,9 +10,18 @@ SwitchBox::SwitchBox()
 {
 }
 
-
 SwitchBox::~SwitchBox()
 {
+}
+
+void SwitchBox::setName(const CStringW &name)
+{
+	this->_name = name;
+}
+
+CStringW SwitchBox::name() const
+{
+	return this->_name;
 }
 
 void SwitchBox::setPosition(const int x, const int y)
@@ -269,50 +278,6 @@ void SwitchBox::removePin(const int index)
 }
 
 /**
- * 序列化。
- * @param archive 归档对象。
- */
-void SwitchBox::serialize(CArchive &archive)
-{
-	if (archive.IsStoring())
-	{
-		archive << this->_x << this->_y;
-		archive << this->_width << this->_height;
-		archive << this->_pin.size();
-		for (unsigned int i = 0; i < this->_pin.size(); ++i)
-		{
-			this->_pin[i].serialize(archive);
-		}
-		archive << this->_wire.size();
-		for (unsigned int i = 0; i < this->_wire.size(); ++i)
-		{
-			this->_wire[i].serialize(archive);
-		}
-	}
-	else
-	{
-		unsigned int size;
-		archive >> this->_x >> this->_y;
-		archive >> this->_width >> this->_height;
-		archive >> size;
-		this->_pin.clear();
-		for (unsigned int i = 0; i < size; ++i)
-		{
-			Pin pin;
-			pin.serialize(archive);
-			this->_pin.push_back(pin);
-		}
-		this->_wire.clear();
-		for (unsigned int i = 0; i < size; ++i)
-		{
-			Wire wire;
-			wire.serialize(archive);
-			this->_wire.push_back(wire);
-		}
-	}
-}
-
-/**
  * 获取外部边界。
  * @return 边界。
  */
@@ -376,7 +341,7 @@ CPoint SwitchBox::getPinCenter(const int index) const
  */
 CPoint SwitchBox::getPortCenter(const int index) const
 {
-	int px, py;
+	double px, py;
 	switch (this->_pin[index].orientation())
 	{
 	case Pin::ORI_TOP:
@@ -396,7 +361,7 @@ CPoint SwitchBox::getPortCenter(const int index) const
 		py = this->_y + this->_pin[index].shift();
 		break;
 	}
-	return CPoint(px, py);
+	return CPoint((int)px, (int)py);
 }
 
 /**

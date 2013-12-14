@@ -9,12 +9,6 @@ public:
 
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
-public:
-#ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
-#endif
-
 protected: 
 	CToolBar          m_wndToolBar;
 	CReBar            m_wndReBar;
@@ -24,6 +18,8 @@ protected:
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnFileSave();
 };
 
 

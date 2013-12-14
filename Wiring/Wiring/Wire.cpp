@@ -128,37 +128,6 @@ int Wire::v() const
 }
 
 /**
- * 序列化。
- * @param archive 归档对象。
- */
-void Wire::serialize(CArchive &archive)
-{
-	if (archive.IsStoring())
-	{
-		archive << this->count();
-		for (int i = 0; i < this->count(); ++i)
-		{
-			archive << this->x(i) << this->y(i);
-		}
-		archive << this->u() << this->v();
-	}
-	else
-	{
-		unsigned int size;
-		archive >> size;
-		this->_x.clear();
-		this->_y.clear();
-		for (unsigned int i = 0; i < size; ++i)
-		{
-			double tx, ty;
-			archive >> tx >> ty;
-			this->add(tx, ty);
-		}
-		archive >> this->_u >> this->_v;
-	}
-}
-
-/**
  * 获取连线的总长度。
  * @return 总长度。
  */

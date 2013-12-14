@@ -11,6 +11,8 @@ class SwitchBox
 public:
 	SwitchBox();
 	virtual ~SwitchBox();
+	void setName(const CStringW &name);
+	CStringW name() const;
 	void setPosition(const int x, const int y);
 	int x() const;
 	int y() const;
@@ -28,7 +30,6 @@ public:
 	std::vector<Wire>& wire();
 	void setWire(std::vector<Wire> &wire);
 	void addWire(const int u, const int v);
-	void serialize(CArchive &archive);
 	CRect getOuterBorder() const;
 	CRect getInnerBorder() const;
 	CRect getLeaveRect() const;
@@ -54,6 +55,7 @@ private:
 	int _y;
 	int _width;
 	int _height;
+	CStringW _name;
 	std::vector<Pin> _pin;
 	std::vector<Wire> _wire;
 

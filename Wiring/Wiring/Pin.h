@@ -21,7 +21,6 @@ public:
 	Orientation orientation() const;
 	void setShift(const double shift);
 	double shift() const;
-	void serialize(CArchive &archive);
 	void setId(const int id);
 	int id() const;
 	friend bool operator <(const Pin &a, const Pin &b);
