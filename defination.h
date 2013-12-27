@@ -8,6 +8,37 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
+/**
+ * 子弹伤害类型。
+ */
+enum BulletAttackType
+{
+    BULLET_ATTACK_PLAYER,   // 攻击玩家的子弹
+    BULLET_ATTACK_ENEMY,    // 攻击敌方的子弹
+    BULLET_ATTACK_NULL = 0x7FFFFFFF
+};
+
+/**
+ * 子弹类型。
+ */
+enum BulletType
+{
+    // 普通圆形子弹
+    BULLET_CIRCLE_RED,
+    BULLET_CIRCLE_ORANGE,
+    BULLET_CIRCLE_YELLOW,
+    BULLET_CIRCLE_GREEN,
+    BULLET_CIRCLE_CYAN,
+    BULLET_CIRCLE_BLUE,
+    BULLET_CIRCLE_PURPLE,
+    BULLET_CIRCLE_BLACK,
+    BULLET_CIRCLE_WHITE,
+    BULLET_TYPE_NULL = 0x7FFFFFFF
+};
+
+/**
+ * 场景名称。
+ */
 enum SceneName
 {
     SCENE_MAIN_MENU,    // 主菜单界面
@@ -15,6 +46,9 @@ enum SceneName
     SCENE_NULL = 0x7FFFFFFF
 };
 
+/**
+ * 游戏分层。
+ */
 enum GameLayer
 {
     GAME_LAYER_BACK_0,      // 下层背景层

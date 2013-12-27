@@ -8,9 +8,9 @@
 		<Option virtualFolders="Game Framework\;Game Framework\Test\;Game Framework\Basic\;Game Framework\;Game Framework\Test\;Implement\;Game Framework\Graphics\;Game Framework\Widget\;Game Framework\Interact\;Implement\Define\;Implement\Scene\;" />
 		<Build>
 			<Target title="Windows_Debug">
-				<Option output="bin\Windows_Debug\ZSTG" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin\Windows_Debug\" />
-				<Option object_output="obj\Windows_Debug\" />
+				<Option output="bin/Windows_Debug/ZSTG" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Windows_Debug/" />
+				<Option object_output="obj/Windows_Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -23,9 +23,9 @@
 				</Linker>
 			</Target>
 			<Target title="Windows_Release">
-				<Option output="bin\Windows_Release\ZSTG" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin\Windows_Release\" />
-				<Option object_output="obj\Windows_Release\" />
+				<Option output="bin/Windows_Release/ZSTG" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Windows_Release/" />
+				<Option object_output="obj/Windows_Release/" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -48,7 +48,8 @@
 			<Add option="-DNDEBUG" />
 			<Add option="-D_WINDOWS" />
 			<Add option="-D_MBCS" />
-			<Add directory="D:\Microsoft DirectX SDK (June 2010)\include" />
+			<Add directory="D:/Microsoft DirectX SDK (June 2010)/include" />
+			<Add directory="F:/DirectX_SDK/Include" />
 		</Compiler>
 		<Linker>
 			<Add library="kernel32" />
@@ -65,144 +66,145 @@
 			<Add library="odbccp32" />
 			<Add library="d3d9" />
 			<Add library="winmm" />
-			<Add directory="D:\Microsoft DirectX SDK (June 2010)\lib" />
-			<Add directory="D:\Microsoft DirectX SDK (June 2010)\lib\x86" />
+			<Add directory="D:/Microsoft DirectX SDK (June 2010)/lib" />
+			<Add directory="D:/Microsoft DirectX SDK (June 2010)/lib/x86" />
+			<Add directory="F:/DirectX_SDK/Lib/x86" />
 		</Linker>
 		<Unit filename="Framework.cpp">
-			<Option virtualFolder="Game Framework\" />
+			<Option virtualFolder="Game Framework/" />
 		</Unit>
 		<Unit filename="Framework.h">
-			<Option virtualFolder="Game Framework\" />
+			<Option virtualFolder="Game Framework/" />
 		</Unit>
 		<Unit filename="KeyState.cpp">
-			<Option virtualFolder="Game Framework\Interact\" />
+			<Option virtualFolder="Game Framework/Interact/" />
 		</Unit>
 		<Unit filename="KeyState.h">
-			<Option virtualFolder="Game Framework\Interact\" />
+			<Option virtualFolder="Game Framework/Interact/" />
 		</Unit>
 		<Unit filename="MouseState.cpp">
-			<Option virtualFolder="Game Framework\Interact\" />
+			<Option virtualFolder="Game Framework/Interact/" />
 		</Unit>
 		<Unit filename="MouseState.h">
-			<Option virtualFolder="Game Framework\Interact\" />
+			<Option virtualFolder="Game Framework/Interact/" />
 		</Unit>
 		<Unit filename="Point2D.cpp">
-			<Option virtualFolder="Game Framework\Basic\" />
+			<Option virtualFolder="Game Framework/Basic/" />
 		</Unit>
 		<Unit filename="Point2D.h">
-			<Option virtualFolder="Game Framework\Basic\" />
+			<Option virtualFolder="Game Framework/Basic/" />
 		</Unit>
 		<Unit filename="Rect2D.cpp">
-			<Option virtualFolder="Game Framework\Basic\" />
+			<Option virtualFolder="Game Framework/Basic/" />
 		</Unit>
 		<Unit filename="Rect2D.h">
-			<Option virtualFolder="Game Framework\Basic\" />
+			<Option virtualFolder="Game Framework/Basic/" />
 		</Unit>
 		<Unit filename="Scene.cpp">
-			<Option virtualFolder="Game Framework\Interact\" />
+			<Option virtualFolder="Game Framework/Interact/" />
 		</Unit>
 		<Unit filename="Scene.h">
-			<Option virtualFolder="Game Framework\Interact\" />
+			<Option virtualFolder="Game Framework/Interact/" />
 		</Unit>
 		<Unit filename="SceneController.cpp">
-			<Option virtualFolder="Game Framework\Interact\" />
+			<Option virtualFolder="Game Framework/Interact/" />
 		</Unit>
 		<Unit filename="SceneController.h">
-			<Option virtualFolder="Game Framework\Interact\" />
+			<Option virtualFolder="Game Framework/Interact/" />
 		</Unit>
 		<Unit filename="SceneGameLoop.cpp">
-			<Option virtualFolder="Implement\Scene\" />
+			<Option virtualFolder="Implement/Scene/" />
 		</Unit>
 		<Unit filename="SceneGameLoop.h">
-			<Option virtualFolder="Implement\Scene\" />
+			<Option virtualFolder="Implement/Scene/" />
 		</Unit>
 		<Unit filename="SceneMainMenu.cpp">
-			<Option virtualFolder="Implement\Scene\" />
+			<Option virtualFolder="Implement/Scene/" />
 		</Unit>
 		<Unit filename="SceneMainMenu.h">
-			<Option virtualFolder="Implement\Scene\" />
+			<Option virtualFolder="Implement/Scene/" />
 		</Unit>
 		<Unit filename="Sprite2D.cpp">
-			<Option virtualFolder="Game Framework\Graphics\" />
+			<Option virtualFolder="Game Framework/Graphics/" />
 		</Unit>
 		<Unit filename="Sprite2D.h">
-			<Option virtualFolder="Game Framework\Graphics\" />
+			<Option virtualFolder="Game Framework/Graphics/" />
 		</Unit>
 		<Unit filename="Sprite2DController.cpp">
-			<Option virtualFolder="Game Framework\Graphics\" />
+			<Option virtualFolder="Game Framework/Graphics/" />
 		</Unit>
 		<Unit filename="Sprite2DController.h">
-			<Option virtualFolder="Game Framework\Graphics\" />
+			<Option virtualFolder="Game Framework/Graphics/" />
 		</Unit>
 		<Unit filename="TestScene.cpp">
-			<Option virtualFolder="Game Framework\Test\" />
+			<Option virtualFolder="Game Framework/Test/" />
 			<Option target="Windows_Debug" />
 		</Unit>
 		<Unit filename="TestScene.h">
-			<Option virtualFolder="Game Framework\Test\" />
+			<Option virtualFolder="Game Framework/Test/" />
 			<Option target="Windows_Debug" />
 		</Unit>
 		<Unit filename="TestSprite2D.cpp">
-			<Option virtualFolder="Game Framework\Test\" />
+			<Option virtualFolder="Game Framework/Test/" />
 			<Option target="Windows_Debug" />
 		</Unit>
 		<Unit filename="TestSprite2D.h">
-			<Option virtualFolder="Game Framework\Test\" />
+			<Option virtualFolder="Game Framework/Test/" />
 			<Option target="Windows_Debug" />
 		</Unit>
 		<Unit filename="Texture2D.cpp">
-			<Option virtualFolder="Game Framework\Graphics\" />
+			<Option virtualFolder="Game Framework/Graphics/" />
 		</Unit>
 		<Unit filename="Texture2D.h">
-			<Option virtualFolder="Game Framework\Graphics\" />
+			<Option virtualFolder="Game Framework/Graphics/" />
 		</Unit>
 		<Unit filename="Texture2DController.cpp">
-			<Option virtualFolder="Game Framework\Graphics\" />
+			<Option virtualFolder="Game Framework/Graphics/" />
 		</Unit>
 		<Unit filename="Texture2DController.h">
-			<Option virtualFolder="Game Framework\Graphics\" />
+			<Option virtualFolder="Game Framework/Graphics/" />
 		</Unit>
 		<Unit filename="Vector2D.cpp">
-			<Option virtualFolder="Game Framework\Basic\" />
+			<Option virtualFolder="Game Framework/Basic/" />
 		</Unit>
 		<Unit filename="Vector2D.h">
-			<Option virtualFolder="Game Framework\Basic\" />
+			<Option virtualFolder="Game Framework/Basic/" />
 		</Unit>
 		<Unit filename="VertexBuffer2D.cpp">
-			<Option virtualFolder="Game Framework\Graphics\" />
+			<Option virtualFolder="Game Framework/Graphics/" />
 		</Unit>
 		<Unit filename="VertexBuffer2D.h">
-			<Option virtualFolder="Game Framework\Graphics\" />
+			<Option virtualFolder="Game Framework/Graphics/" />
 		</Unit>
 		<Unit filename="VertexBuffer2DController.cpp">
-			<Option virtualFolder="Game Framework\Graphics\" />
+			<Option virtualFolder="Game Framework/Graphics/" />
 		</Unit>
 		<Unit filename="VertexBuffer2DController.h">
-			<Option virtualFolder="Game Framework\Graphics\" />
+			<Option virtualFolder="Game Framework/Graphics/" />
 		</Unit>
 		<Unit filename="Widget.cpp">
-			<Option virtualFolder="Game Framework\Widget\" />
+			<Option virtualFolder="Game Framework/Widget/" />
 		</Unit>
 		<Unit filename="Widget.h">
-			<Option virtualFolder="Game Framework\Widget\" />
+			<Option virtualFolder="Game Framework/Widget/" />
 		</Unit>
 		<Unit filename="WidgetBuffer2D.cpp">
-			<Option virtualFolder="Game Framework\Widget\" />
+			<Option virtualFolder="Game Framework/Widget/" />
 		</Unit>
 		<Unit filename="WidgetBuffer2D.h">
-			<Option virtualFolder="Game Framework\Widget\" />
+			<Option virtualFolder="Game Framework/Widget/" />
 		</Unit>
 		<Unit filename="WidgetController.cpp">
-			<Option virtualFolder="Game Framework\Widget\" />
+			<Option virtualFolder="Game Framework/Widget/" />
 		</Unit>
 		<Unit filename="WidgetController.h">
-			<Option virtualFolder="Game Framework\Widget\" />
+			<Option virtualFolder="Game Framework/Widget/" />
 		</Unit>
 		<Unit filename="defination.h">
-			<Option virtualFolder="Implement\Define\" />
+			<Option virtualFolder="Implement/Define/" />
 		</Unit>
 		<Unit filename="main.cpp">
-			<Option virtualFolder="Implement\" />
+			<Option virtualFolder="Implement/" />
 		</Unit>
 		<Extensions>
 			<code_completion />
