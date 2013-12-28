@@ -1,9 +1,6 @@
 #ifndef KEYSTATE_H
 #define KEYSTATE_H
-/**
- * 记录键盘按键的状态。
- * @author ZHG <CyberZHG@gmail.com>
- */
+
 #include <vector>
 #include <windows.h>
 
@@ -35,4 +32,4 @@ private:
     std::vector<bool> _pressed;
 };
 
-#endif // KEYSTATE_H
+#endif

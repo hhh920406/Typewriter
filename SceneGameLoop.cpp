@@ -1,18 +1,28 @@
 #include "SceneGameLoop.h"
 #include "Framework.h"
-#include "Widget.h"
-#include "WidgetController.h"
 
 SceneGameLoop::SceneGameLoop() : Scene()
 {
 }
-#include <cstdio>
+
 void SceneGameLoop::load()
 {
     Scene::load();
     Framework *framework = Framework::getInstance();
     this->setLayerNum(GAME_LAYER_NUM);
-    // Load outer background.
+
+    Sprite2D *player = new Sprite2D(RES_SIZE_PLAYER_W, RES_SIZE_PLAYER_H);
+    framework->spriteController()->initSprite(player,
+                                              RES_IMAGE_LIVING,
+                                              RES_POS_PLAYER_X,
+                                              RES_POS_PLAYER_Y,
+                                              RES_POS_PLAYER_W,
+                                              RES_POS_PLAYER_H,
+                                              RES_IMAGE_PATH_LIVING_W,
+                                              RES_IMAGE_PATH_LIVING_H);
+    player->translateTo(50 + 500 / 2, 50 + 500 / 2 + 200);
+    this->addSprite(player, GAME_LAYER_ALIVE);
+
     Widget *widget;
     widget = new Widget();
     framework->widgetController()->initWidget(widget,

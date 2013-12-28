@@ -1,9 +1,6 @@
 #ifndef SCENECONTROLLER_H
 #define SCENECONTROLLER_H
-/**
- * 对场景的管理。
- * @author ZHG <CyberZHG@gmail.com>
- */
+
 #include <map>
 #include "Scene.h"
 
@@ -31,4 +28,4 @@ private:
     void setScene(const int index);
 };
 
-#endif // SCENECONTROLLER_H
+#endif

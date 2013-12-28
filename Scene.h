@@ -1,9 +1,5 @@
 #ifndef SCENE_H
 #define SCENE_H
-/**
- * 基本的场景，管理图形和处理交互。
- * @author ZHG <CyberZHG@gmail.com>
- */
 
 #include <vector>
 #include "KeyState.h"
@@ -44,4 +40,4 @@ protected:
     std::vector<Widget*> _widgets;
 };
 
-#endif // SCENE_H
+#endif

@@ -1,10 +1,6 @@
 #ifndef FRAMEWORK_H
 #define FRAMEWORK_H
-/**
- * 基本的游戏框架。
- * 在程序中只能出现唯一的实例。
- * @author ZHG <CyberZHG@gmail.com>
- */
+
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <windows.h>
@@ -66,14 +62,14 @@ private:
     KeyState *_keyState;
     MouseState *_mouseState;
 
-    int _lastTime;       // 上次刷新时间。
-    int _lastSecondTime; // 上次用于计算帧率的时间。
-    int _currentTime;    // 当前时间。
-    int _frameCount;     // 帧数。
+    int _lastTime;
+    int _lastSecondTime;
+    int _currentTime;
+    int _frameCount;
     float _fps;
 
     Framework();
     bool initD3D(HWND hWnd);
 };
 
-#endif // FRAMEWORK_H
+#endif

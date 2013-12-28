@@ -1,9 +1,6 @@
 #ifndef VERTEXBUFFER2D_H
 #define VERTEXBUFFER2D_H
-/**
- * 顶点缓存。
- * @author ZHG <CyberZHG@gmail.com>
- */
+
 #include "Point2D.h"
 #include "Framework.h"
 
@@ -30,4 +27,4 @@ protected:
     virtual bool createShape();
 };
 
-#endif // VERTEXBUFFER2D_H
+#endif

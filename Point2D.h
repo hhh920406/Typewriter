@@ -1,9 +1,5 @@
 #ifndef POINT2D_H
 #define POINT2D_H
-/**
- * 基本的二维点。
- * @author ZHG <CyberZHG@gmail.com>
- */
 
 class Point2D
 {
@@ -23,4 +19,4 @@ private:
     float _y;
 };
 
-#endif // POINT2D_H
+#endif

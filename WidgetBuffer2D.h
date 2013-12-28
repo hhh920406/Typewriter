@@ -1,9 +1,6 @@
 #ifndef WIDGETBUFFER2D_H
 #define WIDGETBUFFER2D_H
-/**
- * 不可进行几何变换的顶点缓存。
- * @author ZHG <CyberZHG@gmail.com>
- */
+
 #include "Point2D.h"
 #include "Framework.h"
 #include "VertexBuffer2D.h"
@@ -23,4 +20,4 @@ protected:
     LPDIRECT3DVERTEXBUFFER9 _vertexBuffer;
 };
 
-#endif // WIDGETBUFFER2D_H
+#endif

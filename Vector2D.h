@@ -1,9 +1,6 @@
 #ifndef VECTOR2D_H
 #define VECTOR2D_H
-/**
- * 基本的二维向量。
- * @author ZHG <CyberZHG@gmail.com>
- */
+
 #include "Point2D.h"
 
 class Vector2D : public Point2D
@@ -25,4 +22,4 @@ public:
     friend const Vector2D operator /(const Vector2D &a, const double b);
 };
 
-#endif // VECTOR2D_H
+#endif

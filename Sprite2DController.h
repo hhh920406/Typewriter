@@ -1,9 +1,6 @@
 #ifndef SPRITE2DCONTROLLER_H
 #define SPRITE2DCONTROLLER_H
-/**
- * 管理基本的2D图形。
- * @author ZHG <CyberZHG@gmail.com>
- */
+
 #include <vector>
 
 class Sprite2D;
@@ -29,4 +26,4 @@ private:
     VertexBuffer2DController *_vertexBufferController;
 };
 
-#endif // SPRITE2DCONTROLLER_H
+#endif

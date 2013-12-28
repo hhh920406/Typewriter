@@ -1,9 +1,6 @@
 #ifndef MOUSESTATE_H
 #define MOUSESTATE_H
-/**
- * 记录鼠标的状态。
- * @author ZHG <CyberZHG@gmail.com>
- */
+
 #include "Point2D.h"
 
 class MouseState
@@ -32,4 +29,4 @@ private:
     Point2D _pos;
 };
 
-#endif // MOUSESTATE_H
+#endif

@@ -1,21 +1,11 @@
 #ifndef RESOURCE_H_INCLUDED
 #define RESOURCE_H_INCLUDED
-/**
- * 对各类资源的定义。
- * @author ZHG <CyberZHG@gmail.com>
- */
 
-/**
- * 对窗口属性的定义。
- */
 #define WINDOW_TITLE        "ZSTG 1 Memset"
 #define WINDOW_WIDTH        800
 #define WINDOW_HEIGHT       600
 #define WINDOW_FULLSCREEN   false
 
-/**
- * 需要加载的纹理图片。
- */
 enum ImageResouce
 {
     RES_IMAGE_GAME_BACKGROUND,
@@ -32,9 +22,6 @@ enum ImageResouce
 #define RES_IMAGE_PATH_LIVING_W             1024
 #define RES_IMAGE_PATH_LIVING_H             1024
 
-/**
- * 图形在图片中的位置。
- */
 #define RES_POS_GAME_BACKGROUND_LEFT_X      0
 #define RES_POS_GAME_BACKGROUND_LEFT_Y      0
 #define RES_POS_GAME_BACKGROUND_LEFT_W      50
@@ -55,4 +42,30 @@ enum ImageResouce
 #define RES_POS_GAME_BACKGROUND_RIGHT_W     250
 #define RES_POS_GAME_BACKGROUND_RIGHT_H     600
 
-#endif // RESOURCE_H_INCLUDED
+#define RES_POS_PLAYER_X                    0
+#define RES_POS_PLAYER_Y                    0
+#define RES_POS_PLAYER_W                    256
+#define RES_POS_PLAYER_H                    256
+
+#define RES_SIZE_PLAYER_W                   50
+#define RES_SIZE_PLAYER_H                   50
+
+#define RES_POS_BOSS_1_X                    256
+#define RES_POS_BOSS_1_Y                    0
+#define RES_POS_BOSS_1_W                    256
+#define RES_POS_BOSS_1_H                    256
+
+#define RES_SIZE_BOSS_1_W                   50
+#define RES_SIZE_BOSS_1_H                   50
+
+#define RES_POS_ENEMY_1_X                   0
+#define RES_POS_ENEMY_1_Y                   256
+#define RES_POS_ENEMY_1_W                   256
+#define RES_POS_ENEMY_1_H                   256
+
+#define RES_POS_ENEMY_2_X                   256
+#define RES_POS_ENEMY_2_Y                   256
+#define RES_POS_ENEMY_2_W                   256
+#define RES_POS_ENEMY_2_H                   256
+
+#endif

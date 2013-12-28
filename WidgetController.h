@@ -1,9 +1,6 @@
 #ifndef WIDGETCONTROLLER_H
 #define WIDGETCONTROLLER_H
-/**
- * 管理基本的2D图形。
- * @author ZHG <CyberZHG@gmail.com>
- */
+
 #include <vector>
 
 class Widget;
@@ -31,4 +28,4 @@ private:
     WidgetBuffer2DController *_widgetBufferController;
 };
 
-#endif // WIDGETCONTROLLER_H
+#endif

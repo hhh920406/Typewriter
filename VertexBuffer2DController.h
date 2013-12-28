@@ -1,9 +1,6 @@
 #ifndef VERTEXBUFFER2DCONTROLLER_H
 #define VERTEXBUFFER2DCONTROLLER_H
-/**
- * 管理顶点缓存。
- * @author ZHG <CyberZHG@gmail.com>
- */
+
 #include <map>
 
 class VertexBuffer2D;
@@ -53,4 +50,4 @@ protected:
     virtual VertexBuffer2D* createVertexBuffer(float width, float height, float tu[4], float tv[4]);
 };
 
-#endif // VERTEXBUFFER2DCONTROLLER_H
+#endif

@@ -1,9 +1,6 @@
 #ifndef RECT2D_H
 #define RECT2D_H
-/**
- * 二维的矩形。
- * @author ZHG <CyberZHG@gmail.com>
- */
+
 #include "Point2D.h"
 
 class Rect2D : public Point2D
@@ -25,4 +22,4 @@ protected:
     float _height;
 };
 
-#endif // RECT2D_H
+#endif
