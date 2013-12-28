@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -25,7 +26,22 @@ void initD3D(HWND hWnd) {
     IDirect3D9_CreateDevice(g_pD3D, D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &g_pd3dDevice);
 }
 
+int lastTime;
+enum Scene {
+    SCENE_START,
+    SCENE_MAINMENU,
+    SCENE_MAINGAME,
+    SCENE_EXTRAGAME,
+    SCENE_ENDING,
+    SCENE_SCORE
+};
+enum Scene currentScene = SCENE_START;
+
 void render() {
+    int currentTime = timeGetTime();
+    if ((currentTime - lastTime) * 60 < 1000) {
+        return;
+    }
     IDirect3DDevice9_Clear(g_pd3dDevice, 0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
     IDirect3DDevice9_BeginScene(g_pd3dDevice);
     IDirect3DDevice9_EndScene(g_pd3dDevice);
@@ -113,10 +129,15 @@ void createWindow() {
 }
 
 void messageLoop() {
-    MSG msg;
-    while (GetMessage(&msg, NULL, 0, 0)) {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
+    MSG message;
+    lastTime = timeGetTime();
+    while (message.message != WM_QUIT) {
+        if (PeekMessage(&message, NULL, 0U, 0U, PM_REMOVE)) {
+            TranslateMessage(&message);
+            DispatchMessage(&message);
+        } else {
+            render();
+        }
     }
 }
 
