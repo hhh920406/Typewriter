@@ -24,11 +24,11 @@ void Sprite2DController::setTextureLocation(int index, const char *location)
 
 void Sprite2DController::initSprite(Sprite2D* sprite,
                                     int textureIndex,
-                                    int textureX1, int textureY1,
-                                    int textureX2, int textureY2,
+                                    int textureX, int textureY,
+                                    int textureW, int textureH,
                                     int textureWidth, int textureHeight)
 {
-    VertexBuffer2D *vertexBuffer = this->_vertexBufferController->getVertexBuffer(textureX1, textureY1, textureX2, textureY2, textureWidth, textureHeight);
+    VertexBuffer2D *vertexBuffer = this->_vertexBufferController->getVertexBuffer(textureX, textureY, (textureX + textureW), (textureY + textureH), textureWidth, textureHeight);
     Texture2D *texture = this->_textureController->getTexture(textureIndex);
     sprite->setVertexBuffer(vertexBuffer);
     sprite->setTexture(texture);

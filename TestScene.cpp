@@ -25,7 +25,7 @@ void TestScene::load()
         double angle = i / 100.0 * PI + rand() % 30 / 180.0 * PI + (i % 4) * PI / 2;
         double speed = 0.2 + rand() % 100 / 1000.0;
         sprite = new TestSprite2D(80, 80);
-        framework->spriteController()->initSprite(sprite, 0, 192, 128, 256, 192, 1024, 1024);
+        framework->spriteController()->initSprite(sprite, 0, 192, 128, 64, 64, 1024, 1024);
         sprite->setVelocity(Vector2D(speed * cos(angle), speed * sin(angle)));
         sprite->setBirth(i);
         sprite->translateTo(50 + 500 / 2, 50 + 500 / 2);
@@ -33,7 +33,7 @@ void TestScene::load()
         this->addSprite(sprite, 0);
 
         sprite = new TestSprite2D(30, 30);
-        framework->spriteController()->initSprite(sprite, 0, 512, 0, 576, 64, 1024, 1024);
+        framework->spriteController()->initSprite(sprite, 0, 512, 0, 64, 64, 1024, 1024);
         sprite->setVelocity(Vector2D(speed * cos(angle), speed * sin(angle)));
         sprite->setBirth(i);
         sprite->translateTo(50 + 500 / 2, 50 + 500 / 2);
@@ -51,19 +51,19 @@ void TestScene::load()
     widget = new Widget();
     framework->widgetController()->initWidget(widget, 1,
                                               50, 0, 550, 50,
-                                              50, 0, 600, 50,
+                                              50, 0, 550, 50,
                                               800, 600);
     this->addWidget(widget);
     widget = new Widget();
     framework->widgetController()->initWidget(widget, 1,
                                               50, 550, 550, 50,
-                                              50, 550, 600, 600,
+                                              50, 550, 550, 50,
                                               800, 600);
     this->addWidget(widget);
     widget = new Widget();
     framework->widgetController()->initWidget(widget, 1,
                                               550, 0, 250, 600,
-                                              550, 0, 800, 600,
+                                              550, 0, 250, 600,
                                               800, 600);
     this->addWidget(widget);
 }

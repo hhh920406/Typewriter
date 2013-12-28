@@ -24,16 +24,16 @@ void WidgetController::initWidget(Widget* widget,
                                   int textureIndex,
                                   int x, int y,
                                   int width, int height,
-                                  int textureX1, int textureY1,
-                                  int textureX2, int textureY2,
+                                  int textureX, int textureY,
+                                  int textureW, int textureH,
                                   int textureWidth, int textureHeight)
 {
     float tu[4];
     float tv[4];
-    tu[0] = tu[2] = 1.0f * textureX1 / textureWidth;
-    tu[1] = tu[3] = 1.0f * textureX2 / textureWidth;
-    tv[0] = tv[1] = 1.0f * textureY1 / textureHeight;
-    tv[2] = tv[3] = 1.0f * textureY2 / textureHeight;
+    tu[0] = tu[2] = 1.0f * textureX / textureWidth;
+    tu[1] = tu[3] = 1.0f * (textureX + textureW) / textureWidth;
+    tv[0] = tv[1] = 1.0f * textureY / textureHeight;
+    tv[2] = tv[3] = 1.0f * (textureY + textureH) / textureHeight;
     WidgetBuffer2D *widgetBuffer = new WidgetBuffer2D(x, y, width, height, tu, tv);
     Texture2D *texture = this->_textureController->getTexture(textureIndex);
     widget->setVertexBuffer(widgetBuffer);

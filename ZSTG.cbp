@@ -206,6 +206,9 @@
 		<Unit filename="main.cpp">
 			<Option virtualFolder="Implement/" />
 		</Unit>
+		<Unit filename="resource.h">
+			<Option virtualFolder="Implement/Define/" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<debugger />

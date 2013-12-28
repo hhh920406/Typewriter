@@ -7,7 +7,6 @@ class TestScene : public Scene
 {
 public:
     TestScene();
-
     virtual void load();
 };
 

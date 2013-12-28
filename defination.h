@@ -2,13 +2,6 @@
 #define DEFINATION_H_INCLUDED
 
 /**
- * 对窗口属性的定义。
- */
-#define WINDOW_TITLE "ZSTG 1 Memset"
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
-
-/**
  * 子弹伤害类型。
  */
 enum BulletAttackType
@@ -59,6 +52,7 @@ enum GameLayer
     GAME_LAYER_JUDGE,       // 判定点的绘制
     GAME_LAYER_EVENT_0,     // 立绘与对话框
     GAME_LAYER_EVENT_1,     // 文字层
+    GAME_LAYER_NUM,
     GAME_LAYER_NULL = 0x7FFFFFFF
 };
 

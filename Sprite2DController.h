@@ -18,8 +18,8 @@ public:
     void setTextureLocation(int index, const char *location);
     void initSprite(Sprite2D* sprite,
                     int textureIndex,
-                    int textureX1, int textureY1,
-                    int textureX2, int textureY2,
+                    int textureX, int textureY,
+                    int textureW, int textureH,
                     int textureWidth, int textureHeight);
     Texture2DController* textureController() const;
     VertexBuffer2DController* vertexBufferController() const;

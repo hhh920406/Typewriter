@@ -20,8 +20,8 @@ public:
                     int textureIndex,
                     int x, int y,
                     int width, int height,
-                    int textureX1, int textureY1,
-                    int textureX2, int textureY2,
+                    int textureX, int textureY,
+                    int textureW, int textureH,
                     int textureWidth, int textureHeight);
     Texture2DController* textureController() const;
     WidgetBuffer2DController* widgetBufferController() const;
