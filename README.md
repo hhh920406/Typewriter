@@ -1,4 +1,4 @@
-ZWiring
+MFC布线
 =======
 
-What wiring.
+毫无意义的面向对象程序设计大作业。
