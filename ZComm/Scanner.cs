@@ -101,6 +101,7 @@ namespace ZComm
 
         private InfoSender infoSender;
         private Thread scanThread;
+        private bool isStopScan = false;
 
         public string StartIP
         {
@@ -144,6 +145,11 @@ namespace ZComm
             }
         }
 
+        public void stopScan()
+        {
+            this.isStopScan = true;
+        }
+
         public void scanAll()
         {
             if (startIP != null && endIP != null)
@@ -153,6 +159,10 @@ namespace ZComm
                 {
                     scanUser(ipAddr);
                     ipAddr.increase();
+                    if (isStopScan)
+                    {
+                        break;
+                    }
                 }
             }
         }
@@ -177,14 +187,14 @@ namespace ZComm
                 int recv = server.ReceiveFrom(bytes, ref remote);
                 if (recv >= 4)
                 {
-                    lock (infoSender)
-                    {
-                        infoSender.sendInfo(" 连接成功。\n");
-                    }
                     UserInfo info = new UserInfo();
                     info.Name = Encoding.ASCII.GetString(bytes, 0, recv).Substring(4);
                     info.IP = ipAddr.ToString();
                     info.Port = this.port;
+                    lock (infoSender)
+                    {
+                        infoSender.sendInfo(" 连接成功。" + info.Name + "\n");
+                    }
                     lock (listener)
                     {
                         listener.addUser(info);
@@ -198,6 +208,7 @@ namespace ZComm
                     infoSender.sendInfo(" 无连接。\n");
                 }
             }
+            server.Close();
         }
     }
 }

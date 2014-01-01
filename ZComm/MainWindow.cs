@@ -36,7 +36,22 @@ namespace ZComm
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
+            if (listener.IsListen)
+            {
+                listener.stopListen();
+                this.buttonStart.Text = "开始";
+            }
+            else
+            {
+                listener.startListen();
+                this.buttonStart.Text = "停止";
+            }
+        }
 
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            scanner.stopScan();
+            listener.stopListen();
         }
     }
 }

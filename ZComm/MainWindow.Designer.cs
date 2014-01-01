@@ -268,6 +268,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "MainWindow";
             this.Text = "局域网通信";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLocalPort)).EndInit();
