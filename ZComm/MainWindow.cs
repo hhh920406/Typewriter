@@ -14,12 +14,12 @@ namespace ZComm
     public partial class MainWindow : Form
     {
         private Scanner scanner;
-        private UserInfoListener listener;
+        private UdpListener listener;
 
         public MainWindow()
         {
             InitializeComponent();
-            this.listener = new UserInfoListener();
+            this.listener = new UdpListener(this);
             this.scanner = new Scanner(this.listener);
             this.textBoxLocalHostName.Text = listener.localInfo.Name;
             this.textBoxLocalIP.Text = listener.localInfo.IP;
@@ -52,6 +52,21 @@ namespace ZComm
         {
             scanner.stopScan();
             listener.stopListen();
+        }
+
+        delegate void AddControlCallback(UserInfoControl control);
+
+        public void addUserControl(UserInfoControl control)
+        {
+            if (this.flowLayoutPanel.InvokeRequired)
+            {
+                AddControlCallback d = new AddControlCallback(addUserControl);
+                this.Invoke(d, new object[] { control });
+            }
+            else
+            {
+                this.flowLayoutPanel.Controls.Add(control);
+            }
         }
     }
 }

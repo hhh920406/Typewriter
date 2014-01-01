@@ -4,7 +4,7 @@ using System.Net.Sockets;
 
 namespace ZComm
 {
-    class UserInfo
+    public class UserInfo
     {
         private string name;
         private string ip;

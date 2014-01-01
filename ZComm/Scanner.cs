@@ -34,12 +34,12 @@ namespace ZComm
             {
                 for (int i = 0; i < 4; ++i)
                 {
-                    if (this.ip[i] > addr.ip[i])
+                    if (this.ip[i] < addr.ip[i])
                     {
-                        return true;
+                        return false;
                     }
                 }
-                return false;
+                return true;
             }
 
             public void increase()
@@ -94,7 +94,7 @@ namespace ZComm
             }
         }
 
-        private UserInfoListener listener;
+        private UdpListener listener;
         private IPAddr startIP;
         private IPAddr endIP;
         private int port;
@@ -121,7 +121,7 @@ namespace ZComm
             set { port = value; }
         }
 
-        public Scanner(UserInfoListener listener)
+        public Scanner(UdpListener listener)
         {
             this.listener = listener;
             infoSender = InfoSender.getInstance();
@@ -169,10 +169,10 @@ namespace ZComm
 
         private void scanUser(IPAddr ipAddr)
         {
-            string send = "SCAN" + listener.localInfo.Name;
+            string send = "SCAN" + listener.localInfo.Name + "\0" + listener.localInfo.Port;
             IPEndPoint ip = new IPEndPoint(IPAddress.Parse(ipAddr.ToString()), this.port);
             Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            byte[] bytes = Encoding.ASCII.GetBytes(send);
+            byte[] bytes = Encoding.UTF8.GetBytes(send);
             server.SendTo(bytes, ip);
             bytes = new byte[1024];
             IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
@@ -188,7 +188,8 @@ namespace ZComm
                 if (recv >= 4)
                 {
                     UserInfo info = new UserInfo();
-                    info.Name = Encoding.ASCII.GetString(bytes, 0, recv).Substring(4);
+                    string[] strs = Encoding.UTF8.GetString(bytes, 0, recv).Substring(4).Split(new char[1] { '\0' });
+                    info.Name = strs[0];
                     info.IP = ipAddr.ToString();
                     info.Port = this.port;
                     lock (infoSender)
