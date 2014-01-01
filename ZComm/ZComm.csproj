@@ -54,13 +54,6 @@
       <DependentUpon>ChatDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="FileSender.cs" />
-    <Compile Include="InfoDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="InfoDialog.Designer.cs">
-      <DependentUpon>InfoDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="InfoSender.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,9 +73,6 @@
     <Compile Include="UdpListener.cs" />
     <EmbeddedResource Include="ChatDialog.resx">
       <DependentUpon>ChatDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="InfoDialog.resx">
-      <DependentUpon>InfoDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>

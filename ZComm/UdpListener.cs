@@ -19,7 +19,6 @@ namespace ZComm
 
         private Thread listenThread;
         private bool isListen = false;
-        private InfoSender infoSender;
 
         private MainWindow mainWindow;
 
@@ -33,7 +32,6 @@ namespace ZComm
             this.users = new ArrayList();
             this.localInfo = new UserInfo();
             this.localInfo.getLocalInfo();
-            infoSender = InfoSender.getInstance();
             this.mainWindow = mainWindow;
         }
 
@@ -42,7 +40,6 @@ namespace ZComm
             this.isListen = true;
             listenThread = new Thread(new ThreadStart(this.listen));
             listenThread.Start();
-            infoSender.sendInfo("开始监听扫描：" + localInfo.IP + ":" + localInfo.Port + "\n");
         }
 
         public void stopListen()
@@ -51,7 +48,6 @@ namespace ZComm
             {
                 this.isListen = false;
                 listenThread.Join();
-                infoSender.sendInfo("停止监听扫描\n");
             }
         }
 
@@ -70,10 +66,6 @@ namespace ZComm
                 {
                     int recv = server.ReceiveFrom(bytes, ref remote);
                     string rstr = Encoding.UTF8.GetString(bytes, 0, recv);
-                    lock (infoSender)
-                    {
-                        infoSender.sendInfo("接收到UDP信息：" + rstr + "\n");
-                    }
                     UserInfo info = new UserInfo();
                     string[] strs = rstr.Substring(4).Split(new char[1]{'\0'});
                     info.Name = strs[0];
