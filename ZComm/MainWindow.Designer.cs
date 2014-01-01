@@ -193,6 +193,7 @@
             this.buttonScan.TabIndex = 6;
             this.buttonScan.Text = "扫描";
             this.buttonScan.UseVisualStyleBackColor = true;
+            this.buttonScan.Click += new System.EventHandler(this.buttonScan_Click);
             // 
             // label6
             // 
@@ -213,6 +214,7 @@
             this.buttonStart.TabIndex = 7;
             this.buttonStart.Text = "开始";
             this.buttonStart.UseVisualStyleBackColor = true;
+            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
             // 
             // numericUpDownLocalPort
             // 

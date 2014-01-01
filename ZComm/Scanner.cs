@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace ZComm
@@ -62,7 +63,7 @@ namespace ZComm
                 }
             }
 
-            public string toString()
+            public override string ToString()
             {
                 return ip[0] + "." + ip[1] + "." + ip[2] + "." + ip[3];
             }
@@ -98,13 +99,13 @@ namespace ZComm
 
         public string StartIP
         {
-            get { return startIP.toString(); }
+            get { return startIP.ToString(); }
             set { IPAddr.TryParse(value, out startIP); }
         }
 
         public string EndIP
         {
-            get { return endIP.toString(); }
+            get { return endIP.ToString(); }
             set { IPAddr.TryParse(value, out endIP); }
         }
 
@@ -118,7 +119,7 @@ namespace ZComm
         {
         }
 
-        ArrayList scan()
+        public ArrayList scan(UserInfo localInfo)
         {
             ArrayList userList = new ArrayList();
             if (startIP != null && endIP != null)
@@ -126,10 +127,45 @@ namespace ZComm
                 IPAddr ipAddr = new IPAddr(startIP);
                 while (endIP.larger(ipAddr))
                 {
+                    UserInfo userInfo = scanUser(localInfo, ipAddr);
+                    if (userInfo != null)
+                    {
+                        userList.Add(userInfo);
+                    }
                     ipAddr.increase();
                 }
             }
             return userList;
+        }
+
+        private UserInfo scanUser(UserInfo localInfo, IPAddr ipAddr)
+        {
+            string send = "SCAN" + localInfo.Name;
+            IPEndPoint ip = new IPEndPoint(IPAddress.Parse(ipAddr.ToString()), this.port);
+            Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            byte[] bytes = Encoding.ASCII.GetBytes(send);
+            server.SendTo(bytes, ip);
+            bytes = new byte[1024];
+            IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
+            EndPoint remote = (EndPoint)sender;
+            server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 300);
+            try
+            {
+                int recv = server.ReceiveFrom(bytes, ref remote);
+                if (recv >= 4)
+                {
+                    UserInfo info = new UserInfo();
+                    info.Name = Encoding.ASCII.GetString(bytes, 0, recv).Substring(4);
+                    info.IP = ipAddr.ToString();
+                    info.Port = this.port;
+                    return info;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            return null;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +13,7 @@ namespace ZComm
 {
     public partial class MainWindow : Form
     {
+        private Scanner scanner;
         private UserInfo localInfo;
 
         public MainWindow()
@@ -22,6 +24,23 @@ namespace ZComm
             this.textBoxLocalHostName.Text = localInfo.Name;
             this.textBoxLocalIP.Text = localInfo.IP;
             this.numericUpDownLocalPort.Value = localInfo.Port;
+        }
+
+        private void buttonScan_Click(object sender, EventArgs e)
+        {
+            if (scanner == null)
+            {
+                scanner = new Scanner();
+            }
+            scanner.StartIP = this.textBoxStartIP.Text;
+            scanner.EndIP = this.textBoxEndIP.Text;
+            scanner.Port = (int)this.numericUpDownRemotePort.Value;
+            ArrayList userList = scanner.scan(localInfo);
+        }
+
+        private void buttonStart_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
