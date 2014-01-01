@@ -43,6 +43,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBoxShow.Location = new System.Drawing.Point(12, 12);
             this.richTextBoxShow.Name = "richTextBoxShow";
+            this.richTextBoxShow.ReadOnly = true;
             this.richTextBoxShow.Size = new System.Drawing.Size(424, 270);
             this.richTextBoxShow.TabIndex = 0;
             this.richTextBoxShow.TabStop = false;
@@ -57,6 +58,7 @@
             this.richTextBoxInput.Size = new System.Drawing.Size(309, 76);
             this.richTextBoxInput.TabIndex = 1;
             this.richTextBoxInput.Text = "";
+            this.richTextBoxInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBoxInput_KeyDown);
             // 
             // buttonMessage
             // 

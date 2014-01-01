@@ -151,21 +151,19 @@ namespace ZComm
             {
                 if (((UserInfo)users[i]).IP == userInfo.IP && ((UserInfo)users[i]).Port == userInfo.Port)
                 {
-                    bool flag = false;
+                    bool flag = true;
                     if (chats[i] == null)
                     {
-                        flag = true;
+                        flag = false;
                     }
                     else if (((ChatDialog)chats[i]).IsDisposed)
                     {
-                        flag = true;
+                        flag = false;
                     }
                     if (flag)
                     {
-                        chats[i] = new ChatDialog((UserInfo)users[i]);
-                        ((ChatDialog)chats[i]).Show();
+                        ((ChatDialog)chats[i]).appendReceive(userInfo.Name);
                     }
-                    ((ChatDialog)chats[i]).appendReceive(userInfo.Name);
                     break;
                 }
             }

@@ -42,10 +42,13 @@ namespace ZComm
             Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             byte[] bytes = Encoding.UTF8.GetBytes(send);
             server.SendTo(bytes, ip);
+            this.richTextBoxShow.SelectionStart = this.richTextBoxShow.Text.Length;
             this.richTextBoxShow.SelectionColor = Color.DarkGreen;
             this.richTextBoxShow.AppendText("本地 " + DateTime.Now.ToLongTimeString() + "\n\n");
             this.richTextBoxShow.SelectionColor = Color.Black;
             this.richTextBoxShow.AppendText(this.richTextBoxInput.Text + "\n\n");
+            this.richTextBoxShow.SelectionStart = this.richTextBoxShow.Text.Length;
+            this.richTextBoxShow.ScrollToCaret();
             this.infoSender.sendInfo("发送信息到" + this.Text + "：" + this.richTextBoxInput.Text);
             this.richTextBoxInput.Text = "";
         }
@@ -62,16 +65,28 @@ namespace ZComm
             }
             else
             {
+                this.richTextBoxShow.SelectionStart = this.richTextBoxShow.Text.Length;
                 this.richTextBoxShow.SelectionColor = Color.DarkBlue;
                 this.richTextBoxShow.AppendText(this.Text + " " + DateTime.Now.ToLongTimeString() + "\n\n");
                 this.richTextBoxShow.SelectionColor = Color.Black;
                 this.richTextBoxShow.AppendText(text + "\n\n");
+                this.richTextBoxShow.SelectionStart = this.richTextBoxShow.Text.Length;
+                this.richTextBoxShow.ScrollToCaret();
             }
         }
 
         private void ChatDialog_Shown(object sender, EventArgs e)
         {
             this.loadFinished = true;
+        }
+
+        private void richTextBoxInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Enter)
+            {
+                this.buttonMessage.PerformClick();
+            }
+            this.richTextBoxInput.Text = "";
         }
     }
 }

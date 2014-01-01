@@ -53,6 +53,7 @@
     <Compile Include="ChatDialog.Designer.cs">
       <DependentUpon>ChatDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileSender.cs" />
     <Compile Include="InfoDialog.cs">
       <SubType>Form</SubType>
     </Compile>
