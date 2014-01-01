@@ -99,7 +99,6 @@ namespace ZComm
         private IPAddr endIP;
         private int port;
 
-        private InfoSender infoSender;
         private Thread scanThread;
         private bool isStopScan = false;
 
@@ -124,7 +123,6 @@ namespace ZComm
         public Scanner(UdpListener listener)
         {
             this.listener = listener;
-            infoSender = InfoSender.getInstance();
         }
 
         public void scan()
@@ -180,10 +178,6 @@ namespace ZComm
             server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 1000);
             try
             {
-                lock (infoSender)
-                {
-                    infoSender.sendInfo("扫描：" + ipAddr.ToString() + ":" + this.port);
-                }
                 int recv = server.ReceiveFrom(bytes, ref remote);
                 if (recv >= 4)
                 {
@@ -192,10 +186,6 @@ namespace ZComm
                     info.Name = strs[0];
                     info.IP = ipAddr.ToString();
                     info.Port = this.port;
-                    lock (infoSender)
-                    {
-                        infoSender.sendInfo(" 连接成功。" + info.Name + "\n");
-                    }
                     lock (listener)
                     {
                         listener.addUser(info);
@@ -204,10 +194,6 @@ namespace ZComm
             }
             catch
             {
-                lock (infoSender)
-                {
-                    infoSender.sendInfo(" 无连接。\n");
-                }
             }
             server.Close();
         }

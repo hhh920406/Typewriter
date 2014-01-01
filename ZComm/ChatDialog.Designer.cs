@@ -33,7 +33,6 @@
             this.richTextBoxInput = new System.Windows.Forms.RichTextBox();
             this.buttonMessage = new System.Windows.Forms.Button();
             this.buttonFile = new System.Windows.Forms.Button();
-            this.progressBarFile = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // richTextBoxShow
@@ -44,7 +43,7 @@
             this.richTextBoxShow.Location = new System.Drawing.Point(12, 12);
             this.richTextBoxShow.Name = "richTextBoxShow";
             this.richTextBoxShow.ReadOnly = true;
-            this.richTextBoxShow.Size = new System.Drawing.Size(424, 270);
+            this.richTextBoxShow.Size = new System.Drawing.Size(424, 289);
             this.richTextBoxShow.TabIndex = 0;
             this.richTextBoxShow.TabStop = false;
             this.richTextBoxShow.Text = "";
@@ -58,7 +57,7 @@
             this.richTextBoxInput.Size = new System.Drawing.Size(309, 76);
             this.richTextBoxInput.TabIndex = 1;
             this.richTextBoxInput.Text = "";
-            this.richTextBoxInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBoxInput_KeyDown);
+            this.richTextBoxInput.KeyUp += new System.Windows.Forms.KeyEventHandler(this.richTextBoxInput_KeyUp);
             // 
             // buttonMessage
             // 
@@ -80,15 +79,7 @@
             this.buttonFile.TabIndex = 3;
             this.buttonFile.Text = "传送文件";
             this.buttonFile.UseVisualStyleBackColor = true;
-            // 
-            // progressBarFile
-            // 
-            this.progressBarFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBarFile.Location = new System.Drawing.Point(12, 288);
-            this.progressBarFile.Name = "progressBarFile";
-            this.progressBarFile.Size = new System.Drawing.Size(424, 23);
-            this.progressBarFile.TabIndex = 4;
+            this.buttonFile.Click += new System.EventHandler(this.buttonFile_Click);
             // 
             // ChatDialog
             // 
@@ -96,7 +87,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(448, 404);
-            this.Controls.Add(this.progressBarFile);
             this.Controls.Add(this.buttonFile);
             this.Controls.Add(this.buttonMessage);
             this.Controls.Add(this.richTextBoxInput);
@@ -105,7 +95,6 @@
             this.Name = "ChatDialog";
             this.Text = "ChatDialog";
             this.Load += new System.EventHandler(this.ChatDialog_Load);
-            this.Shown += new System.EventHandler(this.ChatDialog_Shown);
             this.ResumeLayout(false);
 
         }
@@ -116,6 +105,5 @@
         private System.Windows.Forms.RichTextBox richTextBoxInput;
         private System.Windows.Forms.Button buttonMessage;
         private System.Windows.Forms.Button buttonFile;
-        private System.Windows.Forms.ProgressBar progressBarFile;
     }
 }

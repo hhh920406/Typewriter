@@ -70,6 +70,10 @@ namespace ZComm
                 {
                     int recv = server.ReceiveFrom(bytes, ref remote);
                     string rstr = Encoding.UTF8.GetString(bytes, 0, recv);
+                    lock (infoSender)
+                    {
+                        infoSender.sendInfo("接收到UDP信息：" + rstr + "\n");
+                    }
                     UserInfo info = new UserInfo();
                     string[] strs = rstr.Substring(4).Split(new char[1]{'\0'});
                     info.Name = strs[0];
@@ -78,18 +82,18 @@ namespace ZComm
                     if (rstr.Substring(0, 4).Equals("SCAN"))
                     {
                         this.addUser(info);
-                        lock (infoSender)
-                        {
-                            infoSender.sendInfo("监听到连接：" + remote.ToString() + "\n");
-                        }
                     }
                     else if (rstr.Substring(0, 4).Equals("MESS"))
                     {
                         this.addMessage(info);
-                        lock (infoSender)
-                        {
-                            infoSender.sendInfo("监听到消息：" + remote.ToString() + " " + info.Name + "\n");
-                        }
+                    }
+                    else if (rstr.Substring(0, 4).Equals("FISE"))
+                    {
+                        this.sendFileRequest(info);
+                    }
+                    else if (rstr.Substring(0, 4).Equals("FIRE"))
+                    {
+                        this.receiveFile(info);
                     }
                     string send = "SCAN" + localInfo.Name + "\0" + localInfo.Port;
                     bytes = Encoding.UTF8.GetBytes(send);
@@ -163,6 +167,61 @@ namespace ZComm
                     if (flag)
                     {
                         ((ChatDialog)chats[i]).appendReceive(userInfo.Name);
+                    }
+                    break;
+                }
+            }
+        }
+
+        public void sendFileRequest(UserInfo userInfo)
+        {
+            for (int i = 0; i < users.Count; ++i)
+            {
+                if (((UserInfo)users[i]).IP == userInfo.IP && ((UserInfo)users[i]).Port == userInfo.Port)
+                {
+                    bool flag = true;
+                    if (chats[i] == null)
+                    {
+                        flag = false;
+                    }
+                    else if (((ChatDialog)chats[i]).IsDisposed)
+                    {
+                        flag = false;
+                    }
+                    if (flag)
+                    {
+                        string[] strs = userInfo.Name.Split(new char[1] { '/' });
+                        if (strs.Length == 2)
+                        {
+                            string fileName = strs[0];
+                            long size = Int64.Parse(strs[1]);
+                            ((ChatDialog)chats[i]).sendFileRequest(fileName, size);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        public void receiveFile(UserInfo userInfo)
+        {
+            for (int i = 0; i < users.Count; ++i)
+            {
+                if (((UserInfo)users[i]).IP == userInfo.IP && ((UserInfo)users[i]).Port == userInfo.Port)
+                {
+                    bool flag = true;
+                    if (chats[i] == null)
+                    {
+                        flag = false;
+                    }
+                    else if (((ChatDialog)chats[i]).IsDisposed)
+                    {
+                        flag = false;
+                    }
+                    if (flag)
+                    {
+                        int port = Int32.Parse(userInfo.Name);
+                        ((ChatDialog)chats[i]).receiveFileRequest(port);
                     }
                     break;
                 }

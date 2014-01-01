@@ -43,6 +43,8 @@ namespace ZComm
             }
             else
             {
+                listener.localInfo.Name = this.textBoxLocalHostName.Text;
+                listener.localInfo.Port = (int)this.numericUpDownLocalPort.Value;
                 listener.startListen();
                 this.buttonStart.Text = "停止";
             }
