@@ -40,9 +40,9 @@ namespace ZComm
             server.Close();
             this.richTextBoxShow.SelectionStart = this.richTextBoxShow.Text.Length;
             this.richTextBoxShow.SelectionColor = Color.DarkGreen;
-            this.richTextBoxShow.AppendText("本地 " + DateTime.Now.ToLongTimeString() + "\n\n");
+            this.richTextBoxShow.AppendText("本地 " + DateTime.Now.ToLongTimeString() + "\n");
             this.richTextBoxShow.SelectionColor = Color.Black;
-            this.richTextBoxShow.AppendText(this.richTextBoxInput.Text + "\n\n");
+            this.richTextBoxShow.AppendText(this.richTextBoxInput.Text + "\n");
             this.richTextBoxShow.SelectionStart = this.richTextBoxShow.Text.Length;
             this.richTextBoxShow.ScrollToCaret();
             this.richTextBoxInput.Text = "";
@@ -61,9 +61,9 @@ namespace ZComm
             {
                 this.richTextBoxShow.SelectionStart = this.richTextBoxShow.Text.Length;
                 this.richTextBoxShow.SelectionColor = Color.DarkBlue;
-                this.richTextBoxShow.AppendText(this.Text + " " + DateTime.Now.ToLongTimeString() + "\n\n");
+                this.richTextBoxShow.AppendText(this.Text + " " + DateTime.Now.ToLongTimeString() + "\n");
                 this.richTextBoxShow.SelectionColor = Color.Black;
-                this.richTextBoxShow.AppendText(text + "\n\n");
+                this.richTextBoxShow.AppendText(text + "\n");
                 this.richTextBoxShow.SelectionStart = this.richTextBoxShow.Text.Length;
                 this.richTextBoxShow.ScrollToCaret();
             }

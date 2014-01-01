@@ -74,6 +74,9 @@ namespace ZComm
                     if (rstr.Substring(0, 4).Equals("SCAN"))
                     {
                         this.addUser(info);
+                        string send = "SCAN" + localInfo.Name + "\0" + localInfo.Port;
+                        bytes = Encoding.UTF8.GetBytes(send);
+                        server.SendTo(bytes, bytes.Length, SocketFlags.None, remote);
                     }
                     else if (rstr.Substring(0, 4).Equals("MESS"))
                     {
@@ -87,9 +90,6 @@ namespace ZComm
                     {
                         this.receiveFile(info);
                     }
-                    string send = "SCAN" + localInfo.Name + "\0" + localInfo.Port;
-                    bytes = Encoding.UTF8.GetBytes(send);
-                    server.SendTo(bytes, bytes.Length, SocketFlags.None, remote);
                 }
                 catch
                 {

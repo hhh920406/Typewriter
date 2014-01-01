@@ -40,6 +40,7 @@
             this.richTextBoxShow.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBoxShow.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBoxShow.Location = new System.Drawing.Point(12, 12);
             this.richTextBoxShow.Name = "richTextBoxShow";
             this.richTextBoxShow.ReadOnly = true;
@@ -52,6 +53,7 @@
             // 
             this.richTextBoxInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBoxInput.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBoxInput.Location = new System.Drawing.Point(12, 317);
             this.richTextBoxInput.Name = "richTextBoxInput";
             this.richTextBoxInput.Size = new System.Drawing.Size(309, 76);
