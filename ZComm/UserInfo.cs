@@ -35,6 +35,9 @@ namespace ZComm
             this.port = 19627;
         }
 
+        /// <summary>
+        /// 获取主机名和联网的IP。
+        /// </summary>
         public void getLocalInfo()
         {
             this.name = Dns.GetHostName();
