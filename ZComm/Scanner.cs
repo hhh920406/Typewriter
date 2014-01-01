@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace ZComm
 {
@@ -93,9 +94,13 @@ namespace ZComm
             }
         }
 
+        private UserInfoListener listener;
         private IPAddr startIP;
         private IPAddr endIP;
         private int port;
+
+        private InfoSender infoSender;
+        private Thread scanThread;
 
         public string StartIP
         {
@@ -115,32 +120,46 @@ namespace ZComm
             set { port = value; }
         }
 
-        public Scanner()
+        public Scanner(UserInfoListener listener)
         {
+            this.listener = listener;
+            infoSender = InfoSender.getInstance();
         }
 
-        public ArrayList scan(UserInfo localInfo)
+        public void scan()
         {
-            ArrayList userList = new ArrayList();
+            bool flag = false;
+            if (this.scanThread == null)
+            {
+                flag = true;
+            }
+            else if (!this.scanThread.IsAlive)
+            {
+                flag = true;
+            }
+            if (flag)
+            {
+                this.scanThread = new Thread(new ThreadStart(this.scanAll));
+                this.scanThread.Start();
+            }
+        }
+
+        public void scanAll()
+        {
             if (startIP != null && endIP != null)
             {
                 IPAddr ipAddr = new IPAddr(startIP);
                 while (endIP.larger(ipAddr))
                 {
-                    UserInfo userInfo = scanUser(localInfo, ipAddr);
-                    if (userInfo != null)
-                    {
-                        userList.Add(userInfo);
-                    }
+                    scanUser(ipAddr);
                     ipAddr.increase();
                 }
             }
-            return userList;
         }
 
-        private UserInfo scanUser(UserInfo localInfo, IPAddr ipAddr)
+        private void scanUser(IPAddr ipAddr)
         {
-            string send = "SCAN" + localInfo.Name;
+            string send = "SCAN" + listener.localInfo.Name;
             IPEndPoint ip = new IPEndPoint(IPAddress.Parse(ipAddr.ToString()), this.port);
             Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             byte[] bytes = Encoding.ASCII.GetBytes(send);
@@ -148,24 +167,37 @@ namespace ZComm
             bytes = new byte[1024];
             IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
             EndPoint remote = (EndPoint)sender;
-            server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 300);
+            server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 1000);
             try
             {
+                lock (infoSender)
+                {
+                    infoSender.sendInfo("扫描：" + ipAddr.ToString() + ":" + this.port);
+                }
                 int recv = server.ReceiveFrom(bytes, ref remote);
                 if (recv >= 4)
                 {
+                    lock (infoSender)
+                    {
+                        infoSender.sendInfo(" 连接成功。\n");
+                    }
                     UserInfo info = new UserInfo();
                     info.Name = Encoding.ASCII.GetString(bytes, 0, recv).Substring(4);
                     info.IP = ipAddr.ToString();
                     info.Port = this.port;
-                    return info;
+                    lock (listener)
+                    {
+                        listener.addUser(info);
+                    }
                 }
             }
-            catch (Exception e)
+            catch
             {
-                Console.WriteLine(e.ToString());
+                lock (infoSender)
+                {
+                    infoSender.sendInfo(" 无连接。\n");
+                }
             }
-            return null;
         }
     }
 }

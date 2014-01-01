@@ -14,28 +14,24 @@ namespace ZComm
     public partial class MainWindow : Form
     {
         private Scanner scanner;
-        private UserInfo localInfo;
+        private UserInfoListener listener;
 
         public MainWindow()
         {
             InitializeComponent();
-            this.localInfo = new UserInfo();
-            this.localInfo.getLocalInfo();
-            this.textBoxLocalHostName.Text = localInfo.Name;
-            this.textBoxLocalIP.Text = localInfo.IP;
-            this.numericUpDownLocalPort.Value = localInfo.Port;
+            this.listener = new UserInfoListener();
+            this.scanner = new Scanner(this.listener);
+            this.textBoxLocalHostName.Text = listener.localInfo.Name;
+            this.textBoxLocalIP.Text = listener.localInfo.IP;
+            this.numericUpDownLocalPort.Value = listener.localInfo.Port;
         }
 
         private void buttonScan_Click(object sender, EventArgs e)
         {
-            if (scanner == null)
-            {
-                scanner = new Scanner();
-            }
             scanner.StartIP = this.textBoxStartIP.Text;
             scanner.EndIP = this.textBoxEndIP.Text;
             scanner.Port = (int)this.numericUpDownRemotePort.Value;
-            ArrayList userList = scanner.scan(localInfo);
+            scanner.scan();
         }
 
         private void buttonStart_Click(object sender, EventArgs e)

@@ -32,22 +32,22 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxLocalHostName = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.numericUpDownLocalPort = new System.Windows.Forms.NumericUpDown();
+            this.buttonStart = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
             this.textBoxLocalIP = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBoxStartIP = new System.Windows.Forms.TextBox();
-            this.textBoxEndIP = new System.Windows.Forms.TextBox();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.buttonScan = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.buttonStart = new System.Windows.Forms.Button();
-            this.numericUpDownLocalPort = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownRemotePort = new System.Windows.Forms.NumericUpDown();
+            this.buttonScan = new System.Windows.Forms.Button();
+            this.textBoxEndIP = new System.Windows.Forms.TextBox();
+            this.textBoxStartIP = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLocalPort)).BeginInit();
+            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRemotePort)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,6 +97,47 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "本地信息";
             // 
+            // numericUpDownLocalPort
+            // 
+            this.numericUpDownLocalPort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDownLocalPort.Location = new System.Drawing.Point(79, 77);
+            this.numericUpDownLocalPort.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.numericUpDownLocalPort.Name = "numericUpDownLocalPort";
+            this.numericUpDownLocalPort.Size = new System.Drawing.Size(105, 20);
+            this.numericUpDownLocalPort.TabIndex = 8;
+            this.numericUpDownLocalPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownLocalPort.Value = new decimal(new int[] {
+            19627,
+            0,
+            0,
+            0});
+            // 
+            // buttonStart
+            // 
+            this.buttonStart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonStart.Location = new System.Drawing.Point(9, 102);
+            this.buttonStart.Name = "buttonStart";
+            this.buttonStart.Size = new System.Drawing.Size(175, 35);
+            this.buttonStart.TabIndex = 7;
+            this.buttonStart.Text = "开始";
+            this.buttonStart.UseVisualStyleBackColor = true;
+            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 79);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(67, 13);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "监听端口：";
+            // 
             // textBoxLocalIP
             // 
             this.textBoxLocalIP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -126,116 +167,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "用户扫描";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 26);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "起始IP：";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 52);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 13);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "终止IP：";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 78);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(43, 13);
-            this.label5.TabIndex = 2;
-            this.label5.Text = "端口：";
-            // 
-            // textBoxStartIP
-            // 
-            this.textBoxStartIP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxStartIP.Location = new System.Drawing.Point(65, 23);
-            this.textBoxStartIP.Name = "textBoxStartIP";
-            this.textBoxStartIP.Size = new System.Drawing.Size(119, 20);
-            this.textBoxStartIP.TabIndex = 3;
-            this.textBoxStartIP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBoxEndIP
-            // 
-            this.textBoxEndIP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxEndIP.Location = new System.Drawing.Point(65, 49);
-            this.textBoxEndIP.Name = "textBoxEndIP";
-            this.textBoxEndIP.Size = new System.Drawing.Size(119, 20);
-            this.textBoxEndIP.TabIndex = 4;
-            this.textBoxEndIP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 161);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(190, 213);
-            this.flowLayoutPanel1.TabIndex = 6;
-            // 
-            // buttonScan
-            // 
-            this.buttonScan.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonScan.Location = new System.Drawing.Point(9, 104);
-            this.buttonScan.Name = "buttonScan";
-            this.buttonScan.Size = new System.Drawing.Size(175, 31);
-            this.buttonScan.TabIndex = 6;
-            this.buttonScan.Text = "扫描";
-            this.buttonScan.UseVisualStyleBackColor = true;
-            this.buttonScan.Click += new System.EventHandler(this.buttonScan_Click);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 79);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(67, 13);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "监听端口：";
-            // 
-            // buttonStart
-            // 
-            this.buttonStart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonStart.Location = new System.Drawing.Point(9, 102);
-            this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(175, 35);
-            this.buttonStart.TabIndex = 7;
-            this.buttonStart.Text = "开始";
-            this.buttonStart.UseVisualStyleBackColor = true;
-            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
-            // 
-            // numericUpDownLocalPort
-            // 
-            this.numericUpDownLocalPort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDownLocalPort.Location = new System.Drawing.Point(79, 77);
-            this.numericUpDownLocalPort.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.numericUpDownLocalPort.Name = "numericUpDownLocalPort";
-            this.numericUpDownLocalPort.Size = new System.Drawing.Size(105, 20);
-            this.numericUpDownLocalPort.TabIndex = 8;
-            this.numericUpDownLocalPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDownLocalPort.Value = new decimal(new int[] {
-            19627,
-            0,
-            0,
-            0});
-            // 
             // numericUpDownRemotePort
             // 
             this.numericUpDownRemotePort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -256,6 +187,77 @@
             0,
             0});
             // 
+            // buttonScan
+            // 
+            this.buttonScan.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonScan.Location = new System.Drawing.Point(9, 104);
+            this.buttonScan.Name = "buttonScan";
+            this.buttonScan.Size = new System.Drawing.Size(175, 31);
+            this.buttonScan.TabIndex = 6;
+            this.buttonScan.Text = "扫描";
+            this.buttonScan.UseVisualStyleBackColor = true;
+            this.buttonScan.Click += new System.EventHandler(this.buttonScan_Click);
+            // 
+            // textBoxEndIP
+            // 
+            this.textBoxEndIP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxEndIP.Location = new System.Drawing.Point(65, 49);
+            this.textBoxEndIP.Name = "textBoxEndIP";
+            this.textBoxEndIP.Size = new System.Drawing.Size(119, 20);
+            this.textBoxEndIP.TabIndex = 4;
+            this.textBoxEndIP.Text = "192.168.56.20";
+            this.textBoxEndIP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxStartIP
+            // 
+            this.textBoxStartIP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxStartIP.Location = new System.Drawing.Point(65, 23);
+            this.textBoxStartIP.Name = "textBoxStartIP";
+            this.textBoxStartIP.Size = new System.Drawing.Size(119, 20);
+            this.textBoxStartIP.TabIndex = 3;
+            this.textBoxStartIP.Text = "192.168.56.1";
+            this.textBoxStartIP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 78);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(43, 13);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "端口：";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 52);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 13);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "终止IP：";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 26);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "起始IP：";
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 161);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(190, 213);
+            this.flowLayoutPanel1.TabIndex = 6;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -268,9 +270,9 @@
             this.Text = "局域网通信";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLocalPort)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLocalPort)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRemotePort)).EndInit();
             this.ResumeLayout(false);
 
