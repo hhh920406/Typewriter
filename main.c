@@ -12,8 +12,8 @@ const char* WINDOW_CLASS_NAME = "Ant";
 const char* WINDOW_CAPTION = "Ant";
 const int WINDOW_POSITION_X = 50;
 const int WINDOW_POSITION_Y = 50;
-const int WINDOW_SIZE_WIDTH = 800;
-const int WINDOW_SIZE_HEIGHT = 600;
+const int WINDOW_SIZE_WIDTH = 1024;
+const int WINDOW_SIZE_HEIGHT = 768;
 const int RECT_LENGTH = 5;
 
 LPDIRECT3D9 g_pD3D = NULL;
@@ -24,10 +24,6 @@ struct stD3DVertex {
     unsigned long color;
     float tu, tv;
 };
-
-int totalFood;
-int totalRed;
-int totalBlue;
 
 LPDIRECT3DVERTEXBUFFER9 createRect(int r, int g, int b) {
     void *ptr;
@@ -45,10 +41,6 @@ LPDIRECT3DVERTEXBUFFER9 createRect(int r, int g, int b) {
     return rect;
 }
 
-LPDIRECT3DVERTEXBUFFER9 bufferRedAnt;
-LPDIRECT3DVERTEXBUFFER9 bufferBlueAnt;
-LPDIRECT3DVERTEXBUFFER9 bufferFood;
-
 struct Position {
     int x, y;
 };
@@ -61,6 +53,14 @@ int shiftY(struct Position pos) {
     return pos.y - (WINDOW_SIZE_HEIGHT >> 1);
 }
 
+enum AntColor {
+    ANT_RED, ANT_ORANGE, ANT_YELLOW, ANT_GREEN, ANT_CYAN, ANT_BLUE, ANT_PURPLE, ANT_BLACK, ANT_COLOR_NUM
+};
+
+int foodNum;
+int antNum[ANT_COLOR_NUM];
+int antTotalNum;
+
 struct Food {
     struct Position pos;
     int age;
@@ -68,7 +68,6 @@ struct Food {
 
 struct Food createFood() {
     struct Food food;
-    ++totalFood;
     food.pos.x = rand() % WINDOW_SIZE_WIDTH;
     food.pos.y = rand() % WINDOW_SIZE_HEIGHT;
     food.age = 0;
@@ -79,41 +78,42 @@ enum Dir {
     UP, RIGHT, DOWN, LEFT
 };
 
+LPDIRECT3DVERTEXBUFFER9 bufferAnt[ANT_COLOR_NUM];
+LPDIRECT3DVERTEXBUFFER9 bufferFood;
+
 struct Ant {
     struct Position pos;
     int hunger;
+    enum AntColor color;
     enum Dir dir;
 };
 
-struct Ant createAnt() {
+struct Ant createAnt(enum AntColor color) {
     struct Ant ant;
     ant.pos.x = rand() % WINDOW_SIZE_WIDTH;
     ant.pos.y = rand() % WINDOW_SIZE_HEIGHT;
     ant.hunger = 0;
+    ant.color = color;
+    ++antNum[ant.color];
     ant.dir = rand() % 4;
     return ant;
 }
 
 #define MAX_FOOD 2038
-#define MAX_ANT 2038
+#define MAX_ANT 203800
 struct Food food[MAX_FOOD + 10];
-struct Ant redAnt[MAX_ANT + 10];
-struct Ant blueAnt[MAX_ANT + 10];
-int foodNum;
-int redAntNum;
-int blueAntNum;
+struct Ant ant[MAX_ANT + 10];
 
 void initAnt() {
     int i;
-    for (i = 0; i < 100; ++i) {
+    foodNum = 100;
+    antTotalNum = 100;
+    for (i = 0; i < foodNum; ++i) {
         food[i] = createFood();
     }
-    for (i = 0; i < 10; ++i) {
-        redAnt[i] = createAnt();
-        blueAnt[i] = createAnt();
+    for (i = 0; i < antTotalNum; ++i) {
+        ant[i] = createAnt(rand() % ANT_COLOR_NUM);
     }
-    foodNum = 100;
-    redAntNum = blueAntNum = 10;
 }
 
 void foodMove(struct Food *food) {
@@ -185,15 +185,10 @@ void deleteFood(int i) {
     }
 }
 
-void deleteRedAnt(int i) {
-    if (redAntNum > 0) {
-        redAnt[i] = redAnt[redAntNum--];
-    }
-}
-
-void deleteBlueAnt(int i) {
-    if (blueAntNum > 0) {
-        blueAnt[i] = blueAnt[blueAntNum--];
+void deleteAnt(int i) {
+    --antNum[ant[i].color];
+    if (antTotalNum > 0) {
+        ant[i] = ant[antTotalNum--];
     }
 }
 
@@ -202,61 +197,31 @@ int dist(struct Position a, struct Position b) {
 }
 
 void findFood(struct Ant *ant) {
-    int i;
+    int i, j;
     for (i = 0; i < foodNum; ++i) {
         if (dist(ant->pos, food[i].pos) < RECT_LENGTH * RECT_LENGTH) {
             ant->hunger -= 1100;
             deleteFood(i);
+            for (j = 0; j < 20; ++j) {
+                if (antTotalNum < MAX_ANT) {
+                    ant[antTotalNum] = createAnt(ant->color);
+                    ant[antTotalNum].pos.x = ant->pos.x;
+                    ant[antTotalNum].pos.y = ant->pos.y;
+                    ++antTotalNum;
+                    ant->hunger += 10;
+                }
+            }
             break;
         }
     }
 }
 
-int redAntMove(struct Ant *ant) {
+int antMove(struct Ant *ant) {
     randomWalk(ant);
     findFood(ant);
     if (ant->hunger > 2000) {
         if (rand() < 100) {
             return -1;
-        }
-    }
-    if (ant->hunger < -300) {
-        if (redAntNum < MAX_ANT) {
-            redAnt[redAntNum] = createAnt();
-            ++totalRed;
-            redAnt[redAntNum].pos.x = ant->pos.x;
-            redAnt[redAntNum].pos.y = ant->pos.y;
-            ++redAntNum;
-            if (redAntNum > 100) {
-                ant->hunger += 100;
-            } else {
-                ant->hunger += 5;
-            }
-        }
-    }
-    return 0;
-}
-
-int blueAntMove(struct Ant *ant) {
-    randomWalk(ant);
-    findFood(ant);
-    if (ant->hunger > 2000) {
-        if (rand() < 100) {
-            return -1;
-        }
-    }
-    if (ant->hunger < -300) {
-        if (blueAntNum < MAX_ANT) {
-            blueAnt[blueAntNum] = createAnt();
-            ++totalBlue;
-            blueAnt[blueAntNum].pos.x = ant->pos.x;
-            blueAnt[blueAntNum].pos.y = ant->pos.y;
-            ++blueAntNum;
-            if (blueAntNum > 100) {
-                ant->hunger += 100;
-            } else {
-                ant->hunger += 5;
-            }
         }
     }
     return 0;
@@ -264,20 +229,28 @@ int blueAntMove(struct Ant *ant) {
 
 void fight() {
     int i, j;
-    for (i = 0; i < redAntNum; ++i) {
-        for (j = 0; j < blueAntNum; ++j) {
-            if (dist(redAnt[i].pos, blueAnt[j].pos) < RECT_LENGTH * RECT_LENGTH) {
-                redAnt[i].hunger += 20;
-                blueAnt[i].hunger += 20;
+    for (i = 0; i < antTotalNum; ++i) {
+        for (j = i + 1; j < antTotalNum; ++j) {
+            if (ant[i].color != ant[j].color) {
+                if (dist(ant[i].pos, ant[j].pos) < RECT_LENGTH * RECT_LENGTH * 4) {
+                    ant[i].hunger += 500;
+                    ant[j].hunger += 500;
+                }
             }
         }
     }
 }
 
 void initPixel() {
-    bufferRedAnt = createRect(255, 0, 0);
-    bufferBlueAnt = createRect(0, 0, 255);
-    bufferFood = createRect(255, 255, 0);
+    bufferAnt[ANT_RED] = createRect(255, 0, 0);
+    bufferAnt[ANT_ORANGE] = createRect(255, 127, 0);
+    bufferAnt[ANT_YELLOW] = createRect(255, 255, 0);
+    bufferAnt[ANT_GREEN] = createRect(0, 255, 0);
+    bufferAnt[ANT_CYAN] = createRect(0, 255, 255);
+    bufferAnt[ANT_BLUE] = createRect(0, 0, 255);
+    bufferAnt[ANT_PURPLE] = createRect(255, 0, 255);
+    bufferAnt[ANT_BLACK] = createRect(0, 0, 0);
+    bufferFood = createRect(255, 255, 255);
 }
 
 void initD3D(HWND hWnd) {
@@ -320,42 +293,28 @@ void render() {
         IDirect3DDevice9_DrawPrimitive(g_pd3dDevice, D3DPT_TRIANGLESTRIP, 0, 2);
     }
     fight();
-    for (i = blueAntNum - 1; i >= 0; --i) {
-        if (blueAntMove(&blueAnt[i])) {
-            if (rand() % 3 == 0 && foodNum < MAX_FOOD) {
+    for (i = antTotalNum - 1; i >= 0; --i) {
+        if (antMove(&ant[i])) {
+            if (rand() % antTotalNum == 0 && foodNum < MAX_FOOD) {
                 food[foodNum] = createFood();
-                food[foodNum].pos.x = blueAnt[i].pos.x;
-                food[foodNum].pos.y = blueAnt[i].pos.y;
+                food[foodNum].pos.x = ant[i].pos.x;
+                food[foodNum].pos.y = ant[i].pos.y;
                 ++foodNum;
             }
-            deleteBlueAnt(i);
+            deleteAnt(i);
             continue;
         }
-        D3DXMatrixTranslation(&translate, shiftX(blueAnt[i].pos), shiftY(blueAnt[i].pos), 1.0f);
+        D3DXMatrixTranslation(&translate, shiftX(ant[i].pos), shiftY(ant[i].pos), 1.0f);
         IDirect3DDevice9_SetTransform(g_pd3dDevice, D3DTS_WORLD, &translate);
-        IDirect3DDevice9_SetStreamSource(g_pd3dDevice, 0, bufferBlueAnt, 0, sizeof(struct stD3DVertex));
+        IDirect3DDevice9_SetStreamSource(g_pd3dDevice, 0, bufferAnt[ant[i].color], 0, sizeof(struct stD3DVertex));
         IDirect3DDevice9_SetFVF(g_pd3dDevice, D3DFVF);
         IDirect3DDevice9_DrawPrimitive(g_pd3dDevice, D3DPT_TRIANGLESTRIP, 0, 2);
     }
-    for (i = redAntNum - 1; i >= 0; --i) {
-        if (redAntMove(&redAnt[i])) {
-            if (rand() % 3 == 0 && foodNum < MAX_FOOD) {
-                food[foodNum] = createFood();
-                food[foodNum].pos.x = redAnt[i].pos.x;
-                food[foodNum].pos.y = redAnt[i].pos.y;
-                ++foodNum;
-            }
-            deleteRedAnt(i);
-            continue;
-        }
-        D3DXMatrixTranslation(&translate, shiftX(redAnt[i].pos), shiftY(redAnt[i].pos), 1.0f);
-        IDirect3DDevice9_SetTransform(g_pd3dDevice, D3DTS_WORLD, &translate);
-        IDirect3DDevice9_SetStreamSource(g_pd3dDevice, 0, bufferRedAnt, 0, sizeof(struct stD3DVertex));
-        IDirect3DDevice9_SetFVF(g_pd3dDevice, D3DFVF);
-        IDirect3DDevice9_DrawPrimitive(g_pd3dDevice, D3DPT_TRIANGLESTRIP, 0, 2);
+    for (i = 0; i < ANT_COLOR_NUM; ++i)
+    {
+        printf("%d ", antNum[i]);
     }
-    printf("Food: %d Red: %d Blue: %d\t", foodNum, redAntNum, blueAntNum);
-    printf("Food: %d Red: %d Blue: %d\n", totalFood, totalRed, totalBlue);
+    printf("\n");
     IDirect3DDevice9_EndScene(g_pd3dDevice);
     IDirect3DDevice9_Present(g_pd3dDevice, NULL, NULL, NULL, NULL);
 }
