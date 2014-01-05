@@ -8,12 +8,12 @@
 
 #define D3DFVF D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1
 
-const char* WINDOW_CLASS_NAME = "Ant";
-const char* WINDOW_CAPTION = "Ant";
+const char* WINDOW_CLASS_NAME = "Universe";
+const char* WINDOW_CAPTION = "Universe";
 const int WINDOW_POSITION_X = 50;
 const int WINDOW_POSITION_Y = 50;
-const int WINDOW_SIZE_WIDTH = 1024;
-const int WINDOW_SIZE_HEIGHT = 768;
+#define WINDOW_SIZE_WIDTH 800
+#define WINDOW_SIZE_HEIGHT 800
 const int RECT_LENGTH = 5;
 
 LPDIRECT3D9 g_pD3D = NULL;
@@ -26,12 +26,38 @@ struct stD3DVertex {
 };
 
 LPDIRECT3DVERTEXBUFFER9 createRect(int r, int g, int b) {
+    int i;
+    void *ptr;
+    struct stD3DVertex data[38];
+    double PI = acos(-1.0);
+    for (i = 0; i <= 37; ++i) {
+        if (i) {
+            data[i].x = RECT_LENGTH * cos(PI / 18 * i);
+            data[i].y = RECT_LENGTH * sin(PI / 18 * i);
+        } else {
+            data[i].x = 0.0f;
+            data[i].y = 0.0f;
+        }
+        data[i].z = 0.5f;
+        data[i].color = D3DCOLOR_XRGB(r, g, b);
+        data[i].tu = 0.0f;
+        data[i].tv = 0.0f;
+    }
+    LPDIRECT3DVERTEXBUFFER9 rect;
+    IDirect3DDevice9_CreateVertexBuffer(g_pd3dDevice, sizeof(data), 0, D3DFVF, D3DPOOL_DEFAULT, &rect, NULL);
+    IDirect3DVertexBuffer9_Lock(rect, 0, sizeof(data), (void**)&ptr, 0);
+    memcpy(ptr, data, sizeof(data));
+    IDirect3DVertexBuffer9_Unlock(rect);
+    return rect;
+}
+
+LPDIRECT3DVERTEXBUFFER9 createDust(int r, int g, int b) {
     void *ptr;
     struct stD3DVertex data[] = {
-        {RECT_LENGTH, -RECT_LENGTH, 0.5f, D3DCOLOR_XRGB(r, g, b), 1.0f, 0.0f},
-        {RECT_LENGTH, RECT_LENGTH, 0.5f, D3DCOLOR_XRGB(r, g, b), 1.0f, 1.0f},
-        {-RECT_LENGTH, -RECT_LENGTH, 0.5f, D3DCOLOR_XRGB(r, g, b), 0.0f, 0.0f},
-        {-RECT_LENGTH, RECT_LENGTH, 0.5f, D3DCOLOR_XRGB(r, g, b), 0.0f, 1.0f},
+        {1.0f, -1.0f, 0.5f, D3DCOLOR_XRGB(r, g, b), 1.0f, 0.0f},
+        {1.0f, 1.0f, 0.5f, D3DCOLOR_XRGB(r, g, b), 1.0f, 1.0f},
+        {-1.0f, -1.0f, 0.5f, D3DCOLOR_XRGB(r, g, b), 0.0f, 0.0f},
+        {-1.0f, 1.0f, 0.5f, D3DCOLOR_XRGB(r, g, b), 0.0f, 1.0f},
     };
     LPDIRECT3DVERTEXBUFFER9 rect;
     IDirect3DDevice9_CreateVertexBuffer(g_pd3dDevice, sizeof(data), 0, D3DFVF, D3DPOOL_DEFAULT, &rect, NULL);
@@ -42,215 +68,31 @@ LPDIRECT3DVERTEXBUFFER9 createRect(int r, int g, int b) {
 }
 
 struct Position {
-    int x, y;
+    double x, y;
 };
 
-int shiftX(struct Position pos) {
+double shiftX(struct Position pos) {
     return pos.x - (WINDOW_SIZE_WIDTH >> 1);
 }
 
-int shiftY(struct Position pos) {
+double shiftY(struct Position pos) {
     return pos.y - (WINDOW_SIZE_HEIGHT >> 1);
 }
 
-enum AntColor {
-    ANT_RED, ANT_ORANGE, ANT_YELLOW, ANT_GREEN, ANT_CYAN, ANT_BLUE, ANT_PURPLE, ANT_BLACK, ANT_COLOR_NUM
-};
-
-int foodNum;
-int antNum[ANT_COLOR_NUM];
-int antTotalNum;
-
-struct Food {
-    struct Position pos;
-    int age;
-};
-
-struct Food createFood() {
-    struct Food food;
-    food.pos.x = rand() % WINDOW_SIZE_WIDTH;
-    food.pos.y = rand() % WINDOW_SIZE_HEIGHT;
-    food.age = 0;
-    return food;
-}
-
-enum Dir {
-    UP, RIGHT, DOWN, LEFT
-};
-
-LPDIRECT3DVERTEXBUFFER9 bufferAnt[ANT_COLOR_NUM];
-LPDIRECT3DVERTEXBUFFER9 bufferFood;
-
-struct Ant {
-    struct Position pos;
-    int hunger;
-    enum AntColor color;
-    enum Dir dir;
-};
-
-struct Ant createAnt(enum AntColor color) {
-    struct Ant ant;
-    ant.pos.x = rand() % WINDOW_SIZE_WIDTH;
-    ant.pos.y = rand() % WINDOW_SIZE_HEIGHT;
-    ant.hunger = 0;
-    ant.color = color;
-    ++antNum[ant.color];
-    ant.dir = rand() % 4;
-    return ant;
-}
-
-#define MAX_FOOD 2038
-#define MAX_ANT 203800
-struct Food food[MAX_FOOD + 10];
-struct Ant ant[MAX_ANT + 10];
-
-void initAnt() {
-    int i;
-    foodNum = 100;
-    antTotalNum = 100;
-    for (i = 0; i < foodNum; ++i) {
-        food[i] = createFood();
-    }
-    for (i = 0; i < antTotalNum; ++i) {
-        ant[i] = createAnt(rand() % ANT_COLOR_NUM);
-    }
-}
-
-void foodMove(struct Food *food) {
-    ++food->age;
-    if (food->age > 50) {
-        if (rand() < 100) {
-            if (foodNum < MAX_FOOD) {
-                food[foodNum] = createFood();
-                food[foodNum].pos.x = food->pos.x + (rand() % 400) - 200;
-                food[foodNum].pos.y = food->pos.y + (rand() % 400) - 200;
-                if (food[foodNum].pos.x < 0) {
-                    food[foodNum].pos.x = 0;
-                } else if (food[foodNum].pos.x > WINDOW_SIZE_WIDTH) {
-                    food[foodNum].pos.x = WINDOW_SIZE_WIDTH;
-                }
-                if (food[foodNum].pos.y < 0) {
-                    food[foodNum].pos.y = 0;
-                } else if (food[foodNum].pos.y > WINDOW_SIZE_HEIGHT) {
-                    food[foodNum].pos.y = WINDOW_SIZE_HEIGHT;
-                }
-                ++foodNum;
-                food->age = 0;
-            }
-        }
-    }
-}
-
-const int MOVE_SPEED = 1;
-
-void randomWalk(struct Ant *ant) {
-    switch (rand() % 50) {
-    case 0:
-        ant->dir = (ant->dir + 1) % 4;
-        break;
-    case 1:
-        ant->dir = (ant->dir + 3) % 4;
-        break;
-    }
-    switch (ant->dir) {
-    case UP:
-        ant->pos.y += MOVE_SPEED;
-        break;
-    case DOWN:
-        ant->pos.y -= MOVE_SPEED;
-        break;
-    case LEFT:
-        ant->pos.x -= MOVE_SPEED;
-        break;
-    case RIGHT:
-        ant->pos.x += MOVE_SPEED;
-        break;
-    }
-    if (ant->pos.x < 0) {
-        ant->pos.x = 0;
-    } else if (ant->pos.x > WINDOW_SIZE_WIDTH) {
-        ant->pos.x = WINDOW_SIZE_WIDTH;
-    }
-    if (ant->pos.y < 0) {
-        ant->pos.y = 0;
-    } else if (ant->pos.y > WINDOW_SIZE_HEIGHT) {
-        ant->pos.y = WINDOW_SIZE_HEIGHT;
-    }
-    ++ant->hunger;
-}
-
-void deleteFood(int i) {
-    if (foodNum > 0) {
-        food[i] = food[foodNum--];
-    }
-}
-
-void deleteAnt(int i) {
-    --antNum[ant[i].color];
-    if (antTotalNum > 0) {
-        ant[i] = ant[antTotalNum--];
-    }
-}
-
-int dist(struct Position a, struct Position b) {
+double dist(struct Position a, struct Position b) {
     return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
 }
 
-void findFood(struct Ant *ant) {
-    int i, j;
-    for (i = 0; i < foodNum; ++i) {
-        if (dist(ant->pos, food[i].pos) < RECT_LENGTH * RECT_LENGTH) {
-            ant->hunger -= 1100;
-            deleteFood(i);
-            for (j = 0; j < 20; ++j) {
-                if (antTotalNum < MAX_ANT) {
-                    ant[antTotalNum] = createAnt(ant->color);
-                    ant[antTotalNum].pos.x = ant->pos.x;
-                    ant[antTotalNum].pos.y = ant->pos.y;
-                    ++antTotalNum;
-                    ant->hunger += 10;
-                }
-            }
-            break;
-        }
-    }
-}
-
-int antMove(struct Ant *ant) {
-    randomWalk(ant);
-    findFood(ant);
-    if (ant->hunger > 2000) {
-        if (rand() < 100) {
-            return -1;
-        }
-    }
-    return 0;
-}
-
-void fight() {
-    int i, j;
-    for (i = 0; i < antTotalNum; ++i) {
-        for (j = i + 1; j < antTotalNum; ++j) {
-            if (ant[i].color != ant[j].color) {
-                if (dist(ant[i].pos, ant[j].pos) < RECT_LENGTH * RECT_LENGTH * 4) {
-                    ant[i].hunger += 500;
-                    ant[j].hunger += 500;
-                }
-            }
-        }
-    }
-}
+LPDIRECT3DVERTEXBUFFER9 solar;
+LPDIRECT3DVERTEXBUFFER9 earth;
+LPDIRECT3DVERTEXBUFFER9 moon;
+LPDIRECT3DVERTEXBUFFER9 dust;
 
 void initPixel() {
-    bufferAnt[ANT_RED] = createRect(255, 0, 0);
-    bufferAnt[ANT_ORANGE] = createRect(255, 127, 0);
-    bufferAnt[ANT_YELLOW] = createRect(255, 255, 0);
-    bufferAnt[ANT_GREEN] = createRect(0, 255, 0);
-    bufferAnt[ANT_CYAN] = createRect(0, 255, 255);
-    bufferAnt[ANT_BLUE] = createRect(0, 0, 255);
-    bufferAnt[ANT_PURPLE] = createRect(255, 0, 255);
-    bufferAnt[ANT_BLACK] = createRect(0, 0, 0);
-    bufferFood = createRect(255, 255, 255);
+    solar = createRect(190, 86, 25);
+    earth = createRect(20, 53, 230);
+    moon = createRect(220, 255, 230);
+    dust = createDust(200, 200, 200);
 }
 
 void initD3D(HWND hWnd) {
@@ -275,46 +117,196 @@ void initD3D(HWND hWnd) {
 
 int lastTime;
 
+double earthAngle;
+double moonAngle;
+
+struct Position solarPos = {WINDOW_SIZE_WIDTH >> 1, WINDOW_SIZE_HEIGHT >> 1};
+struct Position earthPos;
+struct Position moonPos;
+
+#define MAX_DUST_NUM 10000
+int dustNum;
+struct Position dustPos[MAX_DUST_NUM];
+struct Position dustSpeed[MAX_DUST_NUM];
+
+double solarMass = 50;
+double earthMass = 10;
+double moonMass = 1;
+
+int escapeNum;
+int solarNum;
+int earthNum;
+int moonNum;
+
+double dustAngle;
+int dustDir;
+
 void render() {
     int i;
-    D3DXMATRIX translate;
+    double force;
+    double forceX;
+    double forceY;
+    double angle;
+    double dist2;
+    double PI = acos(-1.0);
+    D3DXMATRIX world;
+    D3DXMATRIX translation;
+    D3DXMATRIX scaling;
+    double solarRadius;
+    double earthRadius;
+    double moonRadius;
     int currentTime = timeGetTime();
     if ((currentTime - lastTime) * 60 < 1000) {
         return;
     }
     IDirect3DDevice9_Clear(g_pd3dDevice, 0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
     IDirect3DDevice9_BeginScene(g_pd3dDevice);
-    for (i = foodNum - 1; i >= 0; --i) {
-        foodMove(&food[i]);
-        D3DXMatrixTranslation(&translate, shiftX(food[i].pos), shiftY(food[i].pos), 1.0f);
-        IDirect3DDevice9_SetTransform(g_pd3dDevice, D3DTS_WORLD, &translate);
-        IDirect3DDevice9_SetStreamSource(g_pd3dDevice, 0, bufferFood, 0, sizeof(struct stD3DVertex));
-        IDirect3DDevice9_SetFVF(g_pd3dDevice, D3DFVF);
-        IDirect3DDevice9_DrawPrimitive(g_pd3dDevice, D3DPT_TRIANGLESTRIP, 0, 2);
+
+    earthPos.x = solarPos.x + 250.0 * cos(earthAngle);
+    earthPos.y = solarPos.y + 250.0 * sin(earthAngle);
+    earthAngle -= 0.002;
+
+    moonPos.x = earthPos.x + 50.0 * cos(moonAngle);
+    moonPos.y = earthPos.y + 50.0 * sin(moonAngle);
+    moonAngle += 0.027;
+
+    solarRadius = sqrt(solarMass) / 2.0 * RECT_LENGTH;
+    earthRadius = sqrt(earthMass) / 2.0 * RECT_LENGTH;
+    moonRadius = sqrt(moonMass) / 2.0 * RECT_LENGTH;
+
+    if (dustDir) {
+        dustAngle -= 0.002f;
+        if (dustAngle < 0.0) {
+            dustDir = 0;
+        }
+    } else {
+        dustAngle += 0.002f;
+        if (dustAngle > PI / 2) {
+            dustDir = 1;
+        }
     }
-    fight();
-    for (i = antTotalNum - 1; i >= 0; --i) {
-        if (antMove(&ant[i])) {
-            if (rand() % antTotalNum == 0 && foodNum < MAX_FOOD) {
-                food[foodNum] = createFood();
-                food[foodNum].pos.x = ant[i].pos.x;
-                food[foodNum].pos.y = ant[i].pos.y;
-                ++foodNum;
+    while (dustNum < MAX_DUST_NUM) {
+        if (rand() > 30000) {
+            break;
+        }
+        if (rand() & 1) {
+            if (rand() & 1) {
+                dustPos[dustNum].x = - (rand() % 1000) / 30.0;
+                dustPos[dustNum].y = - (rand() % 1000) / 30.0;
+                dustSpeed[dustNum].x = cos(dustAngle) * 5 + (rand() % 1000) / 1800.0;
+                dustSpeed[dustNum].y = sin(dustAngle) * 5 + (rand() % 1000) / 1800.0;
+            } else {
+                dustPos[dustNum].x = WINDOW_SIZE_WIDTH + (rand() % 1000) / 30.0;
+                dustPos[dustNum].y = - (rand() % 1000) / 30.0;
+                dustSpeed[dustNum].x = cos(PI / 2 + dustAngle) * 5 - (rand() % 1000) / 1800.0;
+                dustSpeed[dustNum].y = sin(PI / 2 + dustAngle) * 5 + (rand() % 1000) / 1800.0;
             }
-            deleteAnt(i);
+        } else {
+            if (rand() & 1) {
+                dustPos[dustNum].x = WINDOW_SIZE_WIDTH + (rand() % 1000) / 30.0;
+                dustPos[dustNum].y = WINDOW_SIZE_HEIGHT + (rand() % 1000) / 30.0;
+                dustSpeed[dustNum].x = - (cos(dustAngle) * 5 + (rand() % 1000) / 1800.0);
+                dustSpeed[dustNum].y = - (sin(dustAngle) * 5 + (rand() % 1000) / 1800.0);
+            } else {
+                dustPos[dustNum].x = - (rand() % 1000) / 30.0;
+                dustPos[dustNum].y = WINDOW_SIZE_HEIGHT + (rand() % 1000) / 30.0;
+                dustSpeed[dustNum].x = cos(dustAngle - PI / 2) * 5 + (rand() % 1000) / 1800.0;
+                dustSpeed[dustNum].y = sin(dustAngle - PI / 2) * 5 - (rand() % 1000) / 1800.0;
+            }
+        }
+        ++dustNum;
+    }
+
+    for (i = dustNum - 1; i >= 0; --i) {
+        if (dustPos[i].x < -200 || dustPos[i].y < - 200 ||
+            dustPos[i].x > 200 + WINDOW_SIZE_WIDTH ||
+            dustPos[i].y > 200 + WINDOW_SIZE_HEIGHT) {
+            --dustNum;
+            dustPos[i] = dustPos[dustNum];
+            dustSpeed[i] = dustSpeed[dustNum];
+            ++escapeNum;
             continue;
         }
-        D3DXMatrixTranslation(&translate, shiftX(ant[i].pos), shiftY(ant[i].pos), 1.0f);
-        IDirect3DDevice9_SetTransform(g_pd3dDevice, D3DTS_WORLD, &translate);
-        IDirect3DDevice9_SetStreamSource(g_pd3dDevice, 0, bufferAnt[ant[i].color], 0, sizeof(struct stD3DVertex));
+        if (dist(dustPos[i], solarPos) < solarRadius * solarRadius) {
+            solarMass += 1.0 / solarMass;
+            --dustNum;
+            dustPos[i] = dustPos[dustNum];
+            dustSpeed[i] = dustSpeed[dustNum];
+            ++solarNum;
+            continue;
+        }
+        if (dist(dustPos[i], earthPos) < earthRadius * earthRadius) {
+            earthMass += 0.5 / solarMass;
+            --dustNum;
+            dustPos[i] = dustPos[dustNum];
+            dustSpeed[i] = dustSpeed[dustNum];
+            ++earthNum;
+            continue;
+        }
+        if (dist(dustPos[i], moonPos) < moonRadius * moonRadius) {
+            moonMass += 0.1 / solarMass;
+            --dustNum;
+            dustPos[i] = dustPos[dustNum];
+            dustSpeed[i] = dustSpeed[dustNum];
+            ++moonNum;
+            continue;
+        }
+        forceX = 0.0;
+        forceY = 0.0;
+
+        angle = atan2(solarPos.y - dustPos[i].y, solarPos.x - dustPos[i].x);
+        dist2 = dist(solarPos, dustPos[i]);
+        force = solarMass / dist2;
+        forceX += force * cos(angle);
+        forceY += force * sin(angle);
+
+        angle = atan2(earthPos.y - dustPos[i].y, earthPos.x - dustPos[i].x);
+        dist2 = dist(earthPos, dustPos[i]);
+        force = earthMass / dist2;
+        forceX += force * cos(angle);
+        forceY += force * sin(angle);
+
+        angle = atan2(moonPos.y - dustPos[i].y, moonPos.x - dustPos[i].x);
+        dist2 = dist(moonPos, dustPos[i]);
+        force = moonMass / dist2;
+        forceX += force * cos(angle);
+        forceY += force * sin(angle);
+
+        dustSpeed[i].x += forceX * 15.0;
+        dustSpeed[i].y += forceY * 15.0;
+        dustPos[i].x += dustSpeed[i].x;
+        dustPos[i].y += dustSpeed[i].y;
+        D3DXMatrixTranslation(&translation, shiftX(dustPos[i]), shiftY(dustPos[i]), 1.0f);
+        IDirect3DDevice9_SetTransform(g_pd3dDevice, D3DTS_WORLD, &translation);
+        IDirect3DDevice9_SetStreamSource(g_pd3dDevice, 0, dust, 0, sizeof(struct stD3DVertex));
         IDirect3DDevice9_SetFVF(g_pd3dDevice, D3DFVF);
         IDirect3DDevice9_DrawPrimitive(g_pd3dDevice, D3DPT_TRIANGLESTRIP, 0, 2);
     }
-    for (i = 0; i < ANT_COLOR_NUM; ++i)
-    {
-        printf("%d ", antNum[i]);
-    }
-    printf("\n");
+
+    D3DXMatrixTranslation(&translation, shiftX(moonPos), shiftY(moonPos), 1.0f);
+    D3DXMatrixScaling(&scaling, sqrt(moonMass) / 2.0, sqrt(moonMass) / 2.0, 1.0f);
+    D3DXMatrixMultiply(&world, &scaling, &translation);
+    IDirect3DDevice9_SetTransform(g_pd3dDevice, D3DTS_WORLD, &world);
+    IDirect3DDevice9_SetStreamSource(g_pd3dDevice, 0, moon, 0, sizeof(struct stD3DVertex));
+    IDirect3DDevice9_SetFVF(g_pd3dDevice, D3DFVF);
+    IDirect3DDevice9_DrawPrimitive(g_pd3dDevice, D3DPT_TRIANGLEFAN, 0, 36);
+
+    D3DXMatrixTranslation(&translation, shiftX(earthPos), shiftY(earthPos), 1.0f);
+    D3DXMatrixScaling(&scaling, sqrt(earthMass) / 2.0, sqrt(earthMass) / 2.0, 1.0f);
+    D3DXMatrixMultiply(&world, &scaling, &translation);
+    IDirect3DDevice9_SetTransform(g_pd3dDevice, D3DTS_WORLD, &world);
+    IDirect3DDevice9_SetStreamSource(g_pd3dDevice, 0, earth, 0, sizeof(struct stD3DVertex));
+    IDirect3DDevice9_SetFVF(g_pd3dDevice, D3DFVF);
+    IDirect3DDevice9_DrawPrimitive(g_pd3dDevice, D3DPT_TRIANGLEFAN, 0, 36);
+
+    D3DXMatrixTranslation(&translation, shiftX(solarPos), shiftY(solarPos), 1.0f);
+    D3DXMatrixScaling(&scaling, sqrt(solarMass) / 2.0, sqrt(solarMass) / 2.0, 1.0f);
+    D3DXMatrixMultiply(&world, &scaling, &translation);
+    IDirect3DDevice9_SetTransform(g_pd3dDevice, D3DTS_WORLD, &world);
+    IDirect3DDevice9_SetStreamSource(g_pd3dDevice, 0, solar, 0, sizeof(struct stD3DVertex));
+    IDirect3DDevice9_SetFVF(g_pd3dDevice, D3DFVF);
+    IDirect3DDevice9_DrawPrimitive(g_pd3dDevice, D3DPT_TRIANGLEFAN, 0, 36);
+
     IDirect3DDevice9_EndScene(g_pd3dDevice);
     IDirect3DDevice9_Present(g_pd3dDevice, NULL, NULL, NULL, NULL);
 }
@@ -358,7 +350,6 @@ int main() {
     srand(time(NULL));
     createWindow();
     initPixel();
-    initAnt();
     messageLoop();
     return 0;
 }
