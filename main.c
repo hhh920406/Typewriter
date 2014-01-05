@@ -86,13 +86,16 @@ double dist(struct Position a, struct Position b) {
 LPDIRECT3DVERTEXBUFFER9 solar;
 LPDIRECT3DVERTEXBUFFER9 earth;
 LPDIRECT3DVERTEXBUFFER9 moon;
-LPDIRECT3DVERTEXBUFFER9 dust;
+LPDIRECT3DVERTEXBUFFER9 dust[4];
 
 void initPixel() {
     solar = createRect(190, 86, 25);
     earth = createRect(20, 53, 230);
     moon = createRect(220, 255, 230);
-    dust = createDust(200, 200, 200);
+    dust[0] = createDust(220, 200, 200);
+    dust[1] = createDust(200, 220, 200);
+    dust[2] = createDust(200, 200, 220);
+    dust[3] = createDust(220, 220, 200);
 }
 
 void initD3D(HWND hWnd) {
@@ -128,6 +131,7 @@ struct Position moonPos;
 int dustNum;
 struct Position dustPos[MAX_DUST_NUM];
 struct Position dustSpeed[MAX_DUST_NUM];
+int dustColor[MAX_DUST_NUM];
 
 double solarMass = 50;
 double earthMass = 10;
@@ -141,8 +145,11 @@ int moonNum;
 double dustAngle;
 int dustDir;
 
+double dustSpeedInit;
+int dustSpeedDir;
+
 void render() {
-    int i;
+    int i, j;
     double force;
     double forceX;
     double forceY;
@@ -164,27 +171,18 @@ void render() {
 
     earthPos.x = solarPos.x + 250.0 * cos(earthAngle);
     earthPos.y = solarPos.y + 250.0 * sin(earthAngle);
-    earthAngle -= 0.002;
+    earthAngle -= sqrt(sqrt(solarMass)) / 300.0f;
 
     moonPos.x = earthPos.x + 50.0 * cos(moonAngle);
     moonPos.y = earthPos.y + 50.0 * sin(moonAngle);
-    moonAngle += 0.027;
+    moonAngle += sqrt(sqrt(solarMass)) / 55.0f;
 
     solarRadius = sqrt(solarMass) / 2.0 * RECT_LENGTH;
     earthRadius = sqrt(earthMass) / 2.0 * RECT_LENGTH;
     moonRadius = sqrt(moonMass) / 2.0 * RECT_LENGTH;
 
-    if (dustDir) {
-        dustAngle -= 0.002f;
-        if (dustAngle < 0.0) {
-            dustDir = 0;
-        }
-    } else {
-        dustAngle += 0.002f;
-        if (dustAngle > PI / 2) {
-            dustDir = 1;
-        }
-    }
+    dustAngle = PI / 2 - atan2(moonPos.y, moonPos.x);
+    dustSpeedInit = 3.0;
     while (dustNum < MAX_DUST_NUM) {
         if (rand() > 30000) {
             break;
@@ -193,25 +191,29 @@ void render() {
             if (rand() & 1) {
                 dustPos[dustNum].x = - (rand() % 1000) / 30.0;
                 dustPos[dustNum].y = - (rand() % 1000) / 30.0;
-                dustSpeed[dustNum].x = cos(dustAngle) * 5 + (rand() % 1000) / 1800.0;
-                dustSpeed[dustNum].y = sin(dustAngle) * 5 + (rand() % 1000) / 1800.0;
+                dustSpeed[dustNum].x = cos(dustAngle) * dustSpeedInit + (rand() % 1000) / 5800.0;
+                dustSpeed[dustNum].y = sin(dustAngle) * dustSpeedInit + (rand() % 1000) / 5800.0;
+                dustColor[dustNum] = 0;
             } else {
                 dustPos[dustNum].x = WINDOW_SIZE_WIDTH + (rand() % 1000) / 30.0;
                 dustPos[dustNum].y = - (rand() % 1000) / 30.0;
-                dustSpeed[dustNum].x = cos(PI / 2 + dustAngle) * 5 - (rand() % 1000) / 1800.0;
-                dustSpeed[dustNum].y = sin(PI / 2 + dustAngle) * 5 + (rand() % 1000) / 1800.0;
+                dustSpeed[dustNum].x = cos(PI / 2 + dustAngle) * dustSpeedInit - (rand() % 1000) / 5800.0;
+                dustSpeed[dustNum].y = sin(PI / 2 + dustAngle) * dustSpeedInit + (rand() % 1000) / 5800.0;
+                dustColor[dustNum] = 1;
             }
         } else {
             if (rand() & 1) {
                 dustPos[dustNum].x = WINDOW_SIZE_WIDTH + (rand() % 1000) / 30.0;
                 dustPos[dustNum].y = WINDOW_SIZE_HEIGHT + (rand() % 1000) / 30.0;
-                dustSpeed[dustNum].x = - (cos(dustAngle) * 5 + (rand() % 1000) / 1800.0);
-                dustSpeed[dustNum].y = - (sin(dustAngle) * 5 + (rand() % 1000) / 1800.0);
+                dustSpeed[dustNum].x = - (cos(dustAngle) * dustSpeedInit + (rand() % 1000) / 5800.0);
+                dustSpeed[dustNum].y = - (sin(dustAngle) * dustSpeedInit + (rand() % 1000) / 5800.0);
+                dustColor[dustNum] = 2;
             } else {
                 dustPos[dustNum].x = - (rand() % 1000) / 30.0;
                 dustPos[dustNum].y = WINDOW_SIZE_HEIGHT + (rand() % 1000) / 30.0;
-                dustSpeed[dustNum].x = cos(dustAngle - PI / 2) * 5 + (rand() % 1000) / 1800.0;
-                dustSpeed[dustNum].y = sin(dustAngle - PI / 2) * 5 - (rand() % 1000) / 1800.0;
+                dustSpeed[dustNum].x = cos(dustAngle - PI / 2) * dustSpeedInit + (rand() % 1000) / 5800.0;
+                dustSpeed[dustNum].y = sin(dustAngle - PI / 2) * dustSpeedInit - (rand() % 1000) / 5800.0;
+                dustColor[dustNum] = 3;
             }
         }
         ++dustNum;
@@ -224,30 +226,34 @@ void render() {
             --dustNum;
             dustPos[i] = dustPos[dustNum];
             dustSpeed[i] = dustSpeed[dustNum];
+            dustColor[i] = dustColor[dustNum];
             ++escapeNum;
             continue;
         }
         if (dist(dustPos[i], solarPos) < solarRadius * solarRadius) {
-            solarMass += 1.0 / solarMass;
+            solarMass += 0.8 / solarMass;
             --dustNum;
             dustPos[i] = dustPos[dustNum];
             dustSpeed[i] = dustSpeed[dustNum];
+            dustColor[i] = dustColor[dustNum];
             ++solarNum;
             continue;
         }
         if (dist(dustPos[i], earthPos) < earthRadius * earthRadius) {
-            earthMass += 0.5 / solarMass;
+            earthMass += 0.8 / earthMass;
             --dustNum;
             dustPos[i] = dustPos[dustNum];
             dustSpeed[i] = dustSpeed[dustNum];
+            dustColor[i] = dustColor[dustNum];
             ++earthNum;
             continue;
         }
         if (dist(dustPos[i], moonPos) < moonRadius * moonRadius) {
-            moonMass += 0.1 / solarMass;
+            moonMass += 0.7 / solarMass;
             --dustNum;
             dustPos[i] = dustPos[dustNum];
             dustSpeed[i] = dustSpeed[dustNum];
+            dustColor[i] = dustColor[dustNum];
             ++moonNum;
             continue;
         }
@@ -272,13 +278,13 @@ void render() {
         forceX += force * cos(angle);
         forceY += force * sin(angle);
 
-        dustSpeed[i].x += forceX * 15.0;
-        dustSpeed[i].y += forceY * 15.0;
+        dustSpeed[i].x += forceX * 10.0;
+        dustSpeed[i].y += forceY * 10.0;
         dustPos[i].x += dustSpeed[i].x;
         dustPos[i].y += dustSpeed[i].y;
         D3DXMatrixTranslation(&translation, shiftX(dustPos[i]), shiftY(dustPos[i]), 1.0f);
         IDirect3DDevice9_SetTransform(g_pd3dDevice, D3DTS_WORLD, &translation);
-        IDirect3DDevice9_SetStreamSource(g_pd3dDevice, 0, dust, 0, sizeof(struct stD3DVertex));
+        IDirect3DDevice9_SetStreamSource(g_pd3dDevice, 0, dust[dustColor[i]], 0, sizeof(struct stD3DVertex));
         IDirect3DDevice9_SetFVF(g_pd3dDevice, D3DFVF);
         IDirect3DDevice9_DrawPrimitive(g_pd3dDevice, D3DPT_TRIANGLESTRIP, 0, 2);
     }
