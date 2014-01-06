@@ -110,7 +110,19 @@ void deleteStar(int pos) {
     radius[pos] = radius[starNum];
 }
 
+int lastTime;
+enum Scene {
+    SCENE_START,
+    SCENE_MAINMENU,
+    SCENE_MAINGAME,
+    SCENE_EXTRAGAME,
+    SCENE_ENDING,
+    SCENE_SCORE
+};
+enum Scene currentScene = SCENE_START;
+
 void render() {
+<<<<<<< HEAD
     int i, j;
     double force;
     double forceX;
@@ -121,6 +133,8 @@ void render() {
     D3DXMATRIX world;
     D3DXMATRIX translation;
     D3DXMATRIX scaling;
+=======
+>>>>>>> 6d0569e33050b7d9fa0f5b17f9d1ed40d49f2de1
     int currentTime = timeGetTime();
     if ((currentTime - lastTime) * 60 < 1000) {
         return;
