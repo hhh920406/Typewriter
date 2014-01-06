@@ -3,5 +3,6 @@ bin
 obj
 
 # Code::Blocks Files
+*.cbp
 *.depend
 *.layout
