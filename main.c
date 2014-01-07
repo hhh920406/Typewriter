@@ -209,7 +209,7 @@ void initPixel() {
             houseBuffer[i][j] = createHouse(255 - c * 4, 255 - c * 4, 255 - c * 4);
         }
     }
-    house[4][4].capacity = SPORE_NUM;
+    house[4][4].capacity = MAX_SPORE_NUM;
     house[4][4].food *= 100;
     houseBuffer[4][4] = createCenter();
     for (i = 0; i < SPORE_NUM; ++i) {
