@@ -2,8 +2,14 @@ if (!document.getElementById("zan_global")) {
   var div = document.createElement("div");
   div.id = "zan_global";
   document.body.appendChild(div);
-
-  window.setInterval(function() {
+  
+  var count = -1;
+  
+  function zan() {
+    count += 1;
+    if (count % 10) {
+	  return;
+	}
     var links = document.getElementsByClassName("ilike_icon");
     for (var i = 0; i < links.length; ++i) {
       var strs = links[i].getAttribute('onclick').split(",");
@@ -22,7 +28,10 @@ if (!document.getElementById("zan_global")) {
 	    }
       }
     }
-    window.location.reload();
-    console.log("Reload.");
-  }, 10000);
+	if (count > 10) {
+      window.location.reload();
+	}
+  }
+
+  window.setInterval(zan, 1000);
 }
