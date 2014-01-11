@@ -10,9 +10,11 @@ if (!document.getElementById("zan_global")) {
       if (strs.length >= 5) {
 	    if (links[i].innerText.indexOf("取消") < 0) {
 		  for (var j = 0; j < zan_array.length; ++j) {
-		    if (zan_array[j].length > 5) {
-			  if (strs[3].indexOf(zan_array[j]) >= 0) {
+		    var id = "" + zan_array[j];
+		    if (id.length > 5) {
+			  if (strs[3].indexOf(id) >= 0) {
 			    console.log(links[i].innerText);
+				links[i].click();
 				return;
 			  }
 			}
