@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "Renren Zan",
-  "description": "The monster of zan.",
+  "name": "人人自动点赞",
+  "description": "点赞狂魔。",
   "version": "1.0",
   
   "icons": {
