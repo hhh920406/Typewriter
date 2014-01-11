@@ -8,8 +8,16 @@
   "icons": {
 	"64": "icon.png"
   },
-
-  "browser_action": {
-    "default_icon": "icon.png"
+  
+  "permissions": [
+    "http://www.renren.com/",
+    "http://guide.renren.com/",
+	"tabs",
+	"storage",
+	"webNavigation"
+  ],
+  
+  "background": {
+    "scripts": ["background.js"]
   }
 }
