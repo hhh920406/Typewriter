@@ -69,15 +69,15 @@ if (!document.getElementById("zan_global")) {
 	}
     for (var i = 0; i < links.length; ++i) {
       var strs = links[i].getAttribute('onclick').split(",");
-      if (strs.length >= 5) {
-	    if (links[i].innerText.indexOf("取消") < 0) {
-		  if (monster) {
-		    console.log(links[i].innerText);
-		    links[i].click();
-			++zanCount;
-			document.getElementById("zan-monster-span").innerText = "" + zanCount;
-			return;
-		  }
+	  if (links[i].innerText.indexOf("取消") < 0) {
+		if (monster) {
+		  console.log(links[i].innerText);
+		  links[i].click();
+	      ++zanCount;
+		  document.getElementById("zan-monster-span").innerText = "" + zanCount;
+		  return;
+		}
+        if (strs.length >= 5) {
 		  for (var j = 0; j < zan_array.length; ++j) {
 		    var id = "" + zan_array[j];
 		    if (id.length > 5) {
