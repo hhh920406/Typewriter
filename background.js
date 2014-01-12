@@ -1,5 +1,7 @@
 chrome.webNavigation.onDOMContentLoaded.addListener(function(details) {
   if (details.url.indexOf("renren.com") >= 0) {
+    chrome.cookies.remove({url: 'http://renren.com', name: 'IL_D'});
+    chrome.cookies.remove({url: 'http://renren.com', name: 'IL_H'});
     chrome.storage.sync.get('ids', function(items) {
 	  code = "zan_array = [";
       if (items.ids) {
