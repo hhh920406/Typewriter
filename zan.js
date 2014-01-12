@@ -3,7 +3,6 @@ if (!document.getElementById("zan_global")) {
   div.id = "zan_global";
   document.body.appendChild(div);
   
-  // 在导航菜单中加入点赞按钮
   start = 0;
   span = document.createElement("span");
   span.id = "zan-span";
@@ -16,9 +15,12 @@ if (!document.getElementById("zan_global")) {
     if (start == 0) {
 	  start = 1;
 	  document.getElementById("zan-span").innerText = "0";
+	  document.getElementById("zan-monster-span").innerText = "次";
 	} else {
 	  start = 0;
+	  monster = 0;
 	  document.getElementById("zan-span").innerText = "点赞";
+	  document.getElementById("zan-monster-span").innerText = "狂魔";
 	}
   }
   menuTitle = document.createElement("div");
@@ -30,7 +32,6 @@ if (!document.getElementById("zan_global")) {
   var navMenu = document.getElementsByClassName("nav-main");
   navMenu[0].appendChild(menu);
   
-  // 在导航菜单中加入点赞狂魔按钮
   monster = 0;
   span = document.createElement("span");
   span.id = "zan-monster-span";
@@ -43,10 +44,12 @@ if (!document.getElementById("zan_global")) {
     if (monster == 0) {
 	  start = 1;
 	  monster = 1;
+	  document.getElementById("zan-span").innerText = "计数";
 	  document.getElementById("zan-monster-span").innerText = "0";
 	} else {
 	  start = 0;
 	  monster = 0;
+	  document.getElementById("zan-span").innerText = "点赞";
 	  document.getElementById("zan-monster-span").innerText = "狂魔";
 	}
   }
