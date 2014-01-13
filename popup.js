@@ -15,7 +15,35 @@ function loadUserID() {
   });
 }
 
+function updateCheckbox() {
+  chrome.storage.sync.get('comment', function(item) {
+    if (item.comment) {
+	  checkbox_comment.checked = true;
+	} else {
+	  checkbox_comment.checked = false;
+	}
+  });
+  chrome.storage.sync.get('renpin', function(item) {
+    if (item.renpin) {
+	  checkbox_renpin.checked = true;
+	} else {
+	  checkbox_renpin.checked = false;
+	}
+  });
+}
+
+function setCheckboxComment() {
+  chrome.storage.sync.set({'comment': checkbox_comment.checked});
+}
+
+function setCheckboxRenpin() {
+  chrome.storage.sync.set({'renpin': checkbox_renpin.checked});
+}
+
 window.onload = function() {
   loadUserID();
-  button_save.onclick = saveUserID
+  updateCheckbox();
+  button_save.onclick = saveUserID;
+  checkbox_comment.onclick = setCheckboxComment;
+  checkbox_renpin.onclick = setCheckboxRenpin;
 }

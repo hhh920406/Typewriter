@@ -13,8 +13,22 @@ chrome.webNavigation.onDOMContentLoaded.addListener(function(details) {
 	    }
 	  }
 	  code += "];";
-	  chrome.tabs.executeScript(details.tabId, {code: code});
-	  chrome.tabs.executeScript(details.tabId, {file: "zan.js"});
+	  chrome.storage.sync.get('comment', function(items) {
+	    if (items.comment) {
+		  code += "comment = true;";
+		} else {
+		  code += "comment = false;";
+		}
+		chrome.storage.sync.get('renpin', function(items) {
+		  if (items.renpin) {
+		    code += "renpin = true;";
+		  } else {
+		    code += "renpin = false;";
+		  }
+	      chrome.tabs.executeScript(details.tabId, {code: code});
+	      chrome.tabs.executeScript(details.tabId, {file: "zan.js"});
+		});
+	  });
     });
   }
 });
