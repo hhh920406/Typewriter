@@ -2,7 +2,7 @@ if (!document.getElementById("zan_global")) {
     var div = document.createElement("div");
     div.id = "zan_global";
     document.body.appendChild(div);
-    
+
     start = 0;
     span = document.createElement("span");
     span.id = "zan-span";
@@ -31,7 +31,7 @@ if (!document.getElementById("zan_global")) {
     menu.appendChild(menuTitle);
     var navMenu = document.getElementsByClassName("nav-main");
     navMenu[0].appendChild(menu);
-    
+
     monster = 0;
     span = document.createElement("span");
     span.id = "zan-monster-span";
@@ -61,7 +61,7 @@ if (!document.getElementById("zan_global")) {
     menu.appendChild(menuTitle);
     var navMenu = document.getElementsByClassName("nav-main");
     navMenu[0].appendChild(menu);
-    
+
     var zanCount = 0;
     function zanLinks(links) {
         if (!links) {
@@ -97,7 +97,7 @@ if (!document.getElementById("zan_global")) {
         }
         return 0;
     }
-    
+
     function zanComment() {
         if (document.getElementsByClassName("feed-list").length > 0) {
             var moreReply = document.getElementsByClassName("feed-list")[0].getElementsByClassName("more");
@@ -108,6 +108,13 @@ if (!document.getElementById("zan_global")) {
         var comments = document.getElementsByClassName("ilike_comment");
         for (var i = 0; i < comments.length; ++i) {
             if (comments[i].innerText.indexOf("取消") < 0) {
+                if (monster) {
+                    comments[i].click();
+                    ++zanCount;
+                    document.getElementById("zan-span").innerText = "" + zanCount;
+                    console.log(zanCount, comments[i].innerText);
+                    return;
+                }
                 var reply = comments[i].parentElement.getElementsByClassName('reply');
                 if (0 == reply.length) {
                     continue;
@@ -120,19 +127,19 @@ if (!document.getElementById("zan_global")) {
                         ++zanCount;
                         document.getElementById("zan-span").innerText = "" + zanCount;
                         console.log(zanCount, comments[i].innerText);
-                            return;
+                        return;
                     }
                 }
             }
         }
     }
-    
+
     var count = 0;
     function zan() {
         if (!start) {
             return;
         }
-        
+
         var newFeedsCount = document.getElementById("newFeedsCount");
         if (newFeedsCount) {
             if (newFeedsCount.innerText != "0") {
@@ -140,20 +147,21 @@ if (!document.getElementById("zan_global")) {
                 console.log('打开新消息');
             }
         }
-        
+
         ++count;
-        
+
         if (renpin && (count % 1800 == 0)) {
             var menuTitles = document.getElementsByClassName("menu-title-text");
             for (var i = 0; i < menuTitles.length; ++i) {
                 if (menuTitles[i].innerText == "首页") {
+				    menuTitles[i].click();
                     menuTitles[i].parentElement.click();
                     console.log('攒人品');
                     break;
                 }
             }
         }
-        
+
         if (count % 10 == 0) {
             if (0 == zanLinks(document.getElementsByClassName("ilike_icon"))) {
                 if (0 == zanLinks(document.getElementsByClassName("ilike-button like"))) {
