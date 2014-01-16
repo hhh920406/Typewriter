@@ -63,32 +63,36 @@ if (!document.getElementById("zan_global")) {
     navMenu[0].appendChild(menu);
 
     var zanCount = 0;
-    function zanLinks(links) {
-        if (!links) {
-            return 0;
+    var zanIndex = 0;
+    var zanList = new Array();
+    function zanLinks() {
+        if (zanIndex >= zanList.length) {
+            zanIndex = 0;
+            zanList = document.getElementsByClassName("ilike_icon");
+            if (zanList.length == 0) {
+                zanList = document.getElementsByClassName("ilike-button like");
+            }
         }
-        for (var i = 0; i < links.length; ++i) {
-            if (links[i].innerText.indexOf("取消") < 0) {
+        for (; zanIndex < zanList.length; ++zanIndex) {
+            if (zanList[zanIndex].innerText.indexOf("取消") < 0) {
                 if (monster) {
-                    console.log(links[i].innerText);
-                    links[i].click();
+                    zanList[zanIndex++].click();
                     ++zanCount;
                     document.getElementById("zan-monster-span").innerText = "" + zanCount;
                     return 1;
                 }
-                var text1 = links[i].getAttribute('onclick');
+                var text1 = zanList[zanIndex].getAttribute('onclick');
                 var text2 = "";
-                if (typeof links[i].attributes['data-ilike'] != "undefined") {
-                    text2 = links[i].attributes['data-ilike'].nodeValue;
+                if (typeof zanList[zanIndex].attributes['data-ilike'] != "undefined") {
+                    text2 = zanList[zanIndex].attributes['data-ilike'].nodeValue;
                 }
                 for (var j = 0; j < zan_array.length; ++j) {
                     var id = "" + zan_array[j];
                     if (id.length > 5) {
                         if (text1.indexOf(id) >= 0 || text2.indexOf(id) >= 0) {
-                            links[i].click();
+                            zanList[zanIndex++].click();
                             ++zanCount;
                             document.getElementById("zan-span").innerText = "" + zanCount;
-                            console.log(zanCount, links[i].innerText);
                             return 1;
                         }
                     }
@@ -98,24 +102,34 @@ if (!document.getElementById("zan_global")) {
         return 0;
     }
 
+    var replyIndex = 0;
+    var replyList = new Array();
+    var commentIndex = 0;
+    var commentList = new Array();
     function zanComment() {
-        if (document.getElementsByClassName("feed-list").length > 0) {
-            var moreReply = document.getElementsByClassName("feed-list")[0].getElementsByClassName("more");
-            if (moreReply.length > 0) {
-                moreReply[0].click();
+        if (replyIndex >= replyList.length) {
+            replyIndex = 0;
+            if (document.getElementsByClassName("feed-list").length > 0) {
+                replyList = document.getElementsByClassName("feed-list")[0].getElementsByClassName("more");
             }
         }
-        var comments = document.getElementsByClassName("ilike_comment");
-        for (var i = 0; i < comments.length; ++i) {
-            if (comments[i].innerText.indexOf("取消") < 0) {
+        for (; replyIndex < replyList.length; ++replyIndex) {
+            replyList[replyIndex++].click();
+            break;
+        }
+        if (commentIndex >= commentList.length) {
+            commentIndex = 0;
+            commentList = document.getElementsByClassName("ilike_comment");
+        }
+        for (; commentIndex < commentList.length; ++commentIndex) {
+            if (commentList[commentIndex].innerText.indexOf("取消") < 0) {
                 if (monster) {
-                    comments[i].click();
+                    commentList[commentIndex++].click();
                     ++zanCount;
                     document.getElementById("zan-span").innerText = "" + zanCount;
-                    console.log(zanCount, comments[i].innerText);
                     return;
                 }
-                var reply = comments[i].parentElement.getElementsByClassName('reply');
+                var reply = commentList[commentIndex].parentElement.getElementsByClassName('reply');
                 if (0 == reply.length) {
                     continue;
                 }
@@ -123,10 +137,9 @@ if (!document.getElementById("zan_global")) {
                 for (var j = 0; j < zan_array.length; ++j) {
                     var id = "" + zan_array[j];
                     if (text.indexOf(id) >= 0) {
-                        comments[i].click();
+                        commentList[commentIndex++].click();
                         ++zanCount;
                         document.getElementById("zan-span").innerText = "" + zanCount;
-                        console.log(zanCount, comments[i].innerText);
                         return;
                     }
                 }
@@ -144,7 +157,6 @@ if (!document.getElementById("zan_global")) {
         if (newFeedsCount) {
             if (newFeedsCount.innerText != "0") {
                 document.getElementsByClassName("show-new-feed")[0].click();
-                console.log('打开新消息');
             }
         }
 
@@ -157,24 +169,22 @@ if (!document.getElementById("zan_global")) {
                 if (menuTitles[i].innerText == "首页") {
 				    menuTitles[i].click();
                     menuTitles[i].parentElement.click();
-                    console.log('攒人品');
+                    zanIndex = 100000;
+                    replyIndex = 100000;
+                    commentIndex = 100000;
                     break;
                 }
             }
         }
 
         if (count % 10 == 0) {
-            if (0 == zanLinks(document.getElementsByClassName("ilike_icon"))) {
-                if (0 == zanLinks(document.getElementsByClassName("ilike-button like"))) {
-                    zanComment();
-                }
+            if (0 == zanLinks()) {
+                zanComment();
             }
             document.cookie = 'IL_D=' + '0;path=/;domain=.renren.com;expires=' + (new Date()).toGMTString();
             document.cookie = 'IL_H=' + '0;path=/;domain=.renren.com;expires=' + (new Date()).toGMTString();
         }
     }
 
-    console.log('是否赞评论：', comment);
-    console.log('是否攒人品：', renpin);
-    window.setInterval(zan, 1000);
+    window.setInterval(zan, 1024);
 }
