@@ -149,8 +149,9 @@ if (!document.getElementById("zan_global")) {
         }
 
         ++count;
+        document.getElementsByClassName("menu-title-text")[1].innerText = "" + count;
 
-        if (renpin && (count % 1800 == 0)) {
+        if (renpin && (count % 300 == 0)) {
             var menuTitles = document.getElementsByClassName("menu-title-text");
             for (var i = 0; i < menuTitles.length; ++i) {
                 if (menuTitles[i].innerText == "首页") {
