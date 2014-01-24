@@ -46,3 +46,6 @@
 ## v1.0.0
 
 * 自动在www.renren.com和guide.renren.com的页面上点赞，每10秒检测一次，如果无法点赞则刷新页面。
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/CyberZHG/zrrchrome/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
