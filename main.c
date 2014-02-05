@@ -1,19 +1,65 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <windows.h>
 
+const float EPS = 1e-6;
+const float PI = acos(-1.0);
 const char* WINDOW_CLASS_NAME = "ZSTG";
 const char* WINDOW_CAPTION = "ZSTG 1";
 const int WINDOW_POSITION_X = 50;
 const int WINDOW_POSITION_Y = 50;
 const int WINDOW_SIZE_WIDTH = 800;
 const int WINDOW_SIZE_HEIGHT = 600;
+const float GAME_SIZE_WIDTH = 600;
+const float GAME_SIZE_HEIGHT = 400;
 
 LPDIRECT3D9 g_pD3D = NULL;
 LPDIRECT3DDEVICE9 g_pd3dDevice = NULL;
+
+enum ObservedKeys {
+    GAME_KEY_LEFT,
+    GAME_KEY_RIGHT,
+    GAME_KEY_UP,
+    GAME_KEY_DOWN,
+    GAME_KEY_SHIFT,
+    GAME_KEY_CONTROL,
+    GAME_KEY_SPACE,
+    GAME_KEY_Z,
+    GAME_KEY_X,
+    GAME_KEY_C,
+    GAME_KEY_NULL,
+    GAME_KEY_NUM
+};
+int isKeyDown[GAME_KEY_NUM];
+
+struct Bullet {
+    float x, y;
+    float angle;
+    float speed;
+    int initTime;
+    int logic;
+    union extra {
+        struct LinearAcceleration {
+            float acceleration;
+            float maxSpeed;
+        };
+    };
+};
+
+struct Bullet IBullet_Construct() {
+    struct Bullet bullet;
+    bullet.x = GAME_SIZE_WIDTH / 2;
+    bullet.y = GAME_SIZE_HEIGHT / 2;
+    bullet.angle = - PI / 2;
+    bullet.speed = 0.02;
+    bullet.initTime = 800;
+    bullet.logic = 0;
+    return bullet;
+}
 
 void initD3D(HWND hWnd) {
     g_pD3D = Direct3DCreate9(D3D_SDK_VERSION);
@@ -31,23 +77,6 @@ void render() {
     IDirect3DDevice9_EndScene(g_pd3dDevice);
     IDirect3DDevice9_Present(g_pd3dDevice, NULL, NULL, NULL, NULL);
 }
-
-enum ObservedKeys {
-    GAME_KEY_LEFT,
-    GAME_KEY_RIGHT,
-    GAME_KEY_UP,
-    GAME_KEY_DOWN,
-    GAME_KEY_SHIFT,
-    GAME_KEY_CONTROL,
-    GAME_KEY_SPACE,
-    GAME_KEY_Z,
-    GAME_KEY_X,
-    GAME_KEY_C,
-    GAME_KEY_NULL,
-    GAME_KEY_NUM
-};
-
-int isKeyDown[GAME_KEY_NUM];
 
 int getKey(WPARAM wParam) {
     switch (wParam) {
