@@ -1,0 +1,13 @@
+# Code::Blocks Files
+*.layout
+*.depend
+bin
+obj
+
+# Qt Creator Files
+build-*
+*.user
+
+# Demo Files
+demo/lib
+demo/include

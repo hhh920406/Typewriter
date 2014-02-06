@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>monitor.png</file>
+        <file>start.png</file>
+        <file>pause.png</file>
+        <file>stop.png</file>
+        <file>export.png</file>
+        <file>exit.png</file>
+        <file>option.png</file>
+        <file>cascade.png</file>
+        <file>tile.png</file>
+        <file>help.png</file>
+        <file>about.png</file>
+    </qresource>
+</RCC>
