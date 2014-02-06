@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.main"
+    android:versionCode="1202"
+    android:versionName="2.12" >
+
+    <uses-sdk android:minSdkVersion="4" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="Z实验室 混乱蜜蜂 11.02" >
+        <activity
+            android:name="zsys.main.Main"
+            android:label="Z实验室 混乱蜜蜂 11.02" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
