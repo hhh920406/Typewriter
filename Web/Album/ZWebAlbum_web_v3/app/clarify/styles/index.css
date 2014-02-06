@@ -1,0 +1,138 @@
+.mainBlock {
+    width: 800px;
+    min-height: 500px;
+    margin: 0 auto;
+}
+
+.textBlock {
+    width: 100%;
+    margin: 5px;
+    padding: 10px;
+    color: darkgray;
+}
+
+.albumBlock {
+    width: 100%;
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid;
+    border-color: darkgray;
+    border-radius: 10px;
+}
+
+.albumBlockItem {
+    display: inline-block;
+    width: 250px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.selectBlock {
+    display: none;
+    width: 100%;
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid;
+    border-color: darkgray;
+    border-radius: 10px;
+}
+
+.selectBlockItem {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    margin: 5px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 150px;
+    cursor: pointer;
+}
+
+.selectBlockItem img {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+selectBlockItemColor {
+    color: white;
+    background-color: darkmagenta;
+}
+
+selectBlockItemTime {
+    color: white;
+    background-color: darkblue;
+}
+
+selectBlockItemEvent {
+    color: white;
+    background-color: darkgreen;
+}
+
+.processBlock {
+    display: none;
+    width: 100%;
+    max-height: none;
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid;
+    border-color: darkgray;
+    border-radius: 10px;
+}
+
+.history {
+    display: inline-block;
+    width: 100%;
+    margin-top: 2px;
+    padding: 1px;
+    text-align: center;
+    color: gray;
+    background-color: lightgray;
+}
+
+.current {
+    display: inline-block;
+    width: 100%;
+    margin-top: 2px;
+    padding: 1px;
+    text-align: center;
+    color: gray;
+    background-color: bisque;
+}
+
+.resultBlock {
+    display: none;
+    width: 100%;
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid;
+    border-color: darkgray;
+    border-radius: 10px;
+}
+
+.resultBlockItem {
+    display: inline-block;
+    width: 150px;
+    height: 170px;
+    margin: 5px;
+}
+
+.selectBlockItemImageDiv {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    background-color: darkgray;
+    cursor: pointer;
+}
+
+.selectBlockItemImageDiv img {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+}
+
+.selectBlockItemInputDiv {
+    width: 150px;
+    height: 20px;
+    line-height: 20px;
+}

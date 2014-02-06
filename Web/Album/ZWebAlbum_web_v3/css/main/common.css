@@ -1,0 +1,180 @@
+@CHARSET "UTF-8";
+
+body
+{
+    font-family: Arial, sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+.normalMessage
+{
+    color: black;
+    line-height: 16px;
+}
+
+.correctMessage
+{
+    color: darkgreen;
+    line-height: 16px;
+}
+
+.errorMessage
+{
+    color: red;
+    line-height: 16px;
+}
+
+.inputLarge
+{
+    width: 252px;
+    height: 44px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid rgb(203, 203, 203);
+    font-size: 16px;
+    line-height: 18px;
+    overflow: hidden;
+    border-radius: 3px 3px 3px 3px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(51, 51, 51);
+    transition-property: border-color, box-shadow;
+    transition-duration: 0.3s, 0.3s;
+    transition-timing-function: linear;
+}
+
+.inputLarge:focus
+{
+    border-color: rgb(86, 189, 243);
+    box-shadow: 0px 0px 5px rgba(84, 189, 242, 0.6), 0px 1px 3px rgba(0, 0, 0, 0.2) inset;
+    outline: 0px none;
+}
+
+.inputLarge:disabled
+{
+    opacity: 0.5;
+    cursor: default;
+}
+
+.buttonGreen
+{
+    width: 272px;
+    height: 47px;
+    background-color: rgb(96, 176, 68);
+    background-image: url('/images/btn_green_normal.png');
+    border: 0px none;
+    border-radius: 3px 3px 3px 3px;
+    cursor: pointer;
+    color: white;
+    font-size: large;
+    font-weight: 700;
+    margin: 0 auto;
+    padding: 7px 15px 7px 15px;
+    text-shadow: rgba(0, 0, 0, 0.25) 0px -1px 0px;
+}
+
+.buttonGreen:focus
+{
+    outline: none;
+}
+
+.buttonGreen:hover
+{
+    background-image: url('/images/btn_green_hover.png');
+}
+
+.buttonGreen:disabled
+{
+    opacity: 0.5;
+    cursor: default;
+}
+
+.buttonBlue
+{
+    width: 272px;
+    height: 47px;
+    background-color: rgb(48, 114, 179);
+    background-image: url('/images/btn_blue_normal.png');
+    border: 0px none;
+    border-radius: 3px 3px 3px 3px;
+    cursor: pointer;
+    color: white;
+    font-size: large;
+    font-weight: 700;
+    margin: 0 auto;
+    padding: 7px 15px 7px 15px;
+    text-shadow: rgba(0, 0, 0, 0.25) 0px -1px 0px;
+}
+
+.buttonBlue:focus
+{
+    outline: none;
+}
+
+.buttonBlue:hover
+{
+    background-image: url('/images/btn_blue_hover.png');
+}
+
+.buttonBlue:disabled
+{
+    opacity: 0.5;
+    cursor: default;
+}
+
+#sideBar {
+    float: left;
+    width: 159px;
+    border-right: 1px solid rgb(217, 220, 226);
+    border-color: rgb(206, 225, 238);
+}
+
+    #sideBar h3 {
+        font-size: 13px;
+        font-weight: bold;
+        color: rgb(140, 140, 140);
+    }
+
+    #sideBar article {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    #sideBar a {
+        font-size: 14px;
+        display: block;
+        width: 159px;
+        height: 30px;
+        margin: 0 auto;
+        line-height: 30px;
+        vertical-align: baseline;
+    }
+
+    #sideBar a:link,
+    #sideBar a:visited {
+        color: black;
+        text-decoration: none;
+        outline: none;
+    }
+
+    #sideBar a:hover {
+        text-decoration: none;
+        outline: none;
+        background-color: rgb(237, 245, 252);
+    }
+
+    #sideBar a.selected:link,
+    #sideBar a.selected:visited,
+    #sideBar a.selected:hover {
+        color: white;
+        text-decoration: none;
+        outline: none;
+        font-weight: bold;
+        background-color: rgb(57, 126, 206);
+    }
+
+    #bodyDiv {
+        width: 840px;
+        height: 100%;
+        float: left;
+    }

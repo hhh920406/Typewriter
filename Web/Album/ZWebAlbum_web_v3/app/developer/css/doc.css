@@ -1,0 +1,11 @@
+.docDiv {
+    width: 100%;
+    padding: 30px;
+}
+
+.docTable {
+    width: 80%;
+    margin: 0 auto;
+    color: rgb(30, 30, 30);
+    font-size: 14px;
+}

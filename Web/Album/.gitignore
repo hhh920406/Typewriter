@@ -1,0 +1,25 @@
+# Build
+*.exe
+bin
+obj
+
+# Resource
+*.psd
+*.png
+*.jpg
+*.gif
+*.zip
+
+# Other Projects
+phpMyAdmin
+
+# Smarty Folders
+cache
+plugins
+templates_c
+
+# Netbeans Project
+nbproject
+
+#Doxygen Files
+doxygen

@@ -1,0 +1,53 @@
+@CHARSET "UTF-8";
+
+#sql_table
+{
+}
+
+    #sql_table table
+    {
+        width: 100%;
+        border: 1px;
+        text-align: center;
+    }
+    
+    #sql_table th
+    {
+        color: white;
+        background-color: black;
+        font-weight: bold;
+    }
+    
+    #sql_table tr
+    {
+        background-color: #DDDDDD;
+    }
+    
+    #sql_table a:link,
+    #sql_table a:visited
+    {
+        color: black;
+        text-decoration: none;
+        outline: none;
+        vertical-align: top;
+        margin-top: 0;
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+    
+    #sql_table a:hover
+    {
+        color: #444444;
+        text-decoration: none;
+        outline: none;
+        vertical-align: top;
+        margin-top: 0;
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+    
+    #sql_table input[type="text"]
+    {
+        width: 90%;
+        text-align: center;
+    }

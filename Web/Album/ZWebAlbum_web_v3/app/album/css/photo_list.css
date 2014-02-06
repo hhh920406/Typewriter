@@ -1,0 +1,97 @@
+@CHARSET "UTF-8";
+
+.title {
+    font-size: 16px;
+    color: rgb(50, 50, 50);
+    padding-left: 50px;
+}
+
+
+.title a {
+    color: black;
+    text-decoration: none;
+}
+
+.title a:hover {
+    color: white;
+    background-color: black;
+}
+
+
+.pagerDiv {
+    width : 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+    .pagerDiv a:link,
+    .pagerDiv a:visited {
+        color: darkblue;
+    }
+
+    .pagerDiv a:hover {
+        color: darkcyan;
+    }
+
+.albumDiv {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    margin: 20px;
+}
+
+.photoDiv {
+    width: 200px;
+    height: 150px;
+    margin: 0 auto;
+    background-color: rgb(187, 187, 187);
+    box-shadow: 3px 3px 15px rgb(201, 201, 201);
+}
+
+.nameDiv {
+    width: 200px;
+    height: 50px;
+    line-height: 50px;
+    margin: 0 auto;
+    font-size: 13px;
+    color: rgb(40, 40, 40);
+}
+
+.infoDiv {
+    width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.titleInput {
+    width: 80%;
+    height: 20px;
+    line-height: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    padding-left: 20px;
+    background: none;
+    border: none;
+}
+
+.titleInput:focus {
+    background-color: rgb(230, 243, 255);
+}
+
+.descriptionInput {
+    width: 80%;
+    font-size: 15px;
+    color: rgb(50, 50, 50);
+    margin-top: 10px;
+    padding-left: 20px;
+    background: none;
+    border: none;
+}
+
+.descriptionInput:focus {
+    background-color: rgb(243, 230, 255);
+}
+
+.operationDiv {
+    float: right;
+}
