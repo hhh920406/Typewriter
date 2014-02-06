@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, MainActivity!</string>
+    <string name="app_name">Zsys_Matrix</string>
+    <string name="cm1title">Create New Matrix</string>
+    <string name="width">Width</string>
+    <string name="height">Height</string>
+    <string name="cm1choose">Choose the initial status: </string>
+    <string name="matzero">Zeros Matrix</string>
+    <string name="matone">Ones Matrix</string>
+    <string name="matunit">Unit Matrix</string>
+    <string name="next">Next Step</string>
+    <string name="cancel">Cancel</string>
+    <string name="matinit">3</string>
+    <string name="back">Back</string>
+    <string name="confirm">Confirm</string>
+    <string name="emtitle">Edit Matrix</string>
+    <string-array name="relationone">
+        <item>Transpose</item>
+        <item>Upper Triangular</item>
+        <item>Lower Triangular</item>
+        <item>Adjont</item> 
+        <item>Determinant</item> 
+    </string-array>
+    <string-array name="relationtwo">
+        <item>Add</item>
+        <item>Substract</item>
+        <item>Multiply</item>
+        <item>Horizon Merger</item>
+        <item>Vertical Merger</item>
+    </string-array>
+    <string name="left">Left</string>
+    <string name="right">Right</string>
+    <string name="top">Top</string>
+    <string name="bottom">Bottom</string>
+    <string name="helptitle">Operating Instructions</string>
+    <string name="helpcontent">The application is used for visualization of the matrix operation.\n
+        Create Mode: \n
+        The Create Mode is used for create a new matrix or add relations to calculate a new matrix. When 
+        click on the stage, the application will entry creating matrix mode. Otherwise, it will entry the
+        relation mode. \n
+        Edit Mode: \n
+        Click on the matrix will entry the edit view of the matrix. \n
+        Delete Mode: \n
+        Click on the matrix to delete the matrix and all its relation. \n
+        Move Mode: \n
+        The size of the stage is infinity. The stage and the matrix can both be moved. \n
+        Zoom: \n
+        Click on anywhere will change the zoom of the total stage. \n</string>
+
+</resources>
