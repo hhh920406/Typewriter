@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ZMatrix" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Windows_Debug">
+				<Option output="bin/Windows_Debug/ZMatrix" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Windows_Debug/" />
+				<Option object_output="obj/Windows_Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-DSYS_WIN" />
+				</Compiler>
+			</Target>
+			<Target title="Windows_Release">
+				<Option output="bin/Windows_Release/ZMatrix" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Windows_Release/" />
+				<Option object_output="obj/Windows_Release/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-DSYS_WIN" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+			<Target title="Linux_Debug">
+				<Option output="bin/Linux_Debug/ZMatrix" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Linux_Debug/" />
+				<Option object_output="obj/Linux_Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-DSYS_LINUX" />
+				</Compiler>
+			</Target>
+			<Target title="Linux_Release">
+				<Option output="bin/Linux_Release/ZMatrix" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/Linux_Release/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-DSYS_LINUX" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add directory="include" />
+			<Add directory="test" />
+		</Compiler>
+		<Unit filename="include/Complex.h" />
+		<Unit filename="include/Matrix.h" />
+		<Unit filename="include/Matrix_math.h" />
+		<Unit filename="include/ZMat.h" />
+		<Unit filename="include/math/crout.h" />
+		<Unit filename="include/math/doolittle.h" />
+		<Unit filename="include/math/eye.h" />
+		<Unit filename="include/math/inv.h" />
+		<Unit filename="include/math/ldu.h" />
+		<Unit filename="include/math/norm.h" />
+		<Unit filename="include/math/transpose.h" />
+		<Unit filename="main.cpp">
+			<Option target="Windows_Debug" />
+			<Option target="Linux_Debug" />
+		</Unit>
+		<Unit filename="src/Complex.cpp" />
+		<Unit filename="test/Test.cpp">
+			<Option target="Windows_Debug" />
+			<Option target="Linux_Debug" />
+		</Unit>
+		<Unit filename="test/Test.h">
+			<Option target="Windows_Debug" />
+			<Option target="Linux_Debug" />
+		</Unit>
+		<Unit filename="test/Test_Complex.cpp">
+			<Option target="Windows_Debug" />
+			<Option target="Linux_Debug" />
+		</Unit>
+		<Unit filename="test/Test_Complex.h">
+			<Option target="Windows_Debug" />
+			<Option target="Linux_Debug" />
+		</Unit>
+		<Unit filename="test/Test_Decompose.cpp">
+			<Option target="Windows_Debug" />
+			<Option target="Linux_Debug" />
+		</Unit>
+		<Unit filename="test/Test_Decompose.h">
+			<Option target="Windows_Debug" />
+			<Option target="Linux_Debug" />
+		</Unit>
+		<Unit filename="test/Test_Generate.cpp">
+			<Option target="Windows_Debug" />
+			<Option target="Linux_Debug" />
+		</Unit>
+		<Unit filename="test/Test_Generate.h">
+			<Option target="Windows_Debug" />
+			<Option target="Linux_Debug" />
+		</Unit>
+		<Unit filename="test/Test_Matrix.cpp">
+			<Option target="Windows_Debug" />
+			<Option target="Linux_Debug" />
+		</Unit>
+		<Unit filename="test/Test_Matrix.h">
+			<Option target="Windows_Debug" />
+			<Option target="Linux_Debug" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<debugger />
+			<envvars />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
