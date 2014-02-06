@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="company">\n\nZsys Android @ Zsys Studio 2012\n</string>
+    <string name="locale">住址：\n 大连理工大学西山19舍627寝室</string>
+    <string name="phone">联系电话： \n 135****2627</string>
+    <string name="email">电子邮件： \n CyberZHG@gmail.com</string>
+    <string name="logo">Zsys Studio 2011 Logo</string>
+    <string name="about">\nAll Rights Reserved\n</string>
+</resources>
