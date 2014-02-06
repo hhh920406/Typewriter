@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"    
+	android:layout_width="fill_parent"     
+	android:layout_height="fill_parent"  
+	android:background="#FFFFFF"  
+	android:scrollbars="vertical">
+	<LinearLayout
+		 android:layout_width="match_parent"
+		 android:layout_height="match_parent"
+		 android:orientation="vertical"
+		 android:background="#FFFFFF">
+		 <ImageView
+		 	android:layout_width="match_parent"
+		 	android:layout_height="wrap_content"
+		 	android:src="@drawable/logo"
+		 />
+		 <TextView
+		 	android:layout_width="wrap_content"
+		 	android:layout_height="wrap_content"
+		 	android:textColor="#000000"
+		 	android:text="Zsys Java Android @ Zsys Studio 2011"
+		 />
+		 <TextView
+		 	android:layout_width="wrap_content"
+		 	android:layout_height="wrap_content"
+		 	android:textColor="#000000"
+		 	android:text="住址：\n 大连理工大学西山19舍627寝室"
+		 />
+		 <TextView
+		 	android:layout_width="wrap_content"
+		 	android:layout_height="wrap_content"
+		 	android:textColor="#000000"
+		 	android:autoLink="phone"
+		 	android:text="联系电话： \n 13591772627"
+		 />
+		 <TextView
+		 	android:layout_width="wrap_content"
+		 	android:layout_height="wrap_content"
+		 	android:textColor="#000000"
+		 	android:autoLink="email"
+		 	android:text="电子邮件： \n 443442708@qq.com"
+		 />
+		 <TextView
+		 	android:layout_width="wrap_content"
+		 	android:layout_height="wrap_content"
+		 	android:textColor="#000000"
+		 	android:text="\nAll Rights Reserved.\n"
+		 />
+		 <Button
+		 	android:id="@+id/backButton"
+	  		android:layout_width="fill_parent"
+	  		android:layout_height="wrap_content"
+	  		android:text="@string/back"
+		 />
+	</LinearLayout>
+</ScrollView>
