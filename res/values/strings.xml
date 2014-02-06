@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FunctionDisplay</string>
+    <string name="help">程序说明</string>
+    <string name="about">关于我们</string>
+    <string name="function1">一元方程</string>
+    <string name="function2">参数方程</string>
+    <string name="function3">二元方程</string>
+    <string name="function4">柱坐标方程</string>
+    <string name="function5">球坐标方程</string>
+    <string name="help0">整体说明：</string>
+    <string name="help0text">　　本程序的作用是根据输入的数学方程得到相应的函数图像，要求方程表达式所有自变量都用大写的X或Y表示，三维函数图像生成等待时间较长。\n</string>
+    <string name="back">返回主界面</string>
+    <string name="clear">清除输入</string>
+    <string name="make">生成图像</string>
+    <string name="help1">一元方程：</string>
+    <string name="help1text">　　一元方程是关于x与y的方程，因变量默认为y，自变量在方程中用X表示,方程中不得出现因变量y。生成二维函数图像。\n</string>
+    <string name="help2">参数方程：</string>
+    <string name="help2text">　　参数方程因变量默认为x和y，方程中不得出现x和y，自变量在方程中用X表示,。生成二维函数图像。\n</string>
+    <string name="help3">二元方程：</string>
+    <string name="help3text">　　二元方程是关于x、y和z的方程,因变量默认为z，自变量在方程中用X和Y表示,方程中不得出现z。生成三维函数图像。\n</string>
+    <string name="help4">柱坐标方程：</string>
+    <string name="help4text">　　柱坐标方程中x和y使用参数方程的方法，z的位置是x和y的函数，x,y的自变量用X表示，z的自变量用X和Y表示。生成三维函数图像。\n</string>
+    <string name="help5">球坐标方程：</string>
+    <string name="help5text">　　球坐标方程因变量默认为x,y,z，自变量默认为X，方程中不得出现x,y和z。生成三维函数图像。\n</string>
+    <string name="funcerror">函数表达式有问题</string>
+</resources>
