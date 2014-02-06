@@ -12,17 +12,21 @@
 
 ## Contest
 
-* Barrier
 * RTT-Monitor
 
 ## Game
 
 * Tank
+* STG
 
 ## Homework
 
 * MFC
 * Network
+
+## Library
+
+* Matrix
 
 ## Web
 
