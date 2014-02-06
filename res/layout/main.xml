@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"    
+	android:layout_width="fill_parent"     
+	android:layout_height="fill_parent"    
+	android:scrollbars="vertical">
+	<LinearLayout 
+		android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:scrollbars="vertical"
+	    >
+		<TextView  
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content" 
+			android:textColor="#FFFFFF"
+			android:textSize="22sp"
+			android:text="短信筛选"
+			/>
+		<CheckBox
+			android:id="@+id/dateCheckBox"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="　对日期进行筛选"
+			/>
+		<TextView  
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content" 
+			android:text="　　起始时间："
+			/>
+		<DatePicker android:id="@+id/startDatePicker" 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        />
+		<TextView  
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content" 
+			android:text="　　终止时间："
+			/>
+		<DatePicker android:id="@+id/endDatePicker" 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        />
+		<CheckBox
+			android:id="@+id/nameCheckBox"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="　对联系人姓名进行筛选"
+			/>
+		<EditText android:id="@+id/nameEditText"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        />
+		<CheckBox
+			android:id="@+id/bodyCheckBox"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="　对短信内容进行筛选"
+			/>
+		<EditText android:id="@+id/bodyEditText"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        />
+	    <Button android:id="@+id/searchButton"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:text="查找"
+	        />
+	    <TextView  
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content" 
+			android:text="    Zsys Studio 2011\nAll Rights Reserved."
+			/>
+	</LinearLayout>
+</ScrollView>
